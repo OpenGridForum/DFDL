@@ -1,6 +1,5 @@
 # Data Format Description Language (DFDL) 
 
-This github site will be used to host some DFDL workgroup documents, tests, code-snippets and other artifacts of use to the DFDL community.
+Please go to our github pages site: https://opengridforum.github.io/DFDL
 
-See https://OpenGridForum.github.io/DFDL for the complete materials.
 
