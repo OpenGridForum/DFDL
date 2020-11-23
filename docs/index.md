@@ -1,6 +1,11 @@
 # Data Format Description Language (DFDL) 
 
-This github repository and site is the new home for work on DFDL for the Open Grid Forum. 
+The aim of this working group is to define an XML-based language, the 
+Data Format Description Language (DFDL), for describing the structure 
+of binary and textual files and data streams so that their format, 
+structure, and metadata can be exposed.
+
+OGF DFDL Homepage: http://www.ogf.org/dfdl
 
 Go back to the main github page for OGF DFDL here: [OGF DFDL github](https://github.com/OpenGridForum/DFDL)
 
