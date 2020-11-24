@@ -1,0 +1,312 @@
+:page-layout: page
+:url-asciidoctor: http://asciidoctor.org
+:keywords: asciidoc markdown diagram
+// ///////////////////////////////////////////////////////////////////////////
+//
+// This file is written in AsciiDoc.
+//
+// If you can read this comment, your browser is not rendering asciidoc automatically.
+//
+// You need to install the asciidoc plugin to Chrome or Firefox
+// so that this page will be properly rendered for your viewing pleasure.
+//
+// You can get the plugins by searching the web for 'asciidoc plugin'
+//
+// You will want to change plugin settings to enable diagrams (they're off by default.)
+// 
+// You need to view this page with Chrome or Firefox.
+//
+// ///////////////////////////////////////////////////////////////////////////
+//
+// When editing, please start each sentence on a new line.
+// See https://asciidoctor.org/docs/asciidoc-recommended-practices/#one-sentence-per-line[one sentence-per-line writing technique.]
+// This makes textual diffs of this file useful in a similar way to the way they work for code.
+//
+// //////////////////////////////////////////////////////////////////////////
+
+== About AsciiDoc for Documentation
+
+There is a trend towards less WYSIWYG for documentation, slides, etc. because it doesn't have the useful characteristics of source code in that it cannot be easily diffed. Configuration management is always more ad-hoc and problematic.
+AsciiDoc is a highly regular markdown-style language for creating documentation in the style of Markdown, but it eliminates many drawbacks of the various markdown dialects.
+
+This page itself is AsciiDoc. Jekyll converts it to HTML using {url-asciidoctor}[Asciidoctor].
+
+TIP:  When writing asciidoc, or any other markdown, or even html or xml or tdml tutorial, etc. 
+The point is to treat this stuff like code - i.e., have line-diffs be useful.
+In order for that to work *really well*, you need to use the https://asciidoctor.org/docs/asciidoc-recommended-practices/#one-sentence-per-line[one sentence-per-line writing technique.]
+
+TIP: Here is an https://asciidoctor.org/docs/asciidoc-syntax-quick-reference[asciidoc syntax cheat sheet/quick-reference guide.]
+
+A primary reason to use asciidoc is the support for diagrams created via text. Many kinds are supported directly. https://asciidoctor.org/docs/asciidoctor-diagram[See Asciidoctor diagram.]
+
+Let's look at some kinds of content.
+
+== Example of XML as Source Code
+[source,xml]
+....
+<xs:schema ...> 
+  <!-- hello world from an xml comment -->
+</xs:schema>
+....
+
+== Example of Just Slide-like Bulleted List
+You should consider using AsciiDoc for slide-ware instead of something like powerpoint.
+
+* Slide full of bullets
+* Slide full of bullets
+* Slide full of bullets
+* Slide full of bullets
+
+== Example Images
+Images work in the basic way. Here's an inline image 
+image:http://daffodil.apache.org/assets/themes/apache/img/apache-daffodil-logo.png[daffodil logo, link="http://daffodil.apache.org"], 
+and here's the same image as an image block:
+
+---
+image::http://daffodil.apache.org/assets/themes/apache/img/apache-daffodil-logo.png[daffodil logo, link="http://daffodil.apache.org"]
+---
+
+== Example Diagrams
+There are numerous kinds of diagrams possible.
+
+
+=== PlantUML Diagram
+
+http://plantuml.com/[PlantUML] is a component that allows to quickly write:
+
+* Sequence diagram
+* Usecase diagram
+* Class diagram
+* Activity diagram (here is the legacy syntax)
+* Component diagram
+* State diagram
+* Object diagram
+* Deployment diagram 
+* Timing diagram 
+
+The following non-UML diagrams are also supported:
+
+* Wireframe graphical interface
+* Archimate diagram
+* Specification and Description Language (SDL)
+* Ditaa diagram
+* Gantt diagram 
+* MindMap diagram 
+* Work Breakdown Structure diagram 
+* Mathematic with AsciiMath or JLaTeXMath notation
+* Entity Relationship diagram
+
+An www.plantuml.com/plantuml/uml[online PlantUML authoring tool] is available.
+Though just saving and refreshing the page in a web browser (usually they auto-refresh 
+after 1 second) is also pretty easy.
+
+Here is a class diagram example:
+
+[plantuml, target="diagram-classes", format="png"]     
+....
+class BlockProcessor
+class DiagramBlock
+class DitaaBlock
+class PlantUmlBlock
+
+BlockProcessor <|-- DiagramBlock
+DiagramBlock <|-- DitaaBlock
+DiagramBlock <|-- PlantUmlBlock
+
+....
+
+
+Here's a PlantUML Sequence Diagram:
+[plantuml, format="png"]     
+....
+actor Foo1
+boundary Foo2
+control Foo3
+entity Foo4
+database Foo5
+collections Foo6
+Foo1 -> Foo2 : To boundary
+Foo1 -> Foo3 : To control
+Foo1 -> Foo4 : To entity
+Foo1 -> Foo5 : To database
+Foo1 -> Foo6 : To collections
+....
+
+=== Ditaa Diagram
+The http://ditaa.sourceforge.net/[DITAA] graphics are ASCII-Art converted into smoother looking drawings. They have the advantage of being visual in the text file.
+
+These diagrams are quite easily drawn then cut/pasted to/from actual asciidoc digrams using an online tool called http://asciiflow.com/[asciiflow].
+
+[ditaa]
+....
+                   +-------------+
+                   | Asciidoctor |-------+
+                   |   diagram   |       |
+                   +-------------+       | PNG out
+                       ^                 |
+                       | ditaa in        |
+                       |                 v
+ +--------+   +--------+----+    /---------------\
+ |        | --+ Asciidoctor +--> |               |
+ |  Text  |   +-------------+    |   Beautiful   |
+ |Document|   |   !magic!   |    |    Output     |
+ |     {d}|   |             |    |               |
+ +---+----+   +-------------+    \---------------/
+     :                                   ^
+     |          Lots of work             |
+     +-----------------------------------+
+....
+
+Note: below is the widest ditaa diagram you can draw that will fit in the line-length that 
+github's code-review/pull-request window can display without line-wrap.
+If the lines wrap in your ditaa diagram you really lose the ability to comment on them 
+in their textual form in the asciidoc:
+
+[ditaa]
+....
++--------------------------------------------------------------------------------------------------------------------+
+| make ditaa diagrams no wider than this box                                                                         |
++--------------------------------------------------------------------------------------------------------------------+
+....
+
+// Here's that as a comment you can cut/paste into an asciidoc file 
+//
+// DITAA max line length (for github) ruler -------------------------------------------------------------------------|
+//
+
+== GraphViz Record-Based Nodes Diagram
+https://graphviz.gitlab.io/documentation/[GraphViz] is probably the most powerful of the various diagram tools, but with that power comes complexity that some of the other diagram types are able to overcome by being more restrictive.
+
+This is an example of graphViz https://graphviz.gitlab.io/_pages/doc/info/shapes.html#record[Record-based Nodes] which are very useful for box diagrams showing data layouts when a packetdiag is too rigid.
+[graphviz]
+....
+digraph structs { 
+  node [shape=record];
+  struct1 [label="<f0> left|<f1> mid&#92; dle|<f2> right"];
+  struct2 [label="<f0> one|<f1> two"]; 
+  struct3 [label="hello&#92;nworld |{ b |{c|<here> d|e}| f}| g | h"];
+  struct1:f1 -> struct2:f0; 
+  struct1:f2 -> struct3:here; 
+}
+....
+
+== Example Block Diagram
+The http://blockdiag.com/en/blockdiag/[blockdiag] diagram type is for basic box/arrow diagrams.
+
+CAUTION: It is not clear how this compares for ease-of-use with PlantUML or GraphViz.
+
+[blockdiag]
+....
+blockdiag {
+  Kroki -> generates -> "Block diagrams";
+  Kroki -> is -> "very easy!";
+
+  Kroki [color = "greenyellow"];
+  "Block diagrams" [color = "pink"];
+  "very easy!" [color = "orange"];
+}
+....
+
+=== Sequence Diagram
+The http://blockdiag.com/en/seqdiag/[seqdiag] diagram type creates sequence diagrams. 
+
+CAUTION: It is not clear how this compares for ease-of-use with PlantUML sequence diagrams.
+
+[seqdiag]
+....
+seqdiag {
+  browser  -> webserver [label = "GET /seqdiag/svg/base64"];
+  webserver  -> processor [label = "Convert text to image"];
+  webserver <-- processor;
+  browser <-- webserver;
+}
+....
+=== Activity Diagram
+The http://blockdiag.com/en/actdiag/[actdiag] diagram type creates sequence diagrams. 
+
+CAUTION: It is not clear how this compares for ease-of-use with PlantUML activity diagrams.
+[actdiag]
+....
+actdiag {
+  write -> convert -> image
+
+  lane user {
+     label = "User"
+     write [label = "Writing reST"];
+     image [label = "Get diagram IMAGE"];
+  }
+  lane actdiag {
+     convert [label = "Convert reST to Image"];
+  }
+}
+....
+=== Network Diagram
+I don't know how much call we will have for these, but the
+http://blockdiag.com/en/nwdiag/[nwdiag] diagram type creates network diagrams which are interesting anyway.
+
+CAUTION: It is not clear how this compares for ease-of-use with PlantUML diagrams.
+
+[nwdiag]
+....
+nwdiag {
+  network dmz {
+      address = "210.x.x.x/24"
+
+      // set multiple addresses (using comma)
+      web01 [address = "210.x.x.1, 210.x.x.20"];
+      web02 [address = "210.x.x.2"];
+  }
+  network internal {
+      address = "172.x.x.x/24";
+
+      web01 [address = "172.x.x.1"];
+      web02 [address = "172.x.x.2"];
+      db01;
+      db02;
+  }
+}
+....
+
+== More GraphViz Examples
+
+=== GraphViz Ad-Hoc Diagram
+Random boxes and ovals and other shapes.
+
+[graphviz]
+....
+digraph D {
+  subgraph cluster_p {
+    label = "Kroki";
+    subgraph cluster_c1 {
+      label = "Server";
+      Filebeat;
+      subgraph cluster_gc_1 {
+        label = "Docker/Server";
+        Java;
+      }
+      subgraph cluster_gc_2 {
+        label = "Docker/Mermaid";
+        "Node.js";
+        "Puppeteer";
+        "Chrome";
+      }
+    }
+    subgraph cluster_c2 {
+      label = "CLI";
+      Golang;
+    }
+  }
+}
+....
+
+=== GraphViz Digraph
+[graphviz,cyclic,svg]
+....
+digraph g {
+    a -> b
+    b -> c
+    c -> d
+    d -> a
+}
+....
+
