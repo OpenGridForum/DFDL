@@ -11,9 +11,9 @@ representations including JSON, XML, EXI, SAX-style event callbacks, DOM-trees, 
 
 ## Quick Links
 
-* [DFDL News](https://github.com/OpenGridForum/DFDL/wiki/DFDL-Workgroup-News)
-* [Calls/Minutes](https://github.com/OpenGridForum/DFDL/tree/master/docs/calls)
-* [Working-Drafts](https://github.com/OpenGridForum/DFDL/tree/master/docs/working-drafts)
+* [DFDL Workgroup News](https://github.com/OpenGridForum/DFDL/wiki/DFDL-Workgroup-News)
+* [DFDL Workgroup Calls/Meeting Minutes](https://github.com/OpenGridForum/DFDL/tree/master/docs/calls)
+* [DFDL Workgroup Working-Drafts Folder](https://github.com/OpenGridForum/DFDL/tree/master/docs/working-drafts)
 * [OGF DFDL Homepage](http://www.ogf.org/dfdl)
 * [Wikipedia DFDL](https://en.wikipedia.org/wiki/Data_Format_Description_Language)
 
@@ -22,10 +22,8 @@ representations including JSON, XML, EXI, SAX-style event callbacks, DOM-trees, 
 The DFDL Specification is now in public review. 
 You will find the specification for review here:
 
-* [GFD 240](https://github.com/OpenGridForum/Editor/tree/main/DFDL%201.0%20(GFD%20240))
+* [DFDL Specification Public Review (GFD 240)](https://github.com/OpenGridForum/Editor/tree/main/DFDL%201.0%20(GFD%20240))
 
-Comments can be created here:
-
-* [Create Public Comments](https://github.com/OpenGridForum/Editor/issues) Note: please label them with "DFDL 1.0" label when creating them.
+Follow the instructions to create a public comment there. Note: please label them with "DFDL 1.0" when creating them.
 
 
