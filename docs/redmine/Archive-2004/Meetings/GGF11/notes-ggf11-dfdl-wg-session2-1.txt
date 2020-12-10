@@ -1,0 +1,96 @@
+From: Guy Rixon [gtr@ast.cam.ac.uk]
+Sent: Tuesday, June 08, 2004 5:37 PM
+To: mike.beckerle@ascentialsoftware.com
+Subject: Notes from GGF DFDL session 2
+
+Mike chairing
+Alan and Martin on telecon
+13 physically present
+
+Mike presenting: multilayered descriptions and references  List of issues
+  Stored length
+  Choices/unions
+  Layered translations
+  Modularity, extensibility
+ Use cases
+ Discussion
+
+Questions:
+ How is DFDL to be used in a service?
+  Mike: use a library with DFDL API, informed by DFDL description.
+  Questioner: need to discuss this at the data-in-files BOF
+  Jim: use is similar to using a NetCDF library, but more general.
+  Mike: trading off performance against generality
+
+ For dfdl:storedLengthUnitType="logicalItems" are the logical items the element in which the  annotation occurs?
+  Mike: yes.
+
+ Why do stored length numbers not appear as values of minOccurs, maxOccurs?
+  Mike: minOccurs, maxOccurs are static description, same for all instances.
+   storedLength attribute is the run-time value, different for each instance doc.
+  Martin: consider schema with unbounded number of repeats - important case. Then
+   need to store actual number of repeats separately.
+  Mike: storedLength attributes are deliberately put in the element tree. This is a
+   different approach from that in the primer where annotations are outside the tree
+   and are referenced.
+
+ Is ../NUMBER-OF-TREATMENTS (in stored length example) not making DFDL specific to
+  an application domain?
+  Mike: no, it is a reference to another element in the described logical format.
+  Questioner: why is NUMBER-OF-TREATMENTS declared twice?
+  Mike/Jim: it isn't. First occurance is declaration, second is a reference.
+
+ Does XSD allow addition of global attributes, s.t. we could add a storedLength attribute
+  to an element definition?
+  Nobody at meeting knows.
+
+ What does XPath in storedLength attribute represent? Does it refer to the DFDL schema or
+  the ingested data?
+  Mike: it's the path in the data, not in the schema.
+  Questioner: OK, but this makes it harder to reason about.
+  Jim/Mike: in some formats the stored lengths are implict in the representation, not in
+   the logical format (=> it isn't in the DFDL schema?).
+  Mike: but in other examples, some paths do lead into the schema.
+
+ In the stoed length example, is NUMBER-OF-TREATMENT actually text?
+  Mike: yes, logical form is text, representation is binary.
+  Martin: yes, but should be able to get the number without explicitly transforming to string
+   first (API issue?).
+  Jim: could use xsd:int and imply conversion from packed-integer rep.
+
+ Is it really all strings because it's XML?
+  Mike: no, logical type model from XSD is real types. Possible serialization as real
+   XML (unicode in angle brackets) is a separate issue.
+
+ What's the language in the choice example?
+  Mike: it's an ad hoc language based on XQuery.
+
+ Could we use a regular-expression language?
+  Mike: probably not, because we need math and multiple output parameters.
+
+ Better to have an element with text content instead of an attribute for choiceTagValueCalc?
+  Mike: yes, probably.
+
+ Better to reference external algorithm in Perl, Python etc.?
+  Mike: maybe. Or could use a JSP-like form with embedded code.
+
+ Use XSLT?
+  Maybe, if (a) we can get it the right input data and (b) if it is not too verbose.
+  Jim: match-rules aspect of XSLT may be useful; pos better than a procedural language.
+
+ Mike: Exceptions in the match language are important, particularly for output to binary rep.
+
+ What pattern language for data-times?
+  Mike: use the Java one for stringified data-times
+  Need different for binary reps.
+  Questioner: can this be written as recursive DFDL?
+  Jim: maybe intermediate rep.
+  Mike: could infer psuedo-fields of date structure that can be assigned.
+
+Meeting was adjorned (to session 0800 tomorrow) before all slides were shown and dicsussed.
+
+
+
+Guy Rixon 				        gtr@ast.cam.ac.uk
+Institute of Astronomy   	                Tel: +44-1223-337542
+Madingley Road, Cambridge, UK, CB3 0HA		Fax: +44-1223-337523

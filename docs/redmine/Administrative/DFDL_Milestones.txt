@@ -1,0 +1,17 @@
+We propose to produce the following documents: 
+
+1. Formal language for DFDL structure description 
+2. XML representation of this language (XML Schema, including standard APIs to reference it)
+3. Requirements for DFDL ontology - what features are required of a DFDL ontology
+4. Basic types ontology (floating point, integer, character etc.)
+5. Basic structures ontology (Strings, arrays, tables etc.).
+
+ 
+Milestones to producing these document (by number): 
+GGF8 (1) strawman
+GGF9 (1) draft (2) strawman
+GGF10 (1) draft (2) draft (3,4,5) strawman 
+GGF11 (1) complete (2,3,4,5) draft 
+GGF12 (1,2) complete (3,4,5) draft
+GGF13 All documents complete
+

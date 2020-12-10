@@ -1,0 +1,65 @@
+DFDL session at OGF20
+Tuesday 8 May 2007
+Notes by Simon Parker, PolarLake
+Start 10:30, end 12:08, 12 delegates attended.
+
+Steve Hanson presented the material described in his slides with occasional questions from the audience, 
+and drew on his experience with IBM and the working group to explain the background. At the end there was time 
+for more questions and some discussion of DFDL's role, future development and likely usage scenarios.
+
+Steve asked for a show of hands: Who doesn't know about DFDL? Four responded. Who's been following progress? 
+Two responded (myself and someone involved with the Defuddle project).
+
+Steve is an architect working on IBM's Websphere Message Broker. That product included a proprietary non-xml parser, 
+but limitations led them to develop a more standards based approach based on XML Schema, which shipped in 2003. 
+IBM learned of the DFDL initiative, and subsequently joined the working group to help influence the standard.
+For IBM it is important to have a comprehensive solution that is accepted as an open standard.
+
+Question: Will there be support for pointers (absolute persistent binary identifiers)?
+Answer: None planned in version 1.
+
+Question: Given nested structures and one-dimensional arrays, do we need multi-dimensional arrays?
+Answer: Yes, there are differences in access and element order. SOAP suffered for not addressing this. 
+        Although it won't make it into version 1, some work has been done on multi-dimensional arrays.
+
+Question: Any support for versioning?
+Answer: DFDL schema versions can be managed like other XML schemas, but no runtime capability is planned.
+
+Question: Are standard data types such as IEEE floating-point variations supported?
+Answer: Yes, the standard already calls for common standard formats. In a future version, users will be able to define arbitrary binary formats.
+
+Question: Can DFDL be used to validate the format of a file?
+Answer: It can help by describing the valid format, but validation needs three steps. First, ensure the data can be parsed (DFDL parser). 
+        Second, ensure the logical structure is correct (XML Schema validation). Finally, ensure it meets application constraints (Schematron).
+
+Question: Can I use DFDL to map binary data from a foreign machine architecture to my local architecture?
+Answer: That's a two step process. DFDL can describe the foreign format so you can parse it. 
+        DFDL can describe the local format so you can unparse it for storage.
+
+Steve appealed for new members to participate in the working group. Two of the original members merged to become one, 
+and another pulled out when its source of funds dried up. Only two organisations are represented now (IBM and Avaya), 
+and this standardisation work requires more breadth.
+
+The group is also seeking people to review the specification and suggest improvements. In particular, the group is 
+interested to hear feedback on the approach to specifying semantics.
+
+The specification has reached a point where implementation experience would be valuable, and a reference implementation 
+(closely reflecting the abstract semantic functions) will soon be essential.
+
+I described PolarLake's interest. Like IBM's did, our product incorporates a non-xml parser and unparser based on a proprietary format specification. 
+We need to extend and enrich those services, and our clients would prefer to express their format specifications in a portable standard language.
+
+Another delegate described a requirement to serialise data in a packed form across a network and reconstitute the original format at the destination. 
+Finding no standard, they built local tools driven by C structs.
+
+The National Data Archive imports commercial and general data as well as scientific data. At present it uses intermediate forms like a hierarchical 
+nodata format (Hierarchical Data Format?), but would like to adopt DFDL as a comprehensive standard.
+
+Observation: Delimiters aren't always fixed. We need arbitrary whitespace as a delimiter, for example.
+
+Question: Can I merge sets of data using DFDL?
+Answer: No specific help, but DFDL can describe each input.
+
+Observation: ISO CGM is a rich file structure that might make a worthwhile test case.
+
+Observation: Arbitrary size binary integers would be important.
