@@ -1,0 +1,49 @@
+
+2004-06-07 GGF11 DFDL-WG Session 1
+Status Review
+
+The slide presentation was not interrupted by many questions. When we
+reached the end a lively discussion occurred.
+
+Topics included:
+
+* As expected many of the questions dealt with the data formats that
+  aren't discussed in the primer. E.g., stored lengths were raised by
+  someone familiar with a medical image standard format that uses lots
+  of stored length representations. Null values were raised, i.e., can
+  DFDL handle them and roughly what would it be like.
+
+* Some exploration around the limits of expressive power
+  occurred. That is, what can't be described in DFDL. Mike Beckerle
+  made the point that it might not be possible to describe XML data
+  using DFDL because of the complexity of the namespace stuff in the
+  parsing of XML. That is, such a system amounts to reinventing an XML
+  parser in DFDL, and there would be no real point in that. However,
+  if it's not even possible to do it we want to know why, and we may
+  or may not be happy with that limitation.
+
+* The point was made that we seem to be trying to put everything onto
+  the type definitions of XSD, and perhaps we don't need to or
+  shouldn't push everything onto the type definitions.
+
+* Layered/Nested representations were raised. That is, how to handle
+  when there is a structured type (a group), but the representation is
+  somewhat different from it. Not alot different, but somewhat
+  different. E.g., a group containing 2 int fields logically, but
+  their representation is as shorts or bytes.
+
+* What are the difficulties with XML/XSD? Tried to defer this to
+  wednesday, but some people wanted to know what the discussion would
+  be about, so we pulled out a slide for wednesday listing the topics.
+
+* Jim Meyers made the point that DFDL will be very popular because it
+  will free people from having to use more complex API-based data
+  representations in order to share data. Instead they can do what is
+  easiest and most expedient for them in the short term, knowing that
+  the data they're creating can be described in DFDL for subsequent
+  users longer term.
+
+* Guy Rixon asked about an API for accessing DFDL described data. We
+  discussed that XML-ish APIs would of course be possible, then we
+  discussed something more like the SDO specification which has
+  recently come out from IBM/BEA.
