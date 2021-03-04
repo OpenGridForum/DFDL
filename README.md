@@ -1,6 +1,6 @@
 # Data Format Description Language (DFDL) 
 
-This working group has defined language, the 
+This working group has defined the 
 Data Format Description Language (DFDL), for describing the structure 
 of binary and textual files and data streams so that their format, 
 structure, and metadata can be exposed.
