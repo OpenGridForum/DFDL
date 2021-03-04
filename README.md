@@ -5,7 +5,9 @@ Data Format Description Language (DFDL), for describing the structure
 of binary and textual files and data streams so that their format, 
 structure, and metadata can be exposed.
 
-The [DFDL v1.0 Specification](http://www.ogf.org/documents/GFD.240.pdf) is now an Open Grid Forum "Recommendation"
+The [Official PDF of the DFDL v1.0 Specification](http://www.ogf.org/documents/GFD.240.pdf) is now an Open Grid Forum "Recommendation".
+
+You can also view an [HTML page of the DFDL v1.0 Spec](https://htmlpreview.github.io/?https://github.com/OpenGridForum/DFDL/blob/master/docs/current/gwdrp-dfdl-v1.0.8-GFD-R-P.240.htm).
 
 DFDL v1.0 is based on XML Schema but DFDL is not strongly tied to XML. 
 Implementations can convert data from native form into a variety of 
