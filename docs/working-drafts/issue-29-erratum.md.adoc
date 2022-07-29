@@ -1,0 +1,135 @@
+// please start a new sentence on a new line.
+// this facilitates commentary on this document using code-review tools.
+
+= Issue 29 - dfdl:prefixLengthKind Simple Type having DFDL Statement Annotations
+
+
+Sections of the DFDL v1.0 Spec which will require updating include:
+
+## Section 9.5 - Evaluation Order for Statement Annotations
+
+An element (or element reference) having lengthKind 'prefixed' can
+have statements associated with its prefix length type. This is
+discussed below in Section (new sub-section of 9.5).
+
+A new sub-section is added: Evaluation Order for Statement Annotations
+for Elements with dfdl:lengthKind 'prefixed'.
+
+This new sub-section contains the content below.
+
+When an element or element reference has lengthKind 'prefixed' there
+can be additional statement annotations associated with the prefix
+length type.
+
+Definition: the resolved set of statement annotations for the simple
+type that is identified by the dfdl:prefixLengthKind property are
+called the _prefix statement annotations_.
+
+Definition: the resolve set of statement annotations for the nested
+prefix simple type that is identified by the dfdl:prefixLengthKind
+property on a simple type itself having lengthKind 'prefixed', are
+called the _prefix-prefix statement annotations_.
+
+For statement annotations associated with any prefix length, any DFDL
+expressions evaluated cannot refer to the DFDL Infoset using path
+expressions.
+
+The value of the prefix (or prefix-prefix) itself can be referenced
+using the expression ".".
+
+When parsing the value of the "." expression for a prefix (or
+prefix-prefix) quasi-element is as before any adjustment (subtraction)
+from the value based on dfdl:prefixIncludesPrefixLength.
+
+When unparsing the value of the "." expression for a prefix (or
+prefix-prefix) quasi-element is as after any adjustment (addition) to
+the value based on dfdl:prefixIncludesPrefixLength.
+
+The evaluation order of statements associated with prefix lengths is:
+
+1. prefix-prefix statement annotations
+
+2. prefix statement annotations
+
+3. statement annotations for the element itself per the description in
+Section 9.5 above.
+
+The statement annotations for a prefix (or prefix-prefix) are
+evaluated in a similar manner as if they were elements.
+The prefix (or prefix-prefix) length fields can be considered
+_quasi-elements_, keeping in mind that as they do not have element
+declarations these can never be nilled, nor can they have array
+dimension, be optional, be empty or have default values as those
+require XSD attributes or DFDL properties that are expressed only on
+element declarations/references.
+
+This implies that in terms of the rules in section 9.3.2 about
+establishing representation, prefix (or prefix-prefix) quasi-elements
+never have zero length, and always have simple normal representation.
+
+The evaluation order for the prefix (or prefix-prefix) statement annotations is:
+
+1. dfdl:discriminator or dfdl:assert(s) with testKind 'pattern' (parsing only)
+
+2. The prefix (or prefix-prefix) integer itself following property
+scoping rules, which includes establishing simple normal
+representation as described in Section 9.3.2 followed by conversion to
+a value of the simple integer type.
+
+3. dfdl:setVariable(s) - in lexical order, innermost schema component first
+
+4. dfdl:discriminator or dfdl:assert(s) with testKind 'expression'
+(parsing only)
+
+---
+
+## Section 12.3.4 dfdl:lengthKind 'prefixed'
+
+The definition block for prefixLengthKind needs to specify that the
+simpleType can have statements, and that these are evaluated before
+the statements for the element itself.
+
+In addition, any DFDL expressions evaluated by such statements can
+only refer to the value of the prefix length itself by way of the "."
+expression. Specifically, the "." does NOT refer to the element having
+this prefix length, but to the prefix itself.
+
+The statement annotations that can be used on a prefixLengthType
+simpleType are:
+
+- assert
+
+- discriminator
+
+- setVariable
+
+In the material that follows the table in 12.3.4, the sentence "When
+parsing, the length of the element's content is obtained by parsing
+the simple type specified by dfdl:prefixLengthType to obtain an
+integer value." should be modified to insert the word "first" after
+the word "obtained". A sentence is also inserted after this sentence
+stating: "Any statement annotations on the prefixLengthType are
+evaluated as described in Section (new sub-section of 9.5)."
+
+In the sentence that discusses unparsing of prefix length, it
+expresses that the length of the content is computed, then adjusted by
+prefixIncludesPrefixLength and then can finally be stored/written,
+followed by the content.
+
+This must be ammended to make clear that once the new prefix value has
+been computed, and then adjusted as per prefixIncludesPrefixLength, it
+is then that any statement annotations (which can only be setVariable,
+since asserts/discriminators are not evaluated at all at unparse time)
+are evaluated, and if there is no processing error then the content is
+written.
+
+The sentence "Then the value of the prefix length MUST be adjusted
+based on the value of the dfdl:prefixIncludesPrefixLength property."
+is followed by "Once this adjusted prefix length value is computed,
+then any statement annotations on the prefixLengthType are evaluated.
+(Note that these can only be setVariable statements.)", where the DFDL
+expression '.' denotes the value of the adjusted prefix length
+
+The phrase "Then the prefiqx length can be written..." is modified to
+say "Then, in the absence of any processing error, the prefix length
+can be written....".
