@@ -18,8 +18,8 @@ This working group maintains this standard and proposed extensions/additions to 
 ## Quick Links
 
 * [DFDL Workgroup News](https://github.com/OpenGridForum/DFDL/wiki/DFDL-Workgroup-News)
-* [DFDL Workgroup Calls/Meeting Minutes](https://github.com/OpenGridForum/DFDL/tree/master/docs/calls)
-* [DFDL Workgroup Working-Drafts Folder](https://github.com/OpenGridForum/DFDL/tree/master/docs/working-drafts)
+* [DFDL Workgroup Calls/Meeting Minutes](https://github.com/OpenGridForum/DFDL/tree/master/calls)
+* [DFDL Workgroup Current Documents](https://github.com/OpenGridForum/DFDL/tree/master/docs/current)
 * [OGF DFDL Homepage](http://www.ogf.org/dfdl)
 * [Wikipedia DFDL](https://en.wikipedia.org/wiki/Data_Format_Description_Language)
 
