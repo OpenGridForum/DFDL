@@ -17,13 +17,15 @@
 16:45
 
 ### Next regular call
-8th October 2022 @ 16:00 UK
+08-Sep-2022 @ 16:00 UK
 
 ## Agenda
 
 1. Implementations Update
- 
-2. AOB
+
+   Daffodil next release to generate output in W3C EXI (binary XML) format. 
+   Also working on generated C parser for small DFDL subset.
+   Also working on VS Code debugger.
 
 ## Actions
 
