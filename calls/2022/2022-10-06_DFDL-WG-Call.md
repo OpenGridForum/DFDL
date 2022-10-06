@@ -23,12 +23,16 @@
 
 1. Implementations Update
 
-   Daffodil to share publish the results of using their binary XML generation option to the DFDL WG.
+   Apache Daffodil to share the results of using their binary XML generation option with the DFDL WG. Big reduction in output size.
 
-2. Generating an infoset that needs to be mapped to a format with different rules, eg JSON or Apache Drill
+2. Generating an infoset that needs to be mapped to a format with different rules
 
-   This is not a problem for IBM DFDL as it is used within a transformation engine and so a transform can create the desired end result. But it is for Apache Daffodil as it generates an infoset that complies with the DFDL schema. Mike to think on how to proceed, eg issue a warning, allow a plugin to change the infoset.
+   A DFDL parser generates an infoset that complies with the DFDL schema. If the desired output format is JSON or Apache Drill or something else that doesn't have the same rules as a DFDL schema infoset, a problem arises if the infoset violates those rules. This is business-as-usual for IBM DFDL as it is used within a transformation engine and so a subsequent transform step is used  to change the infoset into the desired output structure. But it is a problem for Apache Daffodil which does not have such a transform capability. Mike to think on how to proceed for Daffodil, eg issue a warning, allow a transform plugin to change the infoset.
 
+3. DFDL call minutes have a new format
+
+   The agenda & minutes are now authored and saved in GitHub MarkDown instead of being authored in Notes and converted to PDF. After some experimentation, using a separate table for each action and keeping all the action text on a single line seem to work best. Note that the table of experimental features, which used to be at the foot of each minutes, is now an independent GitHub MarkDown file at https://github.com/OpenGridForum/DFDL/blob/master/docs/current/DFDL-Experimental-Features-Index.md, so it can be edited independently.
+   
 ## Actions
 
 Next action: **330**
@@ -38,7 +42,7 @@ Next action: **330**
 ### Current actions
 
 | 289 | Unparsing: expression refers backwards to outputValueCalc which refers beyond it (Mike). | 
-| -------- | -------|
+| ---------- | -------|
 | 2016-08-02 | Need to decide if this is allowed and if so if there are any restrictions. 
 | 2016-09-13 | Motivating scenario is where a variable is being set to a length element using dfdl:setVariable,  which on unparse is set using dfdl:outputValueCalc. So although the variable is referring backwards to the length element, it is effectively forward referencing so must block. Mike believes this is unavoidable.
 | 2016-10-11 | Daffodil has implemented this, Mike to provide scenario.
@@ -51,7 +55,7 @@ Next action: **330**
 | 2019-12-12 | Daffodil starting to implement dfdl:newVariableInstance
 | 2020-04-16 | No further progress
 | 2020-04-30 | Daffodil has implemented newVariableInstance so now in a position to look at this again.
-| 2020-07-09 | No update -->
+| 2020-07-09 | No update
 | 2020-07-23 | Daffodil has implemented newVariableInstance so Mike will look at this again
 | 2020-09-03 | Daffodil team looking at this and related issues surrounding expression evaluation when unparsing.
 | 2020-10-29 | No further progress
@@ -65,8 +69,8 @@ Next action: **330**
 | 2021-10-14 | Mike to write this up
 | 2022-10-06 | Write up still in progress
 
-| 322 | DFDL 2.0 candidate: Handle embedded XML and JSON in a natural way (Mike) |
-| --- | --- |
+|    322     | DFDL 2.0 candidate: Handle embedded XML and JSON in a natural way (Mike) |
+| ---------- | --- |
 | 2021-07-08 | This was something that was included in the first DFDL 1.0 spec drafts but dropped.
 | 2021-10-14 | Mike has created GitHub issue https://github.com/OpenGridForum/DFDL/issues/27.
 | 2022-02-24 | Create an experimental feature document
@@ -74,16 +78,16 @@ Next action: **330**
 | 2022-08-11 | Apache Daffodil implementation in code review and being tested 
 | 2022-10-06 | Will be in next Apache Daffodil release as an experimental feature
 
-| 324 | Erratum: Clarify semantic of array element assert containing subexpression " .[1] " (All) |
-| --- | --- |
+|    324     | Erratum: Clarify semantic of array element assert containing subexpression " .[1] " (All) |
+| ---------- | --- |
 | 2021-07-08 | Erratum needed to state that ".[1]" is equivalent to "../a[1]" and "../a[dfdl:occursIndex()]"
 | 2021-10-14 | Mike has created GitHub issue https://github.com/OpenGridForum/DFDL/issues/26.
 | 2022-02-24 | Mike to look back through emails for more information.
 | 2022-08-11 | No further progress
 | 2022-10-06 | Mike to update the issue with the specific language and affected section(s)
 
-| 325 | Submit OGF DFDL 1.0 to ISO for adoption as an ISO standard (Mike, Steve) |
-| --- | --- |
+|    325     | Submit OGF DFDL 1.0 to ISO for adoption as an ISO standard (Mike, Steve) |
+| ---------- | --- |
 | 2021-11-11 | Alan & Wolfgang attended the call. OGF is looking to re-home its successful standards to more relevant organisations. The proposal is that DFDL moves to ISO.  OGF has well-established connections with ISO, and Wolfgang is an attendee at working group meetings. There is a specific ISO process that lets them adopt a public, freely available standard whilst maintaining its public, free status. In contrast to ISO-owned standards which are chargeable. The public, free status continues to apply to ongoing revisions. DFDL feels like a good fit for ISO, noted that DFDL schemas exist for ISO 8583 and EDIFACT.  There is no need initially to change DFDL to use ISO templates, this can happen later. Noted that this is not a process for dumping old standards onto ISO, it applies to standards with an active community. The end result is that DFDL continues to evolve and be freely available but there are revisions that are effectively 'blessed' by ISO. An example of this in practice is Open Virtualization Format Specification from DMTF.  Adoption of a standard by ISO is ultimately determined by national body votes. Next steps: OGF will write to ISO-IEC JST1 with the proposal. DFDL WG will reach out to the chair of SC38 WG5 which is considered the most likely place DFDL will end up in ISO. The WG5 chair is Fernando Gebara Filho <fgebara@amazon.com>. DFDL WG to consider attending the appropriate ISO meetings. Useful links: ISO Process: https://www.iec.ch/members_experts/refdocs/iec/Consolidated_JTC1_Supplement_2020_publication.pdf, DMTF ANSI/ISO adoptions: https://www.dmtf.org/about/register/apresources. 
 | 2022-02-24 | OGF are still working on the first step of the process, the application for OGF becoming a PAS submitter. They expect to submit the application letter begin of March. Once OGF will be a recognised PAS submitter there will be an assigned mentor who will guide through the next steps which mostly will have to be taken by the DFDL WG. Wolfgang sent an email with questions that the WG need to answer. Questions discussed and answers sent back to Wolfgang. 
 | 2022-04-07 | Steve to chase OGF for latest position. 
@@ -99,20 +103,20 @@ Next action: **330**
 | 2022-08-11 | Mike has created a PR for the issue. Steve to review.
 | 2022-10-06 | Awaiting review by Steve
 
-| 327 | Do we need a default dfdl:choiceDispatchKey branch? (Steve) |
-| --- | --- |
+|    327     | Do we need a default dfdl:choiceDispatchKey branch? (Steve) |
+| ---------- | --- |
 | 2022-07-14 | To handle a nested choice use case where there is a need to distinguish a bad choice branch key from a good choice branch key that then fails to parse its branch. Steve to reproduce the use case to see if IBM DFDL has a similar problem.
 | 2022-08-11 | IBM DFDL exhibits the same problem. Issue #34 raised. Discussed options for the syntax to indicate that a branch is the default, and agreed that dfdl:choiceBranchKey="" (empty string) works best. Could be an erratum on 1.0 but probably better as 2.0 candidate. 
 | 2022-10-06 | If not an erratum, needs to be an experimental feature if to be added to current implementations. Mike to think on best way forward.
 
-| 329 | DFDL 2.0 candidate: Additional binary number reps (Mike) |
-| --- | --- |
+|    329     | DFDL 2.0 candidate: Additional binary number reps (Mike) |
+| ---------- | --- |
 | 2022-07-14 | Apache Daffodil users are encountering a bunch of unsupported binary number formats. Apache Daffodil would like add support for these into DFDL 1.0 as an experimental feature ahead of DFDL 2.0. To do so requires action 328 to extend the experimental syntax to permit this. 
 | 2022-08-11 | Apache Daffodil has also observed that the same is required for binary calendars, eg, unsigned binary seconds.
 | 2022-10-06 | Mike to create a new experimental feature document and issue, and add to https://github.com/OpenGridForum/DFDL/blob/master/docs/current/DFDL-Experimental-Features-Index.md 
 
 ### Closed actions
-
+None
 
 ### Deferred actions
 
