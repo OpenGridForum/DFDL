@@ -1,11 +1,10 @@
-# OGF DFDL Working Group Call Minutes 11-Aug-22
+# OGF DFDL Working Group Call Agenda 6-Oct-22
 
 ### Meeting Time
 16:00-17:00 UK
 
 ### Attendees
-* Steve Hanson
-* Mike Beckerle
+* 
 
 ### Apologies
 * 
@@ -14,18 +13,15 @@
 "I acknowledge that participation in this meeting is subject to the OGF Intellectual Property Policy"
 
 ### Meeting closed
-16:45
+
 
 ### Next regular call
-08-Sep-2022 @ 16:00 UK
+03-Nov-2022 @ 16:00 UK
 
 ## Agenda
 
 1. Implementations Update
 
-   Daffodil next release to generate output in W3C EXI (binary XML) format. 
-   Also working on generated C parser for small DFDL subset.
-   Also working on VS Code debugger.
 
 ## Actions
 
@@ -105,10 +101,6 @@ Next action: **330**
 
 ### Closed actions
 
-| 328 | Extend experimental feature syntax to allow extra enums on existing properties (Mike) |
-| --- | --- |
-| 2022-07-14 | The experimental feature document does not cater for additional enums to existing properties. Action 329 is an example of where this would be useful.
-| 2022-08-11 | Closed. Mike has updated the document, Steve has reviewed.
 
 ### Deferred actions
 
