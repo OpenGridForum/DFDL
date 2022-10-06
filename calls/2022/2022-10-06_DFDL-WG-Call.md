@@ -1,10 +1,11 @@
-# OGF DFDL Working Group Call Agenda 6-Oct-22
+# OGF DFDL Working Group Call Minutes 6-Oct-22
 
 ### Meeting Time
 16:00-17:00 UK
 
 ### Attendees
-* 
+* Steve Hanson
+* Mike Beckerle
 
 ### Apologies
 * 
@@ -13,7 +14,7 @@
 "I acknowledge that participation in this meeting is subject to the OGF Intellectual Property Policy"
 
 ### Meeting closed
-
+16:50 UK
 
 ### Next regular call
 03-Nov-2022 @ 16:00 UK
@@ -22,6 +23,11 @@
 
 1. Implementations Update
 
+   Daffodil to share publish the results of using their binary XML generation option to the DFDL WG.
+
+2. Generating an infoset that needs to be mapped to a format with different rules, eg JSON or Apache Drill
+
+   This is not a problem for IBM DFDL as it is used within a transformation engine and so a transform can create the desired end result. But it is for Apache Daffodil as it generates an infoset that complies with the DFDL schema. Mike to think on how to proceed, eg issue a warning, allow a plugin to change the infoset.
 
 ## Actions
 
@@ -57,7 +63,7 @@ Next action: **330**
 | 2021-04-15 | Mike walked through examples of dfdl:newVariableInstance which refer forward and use 'dfdlx:direction=unparseOnly', using the PCAP schema. Will be part of the experience document. 
 | 2021-07-08 | Material assembled for experience document.
 | 2021-10-14 | Mike to write this up
-| 2022-08-11 | Write up still in progress
+| 2022-10-06 | Write up still in progress
 
 | 322 | DFDL 2.0 candidate: Handle embedded XML and JSON in a natural way (Mike) |
 | --- | --- |
@@ -66,6 +72,7 @@ Next action: **330**
 | 2022-02-24 | Create an experimental feature document
 | 2022-07-14 | Waiting for prototype implementation
 | 2022-08-11 | Apache Daffodil implementation in code review and being tested 
+| 2022-10-06 | Will be in next Apache Daffodil release as an experimental feature
 
 | 324 | Erratum: Clarify semantic of array element assert containing subexpression " .[1] " (All) |
 | --- | --- |
@@ -73,6 +80,7 @@ Next action: **330**
 | 2021-10-14 | Mike has created GitHub issue https://github.com/OpenGridForum/DFDL/issues/26.
 | 2022-02-24 | Mike to look back through emails for more information.
 | 2022-08-11 | No further progress
+| 2022-10-06 | Mike to update the issue with the specific language and affected section(s)
 
 | 325 | Submit OGF DFDL 1.0 to ISO for adoption as an ISO standard (Mike, Steve) |
 | --- | --- |
@@ -81,6 +89,7 @@ Next action: **330**
 | 2022-04-07 | Steve to chase OGF for latest position. 
 | 2022-07-14 | From Wolfgang: "The process was a bit slower than foreseen, mostly because of holiday absence both on side the of OGF and JTC1. Regarding the application letter I am waiting for the confirmation from our guide that the last  version we have sent him on Monday is well suited for our official application as PAS submitter. If we have his confirmation OGF will officially send the application to JTC1. Thereafter it will subject to a voting of the national bodies which my take additional one or two months." Meantime in parallel Steve will contact the WG5 chair.
 | 2022-08-11 | ISO have received the application from OGF for it to be allowed to be a PAS submitter. Steve has contacted the WG5 chair who is now following progress.
+| 2022-10-06 | Application still in ISO pipeline. 
 
 | 326 | Rules for when an assert or discriminator is used on a prefixLengthType simple type (All) |
 | --- | --- |
@@ -88,16 +97,19 @@ Next action: **330**
 | 2022-04-07 | Struggling to think of a use case where the expression is other than '.', meaning the quasi-element. This is a very restricted use, and suitable for an erratum on DFDL 1.0. Mike to write up. Aside: Steve wondered if validation could be used here instead. IBM DFDL has rich enough validation options that effectively make a validation failure behave like a parse error. Apache Daffodil does not though.
 | 2022-07-14 | Mike has created a tracker https://github.com/OpenGridForum/DFDL/issues/29. Following from Steve's suggestion, can you use an assert with dfdl:checkConstraints('.') be applied to the type?
 | 2022-08-11 | Mike has created a PR for the issue. Steve to review.
+| 2022-10-06 | Awaiting review by Steve
 
 | 327 | Do we need a default dfdl:choiceDispatchKey branch? (Steve) |
 | --- | --- |
 | 2022-07-14 | To handle a nested choice use case where there is a need to distinguish a bad choice branch key from a good choice branch key that then fails to parse its branch. Steve to reproduce the use case to see if IBM DFDL has a similar problem.
-| 2022-08-11 | IBM DFDL exhibits the same problem. Issue #34 raised. Discussed options for the syntax to indicate that a branch is the default, and agreed that dfdl:choiceBranckKey="" (empty string) works best. Could be an erratum on 1.0 but probably better as 2.0 candidate. 
+| 2022-08-11 | IBM DFDL exhibits the same problem. Issue #34 raised. Discussed options for the syntax to indicate that a branch is the default, and agreed that dfdl:choiceBranchKey="" (empty string) works best. Could be an erratum on 1.0 but probably better as 2.0 candidate. 
+| 2022-10-06 | If not an erratum, needs to be an experimental feature if to be added to current implementations. Mike to think on best way forward.
 
 | 329 | DFDL 2.0 candidate: Additional binary number reps (Mike) |
 | --- | --- |
 | 2022-07-14 | Apache Daffodil users are encountering a bunch of unsupported binary number formats. Apache Daffodil would like add support for these into DFDL 1.0 as an experimental feature ahead of DFDL 2.0. To do so requires action 328 to extend the experimental syntax to permit this. 
 | 2022-08-11 | Apache Daffodil has also observed that the same is required for binary calendars, eg, unsigned binary seconds.
+| 2022-10-06 | Mike to create a new experimental feature document and issue, and add to https://github.com/OpenGridForum/DFDL/blob/master/docs/current/DFDL-Experimental-Features-Index.md 
 
 ### Closed actions
 
