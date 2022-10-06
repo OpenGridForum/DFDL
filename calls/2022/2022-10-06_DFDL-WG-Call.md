@@ -8,7 +8,7 @@
 * Mike Beckerle
 
 ### Apologies
-* 
+* Bradd Kadlecik
 
 ### IPR statement
 "I acknowledge that participation in this meeting is subject to the OGF Intellectual Property Policy"
