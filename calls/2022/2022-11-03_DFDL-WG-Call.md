@@ -1,38 +1,28 @@
-# OGF DFDL Working Group Call Minutes 6-Oct-22
+# OGF DFDL Working Group Call Agenda 3-Nov-22
 
 ### Meeting Time
 16:00-17:00 UK
 
 ### Attendees
-* Steve Hanson
-* Mike Beckerle
+* 
+* 
 
 ### Apologies
-* Bradd Kadlecik
+* 
 
 ### IPR statement
 "I acknowledge that participation in this meeting is subject to the OGF Intellectual Property Policy"
 
 ### Meeting closed
-16:50 UK
+
 
 ### Next regular call
-03-Nov-2022 @ 16:00 UK
+01-Dec-2022 @ 16:00 UK
 
 ## Agenda
 
 1. Implementations Update
 
-   Apache Daffodil to share the results of using their binary XML generation option with the DFDL WG. Big reduction in output size.
-
-2. Generating an infoset that needs to be mapped to a format with different rules
-
-   A DFDL parser generates an infoset that complies with the DFDL schema. If the desired output format is JSON or Apache Drill or something else that doesn't have the same rules as a DFDL schema infoset, a problem arises if the infoset violates those rules. This is business-as-usual for IBM DFDL as it is used within a transformation engine and so a subsequent transform step is used  to change the infoset into the desired output structure. But it is a problem for Apache Daffodil which does not have such a transform capability. Mike to think on how to proceed for Daffodil, eg issue a warning, allow a transform plugin to change the infoset.
-
-3. DFDL call minutes have a new format
-
-   The agenda & minutes are now authored and saved in GitHub MarkDown instead of being authored in Notes and converted to PDF. After some experimentation, using a separate table for each action and keeping all the action text on a single line seem to work best. Note that the table of experimental features, which used to be at the foot of each minutes, is now an independent GitHub MarkDown file at https://github.com/OpenGridForum/DFDL/blob/master/docs/current/DFDL-Experimental-Features-Index.md, so it can be edited independently.
-   
 ## Actions
 
 Next action: **330**
