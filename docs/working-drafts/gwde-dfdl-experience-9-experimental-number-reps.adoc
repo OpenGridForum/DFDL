@@ -1,0 +1,88 @@
+:title: Extended Binary Number and Binary Calendar Representations
+:title1: DFDL Experimental Feature
+:author: Mike Beckerle
+:authorOrg: (Apache Daffodil)
+:email: mbeckerle@apache.org
+:toc: macro
+:toc-title:
+[frame=none, grid=none]
+|===
+<|GWD-E >|{author} {authorOrg}
+<|OGF DFDL WG
+|
+<|dfdl-wg@ogf.org >|November 2022
+|===
+''''''''''''''''''''''''''
+[discrete]
+= {title1}
+[discrete]
+= {title}
+''''''''''''''''''''''''''
+[discrete]
+===== Status of This Document
+Grid Working Document (GWD)
+[discrete]
+===== Copyright Notice
+Copyright (C) Open Grid Forum, 2022. Some Rights Reserved. Distribution is Unlimited.
+[discrete]
+===== Abstract
+This document provides experience information to the OGF community on the Data Format Description Language (DFDL) 1.0 specification (GFD-P-R.207)
+
+It documents experimental features which add new binary number representations and binary calendar representations.
+[discrete]
+===== Contents
+toc::[]
+
+<<<
+== Introduction
+This document describes the definitions of new enumeration values for the DFDL<<DFDL>> `dfdl:binaryNumberRep` and `dfdl:binaryCalendarRep` properties.
+
+== Binary Number Representations
+
+=== zigZag
+
+TBD: Blah, blah, blah.
+
+=== offsetBinary
+
+TBD: Blah, blah, blah.
+
+== Binary Calendar Representations
+
+=== binaryHundredthSeconds
+
+TBD: blah blah blah.
+
+=== TBD: needed for NTP packets
+
+TBD: blah blah blah.
+
+<<<
+== Back Matter / Concluding Sections
+==== Security Considerations
+No security issues have been raised.
+
+==== Contributors
+Michael J. Beckerle,
+Apache Daffodil Project,
+{email}
+
+==== Intellectual Property Statement
+The OGF takes no position regarding the validity or scope of any intellectual property or other rights that might be claimed to pertain to the implementation or use of the technology described in this document or the extent to which any license under such rights might or might not be available; neither does it represent that it has made any effort to identify any such rights.  Copies of claims of rights made available for publication and any assurances of licenses to be made available, or the result of an attempt made to obtain a general license or permission for the use of such proprietary rights by implementers or users of this specification can be obtained from the OGF Secretariat.
+
+The OGF invites any interested party to bring to its attention any copyrights, patents or patent applications, or other proprietary rights which may cover technology that may be required to practice this recommendation.  Please address the information to the OGF Executive Director.
+
+==== Disclaimer
+This document and the information contained herein is provided on an “As Is” basis and the OGF disclaims all warranties, express or implied, including but not limited to any warranty that the use of the information herein will not infringe any rights or any implied warranties of merchantability or fitness for a particular purpose.
+
+==== Full Copyright Notice
+Copyright (C) Open Grid Forum (2022). Some Rights Reserved.
+
+This document and translations of it may be copied and furnished to others, and derivative works that comment on or otherwise explain it or assist in its implementation may be prepared, copied, published and distributed, in whole or in part, without restriction of any kind, provided that the above copyright notice and this paragraph are included as references to the derived portions on all such copies and derivative works. The published OGF document from which such works are derived, however, may not be modified in any way, such as by removing the copyright notice or references to the OGF or other organizations, except as needed for the purpose of developing new or updated OGF documents in conformance with the procedures defined in the OGF Document Process, or as required to translate it into languages other than English. OGF, with the approval of its board, may remove this restriction for inclusion of OGF document content for the purpose of producing standards in cooperation with other international standards bodies.
+
+The limited permissions granted above are perpetual and will not be revoked by the OGF or its successors or assignees.
+
+[bibliography]
+==== References
+
+* [[[DFDL]]] OGF DFDL 1.0 specification: http://www.ogf.org/documents/GFD.207.pdf/
