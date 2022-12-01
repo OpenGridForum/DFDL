@@ -34,7 +34,7 @@
 
 ## Actions
 
-Next action: **330**
+Next action: **331**
 
 ### Actions raised at this meeting
 
@@ -118,7 +118,7 @@ Next action: **330**
 
 |    330     | Decide what to do about ICU's change to calendar strict parsing |
 | ---------- | --- |
-| 2022-12-01 | In strict mode, ICU release 71.1 enforces the number of digits implied by a pattern. For example, on earlier ICU releases one could parse the data '1' with pattern D or DD or DDD and it would succeed. From ICU 71.1, just '1' will give an error for DD or DDD. Data '01' or '001' respectively must be supplied for it to parse. Applies to all numeric-only pattern symbols. Affects DFDL 1.0 spec section 13.11.2 bullet d), as we explicitly document this strict mode 'deviation'. ICU won't be reverting this so realistic options for DFDL 1.0 spec are: 1) Treat as a bug which has been fixed and raise erratum, 2) request ICU to provide an undocumented flag to maintain the old behaviour. Note this ICU release has caused several IBM DFDL test cases to fail. They mostly look to be caused by this change, but Steve would like some time to understand all the failures before deciding what to do. 
+| 2022-12-01 | In strict mode, ICU release 71.1 enforces the number of digits implied by a pattern. For example, on earlier ICU releases one could parse the data '1' with pattern D or DD or DDD and it would succeed. From ICU 71.1, just '1' will give an error for DD or DDD. Data '01' or '001' respectively must be supplied for it to parse. Applies to all numeric-only pattern symbols. Affects DFDL 1.0 spec section 13.11.2 bullet d), as we explicitly document this strict mode 'deviation'. ICU won't be reverting this so realistic options for DFDL 1.0 spec are: 1) Treat as a bug which has been fixed and raise erratum, 2) Request ICU to provide an undocumented flag to maintain the old behaviour. Note this ICU release has caused several IBM DFDL test cases to fail. They mostly look to be caused by this change, but Steve would like some time to understand all the failures before deciding what to do. 
 
 ### Closed actions
 None
