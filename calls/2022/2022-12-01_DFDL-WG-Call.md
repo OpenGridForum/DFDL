@@ -4,7 +4,9 @@
 16:00-17:00 UK
 
 ### Attendees
-* 
+* Steve Hanson
+* Bradd Kadlecik
+* Mike Beckerle
 
 ### Apologies
 * 
@@ -13,7 +15,7 @@
 "I acknowledge that participation in this meeting is subject to the OGF Intellectual Property Policy"
 
 ### Meeting closed
-
+17:05 UK
 
 ### Next regular call
 15-Dec-2022 @ 16:00 UK
@@ -22,9 +24,11 @@
 
 1. Implementations Update
 
+   Not discussed.
+
 2. Change in ICU behaviour when parsing calendars
 
-   Affects DFDL 1.0 spec section 13.11.2. In strict mode, ICU release 71.1 enforces the number of digits implied by a pattern. For example, on earlier ICU releases one could parse the data '1' with pattern D or DD or DDD and it would succeed. From ICU 71.1, just '1' will give an error for DD or DDD. Data '01' or '001' respectively must be supplied for it to parse. Applies to all numeric-only pattern symbols.
+   Affects DFDL 1.0 spec section 13.11.2. In strict mode, ICU release 71.1 enforces the number of digits implied by a pattern. For example, on earlier ICU releases one could parse the data '1' with pattern D or DD or DDD and it would succeed. From ICU 71.1, just '1' will give an error for DD or DDD. Data '01' or '001' respectively must be supplied for it to parse. Applies to all numeric-only pattern symbols. New **action 330** raised to decide how to proceed. 
 
 3. AOB
 
@@ -63,17 +67,7 @@ Next action: **330**
 | 2021-07-08 | Material assembled for experience document.
 | 2021-10-14 | Mike to write this up
 | 2022-10-06 | Write up still in progress
-| 2022-11-03 | No further progress
-
-|    322     | DFDL 2.0 candidate: Handle embedded XML and JSON in a natural way (Mike) |
-| ---------- | --- |
-| 2021-07-08 | This was something that was included in the first DFDL 1.0 spec drafts but dropped.
-| 2021-10-14 | Mike has created GitHub issue https://github.com/OpenGridForum/DFDL/issues/27.
-| 2022-02-24 | Create an experimental feature document
-| 2022-07-14 | Waiting for prototype implementation
-| 2022-08-11 | Apache Daffodil implementation in code review and being tested 
-| 2022-10-06 | Will be in next Apache Daffodil release as an experimental feature
-| 2022-11-03 | Needs evaluating over the next 6 months as its current implementation is not in a form that could be incorporated into DFDL spec. Also breaks the idiom that the DFDL schema is also an XML schema for the infoset, because DFDL schema says the embedded XML is just a string. 
+| 2022-12-01 | No further progress
 
 |    324     | Erratum: Clarify semantic of array element assert containing subexpression " .[1] " (All) |
 | ---------- | --- |
@@ -82,7 +76,8 @@ Next action: **330**
 | 2022-02-24 | Mike to look back through emails for more information.
 | 2022-08-11 | No further progress
 | 2022-10-06 | Mike to update the issue with the specific language and affected section(s)
-| 2022-11-03 | Steve had some concerns about the proposed lanuage, Mike to look at this again. 
+| 2022-11-03 | Steve had some concerns about the proposed language, Mike to look at this again. 
+| 2022-12-01 | Mike did some experiments with an online XPath expression evaluator to see what ".[1]" returns. We also noted that a DFDL expression is only allowed to return a single node. Mike to carry on with the experiment.  
 
 |    325     | Submit OGF DFDL 1.0 to ISO for adoption as an ISO standard (Mike, Steve) |
 | ---------- | --- |
@@ -93,15 +88,17 @@ Next action: **330**
 | 2022-08-11 | ISO have received the application from OGF for it to be allowed to be a PAS submitter. Steve has contacted the WG5 chair who is now following progress.
 | 2022-10-06 | Application still in ISO pipeline. 
 | 2022-11-03 | Expecting to hear by next WG call. 
+| 2022-12-01 | Not heard anything yet. Steve to send chaser.
 
-| 326 | Rules for when an assert or discriminator is used on a prefixLengthType simple type (All) |
-| --- | --- |
+
+|    326     | Rules for when an assert or discriminator is used on a prefixLengthType simple type (All) |
+| ---------- | --- |
 | 2022-02-24 | Mike and Steve believe this is allowed but the meaning of relative path components need to be clarified. IBM DFDL does not support asserts on global simple types so unable to test if it works. Apache Daffodil ignores them. A good way to look at the prefixLengthType is as a quasi-element, so assert feels like it should be allowed. If so need to decide if the expression can use absolute paths, relative paths other than '.' and variables. 
 | 2022-04-07 | Struggling to think of a use case where the expression is other than '.', meaning the quasi-element. This is a very restricted use, and suitable for an erratum on DFDL 1.0. Mike to write up. Aside: Steve wondered if validation could be used here instead. IBM DFDL has rich enough validation options that effectively make a validation failure behave like a parse error. Apache Daffodil does not though.
 | 2022-07-14 | Mike has created a tracker https://github.com/OpenGridForum/DFDL/issues/29. Following from Steve's suggestion, can you use an assert with dfdl:checkConstraints('.') be applied to the type?
 | 2022-08-11 | Mike has created a PR for the issue. Steve to review.
 | 2022-10-06 | Awaiting review by Steve
-| 2022-11-03 | No further progress
+| 2022-12-01 | No further progress
 
 |    327     | Do we need a default dfdl:choiceDispatchKey branch? (Steve) |
 | ---------- | --- |
@@ -109,6 +106,7 @@ Next action: **330**
 | 2022-08-11 | IBM DFDL exhibits the same problem. Issue #34 raised. Discussed options for the syntax to indicate that a branch is the default, and agreed that dfdl:choiceBranchKey="" (empty string) works best. Could be an erratum on 1.0 but probably better as 2.0 candidate. 
 | 2022-10-06 | If not an erratum, needs to be an experimental feature if to be added to current implementations. Mike to think on best way forward.
 | 2022-11-03 | Mike having a rethink on this, prefers an explicit, searchable indicator for the default choice branch.
+| 2022-12-01 | Mike to propose a specific syntax and update issue #34.
 
 |    329     | DFDL 2.0 candidate: Additional binary number reps (Mike) |
 | ---------- | --- |
@@ -116,14 +114,19 @@ Next action: **330**
 | 2022-08-11 | Apache Daffodil has also observed that the same is required for binary calendars, eg, unsigned binary seconds.
 | 2022-10-06 | Mike to create a new experimental feature document and issue, and add to https://github.com/OpenGridForum/DFDL/blob/master/docs/current/DFDL-Experimental-Features-Index.md 
 | 2022-11-03 | Bradd also has a requirement for an IBM clock format variant of binary calendar. We should put all our requirements in a single document.
+| 2022-12-01 | Already an issue for more binary calendars dating from 2020, issue #8. We can add more binary calendars to that. Mike to create separate new issue for binary numbers.
+
+|    330     | Decide what to do about ICU's change to calendar strict parsing |
+| ---------- | --- |
+| 2022-12-01 | In strict mode, ICU release 71.1 enforces the number of digits implied by a pattern. For example, on earlier ICU releases one could parse the data '1' with pattern D or DD or DDD and it would succeed. From ICU 71.1, just '1' will give an error for DD or DDD. Data '01' or '001' respectively must be supplied for it to parse. Applies to all numeric-only pattern symbols. Affects DFDL 1.0 spec section 13.11.2 bullet d), as we explicitly document this strict mode 'deviation'. ICU won't be reverting this so realistic options for DFDL 1.0 spec are: 1) Treat as a bug which has been fixed and raise erratum, 2) request ICU to provide an undocumented flag to maintain the old behaviour. Note this ICU release has caused several IBM DFDL test cases to fail. They mostly look to be caused by this change, but Steve would like some time to understand all the failures before deciding what to do. 
 
 ### Closed actions
 None
 
 ### Deferred actions
 
-| 250 | Standardise on a single tdml format for DFDL tests (All) |
-| --- | --- |
+|    250     | Standardise on a single tdml format for DFDL tests (All) |
+| ---------- | --- |
 | 2014-02-05 | Steve has requested permission for IBM to view / use the Daffodil tdml files, as a precursor to trying to standardise on a common tdml format. Was formerly part of action 066. 
 | 2014-02-18 | No further progress 
 | 2014-03-11 | Mike and Steve discussing the best way to share and cooperate on tdml format.
@@ -162,11 +165,22 @@ None
 | 2020-07-23 | No further progress
 | 2020-09-03 | Nothing likely to happen for this action in medium term, so moving to deferred actions
 
-| 316 | Proposed new experimental feature 'User defined functions' (Mike) |
-| --- | --- |
+|    316     | Proposed new experimental feature 'User defined functions' (Mike) |
+| ---------- | --- |
 | 2020-01-09 | Version 2.5.0. of Daffodil will include this, needs writing up. Does XPath 2.0 provide for this?
 | 2020-04-16 | Nothing in core XPath 2.0 that allows user-defined functions, that is left to XSL etc. A write-up is here: https://cwiki.apache.org/confluence/display/DAFFODIL/Proposal%3A+Feature+to+Support+User+Defined+Functions. Mike has an example where values need to be normalised for later comparison. Bradd has an example where floating point precision needs adjustment. Steve is concerned that DFDL is straying too far into the transformation layer, maybe "user-defined-functions-for-DFDL" should be a separate spec? 
 | 2020-09-03 | No further progress. 
 | 2020-09-17 | Nothing likely to happen for this action in medium term, so moving to deferred actions.
+
+|    322     | DFDL 2.0 candidate: Handle embedded XML and JSON in a natural way (Mike) |
+| ---------- | --- |
+| 2021-07-08 | This was something that was included in the first DFDL 1.0 spec drafts but dropped.
+| 2021-10-14 | Mike has created GitHub issue https://github.com/OpenGridForum/DFDL/issues/27.
+| 2022-02-24 | Create an experimental feature document
+| 2022-07-14 | Waiting for prototype implementation
+| 2022-08-11 | Apache Daffodil implementation in code review and being tested 
+| 2022-10-06 | Will be in next Apache Daffodil release as an experimental feature
+| 2022-11-03 | Needs evaluating over the next 6 months as its current implementation is not in a form that could be incorporated into DFDL spec. Also breaks the idiom that the DFDL schema is also an XML schema for the infoset, because DFDL schema says the embedded XML is just a string. 
+| 2022-12-01 | Nothing likely to happen for this action in short term, so moving to deferred actions.
 
 
