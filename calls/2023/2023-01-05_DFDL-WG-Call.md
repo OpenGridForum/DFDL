@@ -1,12 +1,10 @@
-# OGF DFDL Working Group Call Minutes 1-Dec-22
+# OGF DFDL Working Group Call Minutes 5-Jan-2023
 
 ### Meeting Time
 16:00-17:00 UK
 
 ### Attendees
-* Steve Hanson
-* Bradd Kadlecik
-* Mike Beckerle
+* 
 
 ### Apologies
 * 
@@ -15,20 +13,17 @@
 "I acknowledge that participation in this meeting is subject to the OGF Intellectual Property Policy"
 
 ### Meeting closed
-17:05 UK
 
 ### Next regular call
-15-Dec-2022 @ 16:00 UK
+19-Jan-2023 @ 16:00 UK
 
 ## Agenda
 
 1. Implementations Update
 
-   Not discussed.
+2. Clarify and simplify the description of textNumberPattern 'V' and 'P' symbols
 
-2. Change in ICU behaviour when parsing calendars
-
-   Affects DFDL 1.0 spec section 13.11.2. In strict mode, ICU release 71.1 enforces the number of digits implied by a pattern. For example, on earlier ICU releases one could parse the data '1' with pattern D or DD or DDD and it would succeed. From ICU 71.1, just '1' will give an error for DD or DDD. Data '01' or '001' respectively must be supplied for it to parse. Applies to all numeric-only pattern symbols. New **action 330** raised to decide how to proceed. 
+   Affects DFDL 1.0 spec Figure 4 and some of the bullets that follow. See emails from Mike and Steve.  
 
 3. AOB
 
@@ -37,10 +32,6 @@
 Next action: **331**
 
 ### Actions raised at this meeting
-
-|    330     | Decide what to do about ICU's change to calendar strict parsing |
-| ---------- | --- |
-| 2022-12-01 | In strict mode, ICU release 71.1 enforces the number of digits implied by a pattern. For example, on earlier ICU releases one could parse the data '1' with pattern D or DD or DDD and it would succeed. From ICU 71.1, just '1' will give an error for DD or DDD. Data '01' or '001' respectively must be supplied for it to parse. Applies to all numeric-only pattern symbols. Affects DFDL 1.0 spec section 13.11.2 bullet d), as we explicitly document this strict mode 'deviation'. ICU won't be reverting this so realistic options for DFDL 1.0 spec are: 1) Treat as a bug which has been fixed and raise erratum, 2) Request ICU to provide an undocumented flag to maintain the old behaviour. Note this ICU release has caused several IBM DFDL test cases to fail. They mostly look to be caused by this change, but Steve would like some time to understand all the failures before deciding what to do. 
 
 ### Current actions
 
@@ -119,6 +110,10 @@ Next action: **331**
 | 2022-10-06 | Mike to create a new experimental feature document and issue, and add to https://github.com/OpenGridForum/DFDL/blob/master/docs/current/DFDL-Experimental-Features-Index.md 
 | 2022-11-03 | Bradd also has a requirement for an IBM clock format variant of binary calendar. We should put all our requirements in a single document.
 | 2022-12-01 | Already an issue for more binary calendars dating from 2020, issue #8. We can add more binary calendars to that. Mike to create separate new issue for binary numbers.
+
+|    330     | Decide what to do about ICU's change to calendar strict parsing |
+| ---------- | --- |
+| 2022-12-01 | In strict mode, ICU release 71.1 enforces the number of digits implied by a pattern. For example, on earlier ICU releases one could parse the data '1' with pattern D or DD or DDD and it would succeed. From ICU 71.1, just '1' will give an error for DD or DDD. Data '01' or '001' respectively must be supplied for it to parse. Applies to all numeric-only pattern symbols. Affects DFDL 1.0 spec section 13.11.2 bullet d), as we explicitly document this strict mode 'deviation'. ICU won't be reverting this so realistic options for DFDL 1.0 spec are: 1) Treat as a bug which has been fixed and raise erratum, 2) Request ICU to provide an undocumented flag to maintain the old behaviour. Note this ICU release has caused several IBM DFDL test cases to fail. They mostly look to be caused by this change, but Steve would like some time to understand all the failures before deciding what to do. 
 
 ### Closed actions
 None
