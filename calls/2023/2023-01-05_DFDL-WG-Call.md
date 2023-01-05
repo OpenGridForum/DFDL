@@ -4,7 +4,10 @@
 16:00-17:00 UK
 
 ### Attendees
-* 
+* Steve Hanson
+* Mike Beckerle
+* Alan Sill
+* Wolfgang Ziegler
 
 ### Apologies
 * 
@@ -13,6 +16,7 @@
 "I acknowledge that participation in this meeting is subject to the OGF Intellectual Property Policy"
 
 ### Meeting closed
+17:00 UK
 
 ### Next regular call
 19-Jan-2023 @ 16:00 UK
@@ -21,21 +25,25 @@
 
 1. Implementations Update
 
+   Not discussed
+
 2. Clarify and simplify the description of textNumberPattern 'V' and 'P' symbols
 
-   Affects DFDL 1.0 spec Figure 4 and some of the bullets that follow. See emails from Mike and Steve.  
-
-3. AOB
+   Affects DFDL 1.0 spec Figure 4 and some of the bullets that follow. See emails from Mike and Steve. New **action 331**. 
 
 ## Actions
 
-Next action: **331**
+Next action: **332**
 
 ### Actions raised at this meeting
 
+|    331     | Improve the description of textNumberPattern 'V' and 'P' symbols
+| ---------- | --- |
+| 2023-01-05 | Erratum issue https://github.com/OpenGridForum/DFDL/issues/38 created. Needs review.
+
 ### Current actions
 
-| 289 | Unparsing: expression refers backwards to outputValueCalc which refers beyond it (Mike). | 
+|    289     | Unparsing: expression refers backwards to outputValueCalc which refers beyond it (Mike). | 
 | ---------- | -------|
 | 2016-08-02 | Need to decide if this is allowed and if so if there are any restrictions. 
 | 2016-09-13 | Motivating scenario is where a variable is being set to a length element using dfdl:setVariable,  which on unparse is set using dfdl:outputValueCalc. So although the variable is referring backwards to the length element, it is effectively forward referencing so must block. Mike believes this is unavoidable.
@@ -62,7 +70,7 @@ Next action: **331**
 | 2021-07-08 | Material assembled for experience document.
 | 2021-10-14 | Mike to write this up
 | 2022-10-06 | Write up still in progress
-| 2022-12-01 | No further progress
+| 2023-01-05 | No further progress
 
 |    324     | Erratum: Clarify semantic of array element assert containing subexpression " .[1] " (All) |
 | ---------- | --- |
@@ -72,7 +80,8 @@ Next action: **331**
 | 2022-08-11 | No further progress
 | 2022-10-06 | Mike to update the issue with the specific language and affected section(s)
 | 2022-11-03 | Steve had some concerns about the proposed language, Mike to look at this again. 
-| 2022-12-01 | Mike did some experiments with an online XPath expression evaluator to see what ".[1]" returns. We also noted that a DFDL expression is only allowed to return a single node. Mike to carry on with the experiment.  
+| 2022-12-01 | Mike did some experiments with an online XPath expression evaluator to see what ".[1]" returns. We also noted that a DFDL expression is only allowed to return a single node. Mike to carry on with the experiment.
+| 2023-01-05 | Issue 26 updated with Mike's latest findings. Maybe we should disallow ".[n]"? Steve to contact Andrew Coleman, W3C XQuery WG ex-member for advice.
 
 |    325     | Submit OGF DFDL 1.0 to ISO for adoption as an ISO standard (Mike, Steve) |
 | ---------- | --- |
@@ -84,6 +93,7 @@ Next action: **331**
 | 2022-10-06 | Application still in ISO pipeline. 
 | 2022-11-03 | Expecting to hear by next WG call. 
 | 2022-12-01 | Not heard anything yet. Steve to send chaser.
+| 2023-01-05 | OGF accepted as a PAS submitter. Joined on the call by Alan Sill & Wolfgang Ziegler. Alan suggested DFDL WG joined the SC38 WG5 calls, introduced DFDL 1.0 to the group, and followed its suggestions as to how to proceed. Steve to approach WG5 chair Fernando Gebara Filho. Wolfgang reminded us that adoption of DFDL would be by national body vote, so making relevant national bodies like ANSI & BSI aware might be useful. Also need to make sure there is a free copy of the standard publicly available. Noted that there is already a good synergy with ISO standards because DFDL schemas exist for ISO standards EDIFACT and ISO8583.
 
 
 |    326     | Rules for when an assert or discriminator is used on a prefixLengthType simple type (All) |
@@ -94,6 +104,7 @@ Next action: **331**
 | 2022-08-11 | Mike has created a PR for the issue. Steve to review.
 | 2022-10-06 | Awaiting review by Steve
 | 2022-12-01 | No further progress
+| 2023-01-05 | Steve has reviewed and updated the PR (https://github.com/OpenGridForum/DFDL/pull/33) with comments. Need to clarify the order of statement annotation and format annotation 'execution' when prefix and prefix-prefix present. 
 
 |    327     | Do we need a default dfdl:choiceDispatchKey branch? (Steve) |
 | ---------- | --- |
@@ -102,6 +113,7 @@ Next action: **331**
 | 2022-10-06 | If not an erratum, needs to be an experimental feature if to be added to current implementations. Mike to think on best way forward.
 | 2022-11-03 | Mike having a rethink on this, prefers an explicit, searchable indicator for the default choice branch.
 | 2022-12-01 | Mike to propose a specific syntax and update issue #34.
+| 2023-01-05 | Steve reviewed the syntax. Discussed that using a namespaced value like dfdl:default (or if implemented experimentally, dfdlx:default) might be best. 
 
 |    329     | DFDL 2.0 candidate: Additional binary number reps (Mike) |
 | ---------- | --- |
@@ -110,12 +122,15 @@ Next action: **331**
 | 2022-10-06 | Mike to create a new experimental feature document and issue, and add to https://github.com/OpenGridForum/DFDL/blob/master/docs/current/DFDL-Experimental-Features-Index.md 
 | 2022-11-03 | Bradd also has a requirement for an IBM clock format variant of binary calendar. We should put all our requirements in a single document.
 | 2022-12-01 | Already an issue for more binary calendars dating from 2020, issue #8. We can add more binary calendars to that. Mike to create separate new issue for binary numbers.
+| 2023-01-05 | Mike has created https://github.com/OpenGridForum/DFDL/issues/36.
 
 |    330     | Decide what to do about ICU's change to calendar strict parsing |
 | ---------- | --- |
 | 2022-12-01 | In strict mode, ICU release 71.1 enforces the number of digits implied by a pattern. For example, on earlier ICU releases one could parse the data '1' with pattern D or DD or DDD and it would succeed. From ICU 71.1, just '1' will give an error for DD or DDD. Data '01' or '001' respectively must be supplied for it to parse. Applies to all numeric-only pattern symbols. Affects DFDL 1.0 spec section 13.11.2 bullet d), as we explicitly document this strict mode 'deviation'. ICU won't be reverting this so realistic options for DFDL 1.0 spec are: 1) Treat as a bug which has been fixed and raise erratum, 2) Request ICU to provide an undocumented flag to maintain the old behaviour. Note this ICU release has caused several IBM DFDL test cases to fail. They mostly look to be caused by this change, but Steve would like some time to understand all the failures before deciding what to do. 
+| 2023-01-05 | Steve to talk to the engineer at IBM who is making the upgrade.
 
 ### Closed actions
+
 None
 
 ### Deferred actions
