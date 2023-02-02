@@ -14,4 +14,5 @@
 | 11 | User-defined functions | 301 | https://github.com/OpenGridForum/DFDL/issues/21 | Apache Daffodil | | 2.0 candidate |
 | 12 | Unparser forward reference variables | 301 | https://github.com/OpenGridForum/DFDL/issues/22 | Apache Daffodil | | 2.0 candidate |
 | 13 | Handle embedded XML & JSON in natural way | 301 | https://github.com/OpenGridForum/DFDL/issues/27 | Apache Daffodil | | 2.0 candidate |
-| 14 | Provide a default choice dispatch branch | 327 | https://github.com/OpenGridForum/DFDL/issues/34 | Apache Daffodil & IBM z/TPF| | 2.0 candidate |
+| 14 | Additional binary number formats | 329 | https://github.com/OpenGridForum/DFDL/issues/36 | Apache Daffodil | | 2.0 candidate |
+| 15 | Provide a default choice dispatch branch | 327 | https://github.com/OpenGridForum/DFDL/issues/34 | Apache Daffodil & IBM z/TPF| | 2.0 candidate |
