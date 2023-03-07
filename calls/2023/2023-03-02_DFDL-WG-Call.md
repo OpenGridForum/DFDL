@@ -1,19 +1,22 @@
-# OGF DFDL Working Group Call Agenda 2-Mar-2023
+# OGF DFDL Working Group Call Minutes 2-Mar-2023
 
 ### Meeting Time
 16:00-17:00 UK
 
 ### Attendees
-* 
+* Steve Hanson
+* Mike Beckerle
+* Jens Jensen
+* Bradd Kadlecik
 
 ### Apologies
-* 
+* Wolfgang Zeitler
 
 ### IPR statement
 "I acknowledge that participation in this meeting is subject to the OGF Intellectual Property Policy"
 
 ### Meeting closed
-
+16:50 UK
 
 ### Next regular call
 16-Mar-2023 @ 16:00 UK
@@ -22,9 +25,15 @@
 
 1. Implementations Update
 
-2. Call will focus on action 325 - ISO adoption of DFDL
+Not discussed
 
-3. AOB
+2. ISO adoption of DFDL
+
+See action 325.
+
+3. UK Natural Environment Research Council (NERC) projects
+
+Jens described a potential use of DFDL in some work being undertaken in the UK to link NERC data centres in order to make the data they own more available and useful. There is a similar use case for UK Data & Analytics Facility for National Infrastructure (DAFNI). Can DFDL be useful in the plumbing for the data pipelines in these projects?    
 
 ## Actions
 
@@ -45,7 +54,7 @@ Next action: **334**
 | 2022-12-01 | Mike did some experiments with an online XPath expression evaluator to see what ".[1]" returns. We also noted that a DFDL expression is only allowed to return a single node. Mike to carry on with the experiment.
 | 2023-01-05 | Issue 26 updated with Mike's latest findings. Maybe we should disallow ".[n]"? Steve to contact Andrew Coleman, W3C XQuery WG ex-member for advice.
 | 2023-01-19 | Revisited the XPath 2.0 specification. Concluded that ".[1]" is the same as "." and that ".[n]" where n <> 1 returns an empty node sequence. Also noted that when using dfdl:occursIndex() in an expression, if any element on the path to the array element has a sibling of the same name, the results of the expression are unpredictable. Also on section 18.5.2.5 the sentence "In the functions below, if the argument includes the current node, or any enclosing parent node, then it is a Schema Definition Error." should be using "evaluates to" not "includes". Mike to update issue #26 with the actual words for the spec (section 18).   
-| 2023-02-02 | Not discussed
+| 2023-03-02 | Not discussed
 
 |    325     | Submit OGF DFDL 1.0 to ISO for adoption as an ISO standard (Mike, Steve) |
 | ---------- | --- |
@@ -60,6 +69,7 @@ Next action: **334**
 | 2023-01-05 | OGF accepted as a PAS submitter. Joined on the call by Alan Sill & Wolfgang Ziegler. Alan suggested DFDL WG joined the SC38 WG5 calls, introduced DFDL 1.0 to the group, and followed its suggestions as to how to proceed. Steve to approach WG5 chair Fernando Gebara Filho. Wolfgang reminded us that adoption of DFDL would be by national body vote, so making relevant national bodies like ANSI & BSI aware might be useful. Also need to make sure there is a free copy of the standard publicly available. Noted that there is already a good synergy with ISO standards because DFDL schemas exist for ISO standards EDIFACT and ISO8583.
 | 2023-01-19 | The next SC38 Plenary Meeting is in Brisbane, AU from Feb 13 to 17, with remote access. On Thursday Feb 16, WG5 will meet to discuss the activities for the following months. Fernando suggested that we join the Zoom call. Steve to email Fernando nearer the time.
 | 2023-02-02 | Steve has emailed Fernando. Suggest cancelling next DFDL WG call as it also on Feb 16th.
+| 2023-03-02 | The anticipated WG5 call didn't happen, as we found out that the decision to adopt is taken at a higher level. Wolfgang has been in discussion with ISO and we have received documents including SD9 which explain next steps. Awaiting document templates before proceeding further. Agreed to hold separate bi-weekly calls to progress the ISO submission, starting 2023-03-09, so that the regular WG bi-weekly calls are not taken over by this action, Steve to send calendar invite. Mike to create a new folder in the DFDL GitHub repo specifically for the ISO submission.
 
 
 |    326     | Rules for when an assert or discriminator is used on a prefixLengthType simple type (All) |
@@ -72,43 +82,32 @@ Next action: **334**
 | 2022-12-01 | No further progress
 | 2023-01-05 | Steve has reviewed and updated the PR (https://github.com/OpenGridForum/DFDL/pull/33) with comments. Need to clarify the order of statement annotation and format annotation 'execution' when prefix and prefix-prefix present.
 | 2023-01-19 | Mike to update PR #33 with a numbered example to make the annotation execution order clear.
-| 2023-02-02 | Not discussed
+| 2023-03-02 | Not discussed
 
 |    330     | Decide what to do about ICU's change to calendar strict parsing (Steve) |
 | ---------- | --- |
 | 2022-12-01 | In strict mode, ICU release 71.1 enforces the number of digits implied by a pattern. For example, on earlier ICU releases one could parse the data '1' with pattern D or DD or DDD and it would succeed. From ICU 71.1, just '1' will give an error for DD or DDD. Data '01' or '001' respectively must be supplied for it to parse. Applies to all numeric-only pattern symbols. Affects DFDL 1.0 spec section 13.11.2 bullet d), as we explicitly document this strict mode 'deviation'. ICU won't be reverting this so realistic options for DFDL 1.0 spec are: 1) Treat as a bug which has been fixed and raise erratum, 2) Request ICU to provide an undocumented flag to maintain the old behaviour. Note this ICU release has caused several IBM DFDL test cases to fail. They mostly look to be caused by this change, but Steve would like some time to understand all the failures before deciding what to do. 
 | 2023-01-05 | Steve to talk to the engineer at IBM who is making the upgrade.
 | 2023-01-19 | No further progress
-| 2023-02-02 | Not discussed
+| 2023-03-02 | Not discussed
 
 |    331     | Improve the description of textNumberPattern 'V' and 'P' symbols (All)
 | ---------- | --- |
 | 2023-01-05 | Erratum issue https://github.com/OpenGridForum/DFDL/issues/38 created. Needs review.
 | 2023-01-19 | Mike to review Steve's proposal
-| 2023-02-02 | Not discussed
+| 2023-03-02 | Not discussed
 
 |    332     | Improve the description of textNumberPattern quote symbol (Steve)
 | ---------- | --- |
 | 2023-01-19 | Erratum issue https://github.com/OpenGridForum/DFDL/issues/39 created and suggested wording changes for section 13.6.1.1 added. Needs review. 
-| 2023-02-02 | Not discussed
+| 2023-03-02 | Not discussed
 
 |    333     | Ensure the description of textNumberPattern matches ICU (All)
 | ---------- | --- |
 | 2023-01-19 | Erratum issue https://github.com/OpenGridForum/DFDL/issues/40 created to see whether DFDL 1.0 spec description of decimal number pattern has fallen behind ICU behaviour. 
-| 2023-02-02 | Not discussed
+| 2023-03-02 | Not discussed
 
 ### Closed actions
-
-|    327     | Do we need a default dfdl:choiceDispatchKey branch? (All) |
-| ---------- | --- |
-| 2022-07-14 | To handle a nested choice use case where there is a need to distinguish a bad choice branch key from a good choice branch key that then fails to parse its branch. Steve to reproduce the use case to see if IBM DFDL has a similar problem.
-| 2022-08-11 | IBM DFDL exhibits the same problem. Issue #34 raised. Discussed options for the syntax to indicate that a branch is the default, and agreed that dfdl:choiceBranchKey="" (empty string) works best. Could be an erratum on 1.0 but probably better as 2.0 candidate. 
-| 2022-10-06 | If not an erratum, needs to be an experimental feature if to be added to current implementations. Mike to think on best way forward.
-| 2022-11-03 | Mike having a rethink on this, prefers an explicit, searchable indicator for the default choice branch.
-| 2022-12-01 | Mike to propose a specific syntax and update issue #34.
-| 2023-01-05 | Steve reviewed the syntax. Discussed that using a namespaced value like dfdl:default (or if implemented experimentally, dfdlx:default) might be best. 
-| 2023-01-19 | Mike to update issue #34 with proposal. Go with dfdlx:default. The only alternative might be dfdlx:noMatch.
-| 2023-02-02 | **Closed.** Will go with dfdlx:default. Tracked by https://github.com/OpenGridForum/DFDL/issues/34. Noted that IBM z/TPF DFDL parser has also been asked for this feature.
 
 ### Deferred actions
 
