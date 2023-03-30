@@ -1,11 +1,11 @@
-# OGF DFDL Working Group Call Agenda 30-Mar-2023
+# OGF DFDL Working Group Call Minutes 30-Mar-2023
 
 ### Meeting Time
 16:00-17:00 UK
 
 ### Attendees
 * Steve Hanson
-* 
+* Mike Beckerle
 
 ### Apologies
 *
@@ -14,6 +14,7 @@
 "I acknowledge that participation in this meeting is subject to the OGF Intellectual Property Policy"
 
 ### Meeting closed
+17:20 UK
 
 ### Next regular call
 13-Apr-2023 @ 16:00 UK
@@ -24,28 +25,17 @@
 
 Not discussed
 
-2. AOB
-
 ## Actions
 
-Next action: **334**
+Next action: **335**
 
 ### Actions raised at this meeting
 
-### Current actions
-
-|    324     | Erratum: Clarify semantic of array element assert containing subexpression " .[1] " (All) |
+|    334     | Agree wording for other errata that should be in ISO version of DFDL 1.0 spec (All)
 | ---------- | --- |
-| 2021-07-08 | Erratum needed to state that ".[1]" is equivalent to "../a[1]" and "../a[dfdl:occursIndex()]"
-| 2021-10-14 | Mike has created GitHub issue https://github.com/OpenGridForum/DFDL/issues/26.
-| 2022-02-24 | Mike to look back through emails for more information.
-| 2022-08-11 | No further progress
-| 2022-10-06 | Mike to update the issue with the specific language and affected section(s)
-| 2022-11-03 | Steve had some concerns about the proposed language, Mike to look at this again. 
-| 2022-12-01 | Mike did some experiments with an online XPath expression evaluator to see what ".[1]" returns. We also noted that a DFDL expression is only allowed to return a single node. Mike to carry on with the experiment.
-| 2023-01-05 | Issue 26 updated with Mike's latest findings. Maybe we should disallow ".[n]"? Steve to contact Andrew Coleman, W3C XQuery WG ex-member for advice.
-| 2023-01-19 | Revisited the XPath 2.0 specification. Concluded that ".[1]" is the same as "." and that ".[n]" where n <> 1 returns an empty node sequence. Also noted that when using dfdl:occursIndex() in an expression, if any element on the path to the array element has a sibling of the same name, the results of the expression are unpredictable. Also on section 18.5.2.5 the sentence "In the functions below, if the argument includes the current node, or any enclosing parent node, then it is a Schema Definition Error." should be using "evaluates to" not "includes". Mike to update issue #26 with the actual words for the spec (section 18).   
-| 2023-03-02 | Not discussed
+| 2023-03-30 | There are some errata not covered by specific actions, namely #25, #31, #28. Need to agree words.
+
+### Current actions
 
 |    325     | Submit OGF DFDL 1.0 to ISO for adoption as an ISO standard (Mike, Steve) |
 | ---------- | --- |
@@ -61,7 +51,7 @@ Next action: **334**
 | 2023-01-19 | The next SC38 Plenary Meeting is in Brisbane, AU from Feb 13 to 17, with remote access. On Thursday Feb 16, WG5 will meet to discuss the activities for the following months. Fernando suggested that we join the Zoom call. Steve to email Fernando nearer the time.
 | 2023-02-02 | Steve has emailed Fernando. Suggest cancelling next DFDL WG call as it also on Feb 16th.
 | 2023-03-02 | The anticipated WG5 call didn't happen, as we found out that the decision to adopt is taken at a higher level. Wolfgang has been in discussion with ISO and we have received documents including SD9 which explain next steps. Awaiting document templates before proceeding further. Agreed to hold separate bi-weekly calls to progress the ISO submission, starting 2023-03-09, so that the regular WG bi-weekly calls are not taken over by this action, Steve to send calendar invite. Mike to create a new folder in the DFDL GitHub repo specifically for the ISO submission.
-
+| 2023-03-30 | Covered by updates to https://github.com/OpenGridForum/DFDL/blob/master/ISO-process/Call-Notes.md.
 
 |    326     | Rules for when an assert or discriminator is used on a prefixLengthType simple type (All) |
 | ---------- | --- |
@@ -74,6 +64,7 @@ Next action: **334**
 | 2023-01-05 | Steve has reviewed and updated the PR (https://github.com/OpenGridForum/DFDL/pull/33) with comments. Need to clarify the order of statement annotation and format annotation 'execution' when prefix and prefix-prefix present.
 | 2023-01-19 | Mike to update PR #33 with a numbered example to make the annotation execution order clear.
 | 2023-03-02 | Not discussed
+| 2023-03-30 | Mike to update PR #33. Need to add a definition of 'synthetic element' too.
 
 |    330     | Decide what to do about ICU's change to calendar strict parsing (Steve) |
 | ---------- | --- |
@@ -81,24 +72,42 @@ Next action: **334**
 | 2023-01-05 | Steve to talk to the engineer at IBM who is making the upgrade.
 | 2023-01-19 | No further progress
 | 2023-03-02 | Not discussed
+| 2023-03-30 | IBM engineer has paused the upgrade but will looking at it again shortly. Need to decide on 1) or 2).
+
+|    333     | Ensure the description of textNumberPattern matches ICU (All)
+| ---------- | --- |
+| 2023-01-19 | Erratum issue https://github.com/OpenGridForum/DFDL/issues/40 created to see whether DFDL 1.0 spec description of decimal number pattern has fallen behind ICU behaviour. 
+| 2023-03-02 | Not discussed
+| 2023-03-30 | Not discussed
+
+### Closed actions
+
+|    324     | Erratum: Clarify semantic of array element assert containing subexpression " .[1] " (All) |
+| ---------- | --- |
+| 2021-07-08 | Erratum needed to state that ".[1]" is equivalent to "../a[1]" and "../a[dfdl:occursIndex()]"
+| 2021-10-14 | Mike has created GitHub issue https://github.com/OpenGridForum/DFDL/issues/26.
+| 2022-02-24 | Mike to look back through emails for more information.
+| 2022-08-11 | No further progress
+| 2022-10-06 | Mike to update the issue with the specific language and affected section(s)
+| 2022-11-03 | Steve had some concerns about the proposed language, Mike to look at this again. 
+| 2022-12-01 | Mike did some experiments with an online XPath expression evaluator to see what ".[1]" returns. We also noted that a DFDL expression is only allowed to return a single node. Mike to carry on with the experiment.
+| 2023-01-05 | Issue 26 updated with Mike's latest findings. Maybe we should disallow ".[n]"? Steve to contact Andrew Coleman, W3C XQuery WG ex-member for advice.
+| 2023-01-19 | Revisited the XPath 2.0 specification. Concluded that ".[1]" is the same as "." and that ".[n]" where n <> 1 returns an empty node sequence. Also noted that when using dfdl:occursIndex() in an expression, if any element on the path to the array element has a sibling of the same name, the results of the expression are unpredictable. Also on section 18.5.2.5 the sentence "In the functions below, if the argument includes the current node, or any enclosing parent node, then it is a Schema Definition Error." should be using "evaluates to" not "includes". Mike to update issue #26 with the actual words for the spec (section 18).   
+| 2023-03-02 | Not discussed
+| 2023-03-30 | **Closed.** Reviewed the words from 2023-01-19. Confirmed the description of ".[1]", should be added as a bullet to the notes for Table 55 in section 18.4. Confirmed the correction to section 18.5.2.5. Agreed that there is no need to say anything about using dfdl:occursIndex() in an expression, it's self-evident. Issue #26 updated. Spec update agreed.
 
 |    331     | Improve the description of textNumberPattern 'V' and 'P' symbols (All)
 | ---------- | --- |
 | 2023-01-05 | Erratum issue https://github.com/OpenGridForum/DFDL/issues/38 created. Needs review.
 | 2023-01-19 | Mike to review Steve's proposal
 | 2023-03-02 | Not discussed
+| 2023-03-30 | **Closed.** Mike reviewed with one comment which Steve clarified. Spec update agreed.
 
 |    332     | Improve the description of textNumberPattern quote symbol (Steve)
 | ---------- | --- |
 | 2023-01-19 | Erratum issue https://github.com/OpenGridForum/DFDL/issues/39 created and suggested wording changes for section 13.6.1.1 added. Needs review. 
 | 2023-03-02 | Not discussed
-
-|    333     | Ensure the description of textNumberPattern matches ICU (All)
-| ---------- | --- |
-| 2023-01-19 | Erratum issue https://github.com/OpenGridForum/DFDL/issues/40 created to see whether DFDL 1.0 spec description of decimal number pattern has fallen behind ICU behaviour. 
-| 2023-03-02 | Not discussed
-
-### Closed actions
+| 2023-03-30 | **Closed.** Mike reviewed with no comments. Spec update agreed.
 
 ### Deferred actions
 
