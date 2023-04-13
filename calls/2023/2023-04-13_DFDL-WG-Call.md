@@ -1,19 +1,21 @@
-# OGF DFDL Working Group Call Agenda 13-Apr-2023
+# OGF DFDL Working Group Call Minutes 13-Apr-2023
 
 ### Meeting Time
 16:00-17:00 UK
 
 ### Attendees
-* 
+* Steve Hanson
+* Mike Beckerle
+* Alan Sill
 
 ### Apologies
-*
+* Bradd Kadlecik
 
 ### IPR statement
 "I acknowledge that participation in this meeting is subject to the OGF Intellectual Property Policy"
 
 ### Meeting closed
-
+16:55 UK
 
 ### Next regular call
 27-Apr-2023 @ 16:00 UK
@@ -46,7 +48,8 @@ Next action: **335**
 | 2023-01-19 | The next SC38 Plenary Meeting is in Brisbane, AU from Feb 13 to 17, with remote access. On Thursday Feb 16, WG5 will meet to discuss the activities for the following months. Fernando suggested that we join the Zoom call. Steve to email Fernando nearer the time.
 | 2023-02-02 | Steve has emailed Fernando. Suggest cancelling next DFDL WG call as it also on Feb 16th.
 | 2023-03-02 | The anticipated WG5 call didn't happen, as we found out that the decision to adopt is taken at a higher level. Wolfgang has been in discussion with ISO and we have received documents including SD9 which explain next steps. Awaiting document templates before proceeding further. Agreed to hold separate bi-weekly calls to progress the ISO submission, starting 2023-03-09, so that the regular WG bi-weekly calls are not taken over by this action, Steve to send calendar invite. Mike to create a new folder in the DFDL GitHub repo specifically for the ISO submission.
-| 2023-04-13 | Covered by updates to https://github.com/OpenGridForum/DFDL/blob/master/ISO-process/Call-Notes.md.
+| 2023-03-30 | Covered by updates to https://github.com/OpenGridForum/DFDL/blob/master/ISO-process/Call-Notes.md.
+| 2023-04-13 | Mike posted first version of PAS Explanatory Report https://github.com/OpenGridForum/DFDL/pull/41. Steve, Alan, Wolfgang to review and fill in TBDs.
 
 |    326     | Rules for when an assert or discriminator is used on a prefixLengthType simple type (All) |
 | ---------- | --- |
@@ -60,7 +63,7 @@ Next action: **335**
 | 2023-01-19 | Mike to update PR #33 with a numbered example to make the annotation execution order clear.
 | 2023-03-02 | Not discussed
 | 2023-03-30 | Mike to update PR #33. Need to add a definition of 'synthetic element' too.
-| 2023-04-13 | 
+| 2023-04-13 | PR awaiting updates.
 
 |    330     | Decide what to do about ICU's change to calendar strict parsing (Steve) |
 | ---------- | --- |
@@ -69,21 +72,21 @@ Next action: **335**
 | 2023-01-19 | No further progress
 | 2023-03-02 | Not discussed
 | 2023-03-30 | IBM engineer has paused the upgrade but will looking at it again shortly. Need to decide on 1) or 2).
-| 2023-04-13 | 
+| 2023-04-13 | Agreed to go with option 1, as impact is believed to be minimal to existing users. Spec update needed, issue https://github.com/OpenGridForum/DFDL/issues/42 raised.
+
+|    334     | Agree wording for other errata that should be in ISO version of DFDL 1.0 spec (All)
+| ---------- | --- |
+| 2023-03-30 | There are some errata not covered by specific actions, namely #25, #31, #28. Need to agree words.
+| 2023-04-13 | Steve to provide words for #25 (SDE if in-scope delimiter value clashes with an escapeCharacter or escapeEscapeCharacter value). #28 is minor typos. #31 is to correct xs:dateTime constructor args.
+
+### Closed actions
 
 |    333     | Ensure the description of textNumberPattern matches ICU (All)
 | ---------- | --- |
 | 2023-01-19 | Erratum issue https://github.com/OpenGridForum/DFDL/issues/40 created to see whether DFDL 1.0 spec description of decimal number pattern has fallen behind ICU behaviour. 
 | 2023-03-02 | Not discussed
 | 2023-03-30 | Not discussed
-| 2023-04-13 | 
-
-|    334     | Agree wording for other errata that should be in ISO version of DFDL 1.0 spec (All)
-| ---------- | --- |
-| 2023-03-30 | There are some errata not covered by specific actions, namely #25, #31, #28. Need to agree words.
-| 2023-04-13 | 
-
-### Closed actions
+| 2023-04-13 | **Closed**. Agreed to defer until DFDL 2.0 and not treat as erratum.
 
 ### Deferred actions
 
