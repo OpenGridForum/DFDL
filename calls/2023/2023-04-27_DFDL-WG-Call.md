@@ -1,4 +1,4 @@
-# OGF DFDL Working Group Call Agenda 27-Apr-2023
+# OGF DFDL Working Group Call Minutes 27-Apr-2023
 
 ### Meeting Time
 16:00-17:00 UK
@@ -28,7 +28,7 @@ Not discussed.
 
 2. Asterix format
 
-Mike showed an example of "All-purpose structured EUROCONTROL surveillance information exchange". It starts with a bitmap that indicates whether corresponding optional data fields exist. The bitmap has 3 parts, the 2nd & 3rd parts are optional and their existence is indicated by a bit at the end of the previous part. The existence bit is set if one of the corresponding data fields is present. Like ISO8583. Except that if a bitmap part is empty, it must not exist. This latter condition DFDL can't cope with. DFDL 2.0 candidate.
+Mike showed an example of "All-purpose structured EUROCONTROL surveillance information exchange". It starts with a bitmap that indicates whether corresponding optional data fields exist. The bitmap has 3 parts, the 2nd & 3rd parts are optional and their existence is indicated by a bit at the end of the previous part. The existence bit is set if one of the corresponding data fields is present. Like ISO8583. Except that if a bitmap part is empty, it must not exist. A DFDL schema can be created which models the bitmap parts as hidden so they not do not clutter the infoset. Parsing works fine, but unparsing is unable to handle the conditionality of the bitmap parts. DFDL 2.0 candidate.
 
 ## Actions
 
