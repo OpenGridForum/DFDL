@@ -4,7 +4,9 @@
 16:00-17:00 UK
 
 ### Attendees
-* 
+* Steve Hanson
+* Mike Beckerle
+* Don Brutzman
 
 ### Apologies
 * 
@@ -21,6 +23,12 @@
 ## Agenda
 
 1. Implementations Update
+
+Not discussed.
+
+2. Asterix format
+
+Mike showed an example of "All-purpose structured EUROCONTROL surveillance information exchange". It starts with a bitmap that indicates whether corresponding optional data fields exist. The bitmap has 3 parts, the 2nd & 3rd parts are optional and their existence is indicated by a bit at the end of the previous part. The existence bit is set if one of the corresponding data fields is present. Like ISO8583. Except that if a bitmap part is empty, it must not exist. This latter condition DFDL can't cope with. DFDL 2.0 candidate.
 
 ## Actions
 
@@ -62,7 +70,7 @@ Next action: **335**
 | 2023-03-02 | Not discussed
 | 2023-03-30 | Mike to update PR #33. Need to add a definition of 'synthetic element' too.
 | 2023-04-13 | PR awaiting updates.
-| 2023-04-27 | 
+| 2023-04-27 | Mike has created an attachment to the issue for the numbered example, which was reviewed. However Mike is concerned that the suggested approach is not sufficient because asserts are not evaluated during unparsing. Mike also thinks the suggested approach is overkill as there is one very specific use case that does not require the full generality. So, is there a simpler approach? In passing, identified an undocumented corner case; it is a Processing Error if a prefix-prefix-length type evaluates to 0.
 
 |    330     | Decide what to do about ICU's change to calendar strict parsing (Steve) |
 | ---------- | --- |
@@ -72,13 +80,13 @@ Next action: **335**
 | 2023-03-02 | Not discussed
 | 2023-03-30 | IBM engineer has paused the upgrade but will looking at it again shortly. Need to decide on 1) or 2).
 | 2023-04-13 | Agreed to go with option 1, as impact is believed to be minimal to existing users. Spec update needed, issue https://github.com/OpenGridForum/DFDL/issues/42 raised.
-| 2023-04-27 | 
+| 2023-04-27 | No progress.
 
 |    334     | Agree wording for other errata that should be in ISO version of DFDL 1.0 spec (All)
 | ---------- | --- |
 | 2023-03-30 | There are some errata not covered by specific actions, namely #25, #31, #28. Need to agree words.
 | 2023-04-13 | Steve to provide words for #25 (SDE if in-scope delimiter value clashes with an escapeCharacter or escapeEscapeCharacter value). #28 is minor typos. #31 is to correct xs:dateTime constructor args.
-| 2023-04-27 | 
+| 2023-04-27 | Steve has written some initial words and clarified the scope. Mike to review.
 
 ### Closed actions
 
