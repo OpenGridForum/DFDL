@@ -1,10 +1,12 @@
-# OGF DFDL Working Group Call Agenda 11-May-2023
+# OGF DFDL Working Group Call Minutes 11-May-2023
 
 ### Meeting Time
 16:00-17:00 UK
 
 ### Attendees
-* 
+* Steve Hanson
+* Bradd Kadlecik
+* Mike Beckerle
 
 ### Apologies
 * 
@@ -13,7 +15,7 @@
 "I acknowledge that participation in this meeting is subject to the OGF Intellectual Property Policy"
 
 ### Meeting closed
-
+16:45 UK
 
 ### Next regular call
 25-May-2023 @ 16:00 UK (TBC)
@@ -22,8 +24,8 @@
 
 1. Implementations Update
 
-2. AOB
-3. 
+Not discussed.
+
 ## Actions
 
 Next action: **335**
@@ -49,8 +51,7 @@ Next action: **335**
 | 2023-03-30 | Covered by updates to https://github.com/OpenGridForum/DFDL/blob/master/ISO-process/Call-Notes.md.
 | 2023-04-13 | Mike posted first version of PAS Explanatory Report https://github.com/OpenGridForum/DFDL/pull/41. Steve, Alan, Wolfgang to review and fill in TBDs.
 | 2023-04-27 | Review of PAS Explanatory Report https://github.com/OpenGridForum/DFDL/pull/41 in progress.
-| 2023-05-11 |
-
+| 2023-05-11 | No progress
 
 |    326     | Rules for when an assert or discriminator is used on a prefixLengthType simple type (All) |
 | ---------- | --- |
@@ -66,7 +67,10 @@ Next action: **335**
 | 2023-03-30 | Mike to update PR #33. Need to add a definition of 'synthetic element' too.
 | 2023-04-13 | PR awaiting updates.
 | 2023-04-27 | Mike has created an attachment to the issue for the numbered example, which was reviewed. However Mike is concerned that the suggested approach is not sufficient because asserts are not evaluated during unparsing. Mike also thinks the suggested approach is overkill as there is one very specific use case that does not require the full generality. So, is there a simpler approach? In passing, identified an undocumented corner case; it is a Processing Error if a prefix-prefix-length type evaluates to 0.
-| 2023-05-11 |
+| 2023-05-11 | Agreed on a simpler approach whereby any facets on a simple type that is used as a prefix-length type get acted upon when parsing & unparsing and if violated cause a Processing Error. This becomes the normal behaviour, not under property control. Implementations may choose to provide their own switch if the change is problematic to their users. Noted that the DFDL schemas for ISO8583 use prefix-length types, but without facets so no behaviour change. Mike to provide words for spec, and to investigate what ASN.1 does when prefix-prefix-length type evaluates to 0.
+
+
+### Closed actions
 
 |    330     | Decide what to do about ICU's change to calendar strict parsing (Steve) |
 | ---------- | --- |
@@ -77,16 +81,14 @@ Next action: **335**
 | 2023-03-30 | IBM engineer has paused the upgrade but will looking at it again shortly. Need to decide on 1) or 2).
 | 2023-04-13 | Agreed to go with option 1, as impact is believed to be minimal to existing users. Spec update needed, issue https://github.com/OpenGridForum/DFDL/issues/42 raised.
 | 2023-04-27 | No progress.
-| 2023-05-11 |
+| 2023-05-11 | **Closed**. Steve added words for spec update to issue #42. Reviewed and approved the words.
 
 |    334     | Agree wording for other errata that should be in ISO version of DFDL 1.0 spec (All)
 | ---------- | --- |
 | 2023-03-30 | There are some errata not covered by specific actions, namely #25, #31, #28. Need to agree words.
 | 2023-04-13 | Steve to provide words for #25 (SDE if in-scope delimiter value clashes with an escapeCharacter or escapeEscapeCharacter value). #28 is minor typos. #31 is to correct xs:dateTime constructor args.
 | 2023-04-27 | Steve has written some initial words and clarified the scope. Mike to review.
-| 2023-05-11 |
-
-### Closed actions
+| 2023-05-11 | **Closed**. Reviewed #25 and approved the words. #28 & #31 already good-to-go.
 
 
 ### Deferred actions
