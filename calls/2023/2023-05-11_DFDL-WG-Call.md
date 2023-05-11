@@ -18,7 +18,7 @@
 16:45 UK
 
 ### Next regular call
-25-May-2023 @ 16:00 UK (TBC)
+8-June-2023 @ 16:00 UK 
 
 ## Agenda
 
