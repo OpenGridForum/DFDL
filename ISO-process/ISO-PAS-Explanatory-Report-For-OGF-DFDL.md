@@ -1,4 +1,4 @@
-# PAS Explanatory Report for Open Grid Forum (OGF) Data Format Description Language (DFDL)
+# PAS Explanatory Report for Open Grid Forum (OGF) Data Format Description Language (DFDL) Transposition
 
 ## ISO/IEC JTC 1 Common Strategic Characteristics
 _PAS Originators/Submitters are invited to explicitly reference the JTC 1 common strategic characteristics
@@ -7,7 +7,7 @@ PAS Submitter application or any PAS for transposition._
 
 ### ORGANIZATION CRITERIA (SD9 7.3)
 OGF was approved as a PAS Submitter effective 2022-12-02; the application ID is N16164.  
-Since attaining PAS Submitter status there have been no significant changes to OGF at an
+Since attaining PAS Submitter status there have been no changes to OGF at an
 organizational level. 
 Additionally, there have been no changes to the organization criteria as submitted in
 the PAS submitter application N16164.
@@ -29,8 +29,12 @@ This specification addresses a specific challenge faced in response to a need fo
 to be able to understand data regardless of source. 
 A language was needed capable of modeling a wide variety of existing text and binary data formats. 
 A working group was established at the Global Grid Forum (which later became the Open Grid Forum) 
-in 2003 to create a specification for such a language which has now become a Full Recommendation of the 
-OGF. 
+in 2003 to create a specification for such a language. 
+This specification progressed through the OGF process starting as a workgroup 'informational' draft, 
+then entering the OGF 2-stage process for "Recommendation Track" documents in 2011 by becoming an 
+official OGF Proposed Recommendation in 2011.
+As of February 2021 the specifcation was advanced to the final status of OGF Full Recommendation.
+(The OGF process is described in [OGF GFD 152](https://ogf.org/documents/GFD.152.pdf)
 
 This submission addresses the document related criteria specified in SD 9 clause 7.4 as follows:
 
@@ -197,7 +201,7 @@ _b) Describe the process by which the specification was approved._
 
 This process is documented in OGF [GFD 152](https://ogf.org/documents/GFD.152.pdf).
 This includes public comment periods and multiple passes of editorial review including by an external editor/reviewer 
-to insure public comments are addressed. Part of the review process is reviewing interoperability documentation. 
+to ensure public comments are addressed. Part of the review process is reviewing interoperability documentation. 
 
 _c) What “levels” of approval have been obtained?_
 
@@ -284,10 +288,16 @@ W3C XML Schema and W3C XPath - see above.
 
 _c) How the specification is related to emerging and ongoing JTC 1 projects?_
 
-JTC 1 SC41 (Internet of Things, Digital Twin) has a clear relationship to cloud/grid computing technology which has
-clear relationship to the mission of the OGF generally and DFDL specifically. 
+The OGF holds Class A liaison status with ISO/IEC JTC1 SC38 (cloud and distributed computing) by 
+virtue of the similarities between cloud and the “grid computing” that formed the initial working 
+area of OGF (job submission, moving and storing data, accounting, authentication and authorisation, etc.) 
+The various OGF working groups have implemented cloud standards, such as the Open Cloud Computing 
+Interface (OCCI). 
 
-
+DFDL is highly complementary to cloud standards, as it enables 
+cloud computing systems to more rapidly exchange and interoperate with data systems using existing
+mature data formats without a need to convert, update, or otherwise modify the data representation. 
+DFDL can also be a powerful tool for supporting backward compatibility as formats evolve.
 
 ##### 7.4.3.2 Adaptability and Migration
 _a) What adaptations (migrations) of either the specification or International Standards would improve
@@ -311,6 +321,12 @@ that the proposed extension features are clearly identifiable in the text so use
 dependent on these features accidentally. 
 Experience reports about real use cases and the experience with the feature are required 
 before consideration of incorporation of an extension into a future version of the DFDL standard.   
+
+The OGF has already joined WG3 of SC38. 
+Preliminary contact has been established with WG5.
+Upon acceptance of this PAS submission by JTC 1 we expect to 
+increase the existing links with WG 5 and are committed to creating
+Working Agreements with WG5 for DFDL.
 
 ##### 7.4.3.3 Substitution and Replacement
 _a) What needs exist, if any, to replace an existing International Standard? Rationale?_
@@ -337,14 +353,15 @@ multiple separate implementations.
 ##### 7.4.3.4 Document Format and Style
 _a) What plans, if any, exist to conform to JTC 1 document styles?_
 
-The next significant revision of the DFDL specification will be created with the standard 
-JTC 1 document style as a primary output format. 
+The next significant revision of the DFDL specification will be created under 
+ISO/IEC Directives, Part 2, document style guidance as a primary output format. 
 
 Experience creating DFDL schemas for data formats has taught us that all large specifications 
 should be machine-readable and processable so that formal artifacts like interactive help systems, 
 rapid contextual access to the specification text from user interfaces, and even parts of the implementations 
 can be generated from the machine-readable form of the specification. 
-Our goal for the next major version is to generate the JTC 1 document style, and to enable 
+Our goal for the next major version is to generate the ISO/IEC Directives, Part 2, 
+document style, and to enable 
 generation of other formal artifacts, from a common machine-readable form of the 
 specification, likely specified in XML. 
 
