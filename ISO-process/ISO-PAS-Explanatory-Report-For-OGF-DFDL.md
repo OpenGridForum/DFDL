@@ -31,7 +31,7 @@ A language was needed capable of modeling a wide variety of existing text and bi
 A working group was established at the Global Grid Forum (which later became the Open Grid Forum) 
 in 2003 to create a specification for such a language. 
 This specification progressed through the OGF process starting as a workgroup 'informational' draft, 
-then entering the OGF 2-stage process for "Recommendation Track" documents in 2011 by becoming an 
+then entering the OGF 2-stage process for "Recommendation Track" documents by becoming an 
 official OGF Proposed Recommendation in 2011.
 As of February 2021 the specifcation was advanced to the final status of OGF Full Recommendation.
 (The OGF process is described in [OGF GFD 152](https://ogf.org/documents/GFD.152.pdf)
@@ -325,7 +325,7 @@ before consideration of incorporation of an extension into a future version of t
 The OGF has already joined WG3 of SC38. 
 Preliminary contact has been established with WG5.
 Upon acceptance of this PAS submission by JTC 1 we expect to 
-increase the existing links with WG 5 and are committed to creating
+increase the existing links with WG5 and are committed to creating
 Working Agreements with WG5 for DFDL.
 
 ##### 7.4.3.3 Substitution and Replacement
