@@ -1,0 +1,131 @@
+<h1 id="pas-explanatory-report-for-open-grid-forum-ogf-data-format-description-language-dfdl-transposition">PAS Explanatory Report for Open Grid Forum (OGF) Data Format Description Language (DFDL) Transposition</h1>
+<h2 id="isoiec-jtc-1-common-strategic-characteristics">ISO/IEC JTC 1 Common Strategic Characteristics</h2>
+<p><em>PAS Originators/Submitters are invited to explicitly reference the JTC 1 common strategic characteristics (interoperability, portability, cultural and linguistic adaptability, and accessibility) when submitting their PAS Submitter application or any PAS for transposition.</em></p>
+<h3 id="organization-criteria-sd9-7.3">ORGANIZATION CRITERIA (SD9 7.3)</h3>
+<p>OGF was approved as a PAS Submitter effective 2022-12-02; the application ID is N16164.<br />
+Since attaining PAS Submitter status there have been no changes to OGF at an organizational level. Additionally, there have been no changes to the organization criteria as submitted in the PAS submitter application N16164.</p>
+<h3 id="document-related-criteria-sd9-7.4">DOCUMENT RELATED CRITERIA (SD9 7.4)</h3>
+<p>The DFDL 1.0 Specification provides a modeling language for describing general text and binary data in a standard way. A DFDL model or schema allows any text or binary data to be read (or “parsed”) from its native format and to be presented as an instance of an information set. (An information set is a logical representation of the data contents, independent of the physical format. For example, two records could be in different formats, because one has fixed-length fields and the other uses delimiters, but they could contain exactly the same data, and would both be represented by the same information set). The same DFDL schema also allows data to be taken from an instance of an information set and written out (or “serialized”) to its native format.</p>
+<p>This specification addresses a specific challenge faced in response to a need for interoperable APIs to be able to understand data regardless of source. A language was needed capable of modeling a wide variety of existing text and binary data formats. A working group was established at the Global Grid Forum (which later became the Open Grid Forum) in 2003 to create a specification for such a language. This specification progressed through the OGF process starting as a workgroup ‘informational’ draft, then entering the OGF 2-stage process for “Recommendation Track” documents by becoming an official OGF Proposed Recommendation in 2011. As of February 2021 the specifcation was advanced to the final status of OGF Full Recommendation. (The OGF process is described in <a href="https://ogf.org/documents/GFD.152.pdf">OGF GFD 152</a></p>
+<p>This submission addresses the document related criteria specified in SD 9 clause 7.4 as follows:</p>
+<h4 id="quality">7.4.1 Quality</h4>
+<p><em>Within its scope the specification shall completely describe the functionality (in terms of interfaces, protocols, formats, etc.) necessary for an implementation of the submission. If it is based on a product, it shall include all the functionality necessary to achieve the stated level of compatibility or interoperability in a product independent manner.</em></p>
+<h5 id="completeness-m">7.4.1.1 Completeness (M)</h5>
+<p><em>a) How well are all interfaces specified?</em></p>
+<p>The DFDL 1.0 Specification has multiple implementations including several different implementations by IBM Corporation, DFDL4S by the European Space Agency, and an open-source implementation (Apache Daffodil). Interoperability of the IBM Java-based DFDL implementation and the Apache Daffodil implementation has been demonstrated for several DFDL format descriptions (called ‘schemas’).</p>
+<p><em>b) How easily can implementation take place without need of additional descriptions?</em></p>
+<p>The specification is self-contained. It references other documents which collectively provide everything required to implement the language.</p>
+<p><em>c) What proof exists for successful implementations (e.g. availability of test results for media standards)?</em></p>
+<p>IBM has three independent DFDL implementations, one in Java, two in C, in use across these products:</p>
+<ul>
+<li>IBM WebSphere Message Broker (2011 - 2017)</li>
+<li>IBM Integration Bus (2013 - 2022)</li>
+<li>IBM App Connect Enterprise (2018 onwards)</li>
+<li>IBM z/Transaction Processing Facility (2014 onwards)</li>
+<li>IBM InfoSphere Master Data Management (2013 onwards)</li>
+<li>IBM Rational Test Workbench (2012 onwards)</li>
+<li>IBM Rational Integration Tester (2016 onwards)</li>
+</ul>
+<p>The <a href="https://daffodil.apache.org/">Apache Daffodil(tm)</a>open-source implementation has been accepted as an Apache Software Foundation top-level project since 2018 (daffodil.apache.org), and web search shows it has been integrated into the products of <a href="https://owlcyberdefense.com/blog/solving-the-data-format-problem-with-daffodil/">Owl Cyber Defense</a> and <a href="https://techdocs.broadcom.com/us/en/ca-enterprise-software/layer7-api-management/api-gateway/10-1/security-configuration-in-policy-manager/tasks-menu-security-options/Manage-DFDL-Processors.html">Broadcom</a>, is used in military research projects, and has a <a href="https://cloud.google.com/blog/products/application-modernization/dfdl-processing-with-google-cloud">Google cloud service offering that uses it</a>.</p>
+<h5 id="clarity">7.4.1.2 Clarity</h5>
+<p><em>a) What means are used to provide definitive descriptions beyond straight text?</em></p>
+<p>The text was designed to be self-contained and includes detailed definitions and explanatory text.</p>
+<p><em>b) What tables, figures and reference materials are used to remove ambiguity?</em></p>
+<p>The specification is organized into tables providing core definitions for all the format properties augmented by additional sections that provide clarifying examples and discussion.</p>
+<p><em>c) What contextual material is provided to educate the reader?</em></p>
+<p>None is directly provided as part of the DFDL 1.0 specification.</p>
+<p><a href="https://community.ibm.com/community/user/integration/search?s=dfdl.">IBM DFDL training materials</a> are easily found on the Internet.</p>
+<p>These materials are also available on the Internet: - <a href="https://www.xfront.com/DFDL/">www.xfront.com tutorial</a> - <a href="https://github.com/OpenDFDL/training">OpenDFDL training</a> - User assistance with Apache Daffodil and DFDL is available via the Apache Daffodil project users mailing list.</p>
+<h5 id="testability-m">7.4.1.3 Testability (M)</h5>
+<p><em>The extent, use, and availability of conformance/interoperability tests or means of implementation verification (e.g. availability of reference material for magnetic media) shall be described, as well as the provisions the specification has for testability.</em></p>
+<p><em>The specification shall have had sufficient review over an extended time period to characterise it as being stable.</em></p>
+<p>The final OGF Full Recommendation specification has been available from the OGF since February 2021. Earlier mostly-complete drafts were in use starting from September 2011.</p>
+<h5 id="stability-m">7.4.1.4 Stability (M)</h5>
+<p><em>a) How long has the specification existed, unchanged, since some form of verification (e.g. prototype testing, paper analysis, full interoperability tests) has been achieved?</em></p>
+<p>The Specification was ratified as a Grid Full Recommendation by the OGF in February 2021. It was a Proposed Recommendation in substantially complete form since January 2011 but took until June 2019 for two interoperable implementations to be demonstrated. The report of interoperability was published in June 2019, and the specification changes from that date until final ratification in Feb 2021 were essentially clarifications and editorial improvements, not functional content changes.</p>
+<p><em>b) To what extent and for how long have products been implemented using the specification?</em></p>
+<p>IBM DFDL (several different implementations) first appeared publicly in 2011. The ESA (European Space Agency) DFDL4Space first mention was 2016 (Java) and 2018 (C++). The Apache Daffodil Open-Source project began around 2009, but accelerated starting in 2012.</p>
+<p>All these implementations were revised as the specification was refined on the way to becoming a full OGF Recommendation.</p>
+<p><em>c) What mechanisms are in place to track versions, fixes and addenda?</em></p>
+<p>The Specification review process occurs primarily through the Project mailing list. A formal process for creating informational documents and for proposing extensions to DFDL is also defined. The DFDL work group meets via video-conference every few weeks to discuss action items. Changes to the specification are discussed in email threads and eventually are escalated to workgroup action items. When there is a consensus on a need for a change/improvement in the DFDL specification, a GitHub tracker is opened, and remains open while specific language is proposed for addressing the matter. These issues are closed once the change has been integrated into the specification document. (With change history tracked and marked.)</p>
+<p>Proposed draft and Released versions of the specification are made available on the <a href="https://ogf.org/ogf/doku.php/documents/documents.html">OGF website</a>, and on the <a href="https://github.com/OpenGridForum/DFDL">DFDL GitHub site</a>.</p>
+<h5 id="availability-m">7.4.1.5 Availability (M)</h5>
+<p><em>a) Where is the specification available (e.g. one source, multinational locations, what types of distributors)?</em></p>
+<p>The Specification is available at the OGF DFDL Project website: https://www.ogf.org/dfdl where the official PDF version of the specification is maintained.</p>
+<p>Draft and ongoing work on the specification is conducted in the open on the OGF DFDL GitHub site: https://github.com/OpenGridForum/DFDL</p>
+<p><em>b) How long has the specification been available?</em></p>
+<p>The official OGF Full Recommendation version of the DFDL specification <a href="https://ogf.org/documents/GFD.240.pdf">GFD 240</a> is dated February 2021. This superseded two earlier largely complete OGF Proposed Recommendation draft versions: <a href="https://ogf.org/documents/GFD.207.pdf">GFD 207</a> was published in September 2014 and <a href="https://ogf.org/documents/GFD.174.pdf">GFD 174</a> was published in January 2011.</p>
+<p><em>c) Has the distribution been widespread or restricted? (describe the situation)</em></p>
+<p>The Specification is available to all interested parties via a link on the www.ogf.org website without restriction.</p>
+<p><em>d) What are the costs associated with specification availability?</em></p>
+<p>The specification is available without cost.</p>
+<h4 id="consensus-m">7.4.2 Consensus (M)</h4>
+<p><em>The accompanying report shall describe the extent of (inter)national consensus that the document has already achieved.</em></p>
+<h5 id="development-consensus">7.4.2.1 Development Consensus</h5>
+<p><em>a) Describe the process by which the specification was developed.</em></p>
+<p>Face to face meetings were held several times a year as part of OGF general meetings from roughly 2003 to 2009 at which point the spec was largely complete. Subsequently, the specification was refined and clarified primarily via regular semi-weekly telephone calls and the project mailing lists. The formal process for creating an official draft and submitting it for consideration as an OGF Recommendation is documented in OGF <a href="https://ogf.org/documents/GFD.152.pdf">GFD 152</a>.</p>
+<p>OGF documents are developed according to an open public process as described at this link http://redmine.ogf.org/projects/editor/wiki/About_OGF_Documents . Tools to support creation of new OGF documents are described here: https://docs.ogf.org/ogf-documents-and-workspaces/ .</p>
+<p><em>b) Describe the process by which the specification was approved.</em></p>
+<p>This process is documented in OGF <a href="https://ogf.org/documents/GFD.152.pdf">GFD 152</a>. This includes public comment periods and multiple passes of editorial review including by an external editor/reviewer to ensure public comments are addressed. Part of the review process is reviewing interoperability documentation.</p>
+<p><em>c) What “levels” of approval have been obtained?</em></p>
+<p>DFDL is an OGF Full Recommendation.</p>
+<h5 id="response-to-user-requirements">7.4.2.2 Response to User Requirements</h5>
+<p><em>a) How and when were user requirements considered and utilized?</em></p>
+<p>User requirements are solicited via the regular Project calls and the mailing lists, including feedback received by the public on an ongoing basis. This feedback is directly utilized in drafting each subsequent revision of the Specification.</p>
+<p><em>b) To what extent have users demonstrated satisfaction?</em></p>
+<p>Approximately 1300 IBM customers are potentially using IBM DFDL for mission-critical integration &amp; automation applications, including banks, airlines, retailers, manufacturers.</p>
+<p>At <a href="https://cloud.google.com/blog/products/application-modernization/dfdl-processing-with-google-cloud">Google, there is a cloud offering using DFDL capabilities for Application Modernization</a>.</p>
+<p>DFDL has been adopted for cyber-security needs by a number of vendors including <a href="https://owlcyberdefense.com/blog/solving-the-data-format-problem-with-daffodil/">Owl Cyber Defense</a>, <a href="https://techdocs.broadcom.com/us/en/ca-enterprise-software/layer7-api-management/api-gateway/10-1/security-configuration-in-policy-manager/tasks-menu-security-options/Manage-DFDL-Processors.html">Broadcom</a> and is cited in at least one <a href="https://patents.justia.com/patent/11595410">cyber-security-related patent</a>. It also plays a role in prominent <a href="https://eri-summit.darpa.mil/docs/ERISUMMIT2020/Presentations/GAPS%20Workshop%20-%20ERI%20Summit%202020.pdf">military research programs</a> though public documentation of these efforts is thin.</p>
+<h5 id="market-acceptance">7.4.2.3 Market Acceptance</h5>
+<p><em>a) How widespread is the market acceptance today? Anticipated?</em></p>
+<p>See prior items.</p>
+<p><em>b) What evidence is there of market acceptance in the literature?</em></p>
+<p>A search for <a href="https://scholar.google.com/scholar?hl=en&amp;as_sdt=0%2C22&amp;q=dfdl+%22data+format%22&amp;btnG=">DFDL “data format” on Google Scholar</a> turns up a few academic papers.</p>
+<p>Interest in DFDL has not been primarily academic, but here are two published research works that used DFDL processing as part of their research infrastructure.</p>
+<ul>
+<li>T. Strayer et al., “Mission-Centric Content Sharing Across Heterogeneous Networks,” 2019 International Conference on Computing, Networking and Communications (ICNC), Honolulu, HI, USA, 2019, pp. 1034-1038, doi: 10.1109/ICCNC.2019.8685557.</li>
+<li>Jeter, S. et al. (2020). Semantic Links Across Distributed Heterogeneous Data. In: Herrera, F., Matsui , K., Rodríguez-González, S. (eds) Distributed Computing and Artificial Intelligence, 16th International Conference. DCAI 2019. Advances in Intelligent Systems and Computing, vol 1003 . Springer, Cham. https://doi.org/10.1007/978-3-030-23887-2_13</li>
+</ul>
+<p>The public <a href="https://github.com/DFDLSchemas">GitHub site for DFDL Schemas</a> has two popular DFDL schemas which happen to be for ISO data formats. ISO8583 (33 stars rating) and ISO9735/EDIFACT (22 stars rating)</p>
+<h5 id="credibility">7.4.2.4 Credibility</h5>
+<p><em>a) What is the extent and use of conformance tests or means of implementation verification?</em></p>
+<p>Interoperability of two implementations for 14 different DFDL schemas, including those for major data formats like ISO8583, and ISO9735/EDIFACT has been documented in OGF <a href="https://github.com/OpenGridForum/DFDL/blob/master/docs/current/gwde-dfdl-experience-6-v0.1-interoperability.docx">GWDE DFDL Experience Document 6</a> which was published in June 2019.</p>
+<p>Both the IBM and Apache Daffodil implementations make use of a test language called TDML (Test Data Markup Language) which enables test to be created and run against multiple DFDL implementations.</p>
+<p><em>b) What provisions does the specification have for testability?</em></p>
+<p>Not applicable.</p>
+<h4 id="alignment">7.4.3 Alignment</h4>
+<p><em>The specification should be aligned with existing JTC 1 standards or ongoing work and thus complement existing standards, architectures and style guides. Any conflicts with existing standards, architectures and style guides should be made clear and justified.</em></p>
+<h5 id="relationship-to-existing-standards">7.4.3.1 Relationship to Existing Standards</h5>
+<p><em>a) What International Standards are closely related to the specification and how?</em></p>
+<p>The DFDL 1.0 Specification is layered on top of W3C <a href="https://www.w3.org/TR/xmlschema-0/">XML Schema 1.0</a>, and the DFDL expression language is based on <a href="https://www.w3.org/TR/xpath20/">W3C XPath 2.0</a>.</p>
+<p>A related standard is ASN.1 ECN, i.e., ITU-T Recommendation X.692 | ISO/IEC 8825-3, Information technology – ASN.1 encoding rules: Specification of Encoding Control Notation (ECN). ASN1 ECN is an earlier attempt to create a declarative format description system.</p>
+<p><em>b) To what International Standards is the proposed specification a natural extension?</em></p>
+<p>W3C XML Schema and W3C XPath - see above.</p>
+<p><em>c) How the specification is related to emerging and ongoing JTC 1 projects?</em></p>
+<p>The OGF holds Class A liaison status with ISO/IEC JTC1 SC38 (cloud and distributed computing) by virtue of the similarities between cloud and the “grid computing” that formed the initial working area of OGF (job submission, moving and storing data, accounting, authentication and authorisation, etc.) The various OGF working groups have implemented cloud standards, such as the Open Cloud Computing Interface (OCCI).</p>
+<p>DFDL is highly complementary to cloud standards, as it enables cloud computing systems to more rapidly exchange and interoperate with data systems using existing mature data formats without a need to convert, update, or otherwise modify the data representation. DFDL can also be a powerful tool for supporting backward compatibility as formats evolve.</p>
+<h5 id="adaptability-and-migration">7.4.3.2 Adaptability and Migration</h5>
+<p><em>a) What adaptations (migrations) of either the specification or International Standards would improve the relationship between the specification and International Standards?</em></p>
+<p>Three ISO data format standards, EDIFACT ISO 9735, ISO 8583, and Swift ISO 15022 subset were integral to creation and acceptance of the DFDL standard at the OGF level. Going forward additional ISO data standards can be described using DFDL schemas.</p>
+<p><em>b) How much flexibility does the PAS Submitter have?</em></p>
+<p>The submission is made by the OGF DFDL Working Group.</p>
+<p><em>c) What are the longer-range plans for new/evolving specifications?</em></p>
+<p>The DFDL workgroup strives for stability in the specification, and robust compatibility between revisions.</p>
+<p>A standard mechanism is in place for proposing extensions to DFDL. This requires development of a prototype implementation that adheres to the guidelines ensuring that the proposed extension features are clearly identifiable in the text so users do not become dependent on these features accidentally. Experience reports about real use cases and the experience with the feature are required before consideration of incorporation of an extension into a future version of the DFDL standard.</p>
+<p>The OGF has already joined WG3 of SC38. Preliminary contact has been established with WG5. Upon acceptance of this PAS submission by JTC 1 we expect to increase the existing links with WG5 and are committed to creating Working Agreements with WG5 for DFDL.</p>
+<h5 id="substitution-and-replacement">7.4.3.3 Substitution and Replacement</h5>
+<p><em>a) What needs exist, if any, to replace an existing International Standard? Rationale?</em></p>
+<p>Not applicable.</p>
+<p><em>b) What is the need and feasibility of using only a portion of the specification as an International Standard?</em></p>
+<p>The DFDL 1.0 specification is not structured in a way that makes it amenable to adopting only a portion as an ISO standard.</p>
+<p>From the perspective of an implementor using the DFDL specification, DFDL is a large standard; hence, the DFDL 1.0 specification explicitly allows <em>conforming</em> subsets, and identifies the optional features that can be omitted from an implementation while still conforming to the DFDL specification.</p>
+<p><em>c) What portions, if any, of the specification do not belong in an International Standard (e.g. too implementation-specific)?</em></p>
+<p>There are no sections that are too implementation specific as witnessed by the existence of multiple separate implementations.</p>
+<h5 id="document-format-and-style">7.4.3.4 Document Format and Style</h5>
+<p><em>a) What plans, if any, exist to conform to JTC 1 document styles?</em></p>
+<p>The next significant revision of the DFDL specification will be created under ISO/IEC Directives, Part 2, document style guidance as a primary output format.</p>
+<p>Experience creating DFDL schemas for data formats has taught us that all large specifications should be machine-readable and processable so that formal artifacts like interactive help systems, rapid contextual access to the specification text from user interfaces, and even parts of the implementations can be generated from the machine-readable form of the specification. Our goal for the next major version is to generate the ISO/IEC Directives, Part 2, document style, and to enable generation of other formal artifacts, from a common machine-readable form of the specification, likely specified in XML.</p>
+<h4 id="maintenance-m">7.4.4 Maintenance (M)</h4>
+<p><em>a) Have changes occurred on the subject of maintenance since the PAS Submitter application or renewal, or for a Fast Track, since the most recent submission of the standard? (This is the place to mention any particular agreement reached with a JTC 1 subgroup).</em></p>
+<p>No.</p>
+<h2 id="end">END</h2>
