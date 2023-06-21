@@ -4,7 +4,8 @@
 16:00-17:00 UK
 
 ### Attendees
-* 
+* Steve Hanson
+* Mike Beckerle
 
 ### Apologies
 * 
@@ -13,7 +14,7 @@
 "I acknowledge that participation in this meeting is subject to the OGF Intellectual Property Policy"
 
 ### Meeting closed
-
+16:45 UK
 
 ### Next regular call
 22-June-2023 @ 16:00 UK 
@@ -23,8 +24,6 @@
 1. Implementations Update
 
 2. Review of updated DFDL 1.0 spec with errata
-
-3. AOB
 
 ## Actions
 
@@ -52,7 +51,9 @@ Next action: **335**
 | 2023-04-13 | Mike posted first version of PAS Explanatory Report https://github.com/OpenGridForum/DFDL/pull/41. Steve, Alan, Wolfgang to review and fill in TBDs.
 | 2023-04-27 | Review of PAS Explanatory Report https://github.com/OpenGridForum/DFDL/pull/41 in progress.
 | 2023-05-11 | No progress
-| 2023-06-08 | PAS Explanatory Report submitted for preliminary review by friendly ISO member. Comments received and incorporated. 
+| 2023-06-08 | PAS Explanatory Report submitted for preliminary review by friendly ISO member. Comments received and incorporated and report sent back. 
+
+### Closed actions
 
 |    326     | Rules for when an assert or discriminator is used on a prefixLengthType simple type (All) |
 | ---------- | --- |
@@ -69,9 +70,7 @@ Next action: **335**
 | 2023-04-13 | PR awaiting updates.
 | 2023-04-27 | Mike has created an attachment to the issue for the numbered example, which was reviewed. However Mike is concerned that the suggested approach is not sufficient because asserts are not evaluated during unparsing. Mike also thinks the suggested approach is overkill as there is one very specific use case that does not require the full generality. So, is there a simpler approach? In passing, identified an undocumented corner case; it is a Processing Error if a prefix-prefix-length type evaluates to 0.
 | 2023-05-11 | Agreed on a simpler approach whereby any facets on a simple type that is used as a prefix-length type get acted upon when parsing & unparsing and if violated cause a Processing Error. This becomes the normal behaviour, not under property control. Implementations may choose to provide their own switch if the change is problematic to their users. Noted that the DFDL schemas for ISO8583 use prefix-length types, but without facets so no behaviour change. Mike to provide words for spec, and to investigate what ASN.1 does when prefix-prefix-length type evaluates to 0.
-| 2023-06-08 | Words provided. One question arising. Should statement annotations be allowed on a prefix-length type?
-
-### Closed actions
+| 2023-06-08 | **Closed**. Words provided. One question arising. Should statement annotations be allowed on a prefix-length type? Agreed they should not be.
 
 ### Deferred actions
 
