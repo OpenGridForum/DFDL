@@ -83,23 +83,6 @@ Action 322 had been deferred. Reactivated.
 
 ### Closed actions
 
-|    326     | Rules for when an assert or discriminator is used on a prefixLengthType simple type (All) |
-| ---------- | --- |
-| 2022-02-24 | Mike and Steve believe this is allowed but the meaning of relative path components need to be clarified. IBM DFDL does not support asserts on global simple types so unable to test if it works. Apache Daffodil ignores them. A good way to look at the prefixLengthType is as a quasi-element, so assert feels like it should be allowed. If so need to decide if the expression can use absolute paths, relative paths other than '.' and variables. 
-| 2022-04-07 | Struggling to think of a use case where the expression is other than '.', meaning the quasi-element. This is a very restricted use, and suitable for an erratum on DFDL 1.0. Mike to write up. Aside: Steve wondered if validation could be used here instead. IBM DFDL has rich enough validation options that effectively make a validation failure behave like a parse error. Apache Daffodil does not though.
-| 2022-07-14 | Mike has created a tracker https://github.com/OpenGridForum/DFDL/issues/29. Following from Steve's suggestion, can you use an assert with dfdl:checkConstraints('.') be applied to the type?
-| 2022-08-11 | Mike has created a PR for the issue. Steve to review.
-| 2022-10-06 | Awaiting review by Steve
-| 2022-12-01 | No further progress
-| 2023-01-05 | Steve has reviewed and updated the PR (https://github.com/OpenGridForum/DFDL/pull/33) with comments. Need to clarify the order of statement annotation and format annotation 'execution' when prefix and prefix-prefix present.
-| 2023-01-19 | Mike to update PR #33 with a numbered example to make the annotation execution order clear.
-| 2023-03-02 | Not discussed
-| 2023-03-30 | Mike to update PR #33. Need to add a definition of 'synthetic element' too.
-| 2023-04-13 | PR awaiting updates.
-| 2023-04-27 | Mike has created an attachment to the issue for the numbered example, which was reviewed. However Mike is concerned that the suggested approach is not sufficient because asserts are not evaluated during unparsing. Mike also thinks the suggested approach is overkill as there is one very specific use case that does not require the full generality. So, is there a simpler approach? In passing, identified an undocumented corner case; it is a Processing Error if a prefix-prefix-length type evaluates to 0.
-| 2023-05-11 | Agreed on a simpler approach whereby any facets on a simple type that is used as a prefix-length type get acted upon when parsing & unparsing and if violated cause a Processing Error. This becomes the normal behaviour, not under property control. Implementations may choose to provide their own switch if the change is problematic to their users. Noted that the DFDL schemas for ISO8583 use prefix-length types, but without facets so no behaviour change. Mike to provide words for spec, and to investigate what ASN.1 does when prefix-prefix-length type evaluates to 0.
-| 2023-06-08 | **Closed**. Words provided. One question arising. Should statement annotations be allowed on a prefix-length type? Agreed they should not be.
-
 ### Deferred actions
 
 |    250     | Standardise on a single tdml format for DFDL tests (All) |
