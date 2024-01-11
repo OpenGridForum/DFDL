@@ -1,25 +1,24 @@
 # OGF DFDL Working Group Call Agenda and Minutes 11 January 2024
 
 ### Meeting Time
-11:00 - 12:00 EDT.US (11:00-04:00)
+11:00 - 12:00 EDT.US (UTC-5 so 16:00 - 17:00 UTC)
 
 ### Attendees
 * Mike Beckerle
-<!--
 * Bradd Kadlecik
-* Liam O'Neill
 * Steve Hanson
+<!--
+* Liam O'Neill
 -->
-
 
 ### IPR statement
 "I acknowledge that participation in this meeting is subject to the OGF Intellectual Property Policy"
 
 ### Meeting closed
-XX:XX EDT.US
+11:55 EDT.US
 
-### Next regular call
-2024-01-25 @ 11:00 EDT.US(UTC-4) (15:00 UTC)
+### Next regular call (Monthly on 2nd Thursday)
+2024-02-11 @ 11:00 EDT.US(UTC-5) (16:00 UTC)
 
 ## Agenda
 
@@ -30,11 +29,11 @@ XX:XX EDT.US
 
 ## Actions
 
-Next action: **335**
+Next action: **336**
 
 ### Actions raised at this meeting
 
-Action 322 had been deferred. Reactivated. 
+Action 335 Created for clarifications around fn:count (and related functions that take array/optional or node sequence)
 
 ### Current actions
 
@@ -58,6 +57,7 @@ Action 322 had been deferred. Reactivated.
 | 2023-05-11 | No progress
 | 2023-06-08 | PAS Explanatory Report submitted for preliminary review by friendly ISO member. Comments received and incorporated and report sent back. 
 | 2023-06-22 | Nothing has been received back from ISO yet. 
+| 2024-01-11 | No update. Wolfgang will inquire again. 
 
 
 |    322     | DFDL 2.0 candidate: Handle embedded XML and JSON in a natural way (Mike) |
@@ -71,6 +71,7 @@ Action 322 had been deferred. Reactivated.
 | 2022-11-03 | Needs evaluating over the next 6 months as its current implementation is not in a form that could be incorporated into DFDL spec. Also breaks the idiom that the DFDL schema is also an XML schema for the infoset, because DFDL schema says the embedded XML is just a string. 
 | 2022-12-01 | Nothing likely to happen for this action in short term, so moving to deferred actions.
 | 2023-06-22 | Reactivated this action. Mike Beckerle to write up Daffodil implementation as experimental feature document that we can then review. Mike suggests this feature will likely evolve from what Daffodil has implemented, but the current way it works in Daffodil will be worth analyzing. 
+| 2024-01-11 | No progress reported. 
 
 ### Closed actions
 
