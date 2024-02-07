@@ -1,14 +1,15 @@
-# OGF DFDL Working Group Call Agenda 07 February 2024
+# OGF DFDL Working Group Call Agenda & Minutes 07 February 2024
 
 ### Meeting Time
 11:00 - 12:00 EDT.US (UTC-5 so 16:00 - 17:00 UTC)
 
 
 
-<!--
+
 ### Attendees
 * Mike Beckerle
 * Bradd Kadlecik
+<!--
 * Steve Hanson
 * Liam O'Neill
 -->
@@ -16,33 +17,72 @@
 ### IPR statement
 "I acknowledge that participation in this meeting is subject to the OGF Intellectual Property Policy"
 
-<!--
+
 ### Meeting closed
-11:55 EDT.US
--->
+11:45 EDT.US
 
 ### Next regular call (Monthly on 2nd Thursday)
 2024-03-14 @ 11:00 EDT.US(UTC-5) (16:00 UTC)
 
-## Agenda
+## Agenda & Minutes
 
 1. ISO JTC1 PAS update and next steps (action 325)
+
+Agreed to close action 325, and open new action 336 around next steps for ISO related to 
+announcement, branding, etc., and action 337 about how we operate with ISO JTC1 (and possibly a technical committee within that) going forward.)
+
 2. Discuss: pathological DFDL behavior (from email thread)
+
+Action 338 will be created to work on this issue, propose fixes to the super-linear infoset 
+explosion issue. 
+
 2. Implementations Updates 
 2. AOB
 
 ## Actions
 
-Next action: **336**
+Next action: **339**
 
 ### Actions raised at this meeting
 
-TBD
+- 336 - ISO status: announcing this, branding requirements
+- 337 - ISO Workgroup operations - how we change how we work going forward to interoperate 
+  properly with ISO. 
+- 338 - Pathological DFDL behavior issue - how to fix without losing useful transformation 
+  capability. 
 
 ### Current actions
 
-|    325     | Submit OGF DFDL 1.0 to ISO for adoption as an ISO standard (Mike, Steve) |
+|    322     | DFDL 2.0 candidate: Handle embedded XML and JSON in a natural way (Mike) |
 | ---------- | --- |
+| 2021-07-08 | This was something that was included in the first DFDL 1.0 spec drafts but dropped.
+| 2021-10-14 | Mike has created GitHub issue https://github.com/OpenGridForum/DFDL/issues/27.
+| 2022-02-24 | Create an experimental feature document
+| 2022-07-14 | Waiting for prototype implementation
+| 2022-08-11 | Apache Daffodil implementation in code review and being tested 
+| 2022-10-06 | Will be in next Apache Daffodil release as an experimental feature
+| 2022-11-03 | Needs evaluating over the next 6 months as its current implementation is not in a form that could be incorporated into DFDL spec. Also breaks the idiom that the DFDL schema is also an XML schema for the infoset, because DFDL schema says the embedded XML is just a string. 
+| 2022-12-01 | Nothing likely to happen for this action in short term, so moving to deferred actions.
+| 2023-06-22 | Reactivated this action. Mike Beckerle to write up Daffodil implementation as experimental feature document that we can then review. Mike suggests this feature will likely evolve from what Daffodil has implemented, but the current way it works in Daffodil will be worth analyzing. 
+| 2024-01-11 | No progress reported. 
+| 2024-02-07 | No progress reported.
+
+|     336    | ISO status: announcing this, branding requirements
+|------------|---|
+| 2024-02-07 | Created action on when and how we announce the ISO status, what trademarks and branding we can/should use both in announcements and on our materials going forward. Bradd K. has upcoming TPF Users Group 2024 Conference in May and wants to be able to announce the ISO status there.
+
+| 337        | ISO Workgroup operations 
+|------------|---|
+| 2024-02-07 | Creaded action on how we change how we work going forward to interoperate properly with ISO. Alan Sill started an email thread, but has not received a response. 
+
+| 338        | Pathological DFDL behavior (Non-linear)
+|------------|---|
+| 2024-02-07 | Created to address this issue. Bradd K mentioned that customers use the transformation capabilities of DFDL to create and populate structures that are different from the input format, and in unparsing to populate the output from structures that are different. So any solution to the pathological DFDL behavior problem can't prevent these kinds of transformations since users are depending on them. However, there is nothing that requires creation of non-linearly larger structures.
+
+### Closed actions
+
+| 325        | Submit OGF DFDL 1.0 to ISO for adoption as an ISO standard (Mike, Steve) |
+|------------| --- |
 | 2021-11-11 | Alan & Wolfgang attended the call. OGF is looking to re-home its successful standards to more relevant organisations. The proposal is that DFDL moves to ISO.  OGF has well-established connections with ISO, and Wolfgang is an attendee at working group meetings. There is a specific ISO process that lets them adopt a public, freely available standard whilst maintaining its public, free status. In contrast to ISO-owned standards which are chargeable. The public, free status continues to apply to ongoing revisions. DFDL feels like a good fit for ISO, noted that DFDL schemas exist for ISO 8583 and EDIFACT.  There is no need initially to change DFDL to use ISO templates, this can happen later. Noted that this is not a process for dumping old standards onto ISO, it applies to standards with an active community. The end result is that DFDL continues to evolve and be freely available but there are revisions that are effectively 'blessed' by ISO. An example of this in practice is Open Virtualization Format Specification from DMTF.  Adoption of a standard by ISO is ultimately determined by national body votes. Next steps: OGF will write to ISO-IEC JST1 with the proposal. DFDL WG will reach out to the chair of SC38 WG5 which is considered the most likely place DFDL will end up in ISO. The WG5 chair is Fernando Gebara Filho. DFDL WG to consider attending the appropriate ISO meetings. Useful links: ISO Process: https://www.iec.ch/members_experts/refdocs/iec/Consolidated_JTC1_Supplement_2020_publication.pdf, DMTF ANSI/ISO adoptions: https://www.dmtf.org/about/register/apresources. 
 | 2022-02-24 | OGF are still working on the first step of the process, the application for OGF becoming a PAS submitter. They expect to submit the application letter begin of March. Once OGF will be a recognised PAS submitter there will be an assigned mentor who will guide through the next steps which mostly will have to be taken by the DFDL WG. Wolfgang sent an email with questions that the WG need to answer. Questions discussed and answers sent back to Wolfgang. 
 | 2022-04-07 | Steve to chase OGF for latest position. 
@@ -62,23 +102,11 @@ TBD
 | 2023-06-08 | PAS Explanatory Report submitted for preliminary review by friendly ISO member. Comments received and incorporated and report sent back. 
 | 2023-06-22 | Nothing has been received back from ISO yet. 
 | 2024-01-11 | No update. Wolfgang will inquire again. 
-| 2024-01-11 | ISO vote approved on Dec 12 2023. https://www.iso.org/standard/87444.html indicates status "Under Development". Mike Beckerle sent requested reformatting of GFD.240 as A4 size and with all changes accepted. 
+| 2024-01-22 | ISO vote approved on Dec 12 2023. https://www.iso.org/standard/87444.html indicates status "Under Development". 
+| 2024-01-30 | Mike Beckerle sent JTC1 secretary a requested reformatting of GFD.240 as A4 size and with all changes accepted. 
+| 2024-02-07 | ISO status changed to PRF (from DIS) indicating ISO will soon publish their version of the document.
+| 2024-02-07 | Action closed. Future ISO issues will be addressed in separate actions. 
 
-
-|    322     | DFDL 2.0 candidate: Handle embedded XML and JSON in a natural way (Mike) |
-| ---------- | --- |
-| 2021-07-08 | This was something that was included in the first DFDL 1.0 spec drafts but dropped.
-| 2021-10-14 | Mike has created GitHub issue https://github.com/OpenGridForum/DFDL/issues/27.
-| 2022-02-24 | Create an experimental feature document
-| 2022-07-14 | Waiting for prototype implementation
-| 2022-08-11 | Apache Daffodil implementation in code review and being tested 
-| 2022-10-06 | Will be in next Apache Daffodil release as an experimental feature
-| 2022-11-03 | Needs evaluating over the next 6 months as its current implementation is not in a form that could be incorporated into DFDL spec. Also breaks the idiom that the DFDL schema is also an XML schema for the infoset, because DFDL schema says the embedded XML is just a string. 
-| 2022-12-01 | Nothing likely to happen for this action in short term, so moving to deferred actions.
-| 2023-06-22 | Reactivated this action. Mike Beckerle to write up Daffodil implementation as experimental feature document that we can then review. Mike suggests this feature will likely evolve from what Daffodil has implemented, but the current way it works in Daffodil will be worth analyzing. 
-| 2024-01-11 | No progress reported. 
-
-### Closed actions
 
 ### Deferred actions
 
