@@ -33,7 +33,11 @@ Steve H noted the
 
 Mike will raise these to ISO (Lisa) this week.
 
-2. Review of open action items (see dated comments below)
+2. Dynamic dfdl:extraEscapedCharacters
+
+Will be action 339 to investigate and possibly propose a change/fix.
+
+3. Review of open action items (see dated comments below)
 
 3. Dynamic dfdl:extraEscapedCharacters
 
