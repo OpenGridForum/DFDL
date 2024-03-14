@@ -33,13 +33,15 @@ Steve H noted the
 
 Mike will raise these to ISO (Lisa) this week.
 
-2. Dynamic dfdl:extraEscapedCharacters
+2. Review of open action items (see dated comments below)
+
+3. Dynamic dfdl:extraEscapedCharacters
 
 Will be action 339 to investigate and possibly propose a change/fix.
 
-3. Review of open action items (see dated comments below)
+4. Review of open action items (see dated comments below)
 
-3. Additional topics added: 
+5. Additional topics added: 
 
    Steve asked for updates on the 
    - ICU-bug issue and the 
@@ -48,7 +50,7 @@ Will be action 339 to investigate and possibly propose a change/fix.
    These were resolved for Daffodil users, but the resolution not sent 
    back to the DFDL WG. Mike B will find the resolutions and circulate to the WG.
 
-4. Suggested topic for next meeting: DFDL 2.0 - what is being proposed for it. 
+6. Suggested topic for next meeting: DFDL 2.0 - what is being proposed for it. 
 
 ## Actions
 
@@ -171,5 +173,3 @@ Next action: **340**
 | 2020-04-16 | Nothing in core XPath 2.0 that allows user-defined functions, that is left to XSL etc. A write-up is here: https://cwiki.apache.org/confluence/display/DAFFODIL/Proposal%3A+Feature+to+Support+User+Defined+Functions. Mike has an example where values need to be normalised for later comparison. Bradd has an example where floating point precision needs adjustment. Steve is concerned that DFDL is straying too far into the transformation layer, maybe "user-defined-functions-for-DFDL" should be a separate spec? 
 | 2020-09-03 | No further progress. 
 | 2020-09-17 | Nothing likely to happen for this action in medium term, so moving to deferred actions.
-
-
