@@ -33,7 +33,11 @@ Steve H noted the
 
 Mike will raise these to ISO (Lisa) this week.
 
-2. Review of open action items (see dated comments below)
+2. Dynamic dfdl:extraEscapedCharacters
+
+Will be action 339 to investigate and possibly propose a change/fix.
+
+3. Review of open action items (see dated comments below)
 
 3. Additional topics added: 
 
@@ -48,11 +52,11 @@ Mike will raise these to ISO (Lisa) this week.
 
 ## Actions
 
-Next action: **339**
+Next action: **340**
 
 ### Actions raised at this meeting
 
-- none
+- 339 - Dynamic value for dfdl:extraEscapedCharacters
 
 ### Current actions
 
@@ -85,6 +89,10 @@ Next action: **339**
 |------------|---|
 | 2024-02-07 | Created to address this issue. Bradd K mentioned that customers use the transformation capabilities of DFDL to create and populate structures that are different from the input format, and in unparsing to populate the output from structures that are different. So any solution to the pathological DFDL behavior problem can't prevent these kinds of transformations since users are depending on them. However, there is nothing that requires creation of non-linearly larger structures.
 | 2024-03-14 | Briefly discussed. No concrete proposals yet.
+
+| 339        | Dynamic value for dfdl:extraEscapedCharacters
+|------------|---|
+| 2024-03-14 | Created action. Discussed this need. EDIFACT is motivating example. Example DFDL schemas on github site have the default escape characters listed in the dfdl:extraEscapedCharacters property, which seems like a mistake. Steve H. to investigate with IBM contacts. 
 
 ### Closed actions
 
