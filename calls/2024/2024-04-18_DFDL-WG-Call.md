@@ -4,21 +4,25 @@
 11:00 - 12:00 EDT.US (UTC-4) 
 
 ### Attendees
-<!--
 * Mike Beckerle
-* Steve Hanson
 * Bradd Kadlecik
+<!-- 
+* Steve Hanson
 * Liam O'Neill
 -->
 
 ### IPR statement
 "I acknowledge that participation in this meeting is subject to the OGF Intellectual Property Policy"
 
+(We believe OGF IPR policy is only more restrictive than ISO policy - to verify - see action 
+item 337)
+
 ### Meeting closed
-xx:xx EDT.US
+11:53 EDT.US
 
 ### Next regular call (Monthly on 2nd Thursday)
 2024-05-09 @ 11:00 EDT.US(UTC-4) 
+* Bradd K. cannot attend 
 
 ## Agenda & Minutes
 
@@ -32,11 +36,15 @@ xx:xx EDT.US
    - ICU-bug issue and the 
    - textNumberPattern issue
    
-   Mike B circulated emails to the WG. Any further discussion? 
+   Mike B circulated emails to the WG. Any further discussion?
+   (Steve not on the call so not discussed.)
 
-4. Suggested topic: DFDL 2.0 - what is being proposed for it. 
+4. Suggested topic: DFDL 2.0 - what is being proposed for it.
+   (Not discussed on this call - deferred to a future call and email
+    discussion.)
 
-5. Administrivia - MikeB unable to login as dfdl-wg email administrator. (How to fix?)
+5. Administrivia - MikeB unable to login as dfdl-wg email administrator. (How to fix? - not 
+   discussed on call)
 
 ## Actions
 
@@ -62,58 +70,35 @@ Next action: **340**
 | 2024-01-11 | No progress reported. 
 | 2024-02-07 | No progress reported.
 | 2024-03-14 | No progress reported.
-| 2024-04-18 | ...
+| 2024-04-18 | No progress reported. 
 
 | 336         | ISO status: announcing this, branding requirements
 |-------------|---|
 | 2024-02-07  | Created action on when and how we announce the ISO status, what trademarks and branding we can/should use both in announcements and on our materials going forward. Bradd K. has upcoming TPF Users Group 2024 Conference in May and wants to be able to announce the ISO status there.
 | 2024-03-14  | Mike did some investigation and did not find branding/promotion guidelines. Other PAS groups (OMG, w3c) have some process descriptions of how their standards are ISO standards and what the differences are. Suggest we can copy that notion. 
-| 2024-04-18 | ISO page for DFDL updated to final 'published' status: https://www.iso.org/standard/87444.html. Need to verify that final ISO version has errors (from prior review draft) fixed. 
+| 2024-04-18 | ISO page for DFDL updated to final 'published' status: https://www.iso.org/standard/87444.html. Need to verify that final ISO version has errors (from prior review draft) fixed. (Proof copy of ISO-spec is being uploaded)  BraddK to address IBM updates to reference ISO standard. MikeB to handle ASF references, wikipedia update, Owl Cyber references. 
 
 
 | 337        | ISO Workgroup operations 
 |------------|---|
 | 2024-02-07 | Creaded action on how we change how we work going forward to interoperate properly with ISO. Alan Sill started an email thread, but has not received a response. 
 | 2024-03-14 | No progress reported.
-| 2024-04-18 | ...
+| 2024-04-18 | MikeB to contact SC 38 chair re: how to engage going forward.
 
 | 338        | Pathological DFDL behavior (Non-linear)
 |------------|---|
 | 2024-02-07 | Created to address this issue. Bradd K mentioned that customers use the transformation capabilities of DFDL to create and populate structures that are different from the input format, and in unparsing to populate the output from structures that are different. So any solution to the pathological DFDL behavior problem can't prevent these kinds of transformations since users are depending on them. However, there is nothing that requires creation of non-linearly larger structures.
 | 2024-03-14 | Briefly discussed. No concrete proposals yet.
+| 2024-04-18 | No progress reported. 
 
 | 339        | Dynamic value for dfdl:extraEscapedCharacters
 |------------|---|
 | 2024-03-14 | Created action. Discussed this need. EDIFACT is motivating example. Example DFDL schemas on github site have the default escape characters listed in the dfdl:extraEscapedCharacters property, which seems like a mistake. Steve H. to investigate with IBM contacts. 
+| 2024-04-18 | No progress reported. 
 
 ### Closed actions
 
-| 325        | Submit OGF DFDL 1.0 to ISO for adoption as an ISO standard (Mike, Steve) |
-|------------| --- |
-| 2021-11-11 | Alan & Wolfgang attended the call. OGF is looking to re-home its successful standards to more relevant organisations. The proposal is that DFDL moves to ISO.  OGF has well-established connections with ISO, and Wolfgang is an attendee at working group meetings. There is a specific ISO process that lets them adopt a public, freely available standard whilst maintaining its public, free status. In contrast to ISO-owned standards which are chargeable. The public, free status continues to apply to ongoing revisions. DFDL feels like a good fit for ISO, noted that DFDL schemas exist for ISO 8583 and EDIFACT.  There is no need initially to change DFDL to use ISO templates, this can happen later. Noted that this is not a process for dumping old standards onto ISO, it applies to standards with an active community. The end result is that DFDL continues to evolve and be freely available but there are revisions that are effectively 'blessed' by ISO. An example of this in practice is Open Virtualization Format Specification from DMTF.  Adoption of a standard by ISO is ultimately determined by national body votes. Next steps: OGF will write to ISO-IEC JST1 with the proposal. DFDL WG will reach out to the chair of SC38 WG5 which is considered the most likely place DFDL will end up in ISO. The WG5 chair is Fernando Gebara Filho. DFDL WG to consider attending the appropriate ISO meetings. Useful links: ISO Process: https://www.iec.ch/members_experts/refdocs/iec/Consolidated_JTC1_Supplement_2020_publication.pdf, DMTF ANSI/ISO adoptions: https://www.dmtf.org/about/register/apresources. 
-| 2022-02-24 | OGF are still working on the first step of the process, the application for OGF becoming a PAS submitter. They expect to submit the application letter begin of March. Once OGF will be a recognised PAS submitter there will be an assigned mentor who will guide through the next steps which mostly will have to be taken by the DFDL WG. Wolfgang sent an email with questions that the WG need to answer. Questions discussed and answers sent back to Wolfgang. 
-| 2022-04-07 | Steve to chase OGF for latest position. 
-| 2022-07-14 | From Wolfgang: "The process was a bit slower than foreseen, mostly because of holiday absence both on side the of OGF and JTC1. Regarding the application letter I am waiting for the confirmation from our guide that the last  version we have sent him on Monday is well suited for our official application as PAS submitter. If we have his confirmation OGF will officially send the application to JTC1. Thereafter it will subject to a voting of the national bodies which my take additional one or two months." Meantime in parallel Steve will contact the WG5 chair.
-| 2022-08-11 | ISO have received the application from OGF for it to be allowed to be a PAS submitter. Steve has contacted the WG5 chair who is now following progress.
-| 2022-10-06 | Application still in ISO pipeline. 
-| 2022-11-03 | Expecting to hear by next WG call. 
-| 2022-12-01 | Not heard anything yet. Steve to send chaser.
-| 2023-01-05 | OGF accepted as a PAS submitter. Joined on the call by Alan Sill & Wolfgang Ziegler. Alan suggested DFDL WG joined the SC38 WG5 calls, introduced DFDL 1.0 to the group, and followed its suggestions as to how to proceed. Steve to approach WG5 chair Fernando Gebara Filho. Wolfgang reminded us that adoption of DFDL would be by national body vote, so making relevant national bodies like ANSI & BSI aware might be useful. Also need to make sure there is a free copy of the standard publicly available. Noted that there is already a good synergy with ISO standards because DFDL schemas exist for ISO standards EDIFACT and ISO8583.
-| 2023-01-19 | The next SC38 Plenary Meeting is in Brisbane, AU from Feb 13 to 17, with remote access. On Thursday Feb 16, WG5 will meet to discuss the activities for the following months. Fernando suggested that we join the Zoom call. Steve to email Fernando nearer the time.
-| 2023-02-02 | Steve has emailed Fernando. Suggest cancelling next DFDL WG call as it also on Feb 16th.
-| 2023-03-02 | The anticipated WG5 call didn't happen, as we found out that the decision to adopt is taken at a higher level. Wolfgang has been in discussion with ISO and we have received documents including SD9 which explain next steps. Awaiting document templates before proceeding further. Agreed to hold separate bi-weekly calls to progress the ISO submission, starting 2023-03-09, so that the regular WG bi-weekly calls are not taken over by this action, Steve to send calendar invite. Mike to create a new folder in the DFDL GitHub repo specifically for the ISO submission.
-| 2023-03-30 | Covered by updates to https://github.com/OpenGridForum/DFDL/blob/master/ISO-process/Call-Notes.md.
-| 2023-04-13 | Mike posted first version of PAS Explanatory Report https://github.com/OpenGridForum/DFDL/pull/41. Steve, Alan, Wolfgang to review and fill in TBDs.
-| 2023-04-27 | Review of PAS Explanatory Report https://github.com/OpenGridForum/DFDL/pull/41 in progress.
-| 2023-05-11 | No progress
-| 2023-06-08 | PAS Explanatory Report submitted for preliminary review by friendly ISO member. Comments received and incorporated and report sent back. 
-| 2023-06-22 | Nothing has been received back from ISO yet. 
-| 2024-01-11 | No update. Wolfgang will inquire again. 
-| 2024-01-22 | ISO vote approved on Dec 12 2023. https://www.iso.org/standard/87444.html indicates status "Under Development". 
-| 2024-01-30 | Mike Beckerle sent JTC1 secretary a requested reformatting of GFD.240 as A4 size and with all changes accepted. 
-| 2024-02-07 | ISO status changed to PRF (from DIS) indicating ISO will soon publish their version of the document.
-| 2024-02-07 | Action closed. Future ISO issues will be addressed in separate actions. 
-
+None this meeting.
 
 ### Deferred actions
 
