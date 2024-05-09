@@ -18,9 +18,7 @@
 item 337)
 
 ### Meeting closed
-<!-- 
 11:56 EDT.US
--->
 
 ### Next regular call (Monthly on 2nd Thursday)
 2024-06-13 @ 11:00 EDT.US(UTC-4) 
