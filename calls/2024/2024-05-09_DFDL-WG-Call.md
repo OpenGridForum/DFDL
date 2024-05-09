@@ -37,19 +37,19 @@ item 337)
    Mike B circulated emails to the WG. Any further discussion?
    (Steve not on the prior call so not discussed.)
 
-Resolved.
+   Resolved.
 
 3. Topic: DFDL 2.0 
 
-- what is being proposed for it? 
-- How to proceed? 
-- Review of current trackers labeled 2.0. 
+   - what is being proposed for it? 
+   - How to proceed? 
+   - Review of current trackers labeled 2.0. 
 
-See new action 340 below. 
+   See new action 340 below. 
 
 5. Administrivia (if needed)
 
-None
+   None
 
 ## Actions
 
@@ -108,10 +108,9 @@ Noted on call that we need to update DFDL pages on OGF site to mention ISO statu
 | 2024-04-18 | No progress reported. 
 | 2024-05-09 | SMH reported on analysis of this - unclear why EDIFACT model has any extraEscapedCharacters - they seem unnecessary. Consistency with escape schemes and delimiters does require this to be a dynamic property. Decision needed as to Erratum in 1.0 or 1.1 or 2.0. 
 
-| 340        | DFDL 2.0 feature priority - add "in use" labels to experimental features that are already being used/implemented, as a priority scheme. 
-Also add labels for non-experimental things that are high-priority for any user community. 
+| 340        | DFDL 2.0 feature priority 
 |------------|---|
-| 2024-05-09 | Created action item. 
+| 2024-05-09 | Action is to add "in use" labels to experimental features that are already being used/implemented, as a priority scheme. Also add labels for non-experimental things that are high-priority for any user community. 
 
 ### Closed actions
 
