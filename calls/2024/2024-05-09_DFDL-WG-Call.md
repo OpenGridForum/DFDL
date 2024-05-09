@@ -1,13 +1,13 @@
-# OGF DFDL Working Group Call Agenda 09 May 2024
+# OGF DFDL Working Group Call Agenda and Minutes 09 May 2024
 
 ### Meeting Time
 11:00 - 12:00 EDT.US (UTC-4) 
 
 ### Attendees
-<!-- 
 * Mike Beckerle
-* Bradd Kadlecik
 * Steve Hanson
+<!--
+* Bradd Kadlecik
 * Liam O'Neill
 -->
 
@@ -19,7 +19,7 @@ item 337)
 
 ### Meeting closed
 <!-- 
-11:53 EDT.US
+11:56 EDT.US
 -->
 
 ### Next regular call (Monthly on 2nd Thursday)
@@ -39,21 +39,28 @@ item 337)
    Mike B circulated emails to the WG. Any further discussion?
    (Steve not on the prior call so not discussed.)
 
+Resolved.
+
 3. Topic: DFDL 2.0 
 
 - what is being proposed for it? 
 - How to proceed? 
 - Review of current trackers labeled 2.0. 
 
+See new action 340 below. 
+
 5. Administrivia (if needed)
+
+None
 
 ## Actions
 
-Next action: **340**
+Next action: **341**
 
 ### Actions raised at this meeting
 
-- 339 - Dynamic value for dfdl:extraEscapedCharacters
+- action 340 - DFDL 2.0 feature priority - add "in use" labels to experimental features that are already being used/implemented, as a priority scheme. 
+Also add labels for non-experimental things that are high-priority for any user community. 
 
 ### Current actions
 
@@ -72,12 +79,15 @@ Next action: **340**
 | 2024-02-07 | No progress reported.
 | 2024-03-14 | No progress reported.
 | 2024-04-18 | No progress reported. 
+| 2024-05-09 | No progress reported. 
 
 | 336         | ISO status: announcing this, branding requirements
 |-------------|---|
 | 2024-02-07  | Created action on when and how we announce the ISO status, what trademarks and branding we can/should use both in announcements and on our materials going forward. Bradd K. has upcoming TPF Users Group 2024 Conference in May and wants to be able to announce the ISO status there.
 | 2024-03-14  | Mike did some investigation and did not find branding/promotion guidelines. Other PAS groups (OMG, w3c) have some process descriptions of how their standards are ISO standards and what the differences are. Suggest we can copy that notion. 
 | 2024-04-18 | ISO page for DFDL updated to final 'published' status: https://www.iso.org/standard/87444.html. Need to verify that final ISO version has errors (from prior review draft) fixed. (Proof copy of ISO-spec is being uploaded)  BraddK to address IBM updates to reference ISO standard. MikeB to handle ASF references, wikipedia update, Owl Cyber references. 
+| 2024-05-09 | From email threads: Verified that ISO version published has most errors fixed (just some bad table breaks left unfixed.) 
+Noted on call that we need to update DFDL pages on OGF site to mention ISO status. 
 
 
 | 337        | ISO Workgroup operations 
@@ -85,17 +95,25 @@ Next action: **340**
 | 2024-02-07 | Creaded action on how we change how we work going forward to interoperate properly with ISO. Alan Sill started an email thread, but has not received a response. 
 | 2024-03-14 | No progress reported.
 | 2024-04-18 | MikeB to contact SC 38 chair re: how to engage going forward.
+| 2024-05-09 | Mike to try again. 
 
 | 338        | Pathological DFDL behavior (Non-linear)
 |------------|---|
 | 2024-02-07 | Created to address this issue. Bradd K mentioned that customers use the transformation capabilities of DFDL to create and populate structures that are different from the input format, and in unparsing to populate the output from structures that are different. So any solution to the pathological DFDL behavior problem can't prevent these kinds of transformations since users are depending on them. However, there is nothing that requires creation of non-linearly larger structures.
 | 2024-03-14 | Briefly discussed. No concrete proposals yet.
 | 2024-04-18 | No progress reported. 
+| 2024-05-09 | No progress reported. Needs more research. 
 
 | 339        | Dynamic value for dfdl:extraEscapedCharacters
 |------------|---|
 | 2024-03-14 | Created action. Discussed this need. EDIFACT is motivating example. Example DFDL schemas on github site have the default escape characters listed in the dfdl:extraEscapedCharacters property, which seems like a mistake. Steve H. to investigate with IBM contacts. 
 | 2024-04-18 | No progress reported. 
+| 2024-05-09 | SMH reported on analysis of this - unclear why EDIFACT model has any extraEscapedCharacters - they seem unnecessary. Consistency with escape schemes and delimiters does require this to be a dynamic property. Decision needed as to Erratum in 1.0 or 1.1 or 2.0. 
+
+| 340        | DFDL 2.0 feature priority - add "in use" labels to experimental features that are already being used/implemented, as a priority scheme. 
+Also add labels for non-experimental things that are high-priority for any user community. 
+|------------|---|
+| 2024-05-09 | Created action item. 
 
 ### Closed actions
 
