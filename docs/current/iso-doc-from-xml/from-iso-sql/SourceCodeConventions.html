@@ -1,0 +1,418 @@
+<h1>Source Code Conventions</h1>
+
+<p>The following describes the conventions for the various types of source files.  </p>
+
+<p>There is great advantage to be had by obeying certain source code conventions. <br>
+Among the benefits of these source conventions is are ease of reading and of editing,
+the ability to determine the source of current content in the standard, and the enhanced
+ease with which multiple editors can work on the same documents.  </p>
+
+<p>Editors are requested to abide by these conventions and to correct deviation from
+these conventions that they find.  </p>
+
+<h2>All Source Files</h2>
+
+<ul>
+<li><p>Source lines should not be longer than 100 characters. <br>
+Explicit line breaks should be used to maintain this. <br>
+However, there are exceptions in XML Source Files and XSL Source Files.
+See the relevant sections for details.</p></li>
+<li><p>The line break sequence should be CR LF <br>
+That is: the Unicode characters \u000D and \u000A. 
+This is known as "Windows line ending convention".</p></li>
+</ul>
+
+<h2>XML Source Files</h2>
+
+<ul>
+<li><p>Source lines should not be longer than 100 characters. <br>
+Explicit line breaks should be used to maintain this. <br>
+An exception to this rule is text within the tags: <br>
+     <code>&lt;code&gt;</code> ... <code>&lt;/code&gt;</code> <br>
+     <code>&lt;hostcode&gt;</code> ... <code>&lt;/hostcode&gt;</code> <br>
+     <code>&lt;xmlcode&gt;</code> ... <code>&lt;/xmlcode&gt;</code> <br>
+     <code>&lt;schemacode&gt;</code> ... <code>&lt;/schemacode&gt;</code> <br>
+In this text spaces and newlines are significant and must be preserved. <br>
+Thus lines which must appear as one in the output must be kept on a single line. <br>
+Another exception is text within the <code>&lt;URI&gt;</code> ... <code>&lt;/URI&gt;</code> tag. <br>
+A URI may not contain spaces and so, in exceptional cases, the contained text may exceed
+the 100 character limit. <br>
+On very rare occasions this rule may also need to be broken. <br>
+In these cases the source which does not conform must be preceded by the line: <br>
+  <code>&lt;!-- LINE LENGTH CHECK OFF --&gt;</code> <br>
+and followed by the line: <br>
+  <code>&lt;!-- LINE LENGTH CHECK ON --&gt;</code>  </p></li>
+<li><p>Indentation of child elements is not used. <br>
+Partially because of the potentially arbitrarily deep nesting that might occur,
+and partially because it avoids the problem of the use of spaces vs tabs.</p></li>
+<li><p>New sentences should begin a new line.</p></li>
+<li><p>The use of the ' and " characters in text is discouraged as it sometimes leads to corruption when
+source is moved between different systems. <br>
+Simple quoted text should normally use the <code>&lt;quote&gt;</code>... <code>&lt;/quote&gt;</code> tags that give curly double 
+quotes but the <code>&lt;squote&gt;</code>... <code>&lt;/squote&gt;</code> tags are also available for single curly quotes 
+(useful inside curly double quoted text). <br>
+To represent character strings the tags <code>&lt;string&gt;</code>... <code>&lt;/string&gt;</code> are available for marking 
+strings in languages that use single quotes, the tags <code>&lt;stringd&gt;</code>... <code>&lt;/stringd&gt;</code> are available 
+for marking strings in languages that use double quotes, and to represent delimited identifiers,
+the tags <code>&lt;delimId&gt;</code>... <code>&lt;/delimId&gt;</code> are available. <br>
+For a punctuation apostrophe (e.g. as a possessive) the tag <code>&lt;apos/&gt;</code> should be used and if 
+a prime is need, use the <code>&lt;prime/&gt;</code> tag. <br>
+There are a couple of exceptions:  </p>
+
+<ul>
+<li>Inside <code>&lt;comment&gt;</code>, <code>&lt;bar&gt;</code>, and <code>&lt;mergeInstr&gt;</code> elements the above markup is not available and 
+so the ' character is acceptable.  </li>
+<li>In <code>&lt;lblitem&gt;</code> elements if the label includes " then the @label attribute must use the ' 
+character as its delimiter.</li>
+</ul></li>
+<li><p>The tag <code>&lt;ellipsis/&gt;</code> should be used in preference to three full stops (...)</p></li>
+<li><p>Two blank lines should precede every <code>&lt;clause&gt;</code> element, every <code>&lt;annex&gt;</code> element, every
+<code>&lt;subClause*&gt;</code> element, every <code>&lt;foreword&gt;</code> element, every <code>&lt;intro&gt;</code> element, and every
+member of the %subSection.class; parameter entity (such as Format or SyntaxRules).</p></li>
+<li><p>One blank line precedes every <code>&lt;para&gt;</code> element, every <code>&lt;note&gt;</code> element, every <code>&lt;*list&gt;</code>
+element, every <code>&lt;item&gt;</code> element, and every other member of the %block.class; parameter entity. <br>
+The only exception to this rule is that each such element might be immediately preceded by
+one or more <code>&lt;comment&gt;</code> elements, in which case the one blank line precedes the first such 
+<code>&lt;comment&gt;</code> element, which are themselves not separated from the immediately following member of 
+the %block.class; parameter entity.  </p></li>
+<li><p>Every paragraph, list item, note, editor's note, Clause/subClause, etc. should be preceded by
+one or more comments.
+These comments document which proposal, email or other message, or formal ballot comment caused
+the text of those items to come into being or to reach their current wording. <br>
+These comments should be as close to the actual change as possible.  </p></li>
+<li><p>New <code>&lt;comment&gt;</code> elements should use the convention that their content follows one of the 
+following formats:</p>
+
+<ul>
+<li><code>Editorial: &lt;Name&gt;, &lt;Date in ISO 8601&gt; &lt;Optional Description&gt;</code></li>
+<li><code>Editorial: &lt;Name&gt;, &lt;Date in ISO 8601&gt; &lt;Paper number at the time of resolution&gt;
+&lt;Ballot comment number&gt; &lt;Optional Description&gt;</code></li>
+<li><code>Email from: &lt;Name&gt;, &lt;Date in ISO 8601&gt; &lt;HHMM&gt; &lt;Optional Description&gt; &lt;Optional Paper number&gt;</code></li>
+<li><code>Message from: &lt;Name&gt;, &lt;Date in ISO 8601&gt; &lt;HHMM&gt; &lt;Optional Description&gt;
+&lt;Optional Paper number&gt;</code></li>
+<li><code>&lt;Paper number&gt; &lt;Ballot comment number&gt; &lt;Optional Description&gt;</code></li>
+<li><code>&lt;Paper number&gt; &lt;Optional Description&gt;</code></li>
+<li><code>&lt;Explanatory comment regarding the XML document itself unrelated to semantical changes&gt;</code></li>
+</ul></li>
+<li><p><code>&lt;comment&gt;</code>s documenting additional changes caused by an Email or similar message that is related
+to the application of a concrete paper should always end with the paper number of that paper.</p></li>
+<li><p><code>&lt;comment&gt;</code>s documenting changes caused by an Email or similar message need to be backed by a 
+stored copy of that Email or message in <code>Correspondence/</code> according to the rules laid out in
+<a href=".//Correspondence.html">Correspondence</a>.</p></li>
+<li><p>Paper numbers should always start with a leading prefix that ends in a colon (such as <code>WG3:</code>) 
+that identifies the type of paper.</p></li>
+<li><p><code>&lt;comment&gt;</code> elements should be arranged in ascending chronological order. </p></li>
+<li><p>Every item, para, note, and ednote should have the initial text on the same line and have the
+end tag on a separate line. <br>
+For example:  </p>
+
+<pre><code>&lt;item&gt;&lt;specref ref="gql_refer"/&gt;, identifies additional standards that, through reference  
+in this document, constitute provisions of this document.  
+&lt;/item&gt;
+</code></pre>
+
+<p>This allows the element to be collapsed in an XML editor while still showing enough content to
+allow it to be identified. This is equivalent to the practice of quoting the initial text of
+rules in change proposals to allow a check on the correct location.  </p>
+
+<p>An exception to this is the <code>&lt;\defn&gt;</code> tag that must directly follow the last non-space character
+in the <code>&lt;defn&gt;</code>. <br>
+A further exception is <code>&lt;tableTitle&gt;</code> which must have no space or newline directly after it and
+<code>&lt;/tableTitle&gt;</code> which   must have no space or newline directly before it.</p></li>
+<li><p>Id attributes for Clause, Subclause, paragraph, item, etc., excluding PPs and LOs (see later)
+are constructed as follows:</p>
+
+<ul>
+<li><p>An id attribute shall not contain a "-", "-" characters in names shall be replaced by "_".  </p></li>
+<li><p>The id attribute of a Clause or Subclause that is <em>not</em> a modification of a corresponding
+Clause or Subclause in some other part of the standard will be <code>&lt;part&gt;</code>_<code>&lt;tag&gt;</code>, where:  </p>
+
+<ul>
+<li><code>&lt;part&gt;</code> is the value of the "Id code" for the standard/part 
+(See <a href=".//IdCodes.html">IdCodes</a>)  </li>
+<li><code>&lt;tag&gt;</code> is a shortish sequence of characters with some sort of relationship to the Clause
+or Subclause’s title, giving some clue about what Clause or Subclause is when referenced
+by a use of the id in a "ref" attribute.  </li>
+</ul>
+
+<p>For example, “fnd_names” is the id associated with Subclause 5.4, “Names and identifiers”,
+in SQL/Foundation.  </p></li>
+<li><p>The id attribute of a Clause or Subclause that <em>is</em> a modification of a corresponding
+Clause or Subclause in some other part of the standard will be <code>&lt;part&gt;</code>_<code>&lt;tag&gt;</code>, where:  </p>
+
+<ul>
+<li><code>&lt;part&gt;</code> is the value of the "Id code" for the standard/part 
+(See <a href=".//IdCodes.html">IdCodes</a>) </li>
+<li><code>&lt;tag&gt;</code> is the shortish sequence of characters following the underscore in the part that is
+being modified. <br>
+This sequence of characters must be identical to the corresponding sequence in the part
+that is being modified.  </li>
+</ul>
+
+<p>For example, “xml_names” is the id associated with Subclause 5.2, “Names and identifiers”,
+in SQL/XML; that Subclause modifies Subclause 5.4, “Names and identifiers”, in SQL/Foundation,
+so the part of the id following “xml_” in SQL/XML is identical to the part of the
+corresponding id following “fnd_” in SQL/Foundation. </p></li>
+<li><p>The id attribute of a Rule, Description, paragraph, etc. in one part that is modified by a
+Rule, Description, paragraph, etc. in some other part will be
+<code>&lt;part&gt;</code>_<code>&lt;tag&gt;</code>_&lt;code>_<code>&lt;tag2&gt;</code>, where:  </p>
+
+<ul>
+<li><code>&lt;part&gt;</code> is the value of the "Id code" for the standard/part in which it is specified
+(See <a href=".//IdCodes.html">IdCodes</a>)  </li>
+<li><code>&lt;tag&gt;</code> is the the <tag>` part of the id attribute of the Clause or Subclause in which
+it is contained.  </li>
+<li>&lt;code> is the value of the "type code" for the Rule, Description, paragraph, etc.
+(See <a href=".//IdCodes.html">IdCodes</a>.</li>
+<li><code>&lt;tag2&gt;</code> is a shortish sequence of characters that captures some aspect of Rule,
+Description, paragraph, etc., giving some clue about the content and/or meaning of the
+Rule, Description, etc. being when referenced by a use of the id in a "ref" attribute.  </li>
+</ul>
+
+<p><p>For example, “fnd_names_SR_localname” is the id associated with Syntax Rule 4)
+(“If a <local or schema qualified name> does not contain a <code>&lt;local or schema qualifier&gt;</code>,
+then”) in Subclause 5.4, “Names and identifiers”, in SQL/ Foundation. <br>
+Note that only list items that are contained in ordered lists can be referenced symbolically;
+list items contained in unordered (e.g., bulleted) lists cannot be referenced symbolically.  </p></li>
+</ul></p></li>
+<li><p>Clauses/subClauses in parts that modify other parts. <br>
+Agreements with ISO/CS require that each such clause/subclause must contain a <code>&lt;modifiesPart&gt;</code>
+tag (e.g. <code>&lt;modifiesPart part="02" ref="fnd_tables"/&gt;</code>) that should be the first item after
+<code>&lt;bodyMatter&gt;</code> in the clause or subclause.</p></li>
+<li><p>Use of the newpage attribute in the <code>&lt;subClause&gt;</code> element. <br>
+Subclauses in Clauses prior to the first Clause defining syntax, in the Clause named 
+"Conformance", and in the Annexes are NEVER coded with newpage="true". <br>
+Subclauses subordinate to a <code>&lt;subClause&gt;</code> element, e.g. <code>&lt;subClause2&gt;</code>, are (in principle) never
+coded with newpage="true" even though the DTD allows it. <br>
+In Clauses where <code>&lt;subClause&gt;</code> elements with newpage="true" are permitted, the first subClause 
+in a Clause is NEVER coded with newpage="true", but all subsequent <code>&lt;subClause&gt;</code> elements in the
+Clause are ALWAYS coded with newpage="true".</p></li>
+<li><p>Merge instructions should be carefully crafted to be as future proof as possible. <br>
+This generally means that the any rule being inserted is inserted before the rule that is to
+follow it. <br>
+This avoids unfortunate situations such as “Insert after GR 5)f)iii)” (assume that the existing
+rule 5 ends with sub-rule f, which in turn ends with sub-rule iii) when the inserted rule is not
+intended to become GR 5)f)iv) or even GR 5)g), but to become GR 6) instead; in this case, the
+instruction should read “Insert before GR 6)” or (“Insert after the last GR”). <br>
+However, if the inserted rule is to become GR 5)f)iv), then the proper formulation is
+“Insert after GR 5)f)iii)”. <br>
+A more difficult situation occurs when the inserted rule is intended to become GR 5)g), in which
+case the wording is probably most appropriately “Insert after GR 5)f)”. <br>
+When in doubt, consult the other editors for guidance.  </p></li>
+<li><p>Possible Problems and Language Opportunities <br>
+In the Editor’s Notes for each standard or part thereof, near the top of the .xml file, there is
+a comment containing a list of Possible Problems and Language Opportunities that have not yet
+been resolved for that part. <br>
+At the end of that list, there is a comment that identifies the greatest PP or LO number so far
+assigned; refer to this number as GN. <br>
+GN is three characters long, if the number of PPs and LOs exceed 999 then use uppercase Latin
+letters (e.g., A12).
+When a new PP or LO is added to the Editor’s Notes, the value of GN must be incremented by one. <br>
+Following the comment containing the number GN is a sequence of five templates that should be
+used for creating the new PP or LO. <br>
+Select the appropriate template (Major Technical, Minor Technical, Major Editorial,
+Minor Editorial, or Language Opportunity) and copy it to follow the last open PP or LO,
+i.e. immediately prior to the "Placed closed PPs and LOs after this line" comment.  </p>
+
+<p>The starting tag for a Possible Problem takes four mandatory attributes, “id”, “number”,
+“severity” and “realm” (the “severity” and “realm” attributes have already been given values in
+the template that was copied. <br>
+The starting tag for a Language Opportunity takes only the “id” and “number” mandatory 
+attributes.  </p>
+
+<p>The id attribute will be PP<code>&lt;part&gt;&lt;GN&gt;</code>, where:  </p>
+
+<ul>
+<li><code>&lt;part&gt;</code> is the value of the "Id code" for the standard/part 
+(See <a href=".//IdCodes.html">IdCodes</a>).  </li>
+<li><code>&lt;GN&gt;</code> is the new value of GN just computed.  </li>
+</ul>
+
+<p>The number attribute will be <code>&lt;part&gt;-&lt;GN&gt;</code>, where:  </p>
+
+<ul>
+<li><code>&lt;part&gt;</code> is the value of the "PP/LO code" for the standard/part
+See <a href=".//IdCodes.html">IdCodes</a>)  </li>
+<li><code>&lt;GN&gt;</code> is the new value of GN just computed.  </li>
+</ul>
+
+<p>When a PP or LO is resolved it should be preceded by a <code>&lt;comment&gt;</code> of the form "Resolved by ..."
+and moved to a place after the "Placed closed PPs and LOs after this line" comment, preferably
+in order of the number attribute.  </p>
+
+<p>Note: PPs and LOs are referenced by using the <code>&lt;PPref&gt;</code> element where of the “ref” attribute
+is the value of the “id” attribute of the <code>&lt;PP&gt;</code> or <code>&lt;LO&gt;</code> element. <br>
+Normally these occur is sentences such as "See <PPref ref="PPfnd812"/> in the Editor's Notes".  </p></li>
+<li><p><code>&lt;kw&gt;</code> tags should only be applied to words that occur in the list of <code>&lt;key word&gt;</code>s (and, 
+specifically, to words that are actually used in SQL grammar) and not to other objects such a 
+column names. <br>
+There are many column names, field names, and other object names that are spelled identically to 
+various keywords, but those must not be marked using <kw> tags. <br>
+Examples of things that must not be marked using <kw> tags include host language data type names 
+(for example, CHARACTER is used in Fortran and PL/I; while it is spelled identically to the SQL 
+data type name CHARACTER, it must not be marked as a <kw> when used as a Fortran or PL/I name).  </p></li>
+<li><p><code>Dashes</code> are used in several ways in WG 3 documents. </p>
+
+<ul>
+<li>The Unicode character <code>-</code>, called <code>hyphen-minus</code> is used as a
+hyphen to separate compound words, such as <code>off-site</code>.</li>
+<li>The same character (hyphen-minus) is used in monospaced
+material (such as mono, code, and so forth) to represent
+hyphens, minus signs, etc. </li>
+<li>In non-monospaced text, the minus sign (equivalently, the
+signifier of negative numbers) is represented by the character
+entity <code>&amp;minus;</code> (<code>minus</code>; the Unicode character U+2212). 
+NOTE: Until
+2021-08-06, the character entity <code>&amp;ndash;</code> (<code>en dash</code>; the
+Unicode
+character U+2013) was used for this purpose, but it was changed
+after agreement with ISO Central Secretariat. </li>
+<li>In non-monospaced text, the hyphen used to separate the
+digits in ISO 8601-formate dates (such as 2021-08-10) is
+represented
+by the character entity <code>&amp;fdash;</code> (<code>figure dash</code>; the
+Unicode character U+2012). </li>
+<li>In non-monospaced text, the dash used to separate <code>from-to</code>
+text (such as <code>Average values are 0 - 10</code> or
+<code>The next meeting will be July 10 - July 15</code>) is represented
+by the character entity <code>&amp;ndash;</code> (the Unicode character
+U+2013).</li>
+<li>In non-monospaced text, an em dash, represented by the
+character entity <code>&amp;mdash;</code> (the Unicode character
+U+2014) is used to separate distinct phrases within sentences. </li>
+</ul></li>
+<li><p><reserved word> or <non-reserved word>? <br>
+The grammar of most programming languages distinguishes between "keywords"
+(words used in the language to have specific meaning in that
+language) and "identifiers" (words used in code written in
+that language that have no inherent meaning to the language
+itself). <br>
+Identifiers are normally used to identify objects
+created by application programs, such as data structures and
+their components. </p>
+
+<p>The grammar of many languages is defined such that some
+keywords must be used <em>only</em> for the purpose defined by the
+language itself; that is, no identifier can be spelled
+exactly the same as those keywords. <br>
+Such keywords are commonly called "reserved keywords" or "reserved words".
+Other keywords cannot be confused in their programming
+language context with identifiers; those keywords are
+commonly called "unreserved words" or "non-reserved words".</p>
+
+<p>It is frequently difficult for a human being examining the
+grammar of a programming language to determine whether a
+particular keyword must be reserved or can be non-reserved.
+A parser for that language is often used to automatically
+determine which keywords belong in which class.</p></li>
+<li><p>Code examples (e.g. in rules defining syntactic substitution) must always be expressed in the 
+following form:</p>
+
+<p>&lt;code> <br>
+  blah, blah, blah <br>
+  <code>&lt;/code&gt;</code>  </p></li>
+<li><p>Change bars. <br>
+Change bars should be added before (<code>&lt;bar/&gt;</code>) and after (<code>&lt;endbar/&gt;</code>) every textual change,
+except for extremely trivial editorial changes such as the correction of spelling mistakes. <br>
+These tags may incorporate explanatory text such as the paper number that caused the change. <br>
+Deletions of text should be marked with a <code>&lt;delbar/&gt;</code>, which requires explanatory text. <br>
+All change bars should be deleted whenever a new version of the document is published.  </p></li>
+<li><p>Additional conventions for the actual text are to be found in 
+<a href=".//WritingConventions.html">WritingConventions</a>.</p></li>
+</ul>
+
+<h2>Graphics Files</h2>
+
+<p>Vector graphic files should be in SVG format, other graphic files should use the PNG format.</p>
+
+<h2>XSL Source Files</h2>
+
+<ul>
+<li><p>Source lines should not be longer than 100 characters. <br>
+Explicit line breaks should be used to maintain this. <br>
+On very rare occasions this rule may need to be broken. <br>
+In these cases the source which does not conform must be preceded by the line: <br>
+  &lt;!-- LINE LENGTH CHECK OFF --> <br>
+and followed by the line: <br>
+  &lt;!-- LINE LENGTH CHECK ON -->  </p></li>
+<li><p>Code should <em>not</em> be disabled (commented out) unless accompanied by a comment stating under what
+circumstances it is to be re-enabled.  </p></li>
+<li><p>A change log should <em>not</em> be maintained in the document. <br>
+The GIT commit messages are sufficient.  </p></li>
+<li><p>Tags included within other tags should be indented with 2 spaces (<em>not</em> with tabs),
+except for those immediately included within the'<code>&lt;xsl:stylesheet&gt;</code> tag and unless both
+the included start tag and end tag can be included on the same line. <br>
+For example:  </p>
+
+<pre><code>&lt;xsl:choose&gt;
+  &lt;xsl:when test="self::clause"&gt;
+    &lt;xsl:text&gt;Clause &lt;/xsl:text&gt;
+  &lt;/xsl:when&gt;
+  &lt;xsl:when test="self::annex"&gt;
+    &lt;xsl:text&gt;Annex &lt;/xsl:text&gt;
+  &lt;/xsl:when&gt;
+&lt;/xsl:choose&gt;
+</code></pre></li>
+<li><p>Tags with attributes that do not fit on one line should have those attributes start on another
+line but aligned with the first attribute. <br>
+For example:  </p>
+
+<pre><code>&lt;fo:block font="italic 9pt Cambria" text-align="start"
+          space-before.optimum="12pt" space-before.precedence="force"&gt;
+</code></pre></li>
+<li><p>Two blank lines should separate each template.  </p></li>
+</ul>
+
+<h2>DTD Source Files</h2>
+
+<ul>
+<li><p>Two blank lines should precede all entity definitions.</p></li>
+<li><p>Parameter entities should be defined first and include the string ".class" in the name.</p></li>
+<li><p>Every parameter entity should be preceded by a general description and a description of the
+entities that it incorporates in the form shown by the following example:</p>
+
+<pre><code>&lt;!-- comments.class is the class comprising comments and the three change bar elements
+     * comment - 
+     * bar defines the start of a change bar
+     * endbar defines the end of a change bar
+     * delbar marks the place where text has been deleted
+--&gt;
+&lt;!ENTITY % comments.class "comment | bar | endbar | delbar"&gt;
+</code></pre></li>
+<li><p>A change log should <em>not</em> be maintained in the document. <br>
+The GIT commit messages are sufficient.</p></li>
+</ul>
+
+<h2>Makefile</h2>
+
+<ul>
+<li>Make has been setup by following the advice from https://tech.davis-hansson.com/p/make</li>
+<li>No tabs, commands start with ></li>
+<li>bash as default shell</li>
+<li>See Preamble.mk for details</li>
+</ul>
+
+<h2>Documentation Source Files</h2>
+
+<p>All documentation shall be written in Markdown format (*.md files)..</p>
+
+<p>Do not use <code>`&lt;tag&gt;`</code> where "tag" is code, hostcode, schemacode, mono or URI as this confuses 
+the line length checker. instead use the form <code>&amp;lt;tag&gt;</code>.</p>
+
+<p>See <a href="https://daringfireball.net/projects/markdown/">Markdown</a> for help on Markdown syntax.</p>
+
+<p>The documentation generation pipeline supports the generation of mermaid diagrams. </p>
+
+<p>Mermaid is a popular markup syntax for specifying various kinds of diagrams, flowcharts, and
+the like. To add another diagram, create a mermaid file with extensions <code>.mmd</code> in <code>doc/</code> and
+update the <code>Makefile</code> accordingly. This will make sure that the doc build renders your diagram
+to SVG. Generated mermaid diagrams may be included in the documentation using the regular markdown
+syntax for embedding images.</p>
+
+<p>See <a href="https://mermaid-js.github.io/mermaid/#/">Mermaid</a> for help on Mermaid syntax.
+<!--
+1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
+--></p>
+
+<p>This file: Copyright © 2021 Editors of ISO/IEC JTC 1/SC 32/WG 3:
+           Jim Melton, Stephen Cannan, Jörn Bartels, Stefan Plantikow</p>

@@ -1,0 +1,108 @@
+<h1>How to set up use of the offline xml catalog</h1>
+
+<p>The following steps need to be performed to be able to build the document when offline.
+It instructs XEP to load SVG DTDs from local catalog described by <code>SVG_XMLcatalog.xml</code> instead of
+loading them from the network:</p>
+
+<ul>
+<li>Get yourself the required <code>xepjars.zip</code> (same file also available as <code>xepjars.zap</code>).</li>
+<li>Unpack the archive and move/rename the resulting top-level directory the <code>lib</code> directory of your
+XEP installation. </li>
+<li>The jars can be found in the iso document system (<code>05. Drop-in box for members/Build_Environment</code>)
+or in the tools github repo (at <code>https://github.com/gqlstandards/tools</code>).</li>
+<li>Change the script that you use to run xep as described below.</li>
+</ul>
+
+<h2>Mac/linux version using bash</h2>
+
+<p>This assumes XEP is installed in <code>$XEP_HOME</code> and the jars are in <code>lib/contrib</code>.</p>
+
+<ul>
+<li>Change the classpath as follows:</li>
+</ul>
+
+<blockquote>
+  <p><code>CP="$JAVA_HOME/lib/tools.jar:\</code> <br>
+<code>$XEP_HOME/lib/xep.jar:\</code> <br>
+<code>$XEP_HOME/lib/saxon6.5.5/saxon.jar:\</code> <br>
+<code>$XEP_HOME/lib/saxon6.5.5/saxon-xml-apis.jar:\</code> <br>
+<code>$XEP_HOME/lib/xt.jar:\</code> <br>
+<code>$XEP_HOME/lib/contrib/commons-logging-1.2.jar:\</code> <br>
+<code>$XEP_HOME/lib/contrib/httpclient-4.5.5.jar:\</code> <br>
+<code>$XEP_HOME/lib/contrib/httpcore-4.4.9.jar:\</code> <br>
+<code>$XEP_HOME/lib/contrib/slf4j-api-1.7.25.jar:\</code> <br>
+<code>$XEP_HOME/lib/contrib/slf4j-simple-1.7.25.jar:\</code> <br>
+<code>$XEP_HOME/lib/contrib/xercesImpl-2.9.1.jar:\</code> <br>
+<code>$XEP_HOME/lib/contrib/xml-apis-1.4.01.jar:\</code> <br>
+<code>$XEP_HOME/lib/contrib/xmlresolver-1.0.8.jar"</code></p>
+</blockquote>
+
+<ul>
+<li>Change the call to java as follows:</li>
+</ul>
+
+<blockquote>
+  <p><code>"$JAVA_HOME/bin/java" "-Xmx1G" "-Xms1G" \</code> <br>
+<code>-classpath "$CP" \</code> <br>
+<code>"-Dcom.renderx.xep.CONFIG=$XEP_HOME/xep.xml" \</code> <br>
+<code>"-Djavax.xml.parsers.SAXParserFactory=org.apache.xerces.jaxp.SAXParserFactoryImpl" \</code> <br>
+<code>"-Dorg.xml.sax.parser=org.xmlresolver.tools.ResolvingXMLReader" \</code> <br>
+<code>"-Dcom.renderx.xep.CONFIG=$RENDERX_DIR/xep.xml" \</code> <br>
+<code>"-Dcom.renderx.sax.entityresolver=org.xmlresolver.tools.ResolvingXMLReader" \</code> <br>
+<code>"-Dcom.renderx.jaxp.uriresolver=org.xmlresolver.tools.ResolvingXMLReader" \</code> <br>
+<code>"-Drelative-catalogs=yes" \</code> <br>
+<code>"-Dxml.catalog.files=SVG_XMLcatalog.xml" \</code> <br>
+<code>"-Dxml.catalog.prefer=public" \</code> <br>
+<code>"-Dxml.catalog.staticCatalog=yes" \</code> <br>
+<code>"-Dxml.catalog.className=org.apache.xml.resolver.Resolver" \</code> <br>
+<code>com.renderx.xep.XSLDriver "$@"</code></p>
+</blockquote>
+
+<h2>Win version using cmd.exe</h2>
+
+<p>This assumes XEP is installed in <code>%RENDERX_DIR%</code> and the jars are in <code>%JARFILES_DIR</code>.</p>
+
+<ul>
+<li>Change in the file xep.bat (in %RENDERX_DIR%) the variable CP for the classpath as follows:</li>
+</ul>
+
+<blockquote>
+  <p><code>set CP=%RENDERX_DIR%\lib\xep.jar;</code>
+<code>%RENDERX_DIR%\lib\saxon6.5.5\saxon.jar;</code>
+<code>%RENDERX_DIR%\lib\saxon6.5.5\saxon-xml-apis.jar;</code>
+<code>%RENDERX_DIR%\lib\xt.jar;</code>
+<code>%JARFILES_DIR%\xmlresolver-1.0.8.jar;</code>
+<code>%JARFILES_DIR%\slf4j-api-1.7.25.jar;</code>
+<code>%JARFILES_DIR%\httpclient-4.5.5.jar;</code>
+<code>%JARFILES_DIR%\httpcore-4.4.9.jar;</code>
+<code>%JARFILES_DIR%\commons-logging-1.2.jar;</code>
+<code>%JARFILES_DIR%\slf4j-simple-1.7.25.jar;</code>
+<code>%JARFILES_DIR%\xercesImpl-2.9.1.jar;</code>
+<code>%JARFILES_DIR%\xml-apis-1.4.01.jar</code></p>
+</blockquote>
+
+<ul>
+<li>Change the call to Java as follows:</li>
+</ul>
+
+<blockquote>
+  <p><code>java -Xmx1024M -Xms1024M -classpath "%CP%" ^</code> <br>
+<code>-Djavax.xml.parsers.SAXParserFactory=org.apache.xerces.jaxp.SAXParserFactoryImpl ^</code> <br>
+<code>-Dorg.xml.sax.parser=org.xmlresolver.tools.ResolvingXMLReader ^</code> <br>
+<code>-Dcom.renderx.xep.CONFIG="%RENDERX_DIR%/xep.xml" ^</code> <br>
+<code>-Dcom.renderx.sax.entityresolver=org.xmlresolver.tools.ResolvingXMLReader ^</code> <br>
+<code>-Dcom.renderx.jaxp.uriresolver=org.xmlresolver.tools.ResolvingXMLReader ^</code> <br>
+<code>-Drelative-catalogs=yes ^</code> <br>
+<code>-Dxml.catalog.files=SVG_XMLcatalog.xml ^</code> <br>
+<code>-Dxml.catalog.prefer=public ^</code> <br>
+<code>-Dxml.catalog.staticCatalog=yes ^</code> <br>
+<code>-Dxml.catalog.className=org.apache.xml.resolver.Resolver ^</code> <br>
+<code>com.renderx.xep.XSLDriver %*</code></p>
+</blockquote>
+
+<!--
+1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
+-->
+
+<p>This file: Copyright © 2021 Editors of ISO/IEC JTC 1/SC 32/WG 3:
+           Jim Melton, Stephen Cannan, Jörn Bartels, Stefan Plantikow</p>
