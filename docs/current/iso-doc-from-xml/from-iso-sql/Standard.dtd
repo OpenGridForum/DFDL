@@ -1,0 +1,3951 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+                                                                                                   1
+         1         2         3         4         5         6         7         8         9         0
+1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
+-->
+
+<!--
+     Copyright © 1999, 2000, 2002, 2005, 2010, 2028, 2019, 2020, 2021 Jim Melton
+     Copyright © 2021, 2022, 2023 Editors of ISO/IEC JTC 1/SC 32/WG 3:
+                 Jim Melton, Stephen Cannan, Jörn Bartels, Stefan Plantikow
+                 (Granted by Jim Melton, 2021-10-21)
+-->
+
+<!-- ===============================================================================================
+     ...............................................................................................
+                   Standard.DTD
+     ...............................................................................................
+     ===============================================================================================
+-->
+
+<!--
+PURPOSE:
+  This XML DTD is the DTD for standards (incl. parts), technical reports, and technical corrigenda
+-->
+
+
+<!-- There are two primary classes of objects:
+     1) Clauses, Subclauses, and Annexes; and
+     2) Tables, Figures, Examples, Equations, and other such objects.
+     Items in category 2) are refered to as "captioned" objects and are required to be explicitly
+     referenced in the document in which they exist.
+-->
+
+<!-- To permit the inclusion of MathML markup in our standards document, we must
+      include the MathML DTD
+-->
+<!ENTITY % MATHML.prefixed "INCLUDE">
+<!ENTITY % MATHML.prefix "m">
+<!ENTITY % mathml-dtd PUBLIC "-//W3C//DTD MathML 3.0//EN" "mathml3/mathml3.dtd">
+%mathml-dtd;
+
+
+<!-- To assist in making things more readable, we first define some parameter entities.
+      These parameter entities (entities defined with a % notation and referenced with a % instead
+      of an &) are used in this DTD to group elements into various categories.
+      The names of the parameter entities include the string “.class” as a mnemonic that they
+      define classes of elements and/or of other parameter entities.
+-->
+
+
+<!-- comments.class is the class comprising comments and the three change bar elements:
+      * comment defines a comment usually used to identify the source of a change.
+      * bar defines the start of a change bar.
+      * endbar defines the end of a change bar.
+      * delbar marks the place where text has been deleted.
+-->
+<!ENTITY % comments.class "comment | bar | endbar | delbar">
+
+
+<!-- newlines.class is the class comprising things that force new lines:
+      * linebreak forces line break.
+      * blankline forces a blank line.
+      * breakindent forces a line break and then indents the next line.
+-->
+<!ENTITY % newlines.class "linebreak | blankline | breakindent">
+
+
+<!-- printformat.class is the class comprising things that control the format of printed text:
+      * emph does italics.
+      * bold does boldface.
+      * underline does underlining.
+      * strikethrough does strikethrough.
+      * mark-inserted makes its content red boldface.
+      * mark-deleted makes its content blue strikethrough.
+      * quote puts curly-double-quotes around.
+      * mono forces monospacing.
+-->
+<!ENTITY % printformat.class "emph | bold | underline | strikethrough | mark-inserted 
+                            | mark-deleted | quote | mono">
+
+
+<!-- paratext.class is the class comprising paragraphs.
+-->
+<!ENTITY % paratext.class "para">
+
+
+<!-- lists.class is the class comprising all sorts of lists:
+      * slist is a simple list, no bullets or numbers.
+      * ulist is an unnumbered list, either bullets or dashes, depending on nesting depth.
+      * blist is a bulleted list.
+      * dlist is a dashed list.
+      * olist is an ordered list (number, alpha, roman, upperALPHA, upperROMAN, repeat).
+      * nlist is a numbered list.
+      * alist is a lower-case alphabetic list.
+      * rlist is a lower-case roman numbered list.
+      * Alist is an upper-case alphabetic list.
+      * Rlist is an upper-case roman numbered list.
+      * lbllist is a list for which the lblitem element supplies the "bullet".
+-->
+<!ENTITY % lists.class "slist | ulist | blist | dlist | olist | nlist | alist
+                      | rlist | Alist | Rlist | lbllist">
+
+
+<!-- codeblock.class is the class comprising blocks of monospaced code-like text:
+      * grammar is used for BNF in the Format subsections.
+      * code is used for code in the language of the standard, e.g., in Syntax or General Rules.
+      * xmlcode is used for XML-related code, e.g., XQuery expressions, XML Schema fragments.
+      * schemacode is used for table, view, and other schema-related definitions.
+      * hostcode is used for host programming language code.
+      * functionSig is used for function signatures.
+-->
+<!ENTITY % codeblock.class "grammar | code | xmlcode | schemacode | hostcode | functionSig">
+
+
+<!-- definitions.class is the class comprising block-type definitions and is used in formal
+     definitions, typically in Clause 3.
+-->
+<!ENTITY % definitions.class "definition">
+
+
+<!-- notes.class is the class comprising various sorts of notes:
+      * note is used for numbered, informative notes.
+      * ednote is used for editor's notes that are not published in FDIS et seq.
+-->
+<!ENTITY % notes.class "note | ednote">
+
+
+<!-- tables.class is the class comprising tables:
+      * table is a table.
+      * conditionsTable is a generated table of conditions.
+      * featuresTable is a generated table of features.
+-->
+<!ENTITY % tables.class "table | conditionsTable | featuresTable">
+
+
+<!-- images.class is the class comprising figures:
+      * figure is a figure.
+-->
+<!ENTITY % images.class "figure">
+
+
+<!-- examples.class is the class comprising examples:
+      * example is an example.
+-->
+<!ENTITY % examples.class "example">
+
+
+<!-- equations.class is the class comprising equations:
+      * equation is an equation.
+-->
+<!ENTITY % equations.class "equation">
+
+
+<!-- normativerefs.class is the class comprising normativeReferences:
+      * normativeReferences is a normativeReferences.
+-->
+<!ENTITY % normativerefs.class "normativeReferences">
+
+
+<!-- partModifier.class comprises the element used to correlate (sub)clauses in incremental parts
+     with the corresponding (sub)clauses in the parts they modify:
+      * modifiesPart is the part being modified.
+-->
+<!ENTITY % partModifier.class "modifiesPart">
+
+
+<!-- specials.class is a collection of elements used for mathematical and other single characters:
+      * leq is the less-than-or-equal symbol.
+      * geq is the greater-than-or-equal symbol.
+      * neq is the not-equal symbol.
+      * concat is the concatenation symbol (two vertical bars).
+      * prec is the precedes symbol (curved less than).
+      * succ is the succeeds symbol (curved greater than).
+      * simeq is the same-precedence symbol (equal sign where the top line is wavy).
+      * rtarr is the right-arrow symbol.
+      * dblrtarr is the double-right-arrow symbol.
+      * dblltarr is the double-left-arrow symbol.
+      * dblltrtarr is the double-left-right-arrow symbol.
+      * mapsto is the right-arrow-from-bar symbol.
+      * setunion is the U-shaped symbol.
+      * rcbuh is the right curly brace upper hook.
+      * rcbmp is the right curly brace middle part.
+      * rcblh is the right curly brace lower hook.
+      * cbe is the curly brace extension.
+      * omega is a Greek lower-case omega.
+      * infinity is the infinity symbol.
+      * dotOp is the dot operator.
+      * crossProd is the vector or cross product operator.
+      * prime is the prime symbol.
+      * subset is the left-turned "U" meaning "subset of".
+      * forall is the inverted "A" meaning "for all".
+      * exists is the backward "E" meaning "there exists.
+      * element is the stylized epsilon meaning "element of".
+      * spc generates an fo:leader for a thin space; used as thousands separator in numbers.
+      * apos is the punctuation apostrophe.
+      * SQL is the text "SQL", used to trap unexpected uses of the unmarked-up text.
+-->
+<!ENTITY % specials.class "leq | geq | neq | concat | prec | succ | simeq | rtarr | dblrtarr
+           | dblltarr | dblltrtarr | mapsto | setunion | rcbuh | rcbmp | rcblh | cbe | omega
+           | infinity | dotOp | crossProd | prime | subset | forall | exists | element | spc
+           | apos | SQL">
+
+
+<!-- inline.class is a collection of elements that can appear in-line:
+      * bool identifies boolean values (true, false, unknown).
+      * raise is used for conditions such as "data exception - divide by zero".
+      * hosttext is used for host programming language text for inline use.
+      * URI also forces monospacing; it is used for URIs; it is normally an active link.
+      * sub does subscripting.
+      * super does superscripting.
+      * defnref is used for references to terms in definitions.
+      * specref is used for a reference to a section in the same document.
+      * itemref is used to reference a list element (item).
+      * extref is used for references to sections in other documents.
+      * extitemref is used for references to list elements in other documents.
+      * PPref is used to reference a PP or LO element (Possible Problem or Language Opportunity).
+      * ExtPPref is used to reference a PP or LO element in another document.
+      * mergeWith is used to provide a "merge instruction" in an incremental part.
+      * replicateSCsig is used to duplicate, in an incremental part, a rule with SCsignature in a
+        base part.
+      * BNF is used in inline text to represent BNF non-terminal symbols.
+      * newterm is used for new term definitions, inline in text.
+      * kw is used for keywords in text, as well as in BNF.
+      * sjkw is use for SQL/JSON keywords in text and in BNF.
+      * xmlterm is used for words, phrases, terms from the "XML side" of the world
+      * xmltext is used for strings of XML text in the document.
+      * xmlsymdef is used whenever a new symbol used to represent XML text is being defined.
+      * xmlsym is used whenever one of those new symbols used to represent XML text is used.
+      * symdef is used whenever a new symbol is being defined.
+      * sym is used whenever one of those new symbols is used.
+      * SCsignature is used in a subclause invoked from elsewhere to describe the "parameters" of
+        that subclause.
+      * SCreturn is used in an invoked subclause to explicitly return to its invoker; if the
+        subclause has <symreturn>s, then <SCreturn> requires one <SCretval> per <symreturn>.
+      * applySC is used to invoke the rules of another Subclause.
+      * applyExtSC is used to invoke the rules of a Subclause in another Part.
+      * tcSymparam is used for symparam in a TC.
+      * tcSymarg is used for symarg in a TC.
+      * feature is used to markup features.
+      * unicode is used for Unicode character references (U+xxxx).
+      * box is used to produce text in a rectangular box.
+      * math-sum is a hokey way to produce math-like summations.
+      * math-prod is a hokey way to produce math-like products.
+      * ellipsis is ellipsis symbol (...) to mean "text has been elided".
+      * repeat is ellipsis symbol (...) to mean "repeat as needed"
+      * eg produces "e.g.,".
+      * ie produces "i.e.,".
+      * etc produces "etc.".
+      * cf produces "cf.".
+      * vs produces "vs.".
+      * indexTerm is rarely (if ever) used in manual markup, but is used by another stylesheet to
+        automatically markup occurrences in text of terms defined by formal definitions and of
+        terms defined as newterms.
+      * lblitemref is a way to link to a lblitem in a lbllist.
+      * docref is a way to link to a specific document, but not to a component of that document
+      * footnote generates a footnote reference inline and a separate footnote body as a floating
+        block at the end of the page.
+      * table-noteref is the way to reference a table-note from a cell.
+      * passage is used to identify a link target, inline in text.
+      * repeatdefn is used to insert the contents for another defn (ignoring its attributes).
+      * repeatpassage is used to insert the contents for another passage (ignoring its attributes).
+      * repeatitem is used to insert the contents for another item (ignoring its attributes).
+      * squote is used to enclose text in single turned comma quotation marks.
+      * string is used to represent a character string in a language which uses single quotes.
+      * stringd is used to represent a character string in a language which uses double quotes.
+      * delimId is used to represent a delimited identifier in the language being described.
+      * adapackageConditions is used ONLY within the "code" block for the Ada library unit pkg.
+      * inlineEquation is used for "short" (vertically and horizontally) equations.
+      * impDef is used to express implementation-defined.
+      * unDef is used to express implementation-dependent.
+      * digitalArtifact is used to embed a URN where the various Digital Artifacts are available.
+      * any member of the newlines.class.
+      * any member of the specials.class.
+      * any member of the printformat.class.
+-->
+<!ENTITY % inline.class "bool | raise | hosttext | URI | sub | super | defnref | specref
+           | itemref | extref | extitemref | PPref | ExtPPref | mergeWith | replicateSCsig | BNF
+           | newterm | kw | sjkw | xmlterm | xmltext | xmlsymdef | xmlsym | symdef | sym 
+           | applySC | applyExtSC | tcSymparam | tcSymarg | feature
+           | unicode | box | math-sum | math-prod | ellipsis | repeat | eg | ie | etc | cf | vs 
+           | indexTerm | lblitemref | docref | footnote | table-noteref | passage | repeatdefn
+           | repeatpassage | repeatitem | squote | string | stringd | delimId
+           | adaPackageConditions | inlineEquation | impDef | unDef | digitalArtifact
+           | %newlines.class;
+           | %specials.class;
+           | %printformat.class;">
+
+
+<!-- blocks.class is the collection of elements that form text blocks:
+      * any member of the paratext.class.
+      * any member of the lists.class.
+      * any member of the codeblock.class.
+      * any member of the definitions.class.
+      * any member of the notes.class.
+      * any member of the tables.class.
+      * any member of the images.class.
+      * any member of the examples.class.
+      * any member of the comments.class.
+      * any member of the normativerefs.class.
+      * any member of the equations.class.
+-->
+<!ENTITY % blocks.class "%paratext.class; | %lists.class; | %codeblock.class; | %definitions.class;
+           | %notes.class; | %tables.class; | %images.class; | %examples.class; | %comments.class;
+           | %normativerefs.class; | %equations.class;">
+
+
+<!-- subSection.class is the collection of "container" section elements.
+-->
+<!ENTITY % subSection.class "Function | Format | InformalSemantics | SyntaxRules | AccessRules
+           | GeneralRules | ConformanceRules | Definition | Description | Tables | TablePopulation
+           | DefinitionsAndRules | Signature | Parameters | BinaryComposition | CodeGeneration
+           | ProfileEntryInfoProperties | SeeAlso | Throws | Returns | Overrides
+           | InterpretingCustomizeResults | CustomizerProperties | ProfileCustomizerUsage | Model
+           | Properties | Purpose | FunctionSignature | ParameterDefinitions | Results
+           | ArgumentConsiderations | FormalDefinition | ExceptionsAndWarnings | Conformance">
+
+
+<!-- Element definitions
+-->
+
+<!-- The standard element defines a single document containing (one part of) a standard.
+     Its children are:
+      * BNFRoot documents the root elements of the BNF trees.
+      * coverPage creates the cover page of the standard.
+      * copyrightNoticePage creates the back of the standard's cover page.
+      * alternateCopyrightNoticePage creates different (ANSI) text instead of copyrightNoticePage.
+      * standardPartBody contains the "main" part of the standard.
+      * TCPartBody contains the "main" part of the Technical Corrigendum.
+      * backMatter contains the annexes of the standard.
+      * EditorNotes contain the PPs and LOs for non-ballot documents (IWDs & WDs).
+-->
+<!ELEMENT standard (comment*, BNFroot*, comment*, coverPage, comment*,
+                    ( ( (copyrightNoticePage | alternateCopyrightNoticePage),
+                         comment*, standardPartBody )
+                      | (comment*, TCPartBody) ),
+                    comment*, backMatter?,
+                    (comment)*, index?,
+                    comment*, EditorNotes?,
+                    comment*)>
+<!-- The attributes of standard are:
+      * documentType is the official type of the document.
+      * documentLanguage is the language of the document.
+      * documentShortname defines a short name for the document which was used in page footers.
+      * standard is the number of the standard to which the document belongs.
+      * isoNumber is the number of the part of the standard to which the document belongs.
+        For non-multipart standards this is the same as standard.
+      * partNumber2digit this is the part number, normally 2 digits but in the case of TCs the part
+        to which the TC belongs is preceded by "99-".
+        Single part standards use "00" as the part.
+        Note: The list of valid values must match those of "number" in StandardParts.dtd
+      * principleEditor is the editor principally responsible for the document.
+      * associateEditor is the associate editor for the document, if any.
+      * standardYear (used only for TCs) is the year of publication of the document for which the
+        document is a TC.
+      * implementable is 'yes' for implementable standards, 'no' for guide standards and TRs
+      * keywordFromStandard (used only when implementable is 'no') gives the implementable
+        standard from which keywords used in the guide/TR are to be checked (default is 9075)
+      * keywordFromPart gives the number of the part or
+        parts of the implementable standard from which keywords used in the document are to be
+        checked.
+        Normally used only when implementable is 'no'.
+        MUST ALWAYS be space separated 2-digit part numbers!
+      * corSeq (used only for TCs) is the sequence number of the TC.
+        That is 1 for the first TC, 2 for the second, etc.
+-->
+<!ATTLIST standard
+  documentType       ( International_Standard | Corrigendum | Technical_Report | Amendment
+                       | International_Workshop_Agreement)
+                           #REQUIRED
+  documentLanguage   ( English | French | Russian )
+                           #REQUIRED
+  documentShortname  CDATA #REQUIRED
+  standard           ( 9075 | 19075 | 29075 | 39075 | 49075 | 99999 ) #REQUIRED
+  isoNumber          CDATA #REQUIRED
+  partNumber2digit   ( 00 | 01 | 02 | 03 | 04 | 05 | 06 | 07 | 08 | 09 | 10 | 11 | 12 | 13 | 14
+                     | 15 | 16 | 17 | 18 | 19 | 20 | 99
+                     | 99-00 | 99-01 | 99-02 | 99-03 | 99-04 | 99-05 | 99-06 | 99-07 | 99-08
+                     | 99-09 | 99-10 | 99-11 | 99-12 | 99-13 | 99-14 | 99-15 | 99-16 | 99-17
+                     | 99-18 | 99-19 | 99-20
+                     )     #REQUIRED
+  principleEditor    CDATA #REQUIRED
+  associateEditor    CDATA #IMPLIED
+  standardYear       CDATA #IMPLIED
+  implementable      ( yes | no ) "yes"
+  keywordFromStandard ( 9075 | 29075 | 39075 ) "9075"
+  keywordFromPart    CDATA #IMPLIED
+  corSeq             ( 1 | 2 | 3 | 4 | 5 ) #IMPLIED
+>
+
+
+<!-- The comment element contains commentary text without markup.
+-->
+<!ELEMENT comment (#PCDATA)>
+
+
+<!-- There are three elements related to changebars:
+-->
+
+<!-- The bar element starts a section that has been changed.
+-->
+<!ELEMENT bar EMPTY>
+<!-- The attributes of bar are:
+      * id is an optional identifier available for use in an associated endbar.
+      * note is generally the name of the paper which caused the change but may be any source.
+      * colour is the colour to be used for the bar.
+      * style is the style to be used for the bar.
+-->
+<!ATTLIST bar
+  id     ID      #IMPLIED
+  note   CDATA   #REQUIRED
+  colour ( blue | brown | green | red | magenta | cyan | orange | lightgrey ) #IMPLIED
+  style  ( dotted | dashed | solid ) #IMPLIED
+>
+
+
+<!-- The endbar element terminates a section that has been changed.
+-->
+<!ELEMENT endbar EMPTY>
+<!-- The attribute of endbar is:
+      * ref is an optional reference to the bar for which this is the endbar.
+-->
+<!ATTLIST endbar
+  ref IDREF #IMPLIED
+>
+
+
+<!-- The delbar element indicates a deletion.
+-->
+<!ELEMENT delbar EMPTY>
+<!-- The attributes of delbar are:
+      * note is generally the name of the paper which caused the change but may be any source
+        and an indication of what has been deleted.
+      * colour is the colour to be used for the text of the note.
+-->
+<!ATTLIST delbar
+  note   CDATA #REQUIRED
+  colour ( black | blue | brown | green | red | magenta | cyan | orange | lightgrey ) #IMPLIED
+>
+
+
+<!-- The BNFroot element defines the root of a BNF tree in the document.
+-->
+<!ELEMENT BNFroot EMPTY>
+<!-- The attribute of BNFroot is:
+      * name is the name of the BNF element that is the root of a BNF tree.
+-->
+<!ATTLIST BNFroot
+  name   CDATA #REQUIRED
+>
+
+
+<!-- The coverPage element defines the cover page.
+-->
+<!ELEMENT coverPage ((%comments.class;)*, SCtitle,
+                     (%comments.class;)*, WGtitle,
+                     (%comments.class;)*, secretariat,
+                     (%comments.class;)*, partTitleEnglish,
+                     (%comments.class;)*, partTitleFrench,
+                     (%comments.class;)*)>
+
+
+<!-- The SCtitle element contains the plain text giving the title of the responsible ISO SC.
+-->
+<!ELEMENT SCtitle (#PCDATA)>
+
+
+<!-- The WGtitle element contains plain text giving the title of the responsible ISO WG.
+-->
+<!ELEMENT WGtitle (#PCDATA)>
+
+
+<!-- The secretariat element contains name of the National Body holding the SC Secretariat.
+-->
+<!ELEMENT secretariat (#PCDATA)>
+
+
+<!-- The partTitleEnglish element contains the title, in English, of the document on the Cover page.
+     It comprises three or four lines:
+     * partTitleEnglish1
+     * partTitleEnglish2
+     * partTitleEnglish3
+     * partTitleEnglish4
+-->
+<!ELEMENT partTitleEnglish (partTitleEnglish1, partTitleEnglish2,
+                            partTitleEnglish3, partTitleEnglish4?)>
+<!ELEMENT partTitleEnglish1 (#PCDATA)>
+<!ELEMENT partTitleEnglish2 (#PCDATA)>
+<!ELEMENT partTitleEnglish3 (#PCDATA)>
+<!ELEMENT partTitleEnglish4 (#PCDATA)>
+
+
+<!-- The partTitleFrench element contains the title, in French, of the document on the Cover page.
+     It comprises two or three lines:
+     * partTitleFrench1
+     * partTitleFrench2
+     * partTitleFrench3
+-->
+<!ELEMENT partTitleFrench (partTitleFrench1, partTitleFrench2, partTitleFrench3?)>
+<!ELEMENT partTitleFrench1 (#PCDATA)>
+<!ELEMENT partTitleFrench2 (#PCDATA)>
+<!ELEMENT partTitleFrench3 (#PCDATA)>
+
+
+<!-- The copyrightNoticePage element identifies where the stylesheet should insert the
+     required text.
+-->
+<!ELEMENT copyrightNoticePage EMPTY>
+
+
+<!-- The alternateCopyrightNoticePage element identifies where the stylesheet should insert the
+     required text.
+-->
+<!ELEMENT alternateCopyrightNoticePage EMPTY>
+
+
+<!-- The standardPartBody element defines the real meat of the document.
+-->
+<!ELEMENT standardPartBody (comment*, partHeading,
+                            comment*, partTitle,
+                            comment*, foreword,
+                            comment*, intro?,
+                            (comment*, clause)+, 
+                            comment*)>
+
+
+<!-- The TCPartBody element defines the real meat of the TC document.
+-->
+<!ELEMENT TCPartBody       (comment*, partTitle,
+                            comment*, foreword?,
+                            comment*, intro?,
+                            (comment*, clause)*, 
+                            comment*)>
+
+
+<!-- The backMatter element, if present, defines an optional sequence of annex elements
+     optionally followed by a bibliography element.
+-->
+<!ELEMENT backMatter ((comment*, annex)*,
+                      comment*, bibliography?, comment*)>
+
+
+<!-- The index element, if present, specifies when and where in the document the index
+     is to be generated (and printed).  The index element is empty and takes no attributes
+-->
+<!ELEMENT index EMPTY>
+
+
+<!-- The EditorNotes elements define are Possible Problems (PPs) and Language Opportunities (LOs).
+     NOTE: The Editor's Notes do not easily permit changebars because of the rather
+     unusual way in which they are formatted (each combination of severity/realm
+     formatted separately), because it's not feasible to apply the templates
+     for bar/endbar/delbar only for those changebar elements associated with
+     the selected Possible Problems.
+     Changebars beginning and ending completely within a single PP or LO do work.
+-->
+<!ELEMENT EditorNotes (comment | PP | LO)*>
+
+
+<!-- The foreword element defines the foreword and comprises:
+     * forewordHeading which is required by the ISO Directives to be "Foreword".
+     * forewordBody is the actual content of the Foreword.
+-->
+<!ELEMENT foreword ((%comments.class;)*, forewordHeading,
+                    (%comments.class;)*, forewordBody, 
+                    (%comments.class;)*)>
+<!-- The attribute of foreword is:
+      * id is the identifier of the foreword.
+-->
+<!ATTLIST foreword
+  id ID #REQUIRED
+>
+
+
+<!-- The forewordHeading element contains the heading text.
+     The ISO Directives require this to be "Foreword".
+     This is checked in the VerifySourceCode.xsl script.
+-->
+<!ELEMENT forewordHeading (#PCDATA)>
+
+
+<!-- The forewordBody element contains the actual content of the Foreword.
+     It is comprised of:
+     * bodyMatter.
+-->
+<!ELEMENT forewordBody ((%comments.class;)*, bodyMatter)>
+
+
+<!-- The intro element comprises defines the Introduction and comprises:
+     * introHeading which is required by the ISO Directives to be "Introduction".
+     * introBody is the actual content of the Introduction.
+-->
+<!ELEMENT intro ((%comments.class;)*, introHeading,
+                 (%comments.class;)*, introBody, 
+                 (%comments.class;)*)>
+<!-- The attribute of intro is:
+      * id is the identifier of the Introduction.
+-->
+<!ATTLIST intro
+  id ID #REQUIRED
+>
+
+
+<!-- The introHeading element contains the heading text.
+     The ISO Directives require this to be "Introduction".
+-->
+<!ELEMENT introHeading (#PCDATA)>
+
+
+<!-- The introBody ontains the actual content of the Foreword.
+     It is comprised of:
+     * bodyMatter.
+-->
+<!ELEMENT introBody ((%comments.class;)*, bodyMatter)>
+
+
+<!-- A clause element defines the primary subdivision of the technical material.
+     It comprises:
+     * clauseNumber is the number of the clause.
+       This is used only in a TC as in a standard or TR the numbers are assigned dynamically.
+       In a TC the numbers relate to the published standard or TR are are therefore known.
+     * clauseHeading is the title of the clause.
+     * modifiesPart is used only in incremental parts and indicates that the clause modifies a
+       clause with the same name in another part.
+     * bodyMatter is the text of the clause.
+     * termsBoilerplate is the required text for Clause 3 "Terms and Definitions" and is only used
+       in that clause.
+     * subClause of which there may be many and these may be nested upto 4 levels.
+       Note that ISO require that a clause has either bodyMatter or subClause(s) but not both.
+-->
+<!ELEMENT clause     ( (%comments.class;)*, clauseNumber?,
+                       (%comments.class;)*, clauseHeading,
+                       (%comments.class;)*, modifiesPart*, (%comments.class;)*,
+                       ( bodyMatter |
+                         termsBoilerplate |
+                         ( (%comments.class;)*, termsBoilerplate?,
+                           ( (%comments.class; | ednote )*, subClause )+ ) ),
+                       (%comments.class;)*)>
+<!-- The attribute of clause is:
+      * id is the identifier of the clause.
+-->
+<!ATTLIST clause
+  id ID #REQUIRED
+>
+
+
+<!-- A subClause element defines a further subdivision of the technical material.
+     It comprises:
+     * clauseNumber is the number of the subClause.
+       This is used only in the TC as in a standard or TR the numbers are assigned dynamically.
+       In a TC the numbers relate to the published standard or TR are are therefore known.
+     * clauseHeading is the title of the subClause.
+     * modifiesPart is used only in incremental parts and indicates that the subClause modifies 
+       a subClause with the same name in another part.
+       Note: The containing clause must also contain a modifiesPart element.
+             This is checked in the VerifySourceCode.xsl script.
+     * bodyMatter is the text of the subClause.
+     * subClause2 of which there may be many and these may be nested upto 3 levels.
+       Note that ISO require that a subClause has either bodyMatter or subClause2(s) but not both.
+-->
+<!ELEMENT subClause  ( (%comments.class;)*, clauseNumber?,
+                       (%comments.class;)*, clauseHeading,
+                       (%comments.class;)*, modifiesPart*, (%comments.class;)*,
+                       (bodyMatter | ( (%comments.class; | ednote)*, subClause2 )+),
+                       (%comments.class;)*)>
+<!-- The attributes of subClause are:
+     * id is the identifier of the subClause.
+     * newpage indicates whether the subClause must start on a new page or not.
+-->
+<!ATTLIST subClause
+  id      ID #REQUIRED
+  newpage ( true | false ) "false"
+>
+
+
+<!-- A subClause2 element defines a further subdivision of the technical material.
+     It comprises:
+     * clauseNumber is the number of the subClause2.
+       This is used only in the TC as in a standard or TR the numbers are assigned dynamically.
+       In a TC the numbers relate to the published standard or TR are are therefore known.
+     * clauseHeading is the title of the subClause2.
+     * modifiesPart is used only in incremental parts and indicates that the subClause2 modifies 
+       a subClause2 with the same name in another part.
+       Note: The containing subClause must also contain a modifiesPart element.
+             This is checked in the VerifySourceCode.xsl script.
+     * bodyMatter is the text of the subClause2.
+     * subClause3 of which there may be many and these may be nested upto 2 levels.
+       Note that ISO require that a subClause2 has either bodyMatter or subClause3(s) but not both.
+-->
+<!ELEMENT subClause2 ( (%comments.class;)*, clauseNumber?,
+                       (%comments.class;)*, clauseHeading,
+                       (%comments.class;)*, modifiesPart*, (%comments.class;)*,
+                       ( bodyMatter | ( (%comments.class; | ednote )*, subClause3 )+),
+                       (%comments.class;)*)>
+<!-- The attributes of subClause2 are:
+     * id is the identifier of the subClause2.
+     * newpage indicates whether the subClause must start on a new page or not.
+-->
+<!ATTLIST subClause2
+  id ID   #REQUIRED
+  newpage ( true | false ) "false"
+>
+
+
+<!-- A subClause3 element defines a further subdivision of the technical material.
+     It comprises:
+     * clauseNumber is the number of the subClause3.
+       This is used only in the TC as in a standard or TR the numbers are assigned dynamically.
+       In a TC the numbers relate to the published standard or TR are are therefore known.
+     * clauseHeading is the title of the subClause3.
+     * modifiesPart is used only in incremental parts and indicates that the subClause3 modifies 
+       a subClause3 with the same name in another part.
+       Note: The containing subClause2 must also contain a modifiesPart element.
+             This is checked in the VerifySourceCode.xsl script.
+     * bodyMatter is the text of the subClause3.
+     * subClause4 of which there may be many.
+       Note that ISO require that a subClause3 has either bodyMatter or subClause4(s) but not both.
+-->
+<!ELEMENT subClause3 ( (%comments.class;)*, clauseNumber?,
+                       (%comments.class;)*, clauseHeading,
+                       (%comments.class;)*, modifiesPart*, (%comments.class;)*,
+                       ( bodyMatter | ( (%comments.class; | ednote )*, subClause4 )+),
+                       (%comments.class;)*)>
+<!-- The attributes of subClause3 are:
+     * id is the identifier of the subClause3.
+     * newpage indicates whether the subClause must start on a new page or not.
+-->
+<!ATTLIST subClause3
+  id ID   #REQUIRED
+  newpage ( true | false ) "false"
+>
+
+
+<!-- A subClause4 element defines a further subdivision of the technical material.
+     It comprises:
+     * clauseNumber is the number of the subClause4.
+       This is used only in the TC as in a standard or TR the numbers are assigned dynamically.
+       In a TC the numbers relate to the published standard or TR are are therefore known.
+     * clauseHeading is the title of the subClause3.
+     * modifiesPart is used only in incremental parts and indicates that the subClause4 modifies 
+       a subClause4 with the same name in another part.
+       Note: The containing subClause3 must also contain a modifiesPart element.
+             This is checked in the VerifySourceCode.xsl script.
+     * bodyMatter is the text of the subClause4.
+-->
+<!ELEMENT subClause4 ((%comments.class;)*, clauseNumber?,
+                      (%comments.class;)*, clauseHeading,
+                      (%comments.class;)*,
+                      bodyMatter,
+                      (%comments.class;)*)>
+<!-- The attributes of subClause4 are:
+     * id is the identifier of the subClause4.
+     * newpage indicates whether the subClause must start on a new page or not.
+-->
+<!ATTLIST subClause4
+  id      ID #REQUIRED
+  newpage ( true | false ) "false"
+>
+
+
+<!-- The partHeading element triggers the heading in Clause 1 Scope.
+-->
+<!ELEMENT partHeading EMPTY>
+
+
+<!-- The partTitle element defines the title of the document in Clause 1 Scope.
+     It comprises three or four lines:
+     * partTitleOne
+     * partTitleTwo
+     * partTitleThree
+     * partTitleFour
+-->
+<!ELEMENT partTitle (partTitleOne, partTitleTwo, partTitleThree, partTitleFour?)>
+<!ELEMENT partTitleOne (#PCDATA | %inline.class;)*>
+<!ELEMENT partTitleTwo (#PCDATA | %inline.class;)*>
+<!ELEMENT partTitleThree (#PCDATA | %inline.class;)*>
+<!ELEMENT partTitleFour (#PCDATA | %inline.class;)*>
+
+
+<!-- =======================================================================
+     Specify the elements of the backMatter
+     =======================================================================
+-->
+
+<!-- An annex element defines an Annex and comprises:
+     * clauseNumber is the number of the Annex.
+       This is used only in the TC as in a standard or TR the numbers are assigned dynamically.
+       In a TC the numbers relate to the published standard or TR are are therefore known.
+     * clauseHeading is the title of the Annex.
+     * modifiesPart is used only in incremental parts and indicates that the Annex modifies a
+       Annex with the same name in another part.
+     * bodyMatter is the basis text of the Annex.
+       bodyMatter may be followed by one of the following three summary generating elements.
+     * conformanceSummary specifies that a summary of the Conformance Rules be generated.
+       This is for use only in Annex A whose title ends with "conformance summary".
+     * impDefSummary specifies that a summary of the implementation-defined aspects be generated.
+       This is for use only in Annex B whose title is <impDef annex="no" code="None" cap="yes"/>.
+     * unDefSummary specifies that a summary of the implementation-dependent aspects be generated.
+       This is for use only in Annex C whose title is <unDef annex="no" code="None" cap="yes"/>.
+     * subClause of which there may be many and these may be nested upto 3 levels.
+       Note that ISO require that an Annex has either bodyMatter or subClause(s) but not both.
+-->
+<!ELEMENT annex ( (%comments.class;)*, clauseNumber?,
+                  (%comments.class;)*, clauseHeading,
+                  (%comments.class;)*, modifiesPart*,
+                  ( (bodyMatter, ( conformanceSummary? | impDefSummary? | unDefSummary?) ) |
+                    ( ( (%comments.class;)*, subClause)*, (%comments.class;)*) ) )>
+<!-- The attributes of annex are:
+     * id is the identifier of the annex.
+     * normative indicates whether the annex is normative or not.
+-->
+<!ATTLIST annex
+  id        ID #REQUIRED
+  normative ( informative | normative ) #REQUIRED
+>
+
+
+<!-- A conformanceSummary element generates a summary of the Conformance Rules.
+     It can only be used in "Annex A", this is checked in the VerifySourceCode.xsl script.
+-->
+<!ELEMENT conformanceSummary EMPTY>
+
+
+<!-- An impDefSummary element generates a summary of the implementation-defined elements.
+     It can only be used in "Annex B", this is checked in the VerifySourceCode.xsl script.
+-->
+<!ELEMENT impDefSummary EMPTY>
+
+
+<!-- An unDefSummary element generates a summary of the implementation-dependent elements.
+     It can only be used in "Annex C", this is checked in the VerifySourceCode.xsl script.
+-->
+<!ELEMENT unDefSummary EMPTY>
+
+
+<!-- A bibliography element defines the Bibliography and comprises:
+     * referencedDocument elements.
+-->
+<!ELEMENT bibliography ( (referencedDocument | (%notes.class;) | (%comments.class;) )+)>
+<!-- The attribute of bibliography is:
+      * id is the unique identifier for the bibliography.
+-->
+<!ATTLIST bibliography
+    id ID #REQUIRED
+>
+
+
+<!-- A normativeReferences element defines the Normative References and comprises:
+     * referencedDocument elements.
+-->
+<!ELEMENT normativeReferences ( (referencedDocument | (%notes.class;) | (%comments.class;) )+)>
+
+
+<!-- The referencedDocument element specifies a reference to documents whose actual definitions
+     are found in an external document i.e., referencedDocuments.xml.
+     Within a document the referencedDocument is itself referenced using a <docref> element.
+-->
+<!ELEMENT referencedDocument EMPTY>
+<!-- The attribute of referencedDocument is:
+      * id is the unique identifier for the referencedDocument.
+-->
+<!ATTLIST referencedDocument
+    id ID #REQUIRED
+>
+
+
+<!-- The clauseNumber element specifies the actual number of the clause, subClause or annex.
+     Note: This is used only in the TC where the numbering is known.
+           This is checked in the VerifySourceCode.xsl script.
+-->
+<!ELEMENT clauseNumber (#PCDATA)>
+
+
+<!-- A clauseHeading specifies the title of the clause, subClause or annex.
+-->
+<!ELEMENT clauseHeading (#PCDATA | BNF | docref | impDef | unDef | vs | mono | kw | apos 
+                         | bool | quote)*>
+
+
+<!-- A bodyMatter element provides the real "meat" of each clause, subClause, or annex.
+     It comprises either:
+     * tc is a TC entry, or
+     * some elements from the blocks class and/or the subSection class.
+     Note: bodyMatter in a clause does not use the subSection class but this is not enforced.
+-->
+<!ELEMENT bodyMatter ( (%comments.class; | tc)* | (%blocks.class; | %subSection.class;)*)>
+
+
+<!--The termsBoilerplate element is used instead of bodyMatter in Clause 3,
+    "Terms and definitions".
+     Note: ISO Directives Part 2 requires some boilerplate text to precede any definitions,
+     even though that text constitutes a "hanging paragraph" that is otherwise forbidden.
+     Note also that termsBoilerplate may be followed in a clause by subClauses, which
+     is also not allowed for bodyMatter.
+-->
+<!ELEMENT termsBoilerplate (%comments.class; | %blocks.class;)*>
+
+
+<!-- A tc element defines a TC entry and comprises:
+     * tcRationale is the rationale for the TC entry.
+     * tcSource is the source, normally a paper number, of the TC entry.
+       Note: this is never displayed in balloted or published versions of the TC.
+     * tcInstruction is the required change.
+     * tcBody is the, optional, text neceesary to support the instruction.
+-->
+<!ELEMENT tc (tcRationale, tcSource, tcInstruction, tcBody*)>
+
+
+<!-- The tcRationale element describes the reason for the TC entry.
+-->
+<!ELEMENT tcRationale (#PCDATA | %inline.class; | %comments.class;)*>
+
+
+<!-- The tcSource element describes the source of the TC entry and comprises one of:
+     * paperNumber is the paper number that introducted the TC entry.
+     * ballotComment is the ballot comment that introducted the TC entry.
+     * emailMessage is the identification of the email that introducted the TC entry.
+     * editorialChange is the idication that the TC entry was developed by the editor.
+-->
+<!ELEMENT tcSource (paperNumber | ballotComment | emailMessage | editorialChange
+                   | %comments.class;)+>
+
+
+<!-- The paperNumber element specifies a paper number.
+     For example, "WG3:SIA-456".
+-->
+<!ELEMENT paperNumber (#PCDATA)>
+
+
+<!-- The ballotComment element specifies a ballot comment.
+     For example, "FCD1/2005, NLD-P02-123".
+-->
+<!ELEMENT ballotComment (#PCDATA)>
+
+
+<!-- The emailMessage element identifies an email message.
+     For example, "Email from Fred Zemke, 2004-05-10 1123".
+-->
+<!ELEMENT emailMessage (#PCDATA)>
+
+
+<!-- The editorialChange element specifies an editorial change.
+     Note the contents should omit "Editorial Change: " as this is implicit.
+-->
+<!ELEMENT editorialChange (#PCDATA)>
+
+
+<!-- The tcInstruction element specifies what the corrigendum is.
+     Note: this may or may not require the inclusion of the optional tcBody element.
+-->
+<!ELEMENT tcInstruction (#PCDATA | %inline.class; | %comments.class;)*>
+
+
+<!-- The tcBody element contains the actual added or replacement text for the TC entry.
+-->
+<!ELEMENT tcBody (subClause | subClause2 | subClause3 | subClause4
+                | %subSection.class; | %blocks.class; | %comments.class;)*>
+
+
+<!-- ==========================================================================
+     Following this are the subSection elements.
+     Not every Subclause will contain all or any of these, but most subClauses
+     contain some or all of them.
+     ==========================================================================
+-->
+
+<!-- The Function element defines the purpose of the subClause in which it exists.
+-->
+<!ELEMENT Function (%blocks.class;)+>
+<!-- The attribute of Function is:
+      * id is the unique identifier for the Function.
+        Note: this has no actual purpose as there is no way of referencing it.
+-->
+<!ATTLIST Function
+  id ID #IMPLIED
+>
+
+
+<!-- The Format element specifies the grammar.
+-->
+<!ELEMENT Format (((%comments.class;)*, (%notes.class;)*)*,
+                   grammar,
+                  ((%comments.class;)*, (%notes.class;)*)*)>
+<!-- The attribute of Format is:
+      * id is the unique identifier for the Format.
+        Note: this has no actual purpose as there is no way of referencing it.
+-->
+<!ATTLIST Format
+  id ID #IMPLIED
+>
+
+
+<!-- The InformalSemantics element specifies the semantics of the subClause in an informal manner.
+     Note: this is only used during initial development of a standard and never in a published
+     version.
+-->
+<!ELEMENT InformalSemantics (%blocks.class;)+>
+<!-- The attribute of InformalSemantics is:
+      * id is the unique identifier for the InformalSemantics.
+        Note: this has no actual purpose as there is no way of referencing it.
+-->
+<!ATTLIST InformalSemantics
+  id ID #IMPLIED
+>
+
+
+<!-- The SyntaxRules element specifies the Syntax Rules.
+-->
+<!ELEMENT SyntaxRules (((%comments.class;)*, (%notes.class;)*)*,
+                       olist,
+                       ((%comments.class;)*, (%notes.class;)*)*,
+                       table?,
+                       ((%comments.class;)*, (%notes.class;)*))>
+<!-- The attribute of SyntaxRules is:
+      * id is the unique identifier for the SyntaxRules.
+        Note: this has no actual purpose as there is no way of referencing it.
+-->
+<!ATTLIST SyntaxRules
+  id ID #IMPLIED
+>
+
+
+<!-- The AccessRules element specifies the Access Rules.
+-->
+<!ELEMENT AccessRules (((%comments.class;)*, (%notes.class;)*)*,
+                       olist,
+                       ((%comments.class;)*, (%notes.class;)*))>
+<!-- The attribute of AccessRules is:
+      * id is the unique identifier for the AccessRules.
+        Note: this has no actual purpose as there is no way of referencing it.
+-->
+<!ATTLIST AccessRules
+  id ID #IMPLIED
+>
+
+
+<!-- The GeneralRules element specifies the General Rules.
+-->
+<!ELEMENT GeneralRules (((%comments.class;)*, (%notes.class;)*)*,
+                        olist,
+                        ((%comments.class;)*, (%notes.class;)*)*,
+                        table?,
+                        ((%comments.class;)*, (%notes.class;)*))>
+<!-- The attribute of GeneralRules is:
+      * id is the unique identifier for the GeneralRules.
+        Note: this has no actual purpose as there is no way of referencing it.
+-->
+<!ATTLIST GeneralRules
+  id ID #IMPLIED
+>
+
+
+<!-- The ConformanceRules element specifies the Conformance Rules.
+-->
+<!ELEMENT ConformanceRules (((%comments.class;)*, (%notes.class;)*)*,
+                            olist,
+                            ((%comments.class;)*, (%notes.class;)*))>
+<!-- The attribute of ConformanceRules is:
+      * id is the unique identifier for the ConformanceRules.
+        Note: this has no actual purpose as there is no way of referencing it.
+-->
+<!ATTLIST ConformanceRules
+  id ID #IMPLIED
+>
+
+
+<!-- The Definition element specifies the SQL text to define tables, views, etc.
+     in the Information and Definition Schemas in SQL/Schemata.
+-->
+<!ELEMENT Definition ( ((%comments.class;)*, (%notes.class;)*)*,
+                       (( (para, ((%comments.class;)*, (%notes.class;)*))?,
+                         (schemacode, ((%comments.class;)*, (%notes.class;)*)*))* 
+                       |
+                       ( (code, ((%comments.class;)*, (%notes.class;)*)*),
+                         (para, ((%comments.class;)*, (%notes.class;)*)*)*,
+                         (ulist, ((%comments.class;)*, (%notes.class;)*)*)*
+                       )
+                       | NoDefinition
+                       ),
+                       ((%comments.class;)*, (%notes.class;)*)*)>
+<!-- The attribute of Definition is:
+      * id is the unique identifier for the Definition.
+        Note: this has no actual purpose as there is no way of referencing it.
+-->
+<!ATTLIST Definition
+  id ID #IMPLIED
+>
+
+
+<!-- The Description element contains the description od the Definition element items.
+-->
+<!ELEMENT Description (((%comments.class;)*, (%notes.class;)*)*,
+                       olist,
+                       ((%comments.class;)*, (%notes.class;)*))>
+<!-- The attribute of Description is:
+      * id is the unique identifier for the Description.
+        Note: this has no actual purpose as there is no way of referencing it.
+-->
+<!ATTLIST Description
+  id ID #IMPLIED
+>
+
+
+<!-- The Tables element contains the tables defining "Data type correspondences".
+-->
+<!ELEMENT Tables (((%comments.class;)*, (%notes.class;)*)*,
+                  (para?, ((%comments.class;)*, (%notes.class;)*)*,
+                   table, ((%comments.class;)*, (%notes.class;)*))+
+                 )>
+<!-- The attribute of Tables is:
+      * id is the unique identifier for the Tables.
+        Note: this has no actual purpose as there is no way of referencing it.
+-->
+<!ATTLIST Tables
+  id ID #IMPLIED
+>
+
+
+<!-- The TablePopulation celement defines the initial population of tables.
+-->
+<!ELEMENT TablePopulation (((%comments.class;)*, (%notes.class;)*)*,
+                           olist,
+                           ((%comments.class;)*, (%notes.class;)*))>
+<!-- The attribute of TablePopulation is:
+      * id is the unique identifier for the TablePopulation.
+        Note: this has no actual purpose as there is no way of referencing it.
+-->
+<!ATTLIST TablePopulation
+  id ID #IMPLIED
+>
+
+
+<!-- The DefinitionsAndRules element defines the semantic rules for syntax elements or
+     translator-generated classes.
+     Note: This is only used in SQL/OLB.
+     This is checked in the VerifySourceCode.xsl script.
+-->
+<!ELEMENT DefinitionsAndRules (((%comments.class;)*, (%notes.class;)*)*,
+                                olist,
+                                ((%comments.class;)*, (%notes.class;)*))>
+<!-- The attribute of DefinitionsAndRules is:
+      * id is the unique identifier for the DefinitionsAndRules.
+        Note: this has no actual purpose as there is no way of referencing it.
+-->
+<!ATTLIST DefinitionsAndRules
+  id ID #IMPLIED
+>
+
+
+<!-- The Signature element defines the signature of a procedure or a translator-generated class.
+     Note: This is only used in SQL/OLB & SQL/JRT.
+     This is checked in the VerifySourceCode.xsl script.
+-->
+<!ELEMENT Signature (((%comments.class;)*, (%notes.class;)*)*,
+                      (para, (%comments.class;)*)*, 
+                      (code, (%comments.class;)*)?, 
+                      (para, (%comments.class;)*)*,  
+                      grammar?, 
+                      ((%comments.class;)*, (%notes.class;)*))>
+<!-- The attribute of Signature is:
+      * id is the unique identifier for the Signature.
+        Note: this has no actual purpose as there is no way of referencing it.
+-->
+<!ATTLIST Signature
+  id ID #IMPLIED
+>
+
+
+<!-- The Parameters element defines the parameters to sqlj methods and constructors.
+     Note: This is only used in SQL/OLB.
+     This is checked in the VerifySourceCode.xsl script.
+-->
+<!ELEMENT Parameters (((%comments.class;)*, (%notes.class;)*)*,
+                      ulist,
+                      ((%comments.class;)*, (%notes.class;)*))>
+<!-- The attribute of Parameters is:
+      * id is the unique identifier for the Parameters.
+        Note: this has no actual purpose as there is no way of referencing it.
+-->
+<!ATTLIST Parameters
+  id ID #IMPLIED
+>
+
+
+<!-- The BinaryComposition element defines additional methods for translator-generated classes.
+     Note: This is only used in SQL/OLB.
+     This is checked in the VerifySourceCode.xsl script.
+-->
+<!ELEMENT BinaryComposition (((%comments.class;)*, (%notes.class;)*)*,
+                             (para, ((%comments.class;)*, (%notes.class;)*)*,
+                             (olist | ulist?), ((%comments.class;)*, (%notes.class;)*))+)>
+<!-- The attribute of BinaryComposition is:
+      * id is the unique identifier for the BinaryComposition.
+        Note: this has no actual purpose as there is no way of referencing it.
+-->
+<!ATTLIST BinaryComposition
+  id ID #IMPLIED
+>
+
+
+<!-- The CodeGeneration element defines the runtime calls made to interfaces of sqlj.
+     Note: This is only used in SQL/OLB.
+     This is checked in the VerifySourceCode.xsl script.
+-->
+<!ELEMENT CodeGeneration (((%comments.class;)*, (%notes.class;)*)*,
+                          ((para | olist | ulist),
+                          ((%comments.class;)*, (%notes.class;)*)*)+)*>
+<!-- The attribute of CodeGeneration is:
+      * id is the unique identifier for the CodeGeneration.
+        Note: this has no actual purpose as there is no way of referencing it.
+-->
+<!ATTLIST CodeGeneration
+  id ID #IMPLIED
+>
+
+
+<!-- The ProfileEntryInfoProperties element defines the properties of the profile EntryInfo object.
+     Note: This is only used in SQL/OLB.
+     This is checked in the VerifySourceCode.xsl script.
+-->
+<!ELEMENT ProfileEntryInfoProperties (((%comments.class;)*, (%notes.class;)*)*,
+                                      ((para | ulist),
+                                      ((%comments.class;)*, (%notes.class;)*)*))*>
+<!-- The attribute of ProfileEntryInfoProperties is:
+      * id is the unique identifier for the ProfileEntryInfoProperties.
+        Note: this has no actual purpose as there is no way of referencing it.
+-->
+<!ATTLIST ProfileEntryInfoProperties
+  id ID #IMPLIED
+>
+
+
+<!-- The SeeAlso element contains a set of see also references.
+     Note: This is only used in SQL/OLB.
+     This is checked in the VerifySourceCode.xsl script.
+-->
+<!ELEMENT SeeAlso (((%comments.class;)*, (%notes.class;)*)*,
+                   ulist,
+                   ((%comments.class;)*, (%notes.class;)*))>
+<!-- The attribute of SeeAlso is:
+      * id is the unique identifier for the SeeAlso.
+        Note: this has no actual purpose as there is no way of referencing it.
+-->
+<!ATTLIST SeeAlso
+  id ID #IMPLIED
+>
+
+
+<!-- The Throws element defines the exceptions thrown.
+     Note: This is only used in SQL/OLB.
+     This is checked in the VerifySourceCode.xsl script.
+-->
+<!ELEMENT Throws (((%comments.class;)*, (%notes.class;)*)*,
+                  ulist,
+                  ((%comments.class;)*, (%notes.class;)*))>
+<!-- The attribute of Throws is:
+      * id is the unique identifier for the Throws.
+        Note: this has no actual purpose as there is no way of referencing it.
+-->
+<!ATTLIST Throws
+  id ID #IMPLIED
+>
+
+
+<!-- The Returns element defines the value returned by an sqlj method.
+     Note: This is only used in SQL/OLB.
+     This is checked in the VerifySourceCode.xsl script.
+-->
+<!ELEMENT Returns (((%comments.class;)*, (%notes.class;)*)*,
+                   ulist,
+                   ((%comments.class;)*, (%notes.class;)*))>
+<!-- The attribute of Returns is:
+      * id is the unique identifier for the Returns.
+        Note: this has no actual purpose as there is no way of referencing it.
+-->
+<!ATTLIST Returns
+  id ID #IMPLIED
+>
+
+
+<!-- The Overrides element defines the method overridden by another method.
+     Note: This is only used in SQL/OLB.
+     This is checked in the VerifySourceCode.xsl script.
+-->
+<!ELEMENT Overrides (((%comments.class;)*, (%notes.class;)*)*,
+                     ulist,
+                     ((%comments.class;)*, (%notes.class;)*))>
+<!-- The attribute of Overrides is:
+      * id is the unique identifier for the Overrides.
+        Note: this has no actual purpose as there is no way of referencing it.
+-->
+<!ATTLIST Overrides
+  id ID #IMPLIED
+>
+
+
+<!-- The InterpretingCustomizeResults element defines the interpretation of customized results.
+     Note: This is only used in SQL/OLB.
+     This is checked in the VerifySourceCode.xsl script.
+-->
+<!ELEMENT InterpretingCustomizeResults (((%comments.class;)*, (%notes.class;)*)*,
+                                        para, ((%comments.class;)*, (%notes.class;)*)*,
+                                        table, ((%comments.class;)*, (%notes.class;)*))>
+<!-- The attribute of InterpretingCustomizeResults is:
+      * id is the unique identifier for the InterpretingCustomizeResults.
+        Note: this has no actual purpose as there is no way of referencing it.
+-->
+<!ATTLIST InterpretingCustomizeResults
+  id ID #IMPLIED
+>
+
+
+<!-- The CustomizerProperties element describes the properties of a customizer.
+     Note: This is only used in SQL/OLB.
+     This is checked in the VerifySourceCode.xsl script.
+-->
+<!ELEMENT CustomizerProperties (((%comments.class;)*, (%notes.class;)*)*,
+                                para,
+                                ((%comments.class;)*, (%notes.class;)*))>
+<!-- The attribute of CustomizerProperties is:
+      * id is the unique identifier for the CustomizerProperties.
+        Note: this has no actual purpose as there is no way of referencing it.
+-->
+<!ATTLIST CustomizerProperties
+  id ID #IMPLIED
+>
+
+
+<!-- The ProfileCustomizerUsage element describes the usage of a ProfileCustomizer object.
+     Note: This is only used in SQL/OLB.
+     This is checked in the VerifySourceCode.xsl script.
+-->
+<!ELEMENT ProfileCustomizerUsage (((%comments.class;)*, (%notes.class;)*)*,
+                                  ((para | ulist),
+                                  ((%comments.class;)*, (%notes.class;)*)*))*>
+<!-- The attribute of ProfileCustomizerUsage is:
+      * id is the unique identifier for the ProfileCustomizerUsage.
+        Note: this has no actual purpose as there is no way of referencing it.
+-->
+<!ATTLIST ProfileCustomizerUsage
+  id ID #IMPLIED
+>
+
+
+<!-- The Model element describes the manner in which a deployment descriptor file is identified.
+     Note: This is only used in SQL/JRT.
+     This is checked in the VerifySourceCode.xsl script.
+-->
+<!ELEMENT Model (((%comments.class;)*, (%notes.class;)*)*,
+                 para, ((%comments.class;)*, (%notes.class;)*)*,
+                 code, ((%comments.class;)*, (%notes.class;)*)*)>
+<!-- The attribute of Model is:
+      * id is the unique identifier for the Model.
+        Note: this has no actual purpose as there is no way of referencing it.
+-->
+<!ATTLIST Model
+  id ID #IMPLIED
+>
+
+
+<!-- The Properties element defines the BNF specification of the syntax of the contents of a
+     deployment descriptor file.
+     Note: This is only used in SQL/JRT.
+     This is checked in the VerifySourceCode.xsl script.
+-->
+<!ELEMENT Properties (((%comments.class;)*, (%notes.class;)*)*,
+                      para, ((%comments.class;)*, (%notes.class;)*)*,
+                      grammar, ((%comments.class;)*, (%notes.class;)*)*)>
+<!-- The attribute of Properties is:
+      * id is the unique identifier for the Properties.
+        Note: this has no actual purpose as there is no way of referencing it.
+-->
+<!ATTLIST Properties
+  id ID #IMPLIED
+>
+
+
+<!-- The Purpose element defines the purpose of a function.
+     Note: This is only used in the 29075 standards.
+           This is checked in the VerifySourceCode.xsl script.
+-->
+<!ELEMENT Purpose (%blocks.class;)+>
+<!-- The attribute of Purpose is:
+      * id is the unique identifier for the Purpose.
+        Note: this has no actual purpose as there is no way of referencing it.
+-->
+<!ATTLIST Purpose
+  id ID #IMPLIED
+>
+
+
+<!-- The FunctionSignature element defines the signature of a function.
+     Note: This is only used in the 29075 standards.
+           This is checked in the VerifySourceCode.xsl script.
+-->
+<!ELEMENT FunctionSignature (%blocks.class;)+>
+<!-- The attribute of FunctionSignature is:
+      * id is the unique identifier for the FunctionSignature.
+        Note: this has no actual purpose as there is no way of referencing it.
+-->
+<!ATTLIST FunctionSignature
+  id ID #IMPLIED
+>
+
+
+<!-- The ParameterDefinitions element defines the parameters of a function.
+     Note: This is only used in the 29075 standards.
+           This is checked in the VerifySourceCode.xsl script.
+-->
+<!ELEMENT ParameterDefinitions (%blocks.class;)+>
+<!-- The attribute of ParameterDefinitions is:
+      * id is the unique identifier for the ParameterDefinitions.
+        Note: this has no actual purpose as there is no way of referencing it.
+-->
+<!ATTLIST ParameterDefinitions
+  id ID #IMPLIED
+>
+
+
+<!-- The Results element defines the results of a function.
+     Note: This is only used in the 29075 standards.
+           This is checked in the VerifySourceCode.xsl script.
+-->
+<!ELEMENT Results (%blocks.class;)+>
+<!-- The attribute of Results is:
+      * id is the unique identifier for the Results.
+        Note: this has no actual purpose as there is no way of referencing it.
+-->
+<!ATTLIST Results
+  id ID #IMPLIED
+>
+
+
+<!-- The ArgumentConsiderations element describes additional considerations regarding the
+     arguments to a function.
+     Note: This is only used in the 29075 standards.
+           This is checked in the VerifySourceCode.xsl script.
+-->
+<!ELEMENT ArgumentConsiderations (%blocks.class;)+>
+<!-- The attribute of ArgumentConsiderations is:
+      * id is the unique identifier for the ArgumentConsiderations.
+        Note: this has no actual purpose as there is no way of referencing it.
+-->
+<!ATTLIST ArgumentConsiderations
+  id ID #IMPLIED
+>
+
+
+<!-- The FormalDefinition element specifies the formal definition of a function.
+     Note: This is only used in the 29075 standards.
+           This is checked in the VerifySourceCode.xsl script.
+-->
+<!ELEMENT FormalDefinition (%blocks.class;)+>
+<!-- The attribute of FormalDefinition is:
+      * id is the unique identifier for the FormalDefinition.
+        Note: this has no actual purpose as there is no way of referencing it.
+-->
+<!ATTLIST FormalDefinition
+  id ID #IMPLIED
+>
+
+
+<!-- The ExceptionsAndWarnings element specifies the conditions returned by a function.
+     Note: This is only used in the 29075 standards.
+           This is checked in the VerifySourceCode.xsl script.
+-->
+<!ELEMENT ExceptionsAndWarnings (%blocks.class;)+>
+<!-- The attribute of ExceptionsAndWarnings is:
+      * id is the unique identifier for the ExceptionsAndWarnings.
+        Note: this has no actual purpose as there is no way of referencing it.
+-->
+<!ATTLIST ExceptionsAndWarnings
+  id ID #IMPLIED
+>
+
+
+<!-- The Conformance element defines the conformance requirements of a function.
+     Note: This is only used in the 29075 standards.
+           This is checked in the VerifySourceCode.xsl script.
+-->
+<!ELEMENT Conformance (%blocks.class;)+>
+<!-- The attribute of Conformance is:
+      * id is the unique identifier for the Conformance.
+        Note: this has no actual purpose as there is no way of referencing it.
+-->
+<!ATTLIST Conformance
+  id ID #IMPLIED
+>
+
+
+<!-- =======================================================================
+     Following this are the elements of classes
+     =======================================================================
+-->
+
+<!-- =======================================================================
+     %para.class; elements
+     =======================================================================
+-->
+
+<!-- The para element defines a paragraph of text.
+-->
+<!ELEMENT para (#PCDATA | %comments.class; | %inline.class;)*>
+<!-- The attributes of para are:
+      * id is the unique identifier for the para.
+      * name is inline text that is placed before the contents of para.
+-->
+<!ATTLIST para
+  id   ID #IMPLIED
+  name CDATA #IMPLIED
+>
+
+
+<!-- =======================================================================
+     %lists.class; elements
+     =======================================================================
+-->
+
+<!-- An slist element defines a simple list (no bullets, numbers, etc.).
+     It comprises one of:
+     * a set of item elements.
+-->
+<!ELEMENT slist (item | (%comments.class;)*)+>
+
+
+<!-- A ulist element defines an unnumbered list (bullets or dashes).
+     It comprises one of:
+     * a set of item elements.
+-->
+<!ELEMENT ulist (item | (%comments.class;)*)+>
+
+
+<!-- An olist element defines  an ordered list (numbers, letters, roman numerals, etc.).
+     It comprises one of:
+     * a set of item elements.
+     * None that indicates the absence of a set of items.
+     * NoAdditional that indicates the absence of any additional items and is only used in an
+       incremental part that is modifiying another part.
+-->
+<!ELEMENT olist (((%comments.class;)*, (%notes.class;)?, ((%comments.class;)* | item)+)
+               | ((%comments.class;)*, None, (%comments.class;)*, (%notes.class;)*, 
+                  (%comments.class;)*)
+               | ((%comments.class;)*, NoAdditional, (%comments.class;)*))>
+<!-- The attributes of olist are:
+     * start forces the list to start with the given number.
+       For example, <olist start="5">, followed by three <item> elements would result in
+       items 5, 6, 7
+       Note: This is only for use in a TC or a guide standard.
+             This is checked in the VerifySourceCode.xsl script.
+     * new causes the list elements to append "." and a sort of "extended" number that follows
+       the "." and then increments for subsequent list items.
+       For example, <olist start="5" new="1">, followed by three <item> elements would result in
+       items 5.1, 5.2, 5.3
+       Note: This is only for use in a TC.
+             This is checked in the VerifySourceCode.xsl script.
+-->
+<!ATTLIST olist
+  start CDATA #IMPLIED
+  new   CDATA #IMPLIED
+>
+
+
+<!-- An nlist element defines a simple numbered list.
+     It comprises:
+     * a set of item elements.
+-->
+<!ELEMENT nlist (item | (%comments.class;)*)+>
+<!-- The attributes of nlist are:
+     * start forces the list to start with the given number.
+       For example, <nlist start="5">, followed by three <item> elements would result in
+       items 5, 6, 7
+     * new causes the list elements to append "." and a sort of "extended" number that follows
+       the "." and then increments for subsequent list items.
+       For example, <nlist start="5" new="1">, followed by three <item> elements would result in
+       items 5.1, 5.2, 5.3
+     Note: Both of the above attributes are only for use in a TC.
+           This is checked in the VerifySourceCode.xsl script.
+-->
+<!ATTLIST nlist
+  start CDATA #IMPLIED
+  new   CDATA #IMPLIED
+>
+
+
+<!-- An alist element defines a simple lower-case alphabetical list.
+     It comprises:
+     * a set of item elements.
+-->
+<!ELEMENT alist (item | (%comments.class;)*)+>
+<!-- The attributes of alist are:
+     * start forces the list to start with the given letter.
+       For example, <alist start="5">, followed by three <item> elements would result in
+       items e, f, g
+     * new causes the list elements to append "." and a sort of "extended" number that follows
+       the "." and then increments for subsequent list items.
+       For example, <alist start="5" new="1">, followed by three <item> elements would result in
+       items e.1, e.2, e.3
+     Note: Both of the above attributes are only for use in a TC.
+           This is checked in the VerifySourceCode.xsl script.
+-->
+<!ATTLIST alist
+  start CDATA #IMPLIED
+  new   CDATA #IMPLIED
+>
+
+
+<!-- An rlist element defines a simple lower-case roman-number list.
+     It comprises:
+     * a set of item elements.
+-->
+<!ELEMENT rlist (item | (%comments.class;)*)+>
+<!-- The attributes of rlist are:
+     * start forces the list to start with the given letter.
+       For example, <rlist start="5">, followed by three <item> elements would result in
+       items v, vi, vii
+     * new causes the list elements to append "." and a sort of "extended" number that follows
+       the "." and then increments for subsequent list items.
+       For example, <rlist start="5" new="1">, followed by three <item> elements would result in
+       items v.1, v.2, v.3
+     Note: Both of the above attributes are only for use in a TC.
+           This is checked in the VerifySourceCode.xsl script.
+-->
+<!ATTLIST rlist
+  start CDATA #IMPLIED
+  new   CDATA #IMPLIED
+>
+
+
+<!-- An Alist element defines a simple upper-case alphabetical list.
+     It comprises:
+     * a set of item elements.
+-->
+<!ELEMENT Alist (item | (%comments.class;)*)+>
+<!-- The attributes of Alist are:
+     * start forces the list to start with the given letter.
+       For example, <Alist start="5">, followed by three <item> elements would result in
+       items E, F, G
+     * new causes the list elements to append "." and a sort of "extended" number that follows
+       the "." and then increments for subsequent list items.
+       For example, <Alist start="5" new="1">, followed by three <item> elements would result in
+       items E.1, E.2, E.3
+     Note: Both of the above attributes are only for use in a TC.
+           This is checked in the VerifySourceCode.xsl script.
+-->
+<!ATTLIST Alist
+  start CDATA #IMPLIED
+  new   CDATA #IMPLIED
+>
+
+
+<!-- An Rlist element defines a simple upper-case roman-number list.
+     It comprises:
+     * a set of item elements.
+-->
+<!ELEMENT Rlist (item | (%comments.class;)*)+>
+<!-- The attributes of rlist are:
+     * start forces the list to start with the given letter.
+       For example, <Rlist start="5">, followed by three <item> elements would result in
+       items V, VI, VII
+     * new causes the list elements to append "." and a sort of "extended" number that follows
+       the "." and then increments for subsequent list items.
+       For example, <Rlist start="5" new="1">, followed by three <item> elements would result in
+       items V.1, V.2, V.3
+     Note: Both of the above attributes are only for use in a TC.
+           This is checked in the VerifySourceCode.xsl script.
+-->
+<!ATTLIST Rlist
+  start CDATA #IMPLIED
+  new   CDATA #IMPLIED
+>
+
+
+<!-- A dlist element defines a simple dashed list.
+     It comprises:
+     * a set of item elements.
+-->
+<!ELEMENT dlist (item | (%comments.class;)*)+>
+
+
+<!-- A blist element defines a simple bulleted list.
+     It comprises:
+     * a set of item elements.
+-->
+<!ELEMENT blist (item | (%comments.class;)*)+>
+
+
+<!-- An item element defines an item in a list.
+-->
+<!ELEMENT item (#PCDATA | SCsignature | SCreturn | %inline.class; | %blocks.class;)*>
+<!-- The attribute of item is:
+     * id is the unique identifier for the item.
+-->
+<!ATTLIST item
+  id ID #IMPLIED
+>
+
+
+<!-- A lbllist element defines a list in which the character(s) to be used as the identifier for
+     each list item is explicitly specified, as opposed to the type of list determining that
+     identifier.
+     It comprises a set of lblitem elements.
+-->
+<!ELEMENT lbllist (lblitem | (%comments.class;)*)+>
+<!-- The attributes of lbllist are:
+     * lblwidth overrides the default width of the label.
+     * indent causes the left margin be be further increased.
+-->
+<!ATTLIST lbllist
+  lblwidth CDATA #IMPLIED
+  indent   ( yes | no ) "no"
+>
+
+
+<!-- A lblitem element defines an item in a lbllist.
+-->
+<!ELEMENT lblitem (#PCDATA | %inline.class; | %blocks.class;)*>
+<!-- The attributes of lbllist are:
+     * id is the unique identifier for the lblitem.
+     * label is the label to be used for the lblitem.
+       NOTE: The label should be rather short: 1 or 2 characters, maybe 3
+       unless a specific lblwidth attribute is specified on the lbllist.
+-->
+<!ATTLIST lblitem
+  id    ID #IMPLIED
+  label CDATA #REQUIRED
+>
+
+
+<!-- A None element specifies that there are no item elements in an olist and causes the
+     appropriate text to be produced.
+     Note: None cannot be used in a (Sub)clause that contains a modifiesPart element except in
+           a DefinitionsAndRules section in SQL-OLB.
+           The appropriate equivalent is NoAdditional.
+           This is checked in the VerifySourceCode.xsl script.
+-->
+<!ELEMENT None EMPTY>
+
+
+<!-- A NoAdditional element specifies that there are no additional item elements in an olist and
+     causes the appropriate text to be produced.
+     Note: NoAdditional can only be used in a (Sub)clause that contains a modifiesPart element.
+           The appropriate equivalent is None.
+           This is checked in the VerifySourceCode.xsl script.
+-->
+<!ELEMENT NoAdditional EMPTY>
+
+
+<!-- A NoDefinition element specifies that a Definition element has effectively no content and
+     causes the appropriate text to be produced.
+-->
+<!ELEMENT NoDefinition EMPTY>
+
+
+<!-- A grammar element defines a portion of the syntax of the language.
+     It comprises either:
+     * a set of BNFdef elements.
+     * NoFormat is the indication that no additional syntax is being defined.
+       Note: NoFormat can only be used in a (Sub)clause that contains a modifiesPart element.
+             This is checked in the VerifySourceCode.xsl script.
+-->
+<!ELEMENT grammar (((%comments.class;)*, NoFormat)
+                   | ((%comments.class;)*, BNFdef, (%comments.class; | %notes.class;)*)+)>
+<!-- The attribute of grammar is:
+     * discussion is an indication that the grammar element is included as part of a discussion
+       of the BNFdef elements contianed within it and therefore those BNFdef elements are not
+       subject to the normal duplicate definition control.
+-->
+<!ATTLIST grammar
+  discussion ( yes | no ) "no"
+>
+
+
+<!-- A NoFormat element indicates that no additional syntax is being defined and
+     causes the appropriate text to be produced.
+     Note: NoFormat can only be used in a (Sub)clause that contains a modifiesPart element.
+           This is checked in the VerifySourceCode.xsl script.
+-->
+<!ELEMENT NoFormat EMPTY>
+
+
+<!-- A BNFdef element defines a syntax item in BNF.
+     It comprises:
+     * rhs (right-hand side) is the actual definition.
+-->
+<!ELEMENT BNFdef ((%comments.class;)*, (%newlines.class;)*, rhs)>
+<!-- The attributes of BNFdef are:
+     * name is the name of the syntax item being defined.
+     * predicative is an indication of whether it is a production rule that defines a syntactic
+       element not only in terms of the production rule itself but also in terms of further
+       restrictions imposed on it by additional Syntax Rules such that the production rule cannot
+       sufficiently distinguish the syntactic element from the syntactic elements defined by
+       another production rule in an alternative between those two production rules without
+       considering those restrictions.
+-->
+<!ATTLIST BNFdef
+  name        CDATA #REQUIRED
+  predicative ( yes | no ) "no"
+>
+
+
+<!-- The rhs element defines the actual specification of a BNFdef element.
+     It comprises either:
+     * two or more alt elements each optionally followed by a seeTheRules element.
+     * one set of other right-hand side terms, e.g., opt elements, group elements or
+       terminalsymbol elements each optionally followed by a seeTheRules element or
+       just a seeTheRules element.
+-->
+
+<!ELEMENT rhs ( ( (%comments.class;)*, seeTheRules, (%comments.class;)* )
+              | ( ( (%comments.class;)*, (%newlines.class;)*, (%comments.class;)*, alt, 
+                    (%comments.class;)* )+, ((%newlines.class;)?, seeTheRules)? )
+              | ( ( (%comments.class;)*
+                  | (%newlines.class;) 
+                  | opt 
+                  | group 
+                  | terminalsymbol 
+                  | kw 
+                  | sjkw 
+                  | repeat 
+                  | BNF 
+                  | emph ), seeTheRules? )+
+              )>
+
+
+<!-- An alt element defines one alternative production for right-hand side of a BNFdef element.
+     It comprises:
+     * one set of other right-hand side terms, e.g., allAltsFrom element, opt elements,
+       group elements or terminalsymbol elements.
+       Note: strikethrough may only be used if the containing grammar element has the 
+             @discussion='yes' attribute.
+             This is checked in the VerifySourceCode.xsl script.
+
+-->
+<!ELEMENT alt (allAltsFrom | opt | group | terminalsymbol
+               | kw | bold | sjkw | repeat | BNF | emph | strikethrough
+               | %newlines.class;
+               | %comments.class;)*>
+<!-- The attribute of alt is:
+     * br is an indication if a new line is required after it.
+-->
+<!ATTLIST alt
+  br ( yes | no ) "yes"
+>
+
+
+<!-- A BNF element defines the use of a BNFdef element.
+-->
+<!ELEMENT BNF EMPTY>
+<!-- The attributes of BNF are:
+     * name is the name of the syntax item.
+     * standard is the standard in which the BNFdef occurs if not this standard.
+     * part is the part number of the part in which the BNFdef occurs if not this part.
+-->
+<!ATTLIST BNF
+  name     CDATA #REQUIRED
+  standard ( 9075 | 19075 | 29075 | 39075 | 49075 | 99999 ) #IMPLIED
+  part     ( 00 | 01 | 02 | 03 | 04 | 09 | 10 | 11 | 13 | 14 | 15 | 16 | 17 
+           | 18 | 19 | 20 ) #IMPLIED
+>
+
+
+<!-- An allAltsFrom element specifies that the BNFdef also includes all alternatives from the
+     original BNFdef.
+     Note: allAltsFrom can only be used in a (Sub)clause that contains a modifiesPart element,
+           unless the containing grammar element has the @discussion='yes' attribute.
+           This is checked in the VerifySourceCode.xsl script.
+-->
+<!ELEMENT allAltsFrom EMPTY>
+<!-- The attributes of allAltsFrom are:
+     * part is the part number of the part whose BNFdef alternatives are to be implicitly included.
+     * standard is the standard in which the BNFdef occurs if not this standard.
+-->
+<!ATTLIST allAltsFrom
+  part     ( 02 | 03 | 04 | 09 | 10 | 11 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 ) #REQUIRED
+  standard ( 9075 | 29075 | 39075 | 99999 ) #IMPLIED
+>
+
+
+<!-- An opt element specifies an optional part of the production.
+     In comprises one or more from other right-hand side terms, i.e., alt element, opt elements,
+       group elements or terminalsymbol elements.
+-->
+<!ELEMENT opt (alt | opt | group | terminalsymbol | kw | sjkw | repeat | BNF | mono
+               | %newlines.class;
+               | %comments.class;)*>
+
+
+<!-- A group element specifies that its contents are to treated as a single element.
+     In comprises one or more from other right-hand side terms, i.e., alt element, opt elements,
+       group elements or terminalsymbol elements.
+-->
+<!ELEMENT group (alt | opt | group | terminalsymbol | kw | sjkw | repeat | BNF
+                 | %newlines.class;
+                 | %comments.class;)*>
+
+
+<!-- An ellipsis element specifies the use of an ellipsis, that is three dots.
+-->
+<!ELEMENT ellipsis EMPTY>
+
+
+<!-- A repeat element specifies the use of an ellipsis, that is three dots.
+-->
+<!ELEMENT repeat EMPTY>
+
+
+<!-- An eg element specifies the use of the abbreviation for "exempli gratia", i.e, "e.g.,".
+-->
+<!ELEMENT eg EMPTY>
+
+
+<!-- An ie element specifies the use of the abbreviation for "id est", i.e, "i.e.,".
+-->
+<!ELEMENT ie EMPTY>
+
+
+<!-- An etc element specifies the use of the abbreviation for "et cetera", i.e, "etc.".
+-->
+<!ELEMENT etc EMPTY>
+
+
+<!-- A cf element specifies the use of the abbreviation for "confer", i.e, "cf.".
+-->
+<!ELEMENT cf EMPTY>
+
+
+<!-- A vs element specifies the use of the abbreviation for "versus", i.e, "vs.".
+-->
+<!ELEMENT vs EMPTY>
+
+
+<!-- A terminalsymbol element allows inclusion of literal characters in BNF.
+-->
+<!ELEMENT terminalsymbol (#PCDATA | ellipsis | bold)*>
+<!-- The attribute of terminalsymbol is:
+     * unicode defines the code point(s).
+               These are defined as the 4, 5 or 6 hex character(s) separated by commas.
+               For example, unicode="0026" or unicode="007E,005B".
+-->
+<!ATTLIST terminalsymbol
+  unicode CDATA #IMPLIED
+>
+
+
+<!-- A kw element defines its contents as a keyword.
+-->
+<!ELEMENT kw (#PCDATA)>
+
+
+<!-- An sjkw element defines its contents as a SQL/JSON keyword.
+-->
+<!ELEMENT sjkw (#PCDATA)>
+
+
+<!-- A seeTheRules element causes the generation of the sequence "!! See the Syntax Rules".
+-->
+<!ELEMENT seeTheRules EMPTY>
+
+
+<!-- The code element defines its contents as code in the language of the standard.
+-->
+<!ELEMENT code (#PCDATA | %inline.class; | %comments.class;)*>
+<!-- The attribute of code is:
+     * indent causes the the block to be indented.
+-->
+<!ATTLIST code
+  indent ( yes | no ) "no"
+>
+
+
+<!-- The xmlcode element defines its contents as code in the XML language.
+-->
+<!ELEMENT xmlcode (#PCDATA | %inline.class; | %comments.class;)*>
+<!-- The attribute of xmlcode is:
+     * indent causes the the block to be indented.
+-->
+<!ATTLIST xmlcode
+  indent ( yes | no ) "no"
+  artifact ( yes | no ) "no"
+>
+
+
+<!-- The schemacode element defines its contents as code in the SQL schema definition
+     language.
+-->
+<!ELEMENT schemacode (#PCDATA | %inline.class; | %comments.class;)*>
+<!-- The attribute of schemacode is:
+     * indent causes the the block to be indented.
+-->
+<!ATTLIST schemacode
+  indent ( yes | no ) "no"
+  artifact ( yes | no ) "no"
+>
+
+
+<!-- The hostcode element defines its contents as code in a host programming language.
+-->
+<!ELEMENT hostcode (#PCDATA | %inline.class; | %comments.class;)*>
+<!-- The attribute of hostcode is:
+     * indent causes the the block to be indented.
+-->
+<!ATTLIST hostcode
+  indent ( yes | no ) "no"
+  artifact ( yes | no ) "no"
+  language ( C | COBOL ) #IMPLIED
+>
+
+
+<!-- The adaPackageConditions element causes the generation of the contents of the
+     "package SQLSTATE_CODES" for the "Ada library unit package Interfaces.SQL".
+-->
+<!ELEMENT adaPackageConditions EMPTY>
+
+
+<!-- A note element defines its contents as a non-normative NOTE.
+     Notes are given a sequential note number, a dash, and text
+-->
+<!ELEMENT note (#PCDATA | %comments.class; | %paratext.class;
+             | %lists.class; | %codeblock.class; | %tables.class;
+             | %images.class; | %examples.class; | %inline.class;)*>
+<!-- The attributes of note are:
+     * id is the unique identifier for the note.
+     * number is a specific not number (e.g. 12.1).
+       Note: This attribute is only for use in a TC.
+             This is checked in the VerifySourceCode.xsl script.
+-->
+<!ATTLIST note
+  id     ID #IMPLIED
+  number CDATA #IMPLIED
+>
+
+
+<!-- A definition element creates a formal definition.
+     It comprises:
+     * term elements, at least one.
+     * defnDomain is an optional domain for the definition.
+     * defn is the formal definition.
+     * defnExample is an optional example
+     * defnNote is an optional normative note providing additional information.
+     * defnSource is an optional external source of the definition.
+     Note: if the defn element is ommitted, then the defnSource element must be provided.
+     A (set) of entities are also generated for the preferred <term> defined in the <definition>
+     which can be used with the document.
+     The generated entity names are the term name surrounded with underscores.
+     Entities with both lowercase and initial capitals are generated.
+     If type is explicitly or implcitly "n" then plural versions of the above are also generated.
+-->
+<!ELEMENT definition (term+, (%comments.class;)*,
+                      defnDomain?, (%comments.class;)*,
+                      defn?, (%comments.class;)*,
+                      (defnExample | %comments.class;)*,
+                      (defnNote | %comments.class;)*,
+                      defnSource?, (%comments.class;)*,
+                      (%notes.class;)*)>
+<!-- The attributes of definition are:
+     * id is the unique identifier for the definition.
+     * type is the "part of speech" of the term.
+       - n specifies that the term is a noun and is the default.
+       - npn specifies that the term is a noun but whose plural is identical to its singular form,
+             e.g. data.
+       - adj specifies that the term is an adjective.
+       - adv specifies that the term is an adverb.
+       - verb specifies that the term is a verb.
+     * qual is an indication that its value with 2 preceding underscores is appended to the term
+       name in all the generated entities.
+     * start forces the list to start with the given number.
+       For example, <definition start="5">, followed by two <definition> elements would result in
+       definitions 3.1.6.5, 3.1.6.6 and 3.1.6.7, assuming that the they occur in Subclause 3.1.6.
+       Note: This attribute is only for use in a TC.
+             This is checked in the VerifySourceCode.xsl script.
+     * new causes the list elements to append "." with a sort of "extended" number that follows the
+       "." and then increments for subsequent definitions.
+       For example, <definition start="5" new="1">, followed by one more <definition> elements
+       would result in definitions 3.1.6.5.1, 3.1.6.5.2.
+       Note: This attribute is only for use in a TC.
+             This is checked in the VerifySourceCode.xsl script.
+-->
+<!ATTLIST definition
+ id    ID #IMPLIED
+ type  ( n | adj | adv | npn | verb ) "n"
+ qual  CDATA #IMPLIED
+ start CDATA #IMPLIED
+ new   CDATA #IMPLIED
+>
+
+
+<!-- A term element specifies a term being defined.
+-->
+<!ELEMENT term (#PCDATA | impDef | unDef)*>
+<!-- The attribute of term is:
+     * type is the type of the term.
+       The ISO Directives Part 2 defines 3 alternatives:
+        * preferred  - the preferred term(s) which should be listed in preference order.
+        * admitted   - other acceptable term(s) for the concept.
+        * deprecated - terms which should no longer be used.
+-->
+<!ATTLIST term
+  type ( preferred | admitted | deprecated ) "preferred"
+>
+
+
+<!-- A defnDdomain element defines the domain in which the definition applies.
+     Note: a term may have different definitions in different domains.
+-->
+<!ELEMENT defnDomain (#PCDATA | defnref | quote)*>
+
+
+<!-- The defn element provides the actual formal definition.
+-->
+<!ELEMENT defn (#PCDATA | defnref | sym | symdef | ie | kw | apos | string
+                        | specref | docref| BNF | impDef | unDef | xmltext | feature
+                        | %printformat.class;)*>
+
+
+<!-- A defnNote element provides a normative note to a definition.
+-->
+<!ELEMENT defnNote (#PCDATA | defnref | specref | itemref | sym | symdef | kw | BNF
+                    | indexTerm | newterm | docref | impDef | apos | eg | string | feature
+                    | passage
+                    | %printformat.class;)*>
+
+
+<!-- A defnExample element provides an example of the usage of the preferred term.
+-->
+<!ELEMENT defnExample (#PCDATA)>
+
+
+<!-- A defnSource element defines the source of the preferred term if that is not this document.
+-->
+<!ELEMENT defnSource (docref, defnSection?, defnMods?)>
+
+
+<!-- A defnSection identifies the section of the source that defined the (imported) definition.
+-->
+<!ELEMENT defnSection (#PCDATA | extref)*>
+
+
+<!-- A defnMods element allows additional information about a definition sourcre.
+-->
+<!ELEMENT defnMods (#PCDATA)>
+
+
+<!-- An ednote element defines an Editor's Note.
+`-->
+<!ELEMENT ednote (#PCDATA | %paratext.class; | %lists.class; | %codeblock.class;
+                 | %inline.class; | %comments.class;)*>
+<!-- The attribute of ednote is:
+     * id is the unique identifier for the ednote.
+-->
+<!ATTLIST ednote
+  id ID #IMPLIED
+>
+
+
+<!-- The ISO Style Guide requires that all captioned objects be numbered and titled
+     and that they be explicitly referenced in the text.
+     The captioned objects are tables, figures, examples, and equations.
+-->
+
+<!-- A table element defines a table.
+     It comprises:
+     * tableNumber is the number of the table.
+       Note: This is only for use in a TC. 
+             This is checked in the VerifySourceCode.xsl script.
+             Tables are normally automatically numbered.
+     * tableTitle is the title (caption) of the table.
+     * table-common defines the structure, legend, footnotes, and headings of a table.
+     * table-body defines the actual contents of the table.
+-->
+<!ELEMENT table (comment*, tableNumber?, tableTitle,
+                 comment*, table-common,
+                 comment*, table-body,
+                 comment*)>
+<!-- The attributes of table are:
+     * id is the unique identifier for the table.
+     * keep is used to signify that the rendering engine do as much as possible to keep the table
+       on a single page.
+-->
+<!ATTLIST table
+  id   ID #REQUIRED
+  keep ( yes ) #IMPLIED
+>
+
+
+<!-- A tableNumber element defines the number of a table.
+     Note: This only for use in the TC.
+           This is checked in the VerifySourceCode.xsl script.
+-->
+<!ELEMENT tableNumber (#PCDATA)>
+
+
+<!-- A tableTitle element specifies the title of a table.
+-->
+<!ELEMENT tableTitle (#PCDATA | %inline.class;)*>
+
+
+<!-- A table-common element defines the structure, legend, footnotes, and headings of a table.
+     It comprises:
+     * table-setup is the definition of the columns of the table.
+     * table-notations is the definition of the legend and any footnotes.
+     * table-heads is the definition of the table head headers.
+-->
+<!ELEMENT table-common ( (%comments.class;)*, table-setup,
+                         ((%comments.class;)*, table-notations)?,
+                         ((%comments.class;)*, table-heads)?,
+                         (%comments.class;)*)>
+
+
+<!-- A table-setup element determines the number and width of columns.
+-->
+<!ELEMENT table-setup ((%comments.class;)*, table-coldef)+>
+<!-- The attribute of table-setup is:
+     * numcols is the number of columns in the table.
+-->
+<!ATTLIST table-setup
+  numcols CDATA #REQUIRED
+>
+
+
+<!-- A table-coldef element defines a column and its width.
+-->
+<!ELEMENT table-coldef EMPTY>
+<!-- The attributes of table-coldef are:
+     * colnum is the number of the column.
+     * colwidth is the width of the column.
+-->
+<!ATTLIST table-coldef
+  colnum   CDATA #REQUIRED
+  colwidth CDATA #REQUIRED
+>
+
+
+<!-- A table-notations element defines the legend and any footnotes.
+     It comprises:
+     * table-key is the definition of the legend.
+     * table-note is a footnote in the table.
+-->
+<!ELEMENT table-notations ( ((%comments.class;)*, table-key)?,
+                            ((%comments.class;)*, table-note)*,
+                            (%comments.class;)*)>
+
+
+<!-- A table-key element defines the key (legend) for notations in a table.
+-->
+<!ELEMENT table-key (#PCDATA | %inline.class; | %blocks.class;)*>
+
+
+<!-- A table-note element defines a footnote in a table.
+-->
+<!ELEMENT table-note (#PCDATA | %inline.class; | %blocks.class;)*>
+<!-- The attribute of table-note is:
+     * note-char is the character to be used to identify the note.
+-->
+<!ATTLIST table-note
+  note-char CDATA #REQUIRED
+>
+
+
+<!-- A table-heads element defines the table head headers.
+     It comprises either:
+     * a set of table-head elements that each define a column header in a single row.
+     * a set of table-head-row elements that allow for the creation of multi-row table headers.
+-->
+<!ELEMENT table-heads ((%comments.class;)*, (table-head-row | table-head))+>
+
+
+<!-- A table head row element defines a container for multi-row table headers.
+     It comprises:
+     * a set of table-head elements that each define a column header in a single row.
+-->
+<!ELEMENT table-head-row ((%comments.class;)*, table-head)+>
+
+
+<!-- A table-head element defines the header of a column or columns.
+-->
+<!ELEMENT table-head (#PCDATA | %inline.class;)*>
+<!-- The attributes of table-head are:
+     * span is number of columns that the table header is to span.
+     * vspan is number of rows of header that the table header is to span.
+     * align is the specification of the horizontal alignment within its space.
+-->
+<!ATTLIST table-head
+  span  CDATA #IMPLIED
+  vspan CDATA #IMPLIED
+  align ( left | center | right ) "left"
+>
+
+
+<!-- A table-body element defines the actual contents of the table.
+     It comprises:
+     * a set of table-row elements.
+-->
+<!ELEMENT table-body ( ((%comments.class;)*, table-row)+, (%comments.class;)*)>
+
+
+<!-- A table-row element defines a row in the table.
+     It comprises:
+     * a set of table-cell elements.
+-->
+<!ELEMENT table-row ((%comments.class;)*, table-cell)+>
+
+
+<!-- A table cell element defines a single cell in a row.
+     It comprises:
+     * table-row-number is the sequential number of the containing table-row element within the
+       table element.
+-->
+<!ELEMENT table-cell (#PCDATA | table-row-number | %inline.class; | %blocks.class;)*>
+<!-- The attributes of table-cell are:
+      * span specifies the number of columns that the cell is to span.
+      * vspan specifies the number of rows that the cell is to span.
+      * align is the specification of the horizontal alignment within its space.
+      * valign is the specification of the vertical alignment within its space.
+-->
+<!ATTLIST table-cell
+  span   CDATA #IMPLIED
+  vspan  CDATA #IMPLIED
+  align  ( left | center | right ) "left"
+  valign ( top | middle | bottom ) "bottom"
+>
+
+
+<!-- A table-row-number element generates a sequential row number within a table.
+-->
+<!ELEMENT table-row-number EMPTY>
+<!-- The attribute of table-row-number is:
+     * number is explicit number to be generated.
+-->
+<!ATTLIST table-row-number
+  id     ID #IMPLIED
+  number CDATA #IMPLIED
+>
+
+
+<!-- A table-noteref element apecifies reference a table-note element.
+-->
+<!ELEMENT table-noteref EMPTY>
+<!-- The attribute of table-noteref is:
+     * note-char is the character to be used to identify the note being referenced.
+-->
+<!ATTLIST table-noteref
+  note-char CDATA #REQUIRED
+>
+
+
+<!-- A figure element defines a figure.
+     It comprises:
+     * figureNumber is the number of the figure.
+        Note: This only for use in the TC.
+              This is checked in the VerifySourceCode.xsl script.
+     * figureTitle is the caption for the figure.
+-->
+<!ELEMENT figure ((%comments.class;)*, figureNumber?, figureTitle)>
+<!-- The attributes of figure are:
+     * id is the unique identifier for the figure.
+     * file is the file containing the figure to be presented.
+     * width is the width of the figure.
+     * padding-before is optional padding before the figure.
+     * padding-after is optional padding after the figure (but before the caption).
+-->
+<!ATTLIST figure
+  id    ID #REQUIRED
+  file  CDATA #REQUIRED
+  width CDATA #IMPLIED
+  padding-before CDATA #IMPLIED
+  padding-after CDATA #IMPLIED
+>
+
+
+<!-- A figureNumber element defines the number of a figure.
+     Note: This only for use in the TC.
+           This is checked in the VerifySourceCode.xsl script.
+-->
+<!ELEMENT figureNumber (#PCDATA)>
+
+
+<!-- A figureTitle element specifies the title (caption) of a figure.
+-->
+<!ELEMENT figureTitle (#PCDATA | %inline.class;)*>
+
+
+<!-- An example element defines an example.
+     It comprises:
+     * exampleNumber is the number of the example.
+       Note: This only for use in the TC.
+             This is checked in the VerifySourceCode.xsl script.
+     * exampleTitle is the caption for the example.
+     * an element from the codeblock class.
+-->
+<!ELEMENT example ((%comments.class;)*, exampleNumber?, exampleTitle, (%comments.class;)*, 
+                   (%codeblock.class;))>
+<!-- The attribute of example is:
+     * id is the unique identifier for the example.
+-->
+<!ATTLIST example
+  id ID #REQUIRED
+>
+
+
+<!-- An exampleNumber element defines the number of an example.
+     Note: This only for use in the TC.
+           This is checked in the VerifySourceCode.xsl script.
+-->
+<!ELEMENT exampleNumber (#PCDATA)>
+
+
+<!-- An exampleTitle element specifies the title of an example.
+-->
+<!ELEMENT exampleTitle (#PCDATA | %inline.class;)*>
+
+
+<!-- An equation element defines an equation.
+     It comprises:
+     * equationNumber is the number of the equation.
+       Note: This only for use in the TC.
+             This is checked in the VerifySourceCode.xsl script.
+     * equationTitle is the caption (title) of the equation.
+     * either a m:math, a texmath, or an asciimath element.
+-->
+<!ELEMENT equation ((%comments.class;)*, equationNumber?, equationTitle,
+                    (%comments.class;)*, ( texmath+ | asciimath+ | m:math+ ) )>
+<!-- The attributes of equation are:
+     * id is the unique identifier for the equation.
+     * height is a keyword influencing the size/height of the equation
+-->
+<!ATTLIST equation
+  id     ID #REQUIRED
+  height ( smaller | small | normal | big | bigger ) "normal"
+>
+
+
+<!-- An equationNumber element defines the number of an equation.
+     Note: This only for use in the TC.
+           This is checked in the VerifySourceCode.xsl script.
+-->
+<!ELEMENT equationNumber (#PCDATA)>
+
+
+<!-- An equationTitle element specifies the title (caption) of an equation.
+-->
+<!ELEMENT equationTitle (#PCDATA | %inline.class;)*>
+
+
+<!-- A texmath element specifies the actual equation.
+     Note: it is always CDATA so we don't have to worry about its internal structure, as it is
+     permitted to contain angle brackets.
+-->
+<!ELEMENT texmath (#PCDATA)>
+<!-- Here is an example of usage, in context:
+        Testing new "equation" element using texmath.
+          <equation id="JimEquationBlock">
+           <equationTitle>Jim<apos/>s block equation</equationTitle>
+           <texmath><![CDATA[E=mc^2]]></texmath>
+          </equation>
+-->
+
+
+<!-- An asciimath element specifies the actual equation.
+     Note: it is always CDATA so we don't have to worry about its internal structure, as it is
+     permitted to contain angle brackets.
+-->
+<!ELEMENT asciimath (#PCDATA)>
+<!-- Here is an example of usage, in context:
+        This is an equation:
+          <equation id="JimEquation"><asciimath><![CDATA[E=mc^2]]></asciimath></equation>.
+-->
+
+
+<!-- A mathml element specifies the actual equation.
+     Note: it is always CDATA so we don't have to worry about its internal structure, as it is
+     permitted to contain angle brackets.
+-->
+<!ELEMENT mathml (m:math)>
+<!-- Here is an example of usage, in context:
+        This is an equation:
+          <equation id="JimEquation">
+            <mathml>
+              <![CDATA[<m:math
+                          xmlns:m="http://www.w3.org/1998/Math/MathML">
+                <m:mstyle displaystyle="true">
+                  <m:mi>e</m:mi>
+                  <m:mo>=</m:mo>
+                  <m:mi>m</m:mi>
+                  <m:msup>
+                    <m:mi>c</m:mi>
+                    <m:mn>2</m:mn>
+                  </m:msup>
+                </m:mstyle>
+              </m:math>]]>
+            </mathml>
+          </equation>
+        This is a better solution:
+          <equation id="JimEquation">
+            <mathml>
+              <m:math xmlns:m="http://www.w3.org/1998/Math/MathML">
+                <m:mstyle displaystyle="true">
+                  <m:mi>e</m:mi>
+                  <m:mo>=</m:mo>
+                  <m:mi>m</m:mi>
+                  <m:msup>
+                    <m:mi>c</m:mi>
+                    <m:mn>2</m:mn>
+                  </m:msup>
+                </m:mstyle>
+              </m:math>
+            </mathml>
+          </equation>
+-->
+
+
+<!-- The conditionsTable element generates a table of the conditions used in a document.
+     It comprises:
+     * tableTitle is the title of the generated table.
+     * conditionsFrom is an indication that the table should also contain a row that references
+       conditions in another part.
+       Note: conditionsFrom can only be used in a (Sub)clause that contains a modifiesPart element.
+             This is checked in the VerifySourceCode.xsl script.
+     Note: condition usages are defined by the raise element.
+-->
+<!ELEMENT conditionsTable (tableTitle, conditionsFrom*)>
+<!-- The attribute of conditionsTable is:
+     * id is the unique identifier for the conditionsTable.
+-->
+<!ATTLIST conditionsTable
+  id ID #REQUIRED
+>
+
+
+<!-- A conditionsFrom elements specifies that an "All alternatives from..." row is to be generated
+     for the part whose defined conditions are not to be included.
+     Note: conditionsFrom can only be used in a (Sub)clause that contains a modifiesPart element.
+           This is checked in the VerifySourceCode.xsl script.
+-->
+<!ELEMENT conditionsFrom EMPTY>
+<!-- The attribute of conditionsFrom is:
+     * part is part number whose conditions are to be referenced.
+-->
+<!ATTLIST conditionsFrom
+  part     ( 01 | 02 | 03 | 04 | 09 | 10 | 11 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 ) #REQUIRED
+>
+
+
+<!-- The featuresTable element generates a table of the optional features defined in a document.
+     It comprises:
+     * tableTitle is the title of the generated table.
+     Note: features are defined by the feature element.
+-->
+<!ELEMENT featuresTable (tableTitle)>
+<!-- The attribute of featuresTable is:
+     * id is the unique identifier for the featuresTable.
+-->
+<!ATTLIST featuresTable
+  id ID #REQUIRED
+>
+
+
+<!-- A modifiesPart specifies that a (sub)clause in an incremental part modifies a (sub)clause in
+     another part.
+     Note: This also causes a reference to occur in the referenced part.
+-->
+<!ELEMENT modifiesPart EMPTY>
+<!-- The attributes of modifiesPart are:
+     * part is the part number ofthe part being modified.
+     * ref is the @id attribute of the (sub)clause being modified.
+-->
+<!ATTLIST modifiesPart
+  part ( 02 | 03 | 04 | 11 ) #REQUIRED
+  ref  CDATA #REQUIRED
+>
+
+
+<!-- A functionSig element defines the signature of a function in a function library.
+     It comprises:
+     * a set, possibly empty, of funcParam elements.
+     * a set of funcReturn elements.
+
+   For example:
+     normal_distribution (
+       given_value REAL,
+       mean REAL,
+       standard_deviation REAL,
+       cumulative_or_density STRING
+     )
+     returns (
+       density_or_probability REAL
+     )
+
+     The markup for that signature might be:
+     <functionSig name="normal_distribution">
+       <funcParam paramName="given_value" paramType="REAL"/>
+       <funcParam paramName="mean" paramType="REAL"/>
+       <funcParam paramName="standard_deviation" paramType="REAL"/>
+       <funcParam paramName="cumulative_or_density" paramType="STRING"/>
+       <funcReturn returnName="density_or_probability" returnType="REAL"/>
+     </functionSignature>
+-->
+<!ELEMENT functionSig (funcParam*, funcReturn)>
+<!-- The attribute of functionSignature is:
+     * name is the name of the function.
+-->
+<!ATTLIST functionSig
+  name CDATA #REQUIRED
+>
+
+
+<!-- A funcParam element defines a parameter of a function.
+-->
+<!ELEMENT funcParam EMPTY>
+<!-- The attributes of funcParam are:
+     * paramName is the name of the parameter.
+     * paramType is the data type of the parameter.
+     * paramOptional is an indication that the parameter is optional.
+-->
+<!ATTLIST funcParam
+  paramName     CDATA #REQUIRED
+  paramType     CDATA #REQUIRED
+  paramOptional (yes) #IMPLIED
+>
+
+
+<!-- A funcReturn element defines a return value of a function.
+-->
+<!ELEMENT funcReturn EMPTY>
+<!-- The attributes of funcReturn are:
+     * returnType is the data type of the return value.
+     * returnOptional is an indication that the return value is optional.
+-->
+<!ATTLIST funcReturn
+  returnType     CDATA #REQUIRED
+  returnOptional CDATA #IMPLIED
+>
+
+
+<!-- =======================================================================
+     Following are the inline elements
+     =======================================================================
+-->
+
+<!-- An leq element generates the less-than-or-equal sign.
+-->
+<!ELEMENT leq EMPTY>
+
+
+<!-- A geq element generates the greater-than-or-equal sign.
+-->
+<!ELEMENT geq EMPTY>
+
+
+<!-- A neq element generates the not-equal sign.
+-->
+<!ELEMENT neq EMPTY>
+
+
+<!-- A concat element generates the concatenation sign.
+-->
+<!ELEMENT concat EMPTY>
+
+
+<!-- A prec element generates the precedes sign.
+-->
+<!ELEMENT prec EMPTY>
+
+
+<!-- A succ element generates the succeeds sign.
+-->
+<!ELEMENT succ EMPTY>
+
+
+<!-- A simeq element generates the same precedence sign.
+-->
+<!ELEMENT simeq EMPTY>
+
+
+<!-- A mapsto element generates the maps to sign.
+-->
+<!ELEMENT mapsto EMPTY>
+
+
+<!-- A setunion element generates the set union ("cup") sign.
+-->
+<!ELEMENT setunion EMPTY>
+
+
+<!-- A rtarr element generates the double right arrow.
+-->
+<!ELEMENT rtarr EMPTY>
+
+
+<!-- A dblrtarr element generates the double right arrow.
+-->
+<!ELEMENT dblrtarr EMPTY>
+
+
+<!-- A dblltarr element generates the double left arrow.
+-->
+<!ELEMENT dblltarr EMPTY>
+
+
+<!-- A dblltrtarr element generates the double left-right arrow.
+-->
+<!ELEMENT dblltrtarr EMPTY>
+
+
+<!-- A rcbuh element generates the right curly bracket upper hook.
+-->
+<!ELEMENT rcbuh EMPTY>
+
+
+<!-- A rcbmp element generates the right curly bracket middle part.
+-->
+<!ELEMENT rcbmp EMPTY>
+
+
+<!-- A rcblh element generates the right curly bracket lower hook.
+-->
+<!ELEMENT rcblh EMPTY>
+
+
+<!-- A cbe element generates the curly bracket extension.
+-->
+<!ELEMENT cbe EMPTY>
+
+
+<!-- An omega element generates a Greek lower-case omega.
+-->
+<!ELEMENT omega EMPTY>
+
+
+<!-- An infinity element generates the infinity symbol.
+-->
+<!ELEMENT infinity EMPTY>
+
+
+<!-- A dotOp element generates the dot operator symbol.
+-->
+<!ELEMENT dotOp EMPTY>
+
+
+<!-- A crossProd element generates the vector or cross product operator symbol.
+-->
+<!ELEMENT crossProd EMPTY>
+
+
+<!-- An emph element indicates that its contents is to be italized.
+-->
+<!ELEMENT emph (#PCDATA | %inline.class;)*>
+
+
+<!-- A bold element indicates that its contents is to be set in boldface.
+-->
+<!ELEMENT bold (#PCDATA | %inline.class;)*>
+
+
+<!-- An underline element indicates that its contents is to be underlined.
+-->
+<!ELEMENT underline (#PCDATA | %inline.class;)*>
+
+
+<!-- A strikethrough element indicates that its contents is to be struckthrough.
+-->
+<!ELEMENT strikethrough (#PCDATA | %inline.class;)*>
+
+
+<!-- A mark-inserted defines its contents as new material.
+     This element id not used.
+-->
+<!ELEMENT mark-inserted (#PCDATA | %inline.class;)*>
+
+
+<!-- mark-deleted defines its contents as deleted material.
+     This element id not used.
+-->
+<!ELEMENT mark-deleted (#PCDATA | %inline.class;)*>
+
+
+<!-- An apos element generates the punctuation apostrophe symbol.
+-->
+<!ELEMENT apos EMPTY>
+
+
+<!-- A prime element generates the prime symbol.
+-->
+<!ELEMENT prime EMPTY>
+
+
+<!-- A subset element generates the left-turned "U" meaning "subset of".
+-->
+<!ELEMENT subset EMPTY>
+
+
+<!-- A forall element generates the inverted "A" meaning "for all".
+-->
+<!ELEMENT forall EMPTY>
+
+
+<!-- An exists element generates the backward "E" meaning "there exists".
+-->
+<!ELEMENT exists EMPTY>
+
+
+<!-- An element element generates the stylized epsilon meaning "element of".
+-->
+<!ELEMENT element EMPTY>
+
+
+<!-- A spc element generates an fo:leader for a thin space used as thousands separator in numbers.
+-->
+<!ELEMENT spc EMPTY>
+
+
+<!-- An SQL element generates the text "SQL".
+-->
+<!ELEMENT SQL EMPTY>
+
+
+<!-- A quote element indicates that its contents is to enclosed in double "curly" quotes.
+-->
+<!ELEMENT quote (#PCDATA | %inline.class;)*>
+
+
+<!-- An squote element indicates that its contents is to enclosed in single "curly" quotes.
+-->
+<!ELEMENT squote (#PCDATA | %inline.class;)*>
+
+
+<!-- A string element indicates that its contents represents the text as a character string in a
+     language which uses single quotes.
+-->
+<!ELEMENT string (#PCDATA | %inline.class;)*>
+
+
+<!-- A stringd element indicates that its contents represents the text as a character string in a
+     language which uses double quotes.
+-->
+<!ELEMENT stringd (#PCDATA | %inline.class;)*>
+
+
+<!-- A delimId element defines a delimited identifier.
+-->
+<!ELEMENT delimId (#PCDATA | %inline.class;)*>
+
+
+<!-- A newterm element defines a new term in the standard.
+-->
+<!ELEMENT newterm (#PCDATA | apos)*>
+
+
+<!-- A passage element marks a portion of text as being referenceable by a repeatpassage element.
+-->
+<!ELEMENT passage (#PCDATA | %inline.class;)*>
+<!-- The attribute of passage is:
+     * id is the unique identifier for the passage.
+-->
+<!ATTLIST passage
+  id ID #IMPLIED
+>
+
+
+<!-- An xmlterm element defines and term in XML.
+-->
+<!ELEMENT xmlterm (#PCDATA)>
+
+
+<!-- An xmltext element specifies that its contents as in-line XML text.
+-->
+<!ELEMENT xmltext (#PCDATA | %inline.class;)*>
+
+
+<!-- An xmlsymdef element defines an XML symbol.
+     These symbols are used in rules, etc. and are referenced using xmlsym elements.
+-->
+<!ELEMENT xmlsymdef (#PCDATA)>
+
+
+<!-- An xmlsym element references an XML symbol defined by a xmlsymdef element.
+-->
+<!ELEMENT xmlsym (#PCDATA)>
+
+
+<!-- A symdef element defines a symbol.
+     These symbols are used in rules, etc. and are referenced using sym elements.
+-->
+<!ELEMENT symdef (#PCDATA | prime | sym | symdef | delimId)*>
+
+
+<!-- A sym element references a symbol defined by a symdef element.
+-->
+<!ELEMENT sym (#PCDATA | prime)*>
+
+
+<!-- A SCsignature element specifies the signature of an invocable Subclause.
+     It comprises:
+     * zero or more symparam elements.
+     * zero or more symreturn elements.
+     * zero or one documentation elements
+-->
+<!ELEMENT SCsignature (symparam*, symreturn*, documentation?)>
+
+
+<!-- A symparam defines a parameter of an invocable Subclause.
+-->
+<!ELEMENT symparam (symdef | xmlsymdef)>
+<!-- The attribute of symparam is:
+     * param is the name of the parameter.
+-->
+<!ATTLIST symparam
+  name CDATA #REQUIRED
+>
+
+
+<!-- A symreturn element defines the symbol used as the result of an invocable
+     Subclause.
+-->
+<!ELEMENT symreturn EMPTY >
+<!-- The attribute of symreturn is:
+     * param is the name of the return parameter.
+-->
+<!ATTLIST symreturn
+  name CDATA #REQUIRED
+>
+
+
+
+<!-- A documentation element allows the incorporation of a simple list that
+     textually describes the meaning/intent of each symparam and
+     symreturn in an SCsignature.
+-->
+<!ELEMENT documentation (slist)>
+
+
+<!-- A tcSymparam defines a parameter of an invocable Subclause in a TC where there
+     is not a proper referent.
+-->
+<!ELEMENT tcSymparam (#PCDATA | %inline.class;)*>
+<!-- The attribute of tcSymparam is:
+     * param is the name of the parameter.
+-->
+<!ATTLIST tcSymparam
+  name CDATA #IMPLIED
+>
+
+
+<!-- SCreturn is used to explicitly terminate evaluation of Syntax or General Rules,
+     return from the invoked Subclause to its invoker, and (if one or more SCretval
+     children are specified) return the results of the invoked Subclause.
+-->
+<!ELEMENT SCreturn (SCretval*)>
+<!-- The attribute of SCreturn is:
+      * cap specifies that generated text should begin with a capital letter, i.e.,
+            "Evaluation of the ..." instead of "evaluation of the...".
+-->
+<!ATTLIST SCreturn
+  cap   (no) #IMPLIED
+>
+
+
+<!-- In an SCreturn element, there must be one <SCretval> element corresponding to
+     each <symreturn> element in the associated <SCsignature> element.  The <SCretval>
+     element specifies the results to be returned to the corresponding <symreturn>
+     in the invoking Subclause.
+-->
+<!ELEMENT SCretval (#PCDATA | sym | xmlsym | sub)*>
+<!-- The attribute of SCretval is:
+     * name: the name of the corresponding <symreturn>.
+-->
+<!ATTLIST SCretval
+  name   CDATA        #REQUIRED
+>
+
+
+<!-- An applySC element defines an invocation of a Subclause.
+-->
+<!ELEMENT applySC (symarg*, symresult*)>
+<!-- The attributes of applySC are:
+     * ref is the @id attribute value that identifies the invoked Subclause.
+     * rules is the set of Rule that are to be invoked.
+     * type is the form of the application.
+-->
+<!ATTLIST applySC
+  ref    IDREF        #REQUIRED
+  rules  ( SR | AR | GR ) #REQUIRED
+  type   ( normal | asTest | asTrial ) "normal"
+>
+
+
+<!-- A symarg element defines the symbol used to define an argument passed to an invocable
+     Subclause.
+     NOTE: the set of permitted elements should be significantly reduced.
+-->
+<!ELEMENT symarg (#PCDATA | sym | sub | xmlsym | bool | quote | BNF | impDef | unDef | kw | mono 
+                  |leq |symdef | emph | string)*>
+<!-- The attribute of symarg is:
+     * param is the name of the symparam parameter in the invoked subClause.
+-->
+<!ATTLIST symarg
+  param CDATA #REQUIRED
+>
+
+
+<!-- A symresult element defines the symbol used to capture the result of an invocable
+     Subclause.
+     NOTE: the set of permitted elements should be significantly reduced.
+-->
+<!ELEMENT symresult (#PCDATA | symdef | xmlsymdef | sym | sub | BNF)*>
+<!-- The attribute of symresult is:
+     * param is the name of the symreturn parameter in the invoked subClause.
+-->
+<!ATTLIST symresult
+  param CDATA #REQUIRED
+>
+
+
+<!-- A tcSymarg element defines an argument passed to an invocable Subclause in a TC where there
+     is not a proper referent.
+     NOTE: the set of permitted elements should be defined.
+-->
+<!ELEMENT tcSymarg (#PCDATA | %inline.class;)*>
+<!-- The attributes of tcSymarg are:
+     * param is the name of the symparam parameter in the invoked subClause.
+     * ref is the @id attribute value that identifies the invoked Subclause.
+-->
+<!ATTLIST tcSymarg
+  param CDATA #IMPLIED
+  ref   IDREF #IMPLIED
+>
+
+
+<!-- An applyExtSC element defines an invocation of a Subclause in another Part.
+-->
+<!ELEMENT applyExtSC (extsymarg*, extsymresult*)>
+<!-- The attributes of applyExtSC are:
+     * part is the part numebr of the part in which the invoked Sunclause appears.
+     * ref is the @id attribute value that identifies the invoked Subclause.
+     * rules is the set of Rule that are to be invoked.
+     * standard is the standard number of the part if this is different from that of the
+       referencing document.
+-->
+<!ATTLIST applyExtSC
+  part     ( 01 | 02 | 03 | 04 | 09 | 10 | 11 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 ) #REQUIRED
+  ref      CDATA        #REQUIRED
+  rules    ( SR | AR | GR ) #REQUIRED
+  standard ( 9075 | 29075 | 39075 | 99999 ) #IMPLIED
+  type     ( normal | asTest | asTrial ) "normal"
+>
+
+
+<!-- An extsymarg element defines the symbol used to define an argument passed to an invocable
+    subclause in another part.
+     NOTE: the set of permitted elements should be significantly reduced.
+-->
+<!ELEMENT extsymarg (#PCDATA | sym | sub | BNF | kw)*>
+<!-- The attribute of extsymarg is:
+     * param is the name of the symparam parameter in the invoked subClause.
+-->
+<!ATTLIST extsymarg
+  param CDATA #REQUIRED
+>
+
+
+<!-- An extsymresult element defines the symbol used to capture the result of an invocable
+     subClause in another part.
+-->
+<!ELEMENT extsymresult (#PCDATA | symdef | sub)*>
+<!-- The attribute of extsymresult is:
+     * param is the name of the symreturn parameter in the invoked subClause.
+-->
+<!ATTLIST extsymresult
+  param CDATA #REQUIRED
+>
+
+
+<!-- A feature element defines a reference to a feature of the language.
+     Features are defined iin features.xml
+-->
+<!ELEMENT feature EMPTY>
+<!-- The attributes of feature are:
+     * code is the identification of the feature.
+     * standard is the standard to which the feature applies, if not the standard of the document.
+     * codeOnly indicates whether or not only the code of the feature should be presented.
+     * textOnly indicates whether or not only the text of the feature should be presented.
+-->
+<!ATTLIST feature
+  code     CDATA #REQUIRED
+  standard ( 9075 | 29075 | 39075 | 99999 ) #IMPLIED
+  codeOnly ( yes | no ) #IMPLIED
+  textOnly ( yes | no ) #IMPLIED
+>
+
+
+<!-- An impDef element marks the use of an implementation-defined aspect the language.
+-->
+<!ELEMENT impDef EMPTY>
+<!-- The attributes of impDef are:
+      * id identifies the specific instance of the element but is not explicitly input,
+           it is provided by the build process during the addIds step.
+      * code identifies the externally referencable identifier of the implementation-defined
+             aspect.
+      * annex specifies whether or not the para/item in which the impDef occurs is to be recorded
+              in the annex.
+              "no" is used when the text "implementation-defined" is being used in a general sense
+              and is not actually defining or referencing a specific "implementation-defined"
+              feature.
+              In these cases "code" is should be set to "None".
+      * cap specifies that generated text should begin with a capital letter, i.e.,
+            "Implementation-defined" instead of "implementation-defined".
+-->
+<!ATTLIST impDef
+  id    ID #IMPLIED
+  code  CDATA #REQUIRED
+  annex ( no ) #IMPLIED
+  cap   ( yes ) #IMPLIED
+>
+
+
+<!-- An unDef element marks the use of an implementation-dependent aspect the language.
+-->
+<!ELEMENT unDef EMPTY>
+<!-- The attributes of unDef are:
+      * id identifies the specific instance of the element but is not explicitly input,
+           it is provided by the build process during the addIds step.
+      * code identifies the externally referencable identifier of the implementation-dependent
+             aspect.
+      * annex specifies whether or not the para/item in which the unDef occurs is to be recorded
+              in the annex.
+              "no" is used when the text "implementation-dependent" is being used in a general
+              sense and is not actually defining or referencing a specific
+              "implementation-dependent" aspect.
+              In these cases "code" is should be set to "None".
+      * cap specifies that generated text should begin with a capital letter, i.e.,
+            "Implementation-dependent" instead of "implementation-dependent".
+-->
+<!ATTLIST unDef
+  id    ID    #IMPLIED
+  code  CDATA #REQUIRED
+  annex ( no )  #IMPLIED
+  cap   ( yes ) #IMPLIED
+>
+
+
+<!ELEMENT digitalArtifact EMPTY>
+<!-- The attribute of digitalArtifact is:
+     * type is the type of the artifact.
+-->
+<!ATTLIST digitalArtifact
+  type (BNFText | BNFXML | Conditions | Features | ImpDef
+        | UnDef  | HeaderC | HeaderCobol | SDL | XMLSchema | AdaInterface) #REQUIRED
+>
+
+
+<!-- A indexTerm element defines an additional terms or phrases that is to be indexed.
+     Indexing is normally defined by a stylesheet to apply specific elements and is not
+     normally applied manually in this way.
+-->
+<!ELEMENT indexTerm (#PCDATA | %printformat.class;)*>
+
+
+<!-- A unicode element represents a Unicode value using "U+nnnn".
+-->
+<!ELEMENT unicode (#PCDATA | sym | sub | ellipsis)*>
+
+
+<!-- A mono element defines its contents as in-line code in the langauge of the standard.
+-->
+<!ELEMENT mono (#PCDATA | %inline.class;)*>
+
+
+<!-- A hosttext element defines its contents as in-line host programming language code.
+-->
+<!ELEMENT hosttext (#PCDATA | %inline.class;)*>
+
+
+<!-- A URI element specifies its contents to be a URI.
+-->
+<!ELEMENT URI (#PCDATA)>
+<!-- The attribute of URI is:
+     * active is an indication of whether a live-link should be generated or not.
+-->
+<!ATTLIST URI
+  active ( no | yes ) "yes"
+>
+
+
+<!-- A bool element represents its contents as a Boolean value.
+     There are three possible values: True, False, and Unknown.
+     These are not currently enforced.
+-->
+<!ELEMENT bool (#PCDATA)>
+
+
+<!-- A raise element identifies a condition that is to be raised.
+     Conditions are defined in conditions.xml
+-->
+<!ELEMENT raise EMPTY>
+<!-- The attributes of raise are:
+     * class is the class of the condition to be raised.
+     * subclass is, optionally, the subclass of the condition to be raised.
+-->
+<!ATTLIST raise
+  class    CDATA #REQUIRED
+  subclass CDATA #IMPLIED
+>
+
+
+<!-- A sub element causes its contents to be subscripted.
+-->
+<!ELEMENT sub (#PCDATA | %inline.class;)*>
+
+
+<!-- A super element causes its contents to be superscripted.
+-->
+<!ELEMENT super (#PCDATA | %inline.class;)*>
+
+
+<!-- A repeatdefn element copies the text of a defn element.
+-->
+<!ELEMENT repeatdefn EMPTY>
+<!-- The attribute of repeatdefn is:
+     * ref is the value of the id attribute of the referenced definition.
+-->
+<!ATTLIST repeatdefn
+  ref IDREF #REQUIRED
+>
+
+
+<!-- A repeatpassage element copies a previously defined passage.
+-->
+<!ELEMENT repeatpassage EMPTY>
+<!-- The attribute of repeatpassage is:
+     * ref is the value of the id attribute of the referenced passage.
+-->
+<!ATTLIST repeatpassage
+  ref IDREF #REQUIRED
+>
+
+
+<!-- A repeatitem element copies the contents of a referenced item.
+-->
+<!ELEMENT repeatitem EMPTY>
+<!-- The attribute of repeatitem is:
+     * ref is the value of the id attribute of the referenced item.
+-->
+<!ATTLIST repeatitem
+  ref IDREF #REQUIRED
+>
+
+
+<!-- A specref element generates a reference to something in the same document.
+     The elements that can be referenced are <clause>, <annex>, <subClause>, <subClause2>,
+     <subClause3>, <subClause4>, <table>, <conditionsTable>, <featuresTable>, <figure>, <example>,
+     <equation>, <note>, <ednote>, and <bibliography>.
+     Attempts to reference some other object (element) will generate an error.
+-->
+<!ELEMENT specref EMPTY>
+<!-- The attribute of specref is:
+     * ref is the value of the id attribute of the referenced element.
+-->
+<!ATTLIST specref
+  ref IDREF #REQUIRED
+>
+
+
+<!-- A defnref element references the preferred term in a definition.
+     Attempts to reference some other object (element) will generate an error.
+-->
+<!ELEMENT defnref EMPTY>
+<!-- The attributes of defnref are:
+     * ref is the symbolic reference (@id) of the referenced definition.
+     * plural indicates if the term is to be referenced as a plural noun or not.
+-->
+<!ATTLIST defnref
+  ref    IDREF #REQUIRED
+  plural ( yes | no ) "no"
+>
+
+
+<!-- An itemref is used to reference a list element.
+     Objects that can be referenced using <itemref> are:
+     <item> (list element of any list other than a <lbllist>), <para>, and <table-row-number>.
+     Attempts to reference some other object (element) will generate an error.
+-->
+<!ELEMENT itemref EMPTY>
+<!-- The attributes of itemref are:
+     * ref is the symbolic reference (@id) of the referenced item.
+     * type is the kind of list item (General Rule, step, etc.)
+       Note: SR/AR/GR/CR are Syntax/Access/General/Conformance Rule;
+             Desc is Description; LE is for item in ordered list;
+             item is for item in UNordered list;
+             para is for paragraph (and the default);
+             row is for table-row-number;
+             step is for ordered list.
+-->
+<!ATTLIST itemref
+  ref  IDREF #REQUIRED
+  type ( SR | AR | GR | CR | Desc | LE | row | step | item | para ) "para"
+>
+
+
+<!-- An extref element generates a reference to something in another document.
+     The elements that can be referenced are <clause>, <annex>, <subClause>, <subClause2>,
+     <subClause3>, <subClause4>, <table>, <conditionsTable>, <featuresTable>, <figure>, <example>,
+     <equation>, <note>, <ednote>, and <bibliography>.
+     Attempts to reference some other object (element) will generate an error.
+-->
+<!ELEMENT extref EMPTY>
+<!-- The attributes of extref are:
+     * part is the part number of the other document.
+     * ref is the value of the id attribute of the referenced element.
+     * standard is the standard number of the part if this is different from that of the
+       referencing document.
+-->
+<!ATTLIST extref
+  part     ( 00 | 01 | 02 | 03 | 04 | 05 | 06 | 07 | 08 | 09 | 10 | 11 | 13 | 14 | 15 | 16 | 17 
+           | 18 | 19 | 20 ) #REQUIRED
+  ref      CDATA #REQUIRED
+  standard ( 9075 | 29075 | 39075 | 99999 ) #IMPLIED
+>
+
+
+<!-- An extitemref element defines a reference to a list element in another document.
+     Objects that can be referenced using <extitemref> are:
+     <item> (list element of any list other than a <lbllist>), <para>, and <table-row-number>.
+     Attempts to reference some other object (element) will generate an error.
+-->
+<!ELEMENT extitemref EMPTY>
+<!-- The attributes of extitemref are:
+     * part is the part number of the document in which the referenced item exists.
+     * ref is the symbolic reference (@id) of the referenced item.
+     * type is the kind of list item (General Rule, step, etc.)
+       Note: SR/AR/GR/CR are Syntax/Access/General/Conformance Rule;
+             Desc is Description; LE is for item in ordered list;
+             item is for item in UNordered list;
+             para is for paragraph (and the default);
+             row is for table-row-number;
+             step is for ordered list.
+     * standard is the standard number of the part if this is different from that of the
+       referencing document.
+-->
+<!ATTLIST extitemref
+  part     ( 00 | 01 | 02 | 03 | 04 | 09 | 10 | 11 | 13 | 14 | 15 | 16 | 17 
+           | 18 | 19 | 20 ) #REQUIRED
+  ref      CDATA #REQUIRED
+  type     ( SR | AR | GR | CR | Desc | LE | row | step | item | para ) "para"
+  standard ( 9075 | 29075 | 39075 | 99999 ) #IMPLIED
+>
+
+
+<!-- A PPref element defines a reference to a PP or LO element in the editor's notes in this
+     document.
+-->
+<!ELEMENT PPref EMPTY>
+<!-- The attribute of PPref is:
+      * ref is the id of the referenced the PP or LO.
+-->
+<!ATTLIST PPref
+  ref IDREF #REQUIRED
+>
+
+
+<!-- An ExtPPref element defines a reference a PP or LO element in the editor's notes in another
+     document.
+-->
+<!ELEMENT ExtPPref EMPTY>
+<!-- The attributes of ExtPPref are:
+      * ref is the id of the referenced the PP or LO.
+      * standard is the standard in which the referenced PP or LO exists.
+        If not specified then the standard of the current document is assumed.
+      * part is the part number of the standard in which the referenced PP or LO exists.
+        If not specified then "00" is assumed, i.e. and undivided standard.
+-->
+<!ATTLIST ExtPPref
+  ref      CDATA #REQUIRED
+  standard ( 9075 | 19075 | 29075 | 39075 | 49075 | 99999 ) #IMPLIED
+  part     ( 01 | 02 | 03 | 04 | 09 | 10 | 11 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 ) #IMPLIED
+>
+
+
+<!-- A lblitemref is used to reference a lblitem in a lbllist, but only in "this" document,
+     not in another document.
+-->
+<!ELEMENT lblitemref EMPTY>
+<!-- The attribute of lblitemref is:
+     * ref is the symbolic reference to id of a lblitem.
+-->
+<!ATTLIST lblitemref
+  ref IDREF #REQUIRED
+>
+
+
+<!-- A docref element defines a reference to a referencedDocument element in a normativeReferences
+     or bibliography in this document, unless in the TC, in which case the part attribute is
+     required.
+-->
+<!ELEMENT docref EMPTY>
+<!-- The attributes of docref are:
+     * ref is the id attribute of the document being referenced.
+     * part is the part number in which the referencedDocument element exists.
+       Note: This only for use in the TC when it is required.
+             This is checked in the VerifySourceCode.xsl script.
+-->
+<!ATTLIST docref
+  ref  CDATA #REQUIRED
+  part ( 00 | 01 | 02 | 03 | 04 | 09 | 10 | 11 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 ) #IMPLIED
+>
+
+
+<!-- A footnote element creates a reference to a footnote and the footnote itself.
+     The reference is an inline, superscripted number (monotonically increasing through the
+     document.
+     The footnote contains the contents of the element as a block of text that floats near the
+     bottom of the page, prefixed with the same superscript number.
+-->
+<!ELEMENT footnote (#PCDATA | %inline.class;)*>
+
+
+<!-- A mergeWith element specifies how to merge material in an incremental part with material
+     in a base part.
+     In incremental parts this is used to identify the Rule, paragraph, Descriptions etc.
+     in the base document being modified.
+     The mergeWith element is permitted by the DTD to have one of several children, each
+     related to the target of the merge.
+-->
+<!ELEMENT mergeWith (addListItem | addPara | addRows | addRule
+                     | augmentListItem | augmentNote | augmentPara | augmentRule
+                     | convertRuleToCase | insertCode )>
+<!-- The attribute of mergeWith is:
+     * part is the part number of the base part in which the merge is to be effectively performed.
+-->
+<!ATTLIST mergeWith
+  part ( 02 | 03 | 04 | 09 | 10 | 11 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 ) #REQUIRED
+>
+
+
+<!-- The addListItem element is used when adding a list item to a list (ordered or unordered) that
+     is subordinate to an ordinary paragraph (e.g., not part of a numbered Syntax Rule or other
+     Rule or Description).
+     There must be one or more <target> children, one for each "level" of the list item.
+     If the list item is part of a list that is subordinate to a paragraph, the first <target>
+     must identify that paragraph (by @id).
+     NOTE: It is extremely unusual for the first <target> to NOT reference a paragraph.
+-->
+<!ELEMENT addListItem (context, target*)>
+<!-- The attribute of addListItem is:
+     * position identifies whether the new list item is added before or after the item
+       referenced in the last <target> element; "last" implies to add the new list item
+       as the last item in the list subordinate to the final <target> child.
+-->
+<!ATTLIST addListItem
+  position ( before | after | last ) #REQUIRED
+>
+
+
+<!-- The context element is used only within an <addListItem> element and identifies the
+     context (paragraph or Rule) of the insertion point for a list item to be inserted.
+-->
+<!ELEMENT context EMPTY>
+<!-- The attributes of context are:
+     * type identifies whether the "parent" of the list into which a list item is being added
+       is a paragraph or a (ordered) list item.
+     * ref identifies the specific paragraph or list item in which the list occurs.
+-->
+<!ATTLIST context
+  type ( para | SR | AR | GR | CR | Desc | TP ) #REQUIRED
+  ref  CDATA #REQUIRED
+>
+
+
+<!-- The target element is used only within an <addListItem> element and identifies the insertion
+     point. For example, if the new list item is to be added immediately after the third list item
+     in a bulleted list that is itself part of the fifth list item in a dashed list that is
+     subordinate to the 10th paragraph of a Subclause, there will be one <context> element and
+     two <target> elements: the <context> identifies the 10th paragraph (by @id),
+     the first <target> identifies the fifth list item in the dashed list, and the
+     second <target> identifies the third list item in the bulleted list.
+-->
+<!ELEMENT target EMPTY>
+<!-- The attribute of addListItem is:
+     * ref identifies the @id attribute of the target list item.
+-->
+<!ATTLIST target
+  ref CDATA #REQUIRED
+>
+
+
+<!-- The addPara element is used when adding a paragraph in a body of text.
+-->
+<!ELEMENT addPara EMPTY>
+<!-- The attributes of addPara are:
+     * position identifies whether the new list item is added before or after the referenced item.
+     * ref identifies the @id attribute of the target paragraph.
+-->
+<!ATTLIST addPara
+  position ( before | after ) #REQUIRED
+  ref      CDATA #REQUIRED
+>
+
+
+<!-- The addRows element is used when adding rows to an existing table.
+-->
+<!ELEMENT addRows EMPTY>
+<!-- The attributes of addRows are:
+     * targetTable identifies the target table into which rows are to be added.
+     * sourceTable identified the (local) source table whose rows are to be added.
+-->
+<!ATTLIST addRows
+  targetTable CDATA #REQUIRED
+  sourceTable IDREF #REQUIRED
+>
+
+
+<!-- The addRule element is used to add a new SR, AR, GR, CR, Desc, TP.
+     The new rule is added either before or after an existing rule, or at the end of
+     all existing rules.
+     The "existing rule" is identified by specifying the value of its @id attribute as the value 
+     of the @ref attribute of the <before> or <after> element.
+-->
+<!ELEMENT addRule (before | after | last)>
+<!-- The attribute of addRows is:
+     * type is the kind of thing being merged (e.g., SR, Desc.).
+-->
+<!ATTLIST addRule
+  type ( SR | AR | GR | CR | Desc | TP ) #REQUIRED
+>
+
+
+<!-- The before element is used to add a new SR, AR, GR, CR, Desc, or TP immediately before
+     an existing rule of the same type.
+-->
+<!ELEMENT before EMPTY>
+<!-- The attribute of before is:
+     * ref is the symbolic reference (@id) to the place in the target document where the merger is
+       to effectively take place.
+-->
+<!ATTLIST before
+  ref CDATA #REQUIRED
+>
+
+
+<!-- The after element is used to add a new SR, AR, GR, CR, Desc, or TP immediately after
+     an existing rule of the same type.
+-->
+<!ELEMENT after EMPTY>
+<!-- The attribute of after is:
+     * ref is the symbolic reference (@id) to the place in the target document where the merger is
+       to effectively to take place
+-->
+<!ATTLIST after
+  ref CDATA #REQUIRED
+>
+
+
+<!-- The last element is used to add a new SR, AR, GR, CR, Desc, or  TP after the existing last
+     rule of the same type.
+-->
+<!ELEMENT last EMPTY>
+
+
+<!-- The augmentListItem element is used when modifying a list item in an ordered or unordered list
+     that is subordinate to an ordinary paragraph (e.g., not part of a numbered Syntax Rule or
+     other Rule or Description).
+     There must be one or more <target> children, one for each "level" of the list item.
+     If the list item is part of a list that is subordinate to a paragraph, the first <target>
+     must identify that paragraph (by @id).
+     NOTE: It is extremely unusual for the first <target> to NOT reference a paragraph.
+     The <addition> child element provides the new text used to augment the list item, while
+     the <location> child element helps position that new text within the list item.
+-->
+<!ELEMENT augmentListItem (target+, addition, location)>
+
+
+<!-- The augmentNote element is used when adding to the contents of a note (e.g., if
+     adding list text to a comma-separate list in the note).
+     There must be a single <addition> child element and a single <location> child element.
+     The <location> element may be empty.
+-->
+<!ELEMENT augmentNote (addition, location)>
+<!-- The attribute of augmentNote is:
+     * ref identifies the @id attribute of the target note.
+-->
+<!ATTLIST augmentNote
+  ref CDATA #REQUIRED
+>
+
+
+<!-- The augmentPara element is used when adding to the contents of a paragraph (e.g., if
+     adding list text to a comma-separate list in the paragraph).
+     There must be a single <addition> child element and a single <location> child element.
+     The <location> element may be empty.
+-->
+<!ELEMENT augmentPara (addition, location)>
+<!-- The attribute of augmentPara is:
+     * ref identifies the @id attribute of the target paragraph or list item.
+-->
+<!ATTLIST augmentPara
+  ref CDATA #REQUIRED
+>
+
+
+<!-- The addition element is used only within an <augmentPara>, <augmentRule>, or
+     <convertRuleToCase> element and provides the text used to augment the paragraph 
+     (often a bit of text terminated with a comma) by inserting it at a particular location in the 
+     paragraph (such as a comma-separated list).
+-->
+<!ELEMENT addition (#PCDATA | %inline.class;)*>
+
+
+<!-- The location element is used only within an <augmentPara> or <augmentRule> element
+     and provides text identify the particular location in the paragraph (such as a
+     comma-separated list) where text is to be added.
+-->
+<!ELEMENT location (#PCDATA | %inline.class;)*>
+
+
+<!-- The augmentRule element is used when augmenting the contents, but not the lead
+     text of a Rule that has subrules, of a Rule (e.g., if adding list text to
+     a comma-separate list in the paragraph), such as an SR, AR,GR, CR, or Desc.
+     (Use "LE" if augmenting a list item in a section with numbered rules other than those.)
+     There must be a single <addition> child element and a single <location> child element.
+-->
+<!ELEMENT augmentRule (addition, location)>
+<!-- The attributes of augmentPara are:
+     * ref identifies the @id attribute of the target paragraph or list item.
+     * leadText indicated whether "the lead text of" is specified when identifying the Rule.
+-->
+<!ATTLIST augmentRule
+  leadText ( yes | no ) "no"
+  type     ( SR | AR | GR | CR | Desc | TP | LE ) #REQUIRED
+  ref      CDATA #REQUIRED
+>
+
+
+<!-- The convertRuleToCase element transforms (virtually, not literally!) a Rule that is
+     not a Case in a base part to a Case because of requirements in the incremental part.
+     In practice, this element generates a "Case:", inserts the text specified as the
+     content of the addition element as a subrule, then generates "Otherwise, the original
+     [rule]".
+     Because the new subrule might have a <code> block or even a new <para> element, we can't use
+     the <addition> element, but we need a more inclusive <newSubrule>
+-->
+<!ELEMENT convertRuleToCase (newSubrule)>
+<!-- The attributes of convertRuleToCase are:
+     * type is the kind of thing being converted to a Case (e.g., SR, GR, Desc)
+     * ref identifies the @id attribute of the target Rule
+-->
+<!ATTLIST convertRuleToCase
+  type ( SR | AR | GR | CR | Desc | TP ) #REQUIRED
+  ref  CDATA #REQUIRED
+>
+
+
+<!-- The newSubrule element is used only within an <convertRuleToCase> element and provides the
+     text for the new subrule that requires a Case to be use to replace the original rule.
+-->
+<!ELEMENT newSubrule (#PCDATA | %inline.class; | %blocks.class;)*>
+
+
+<!-- The insertCode element inserts (virtually, not literally!) a block of code
+     (which might be <code>, <hostcode>, <schemacode>) into an existing block
+     of code in an SR, GR, or Description at a location specified by "before" or "after"
+     a specified bit of code/text.  The <target> child element allows use of a code block
+     to identify the location where the insertion is to be performed.
+-->
+<!ELEMENT insertCode (target?, currentText)>
+<!-- The attributes of insertCode are:
+     * type is the kind of thing into which new code is being inserted (i.e., SR, GR, Desc)
+     * position identifies whether the insertion is before or after the text identified
+       by the value of <currentText>.
+-->
+<!ATTLIST insertCode
+  type ( SR | GR | Defn | Desc | TP | code | hostcode | schemacode ) #REQUIRED
+  position ( before | after ) #REQUIRED
+>
+
+
+<!-- The currentText element identifies the existing text after/before which the new
+     code is to be inserted. 
+-->
+<!ELEMENT currentText (%blocks.class;)*>
+
+
+<!-- The replicateSCsig element is used in an incremental part to replicate (not insert, augment,
+     or replace) a Rule in order to satisfy controls during the generation of the incremental
+     part. 
+     The Rule will of necessity be an <SCsignature> subClause signature in a base part.
+     replicateSCsig allows specification of zero or more symparam and zero or more symreturn
+     child elements, which are appended to the symparam and symreturn elements, respectively,
+     that are copied from the referenced SCsignature element in the base part.
+-->
+<!ELEMENT replicateSCsig (symparam*, symreturn*, documentation?)>
+<!-- The attributes of replicateSCsig are:
+     * part is the part number of the base part in which the merge is to be effectively performed.
+     * type is the kind of thing being replicated (i.e., SR or GR).
+     * ref identifies the @id attribute of the target list item.
+-->
+<!ATTLIST replicateSCsig
+  part ( 02 | 03 | 04 | 09 | 10 | 11 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 ) #REQUIRED
+  type ( SR | AR | GR ) #REQUIRED
+  ref  CDATA #REQUIRED
+>
+
+
+<!-- A box element causes a box to be drawn around its contents.
+-->
+<!ELEMENT box (#PCDATA | %inline.class;)*>
+
+
+<!-- A linebreak element causes a new line.
+-->
+<!ELEMENT linebreak EMPTY>
+
+
+<!-- A blankline element causes a new line and adds a blank line.
+-->
+<!ELEMENT blankline EMPTY>
+
+
+<!-- A breakindent element causes a new line and indents the following line.
+-->
+<!ELEMENT breakindent EMPTY>
+
+
+<!-- !!! More extensive documentation required !!! -->
+
+<!-- An inlineEquation contains a bit of m:math, a texmath, or an asciimath expressing a "small" 
+     equation that is displayed in-line (as opposed to a separate, labeled and numbered, block.
+-->
+<!ELEMENT inlineEquation (texmath | asciimath | m:math)>
+<!-- The attribute of inlineEquation is:
+     * id is the unique identifier for the inlineEquation.
+-->
+<!ATTLIST inlineEquation
+  id ID #IMPLIED
+>
+
+<!-- A math expression using Greek Sigma
+-->
+<!ELEMENT math-sum (lower, upper, expression)>
+<!-- The attributes of math-sum are:
+     * index
+     * length
+     * upadding
+     * lpadding
+-->
+<!ATTLIST math-sum
+  index    CDATA #REQUIRED
+  length   CDATA '3em'
+  upadding CDATA '-3em'
+  lpadding CDATA '-1.8em'
+>
+
+
+<!-- A math expression using Greek Pi
+-->
+<!ELEMENT math-prod (lower, upper, expression)>
+<!-- The attributes of math-prod are:
+     * index
+     * length
+     * upadding
+     * lpadding
+-->
+<!ATTLIST math-prod
+  index    CDATA #REQUIRED
+  length   CDATA '3em'
+  upadding CDATA '-3em'
+  lpadding CDATA '-1.8em'
+>
+
+
+<!ELEMENT lower (#PCDATA | %inline.class;)*>
+
+
+<!ELEMENT upper (#PCDATA | %inline.class;)*>
+
+
+<!ELEMENT expression (#PCDATA | %inline.class;)*>
+
+<!-- !!! End of more extensive documentation required !!! -->
+
+
+<!-- =======================================================================
+     Following this comment are the Editor Notes elements (PPs, LOs)
+     =======================================================================
+-->
+
+<!-- A PP element defines a Possible Problem and comprises:
+     * reference is the reference to most closely related clause or subClause.
+     * noteAt is, optionally, the place or places in the document which refer to this PP.
+     * source is the paper number or other source of the PP.
+     * problem is a description of the opportunity.
+     * solution is an optional suggested solution.
+-->
+<!ELEMENT PP (comment*, reference,
+              comment*, noteAt?,
+              comment*, source,
+              comment*, problem,
+              comment*, solution?,
+              comment*)>
+<!-- The attributes of PP are:
+      * id is the unique identifier for the PP.
+      * number is the human readable version of the unique identifier.
+      * severity is severity of the problem.
+      * realm is an indication of whether the problem is technical or editorial.
+-->
+<!ATTLIST PP
+id       ID #REQUIRED
+number   CDATA #REQUIRED
+severity ( major | minor ) #REQUIRED
+realm    ( technical | editorial ) #REQUIRED
+>
+
+
+<!-- An LO element defines a Language Opportunity and comprises:
+     * reference is the reference to most closely related clause or subClause.
+     * noteAt is, optionally, the place or places in the document which refer to this LO.
+     * source is the paper number or other source of the LO.
+     * since [optional] captures the date at which the LO was recorded.
+     * problem is a description of the opportunity.
+     * solution is an optional suggested solution.
+-->
+<!ELEMENT LO (comment*, reference,
+              comment*, noteAt?,
+              comment*, source,
+              comment*, since?,
+              comment*, problem,
+              comment*, solution?,
+              comment*)>
+<!-- The attributes of LO are:
+      * id is the unique identifier for the LO.
+      * number is the human readable version of the unique identifier.
+      * status determines if the LO is active or deferred (to the next version).
+-->
+<!ATTLIST LO
+id     ID #REQUIRED
+number CDATA #REQUIRED
+status ( active | deferred ) "active"
+>
+
+
+<!-- A reference element indicates the clauses or subClauses most closely related to the Possible
+     Problem or Language Opportunity.
+     This should be either:
+     * one or more <specref>s to a clause or subClause, or <defnref> to a definition.
+       The type of the target of the <specref> is not checked.
+     or
+     * "No specific location."
+-->
+<!ELEMENT reference (#PCDATA | specref | defnref | bar)*>
+
+
+<!-- A noteAt element indicates where, in the body of the document, reference is made to this
+     Possible Problem or Language opportunity.
+     This should be either:
+     * one or more <specref>s to <ednote>s.
+       The type of the target of the <specref> is not checked.
+     or
+     * "None."
+-->
+<!ELEMENT noteAt (#PCDATA | specref)*>
+
+
+<!-- A source element describes the source of the Possible Problem or Language Opportunity.
+     It is frequently a paper number, e.g., WG3:SXM-032, but may be any text.
+-->
+<!ELEMENT source (#PCDATA)>
+
+
+<!--  A since element describes the date at which the Language Opportunity was recorderd
+      (using YYYY-MM-DD format).
+  -->
+<!ELEMENT since (#PCDATA)>
+
+
+<!-- A problem element describes the Possible Problem or Language Opportunity and comprises:
+      * one or more members of the blocks.class
+-->
+<!ELEMENT problem (%blocks.class;)+>
+
+
+<!-- A solution element provides a suggested solution to the Possible Problem or Language
+     Opportunity and comprises:
+      * one or more members of the blocks.class
+-->
+<!ELEMENT solution (%blocks.class;)+>
+
+
+<!--
+CHANGE HISTORY:
+  Initial version - - - - - - - - - - - - - - - - (v0.1):   Jim Melton; initiated 2001-03-01
+  Getting serious - - - - - - - - - - - - - - - - (v0.2):   Jim Melton; 2002-09-17
+  Even more serious - - - - - - - - - - - - - - - (v0.3):   Jim Melton; 2002-11-18
+  Many enhancements - - - - - - - - - - - - - - - (v0.4):   Jim Melton; 2002-12-12
+  Minor cleanup - - - - - - - - - - - - - - - - - (v0.5):   Jim Melton; 2003-01-07
+  Added comment elem  - - - - - - - - - - - - - - (v0.6):   Jim Melton; 2003-02-10
+  Fixed extref, added extitemref  - - - - - - - - (v0.7):   Jim Melton; 2003-04-19
+  Added table spans, multiline headers, footnotes (v0.7.1): Jim Melton; 2003-04-20
+  Add Editor Notes (PPs, LOs)                     (v0.8):   Jim Melton; 2003-12-11 et seq
+  Add support for TCs and changebars              (v0.9):   Jim Melton/Stephen Cannan; 2004-02-20
+  Add support for symbolic references to para     (v0.9.1): Jim Melton; 2004-05-01
+  Support split between TC and standard parts     (v1.0):   Jim Melton/Stephen Cannan; 2004-05-28
+  Do symarg/symparam/modifiesPart/modifiedByPart  (v1.01):  Jim Melton; 2004-07-05
+  Allow modifiesPart/modifiedByPart in OK places  (v1.02):  Jim Melton; 2004-07-05
+  Add @principle/associateEditor attributes to
+  standard; in symparam made IDREF to IDREFS   (v1.03):  Jim Melton; 2004-10-01
+  Update support for changebars re: XML FO 1.1    (v1.04):  Jim Melton; 2005-03-25
+  Fixes for symarg/extsymarg/symparam             (v1.05):  Jim Melton; 2005-05-24
+  In extsymarg, make ref CDATA, not IDREF, for now(v1.06):  Jim Melton; 2005-05-25
+  More changebar support in tables                (v1.07):  Jim Melton; 2005-05-27
+  Attribute on URI element re: active link        (v1.08):  Jim Melton; 2005-11-02
+  Added ID attribute to table-row-number element  (v1.09):  Jim Melton; 2005-12-28
+  Added support for bibliography and biblio-entry (v1.10):  Jim Melton; 2006-01-05
+  Better changebar support, tcSymarg, tcSymparam  (v1.11):  S. Cannan;  2006-04-09
+  Allow comment to include indexTerm element      (v1.12):  Jim Melton; 2006-07-18
+  Remove modifiedByPart element                   (v1.13):  Jim Melton; 2006-09-04
+  Define SCsignature/applySC/symreturn/symresult  (v1.14):  Jim Melton; 2006-09-20
+  Restrict part attribute values of modifiesPart  (v1.15):  Jim Melton; 2007-05-09
+  Revise "definition" to use child elem, not attr (v1.16):  Jim Melton; 2007-07-24
+  Modified "definition" so "defn" is optional     (v1.17):  Jim Melton; 2007-07-25
+  Fixed def'n of bibliography allow trail endbar  (v1.18):  Jim Melton; 2007-07-27
+  Allow for indented code elems & labelled lists  (v1.19):  Jim Melton; 2008-10-01
+  Add lblwidth attribute to lbllist lists         (v1.20):  M Ashworth; 2008-10-14
+  <feature> is now an empty element               (v1.21):  Jim Melton; 2009-01-09
+  Allow zero params/args in SCsignature/applySC   (v1.22):  Jim Melton; 2009-06-2x
+  Modify element "feature" for empty content model(v1.23):  Jim Melton; 2010-05-18
+  Add alternate copyright statement for INCITS    (v1.24):  Jim Melton; 2011-05-12
+  Add lblitemref element                          (v1.25):  Jim Melton; 2011-10-24
+  Add bibref, normativeReference[s],normRefTitle, normRefDescr, normRefref
+                                                  (v1.26):  Jim Melton; 2011-11-11
+  Modify note element to permit notes to contain tables and figures
+                                                  (v1.27):  Jim Melton; 2014-07-03
+  Add docref                                      (v1.28):  Jim Melton; 2014-08-02
+  Add ability for SCsignature to have 0, 1, 2 rtns(v1.29):  Jim Melton; 2016-10-21
+  Add PDF bookmarks to documents                  (v1.30):  Jim Melton; 2016-11-30
+  Convert index to fully "hot-linked"             (v1.30):  Jim Melton; 2016-11-30
+  Add allAltsFrom                                 (v1.31):  Jim Melton; 2017-07-27
+  Modify definition of math-sum/math-prod         (v1.32):  Jim Melton; 2017-11-29
+  Add attribute "rules" to SCsignature and reduce control on the
+  ref attribute for normRefref for use in the TC  (v1.33):  Stephen Cannan; 2018-10-11
+  Add normRefIdentifier and ...Title to normativeReference for use in normRefRef
+                                                  (v1.34):  Jim Melton; 2019-01-30
+  Add normRefDate to normativeReference           (v1.35):  Jim Melton; 2019-02-23
+  Add para name attribute                         (v1.36):  Stefan Plantikow; 2019-09-26
+  Add predicative attribute to BNFdef             (v1.37):  Stefan Plantikow; 2019-09-26
+  Overhaul biblio-entry, repl bibref for ISO 690  (v1.38):  Jim Melton; 2020-01-28
+  Overhaul normativeReference/normRefref/ISO 690  (v1.38):  Jim Melton; 2020-02-03
+  Add dotOp                                       (v1.39):  Stephen Cannan; 2020-02-04
+  Removing unused impelt feature                  (v1.40):  Stefan Plantikow; 2020-02-11
+  Add passage, phrase, paste                      (v1.41):  Stefan Plantikow; 2020-02-11
+  Replace paste with repeat{defn|passage}         (v1.42):  Stefan Plantikow; 2020-02-17
+  Add crossProd                                   (v1.43):  Stephen Cannan; 2020-10-21
+  Move @type and @qual to definition              (v1.44):  Stefan Plantikow; 2021-08-05
+  Add @type to passage                            (v1.45):  Stefan Plantikow; 2021-08-05
+-->

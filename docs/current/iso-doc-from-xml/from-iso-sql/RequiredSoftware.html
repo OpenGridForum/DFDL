@@ -1,0 +1,285 @@
+<h1>Required Software Components</h1>
+
+<h2>All</h2>
+
+<p>See the end of this document for information instructing how to specify
+the locations on your computer in which the required software must be installed. </p>
+
+<p>The required software components are:</p>
+
+<ol>
+<li><p>GNU tools</p>
+
+<p>The build requires use of GNU make, GNU awk, and GNU grep, GNU tr (from coreutils).</p>
+
+<p>It may be possible to use other variants of these tools but this is not guaranteed to work. <br>
+If you are using Windows 10, then the installation of cygwin (see below) will provide suitable
+versions.  </p></li>
+<li><p>Saxon-HE (home edition)  </p>
+
+<p>Required version is 11.2. There is 11.3 out, which is currently under test. 
+Available from <a href="https://sourceforge.net/projects/saxon/">www.saxonica.com</a>. <br>
+Download the appropriate file (whose filename ends with "J.zip"). <br>
+Copy the .jar files in that .zip file to your Java directory.  </p></li>
+<li><p>XEP  </p>
+
+<p>Required version is >= 4.28; 4.30 is most recent and should work just as fine.</p>
+
+<p>Available from <a href="http://www.renderx.com/download/index.html">www.renderx.com</a>. <br>
+Note: a license is required to suppress the Renderx footer stamp. <br>
+Contact Jim Melton regarding this.  </p>
+
+<p>In the file RENDERX_DIR\xep.bat the path for the java program needs to be removed.  </p>
+
+<p>for example, comment out the line in xep.bat:  </p>
+
+<p>rem "C:\Program Files\Java\jre1.8.0_191\bin\java" -classpath "%CP%" 
+com.renderx.xep.XSLDriver "-DCONFIG=C:\Program Files\RenderX\XEP\xep.xml" %*</p>
+
+<p>and then add the following line immediately after the one commented out:  </p>
+
+<p>java -classpath "%CP%" com.renderx.xep.XSLDriver 
+"-DCONFIG=C:\Program Files\RenderX\XEP\xep.xml" %*</p>
+
+<p>If, when building one or more documents, XEP terminates with an error indicating 
+insufficient virtual memory, modify that line to read:</p>
+
+<p>java -Xmx1024M -Xms1024M -classpath "%CP%" com.renderx.xep.XSLDriver 
+"-DCONFIG=C:\Program Files\RenderX\XEP\xep.xml" %*</p></li>
+<li><p>Java  </p>
+
+<p>Version 8 or above. <br>
+Available from <a href="https://www.java.com/en/download/">www.java.com</a></p></li>
+<li><p>XML Editor  </p>
+
+<p>Many alternatives are available. <br>
+For example: XMLSpy, XMetal, Stylus Studio, Oxygen. <br>
+Some are available at no cost, while others are commercial products.  </p>
+
+<p>When using Mac OS X, one of the WG3 editors has found Oxygen XML to be the only truly viable
+option due to the size of some of the XML files (as of late 2020).</p></li>
+<li><p>An SVG (Scalable Vector Graphics) editor  </p>
+
+<p>Several alternatives are available. <br>
+Adobe Illustrator is difficult to learn and expensive but may be the most consistent. <br>
+Free SVG editors are available but may output invalid SVG syntax under some 
+conditions, but Inkscape has been used with success for some TRs. <br>
+Another alternative is to use the online service at: https://app.diagrams.net/  </p>
+
+<ul>
+<li>Create New Diagram or Open Existing Diagram  </li>
+<li>Edit diagram  </li>
+<li>Export as -> SVG -> Select "Transparent Background" and in "Text settings" select 
+"Convert labels to SVG".</li>
+</ul></li>
+<li><p>Arial Unicode MS</p>
+
+<p>Required to display several characters not found in most fonts <br>
+Version 1.01 <br>
+Was supplied free with Microsoft Office prior to 2016.  </p>
+
+<p>Can currently be download from ftp://ftp.exlibris-usa.com/Fonts - 
+Cyber/ARIALUNI.TTF  -- login:  ftpuser ; pw: aleph500 .</p>
+
+<p>The file needs to copied to the directory c:\Windows\Fonts</p></li>
+<li><p>Font Installation</p>
+
+<p>The following fonts need to be defined in the file RENDERX_DIR\xep.xml:</p>
+
+<ul>
+<li>Cambria</li>
+<li>ArialUnicodeMS</li>
+<li>DejaVuSans</li>
+</ul>
+
+<p>Add at the end of the last font group the font Cambria and add after the last font 
+group a new font group for ArialUnicodeMS and DejaVuSans.</p>
+
+<p>Old content:</p>
+
+<pre><code>  &lt;font-family name="Palatino" embed="true" ligatures="&amp;#xFB00; &amp;#xFB01; &amp;#xFB02; &amp;#xFB03; &amp;#xFB04;"&gt;  
+    &lt;font&gt;&lt;font-data ttf="pala.ttf"/&gt;&lt;/font&gt;  
+   &lt;font style="italic"&gt;&lt;font-data ttf="palai.ttf"/&gt;&lt;/font&gt;  
+   &lt;font weight="bold"&gt;&lt;font-data ttf="palab.ttf"/&gt;&lt;/font&gt;  
+   &lt;font weight="bold" style="italic"&gt;&lt;font-data ttf="palabi.ttf"/&gt;&lt;/font&gt;  
+  &lt;/font-family&gt;  
+ &lt;/font-group&gt;
+</code></pre>
+
+<p>New content:</p>
+
+<pre><code>  &lt;font-family name="Palatino" embed="true" ligatures="&amp;#xFB00; &amp;#xFB01; &amp;#xFB02;' &amp;#xFB03; &amp;#xFB04;"&gt;  
+    &lt;font&gt;&lt;font-data ttf="pala.ttf"/&gt;&lt;/font&gt;  
+    &lt;font style="italic"&gt;&lt;font-data ttf="palai.ttf"/&gt;&lt;/font&gt;  
+    &lt;font weight="bold"&gt;&lt;font-data ttf="palab.ttf"/&gt;&lt;/font&gt;  
+    &lt;font weight="bold" style="italic"&gt;&lt;font-data ttf="palabi.ttf"/&gt;&lt;/font&gt;  
+  &lt;/font-family&gt;  
+
+
+  &lt;font-family name="Cambria" embed="true"&gt;  
+    &lt;font&gt;&lt;font-data ttf="cambria.ttc"/&gt;&lt;/font&gt;  
+    &lt;font style="italic"&gt;&lt;font-data ttf="cambriai.ttf"/&gt;&lt;/font&gt;  
+    &lt;font weight="bold"&gt;&lt;font-data ttf="cambriab.ttf"/&gt;&lt;/font&gt;  
+    &lt;font weight="bold" style="oblique"&gt;&lt;font-data ttf="cambriaz.ttf"/&gt;&lt;/font&gt;  
+  &lt;/font-family&gt;  
+ &lt;/font-group&gt;  
+
+
+ &lt;font-group xml:base="file:/C:/Windows/Fonts/" label="Windows TrueType"&gt;  
+
+
+   &lt;font-family name="ArialUnicodeMS"&gt;  
+     &lt;font&gt;&lt;font-data embed="true" subset="true" ttf="ARIALUNI.TTF"/&gt;&lt;/font&gt;  
+   &lt;/font-family&gt;  
+
+
+   &lt;font-family name="DejaVuSans"&gt;  
+    &lt;font&gt;&lt;font-data embed="true" subset="true" ttf="DejaVuSans.ttf"/&gt;&lt;/font&gt;  
+   &lt;/font-family&gt;  
+
+
+ &lt;/font-group&gt;
+</code></pre>
+
+<p>You need to specify the correct file name for the ArialUnicodeMS font. <br>
+The name may be different if you had to download it.</p></li>
+<li><p>node.js and npm</p>
+
+<p>Please install a recent (16+) LTS version of node.js and npm</p>
+
+<p>For Windows users, it is recommended to use the installer available from
+<a href="http://nodejs.org">http://nodejs.org</a>. This official installer includes npm. <br>
+During the installation accept the default options for setup and select (click) the 
+"Automatically install the necessary tools" box.</p>
+
+<p>Make sure node and npm are on your PATH or, alternatively, set the
+environment variables <code>BIN_NODE</code> and <code>BIN_NPM</code> to point to the
+executables accordingly.</p></li>
+<li><p>Ruby (Currently optional since clickify has been temporarily disabled)</p>
+
+<p>Required to insert clickable links for terms <br>
+Available from <a href="https://www.ruby-lang.org/en/downloads/">www.ruby-lang.org</a> <br>
+or for Windows as an installer from <a href="https://rubyinstaller.org/downloads/">rubyinstaller.org</a> <br>
+Tested version 2.6.5-1 <br>
+Note: You do not need to install the MSYS2 toolchain. <br>
+Once everything else is installed then you need to run:
+    gem install bundler
+or if in Windows:
+    gem.cmd install bundler</p></li>
+</ol>
+
+<p>If any required tools are not on your $PATH (or %PATH%) or have been installed under a non-standard
+name on your system, then make may be configured to find them correctly by setting environment
+variables in your shell or make variables when invoking make accordingly.  Please see <code>Tools.mk</code> 
+for the set of supported variables.</p>
+
+<p>In addition, some components are Operating System specific, see below.</p>
+
+<h2>Windows 10</h2>
+
+<p>The additional requirements are:</p>
+
+<ol>
+<li><p>Cygwin  </p>
+
+<p>Use the standard installation mechanism of Cygwin.
+It is recommended that you accept the default directory (C:\cygwin64).</p>
+
+<p>You need to select and install:</p>
+
+<ul>
+<li><p>cygwin (The default package) <br>
+The tested version is 3.0.2-1</p>
+
+<p>Once the default package has been installed, you will be asked to select the 
+packages you want to install. <br>
+Near the top of the window, select the dropdown list beside the word View and 
+select Full. <br>
+In turn, scroll through the alphabetical list of packages until you locate each 
+package listed below. <br>
+To select a package, use the dropdown list under the column New for each package 
+and choose the correct version as indicated below.  </p>
+
+<p>The following packages you need explicitly to select.  </p></li>
+<li><p>make
+The tested version is 4.2.1-2</p></li>
+<li><p>perl <br>
+The tested version is 5.26.3-1</p></li>
+<li><p>zip <br>
+The tested version is 3.0-12</p>
+
+<p>When you have selected all of these packages (and the other packages that have 
+automatically been selected to support them), click on the Next button. <br>
+The packages will automatically be installed. (This may take a while.)  </p>
+
+<p>You should set the default directory of your cygwin Terminal to the working 
+directory for the SQL sources.  </p>
+
+<p>Add at the end of the file C:\cygwin64\home\<code>&lt;user_name&gt;</code>\.bash_profile the following 
+line:</p>
+
+<p>cd <code>&lt;sql_source_directory&gt;</code></p></li>
+</ul></li>
+<li><p>Environment variables  </p>
+
+<p>The following environment variables need to be set: <br>
+<strong><em>Important Note</em></strong>: The directory names that you choose <strong>SHOULD NOT</strong> not include a space 
+character. <br>
+The inclusion of a space may cause some actions not to perform correctly. <br>
+That is: "C:\TEMP\STAGING" is acceptable, but "C:\TEMP\STAGING DIRECTORY" is not. <br>
+<em>(Note: If you are reading this in the .md source, the underscore and backslash have 
+been escaped with a backslash.)</em></p>
+
+<ul>
+<li><p>SAXON_DIR <br>
+The directory in which the saxon9he.jar file is to be found. <br>
+e.g. SAXON_DIR=C:\Saxon</p></li>
+<li><p>RENDERX_DIR
+The directory in which the xep.bat file is to be found. <br>
+e.g. RENDERX_DIR=C:\RenderX\XEP</p></li>
+<li><p>JARFILES_DIR
+The directory in which the required JAR files are to be
+found. <br>
+e.g. JARFILES_DIR=C:\JARfiles</p></li>
+<li><p>STAGING_DIR <br>
+The absolute path to the directory into which the generated files are to be copied
+by stage-* targets
+e.g. STAGING_DIR=D:\TEMP</p></li>
+<li><p>PUBLISH_DIR <br>
+The absolute path to the directory into which the generated files are to be copied
+by publish-* targets
+e.g. PUBLISH_DIR=D:\TEMP</p></li>
+<li><p>XEP_EXT <br>
+The extension of the xep.bat file. <br>
+Needed to allow the bat file to be called from make under cygwin. <br>
+i.e. XEP_EXT=.bat</p></li>
+<li><p>BUNDLE_EXT <br>
+The extension of the bundle.cmd file. <br>
+Needed to allow the bundle file to be called from make under cygwin. <br>
+i.e. BUNDLE_EXT=.env</p></li>
+<li><p>ENV_EXT <br>
+The extension of the env.exe file. <br>
+Needed to allow the env file to be called from make under cygwin. <br>
+i.e. ENV_EXT=.exe     </p></li>
+</ul></li>
+</ol>
+
+<h2>UNIX</h2>
+
+<p><strong>TO BE ADDED</strong></p>
+
+<h1>Optional Software Components</h1>
+
+<ol>
+<li><p>PDF compare</p>
+
+<p>You can find the tool confrontapdf at: 
+<a href="https://sourceforge.net/projects/confrontapdf/">sourceforge.net</a></p></li>
+</ol>
+
+<!--
+1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
+-->
+
+<p>This file: Copyright © 2021 Editors of ISO/IEC JTC 1/SC 32/WG 3:
+           Jim Melton, Stephen Cannan, Jörn Bartels, Stefan Plantikow</p>

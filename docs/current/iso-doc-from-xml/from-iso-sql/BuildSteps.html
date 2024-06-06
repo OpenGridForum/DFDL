@@ -1,0 +1,13 @@
+<h1>Build steps during artifact generation</h1>
+
+<p>The following flowchart summarizes the build steps taken to produce the artifacts of a part or a
+standard.
+It uses <code>gql-standard</code> as a running example. It does not cover side-topics like staging or 
+cleaning.
+Please also note that this only captures the high-level dependency graph.
+Dotted dependencies are strictly not needed or already indirecly implied but present to control the 
+order in which targets are built or because they represent the primary source of the build step.
+The exact details and additional build-related dependencies of each individual build step are not 
+given here but may be found by reading the <code>Makefile</code>.</p>
+
+<p><img src="BuildStandardPDF.svg" alt="BuildStandardPDF" title=""></p>

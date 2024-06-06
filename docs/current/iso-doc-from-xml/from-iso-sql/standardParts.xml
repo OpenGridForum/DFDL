@@ -1,0 +1,536 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+         1         2         3         4         5         6         7         8         9
+1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
+-->
+<!DOCTYPE parts SYSTEM "StandardParts.dtd" [
+]>
+
+<!-- ==================================================================== -->
+<!-- Identify every part of a WG3 standard for a particular publication   -->
+<!-- Some of this information is used when compiling the documents        -->
+<!--   themselves, while other parts are used for creating the "dummy     -->
+<!--   pointer" documents that point to the various actual parts.         -->
+<!-- See the DTD for more information                                     -->
+<!-- ==================================================================== -->
+<!-- NOTE: ALWAYS, ALWAYS, ALWAYS use 'docStage="ISO/IEC"' when the stage -->
+<!--   is IS (International Standard)                                     -->
+<!-- ==================================================================== -->
+<parts>
+<!-- ==================================================================== -->
+<!-- SQL STANDARDS                                                        -->
+<!-- ==================================================================== -->
+<standard number="9075"
+          docYear="20xx"
+          documentSubtype="IWD"
+          formalStage="IWD-20"
+          docStage="IWD">
+<!-- ==================================================================== -->
+<!-- THE SQL STANDARD                                                     -->
+<!-- NOTE: When publishing FDIS/IS documents, use the following format    -->
+<!-- for the @output attribute of the <part> element:                     -->
+<!--    ISO_IEC_9075-2(en)_Foundation                                     -->
+<!-- ==================================================================== -->
+<part number="01" shortname="SQL/Framework"
+      input="sql-framework"  output="9075_9IWD10-01-Framework_2024-04-18"
+      WG3="SYX-005" H2="2024-00060" dir="Informal_working_drafts"
+      artifactURI="https://standards.iso.org/iso-iec/9075/-1/ed-7/en/"
+      >
+  <artifact type="Conditions" suffix="-conditions.xml"/>
+  <artifact type="Features" suffix="-features.xml"/>
+  <artifact type="ImpDef" suffix="-implementation-defined.xml"/>
+  <artifact type="UnDef" suffix="-implementation-dependent.xml"/>
+</part>
+<part number="02" shortname="SQL/Foundation"
+      input="sql-foundation" output="9075_9IWD10-02-Foundation_2024-04-18"
+      WG3="SYX-006" H2="2024-00061" dir="Informal_working_drafts"
+      artifactURI="https://standards.iso.org/iso-iec/9075/-2/ed-7/en/"
+      >
+  <artifact type="BNFText" suffix=".bnf.txt"/>
+  <artifact type="BNFXML" suffix=".bnf.xml"/>
+  <artifact type="Conditions" suffix="-conditions.xml"/>
+  <artifact type="Features" suffix="-features.xml"/>
+  <artifact type="ImpDef" suffix="-implementation-defined.xml"/>
+  <artifact type="UnDef" suffix="-implementation-dependent.xml"/>
+  <artifact type="AdaInterface" suffix="-Interfaces.SQL.ada"/>
+</part>
+<part number="03" shortname="SQL/CLI"
+      input="sql-cli"        output="9075_9IWD10-03-CLI_2024-04-18"
+      WG3="SYX-007" H2="2024-00062" dir="Informal_working_drafts"
+      artifactURI="https://standards.iso.org/iso-iec/9075/-3/ed-7/en/"
+      >
+  <artifact type="BNFText" suffix=".bnf.txt"/>
+  <artifact type="BNFXML" suffix=".bnf.xml"/>
+  <artifact type="Conditions" suffix="-conditions.xml"/>
+  <artifact type="Features" suffix="-features.xml"/>
+  <artifact type="ImpDef" suffix="-implementation-defined.xml"/>
+  <artifact type="UnDef" suffix="-implementation-dependent.xml"/>
+  <artifact type="HeaderC" suffix=".sqlcli.h"/>
+  <artifact type="HeaderCobol" suffix=".sqlcli.cob"/>
+</part>
+<part number="04" shortname="SQL/PSM"
+      input="sql-psm"        output="9075_9IWD10-04-PSM_2024-04-18"
+      WG3="SYX-008" H2="2024-00063" dir="Informal_working_drafts"
+      artifactURI="https://standards.iso.org/iso-iec/9075/-4/ed-8/en/"
+      >
+  <artifact type="BNFText" suffix=".bnf.txt"/>
+  <artifact type="BNFXML" suffix=".bnf.xml"/>
+  <artifact type="Conditions" suffix="-conditions.xml"/>
+  <artifact type="Features" suffix="-features.xml"/>
+  <artifact type="ImpDef" suffix="-implementation-defined.xml"/>
+  <artifact type="UnDef" suffix="-implementation-dependent.xml"/>
+  <artifact type="SDL" suffix="-schema-definition.sql"/>
+  <artifact type="AdaInterface" suffix="-Interfaces.SQL.ada"/>
+</part>
+<part number="09" shortname="SQL/MED"
+      input="sql-med"        output="9075_9IWD10-09-MED_2024-04-18"
+      WG3="SYX-009" H2="2024-00064" dir="Informal_working_drafts"
+      artifactURI="https://standards.iso.org/iso-iec/9075/-9/ed-6/en/"
+      >
+  <artifact type="BNFText" suffix=".bnf.txt"/>
+  <artifact type="BNFXML" suffix=".bnf.xml"/>
+  <artifact type="Conditions" suffix="-conditions.xml"/>
+  <artifact type="Features" suffix="-features.xml"/>
+  <artifact type="ImpDef" suffix="-implementation-defined.xml"/>
+  <artifact type="UnDef" suffix="-implementation-dependent.xml"/>
+  <artifact type="HeaderC" suffix=".sqlcli.h"/>
+  <artifact type="HeaderCobol" suffix=".sqlcli.cob"/>
+  <artifact type="SDL" suffix="-schema-definition.sql"/>
+  <artifact type="AdaInterface" suffix="-Interfaces.SQL.ada"/>
+</part>
+<part number="10" shortname="SQL/OLB"
+      input="sql-olb"        output="9075_9IWD10-10-OLB_2024-04-18"
+      WG3="SYX-010" H2="2024-00065" dir="Informal_working_drafts"
+      artifactURI="https://standards.iso.org/iso-iec/9075/-10/ed-6/en/"
+      >
+  <artifact type="BNFText" suffix=".bnf.txt"/>
+  <artifact type="BNFXML" suffix=".bnf.xml"/>
+  <artifact type="Conditions" suffix="-conditions.xml"/>
+  <artifact type="Features" suffix="-features.xml"/>
+  <artifact type="ImpDef" suffix="-implementation-defined.xml"/>
+  <artifact type="UnDef" suffix="-implementation-dependent.xml"/>
+</part>
+<part number="11" shortname="SQL/Schemata"
+      input="sql-schemata"   output="9075_9IWD10-11-Schemata_2024-04-18"
+      WG3="SYX-011" H2="2024-00066" dir="Informal_working_drafts"
+      artifactURI="https://standards.iso.org/iso-iec/9075/-11/ed-6/en/"
+      >
+  <artifact type="Features" suffix="-features.xml"/>
+  <artifact type="ImpDef" suffix="-implementation-defined.xml"/>
+  <artifact type="UnDef" suffix="-implementation-dependent.xml"/>
+  <artifact type="SDL" suffix="-schema-definition.sql"/>
+</part>
+<part number="13" shortname="SQL/JRT"
+      input="sql-jrt"        output="9075_9IWD10-13-JRT_2024-04-18"
+      WG3="SYX-012" H2="2024-00067" dir="Informal_working_drafts"
+      artifactURI="https://standards.iso.org/iso-iec/9075/-13/ed-6/en/"
+      >
+  <artifact type="BNFText" suffix=".bnf.txt"/>
+  <artifact type="BNFXML" suffix=".bnf.xml"/>
+  <artifact type="Conditions" suffix="-conditions.xml"/>
+  <artifact type="Features" suffix="-features.xml"/>
+  <artifact type="ImpDef" suffix="-implementation-defined.xml"/>
+  <artifact type="UnDef" suffix="-implementation-dependent.xml"/>
+  <artifact type="SDL" suffix="-schema-definition.sql"/>
+</part>
+<part number="14" shortname="SQL/XML"
+      input="sql-xml"        output="9075_9IWD10-14-XML_2024-04-18"
+      WG3="SYX-013" H2="2024-00068" dir="Informal_working_drafts"
+      artifactURI="https://standards.iso.org/iso-iec/9075/-14/ed-7/en/"
+      >
+  <artifact type="BNFText" suffix=".bnf.txt"/>
+  <artifact type="BNFXML" suffix=".bnf.xml"/>
+  <artifact type="Conditions" suffix="-conditions.xml"/>
+  <artifact type="Features" suffix="-features.xml"/>
+  <artifact type="ImpDef" suffix="-implementation-defined.xml"/>
+  <artifact type="UnDef" suffix="-implementation-dependent.xml"/>
+  <artifact type="SDL" suffix="-schema-definition.sql"/>
+  <artifact type="AdaInterface" suffix="-Interfaces.SQL.ada"/>
+  <artifact type="XMLSchema" suffix=".xsd"/>
+</part>
+<part number="15" shortname="SQL/MDA"
+      input="sql-mda"        output="9075_9IWD10-15-MDA_2024-04-18"
+      WG3="SYX-014" H2="2024-00069" dir="Informal_working_drafts"
+      artifactURI="https://standards.iso.org/iso-iec/9075/-15/ed-3/en/"
+      >
+  <artifact type="BNFText" suffix=".bnf.txt"/>
+  <artifact type="BNFXML" suffix=".bnf.xml"/>
+  <artifact type="Conditions" suffix="-conditions.xml"/>
+  <artifact type="Features" suffix="-features.xml"/>
+  <artifact type="ImpDef" suffix="-implementation-defined.xml"/>
+  <artifact type="UnDef" suffix="-implementation-dependent.xml"/>
+  <artifact type="SDL" suffix="-schema-definition.sql"/>
+  <artifact type="AdaInterface" suffix="-Interfaces.SQL.ada"/>
+</part>
+<part number="16" shortname="SQL/PGQ"
+      input="sql-pgq"        output="9075_9IWD10-16-PGQ_2024-04-18"
+      WG3="SYX-015" H2="2024-00070" dir="Informal_working_drafts"
+      artifactURI="https://standards.iso.org/iso-iec/9075/-16/ed-2/en/"
+      >
+  <artifact type="BNFText" suffix=".bnf.txt"/>
+  <artifact type="BNFXML" suffix=".bnf.xml"/>
+  <artifact type="Conditions" suffix="-conditions.xml"/>
+  <artifact type="Features" suffix="-features.xml"/>
+  <artifact type="ImpDef" suffix="-implementation-defined.xml"/>
+  <artifact type="UnDef" suffix="-implementation-dependent.xml"/>
+  <artifact type="SDL" suffix="-schema-definition.sql"/>
+  <artifact type="AdaInterface" suffix="-Interfaces.SQL.ada"/>
+</part>
+<!--
+<part number="17" shortname="SQL/Stream"
+      input="sql-streaming"  output="9075_1IWD1-17-Stream_2020-10-14"
+      WG3="W03-0??" H2="2020-00???" dir="Informal_working_drafts"
+      documentSubtype="Informal Working Draft (IWD)"
+      formalStage="IWD-20" docStage="IWD"
+      >
+  <artifact type="BNFText" suffix=".bnf.txt"/>
+  <artifact type="BNFXML" suffix=".bnf.xml"/>
+  <artifact type="Conditions" suffix="-conditions.xml"/>
+  <artifact type="Features" suffix="-features.xml"/>
+  <artifact type="ImpDef" suffix="-implementation-defined.xml"/>
+  <artifact type="UnDef" suffix="-implementation-dependent.xml"/>
+  <artifact type="SDL" suffix="-schema-definition.sql"/>
+  <artifact type="AdaInterface" suffix="-Interfaces.SQL.ada"/>
+</part>
+-->
+<!--
+<part number="18" shortname="SQL/JSON"
+      input="sql-json"        output="9075_9IWD7-18-JSON_2023-07-13"
+      WG3="XXX-XXX" H2="2023-00320" dir="Informal_working_drafts"
+      artifactURI="https://standards.iso.org/iso-iec/9075/-18/ed-1/en/"
+      >
+  <artifact type="BNFText" suffix=".bnf.txt"/>
+  <artifact type="BNFXML" suffix=".bnf.xml"/>
+  <artifact type="Conditions" suffix="-conditions.xml"/>
+  <artifact type="Features" suffix="-features.xml"/>
+  <artifact type="ImpDef" suffix="-implementation-defined.xml"/>
+  <artifact type="UnDef" suffix="-implementation-dependent.xml"/>
+  <artifact type="SDL" suffix="-schema-definition.sql"/>
+  <artifact type="AdaInterface" suffix="-Interfaces.SQL.ada"/>
+</part>
+-->
+
+<!-- ==================================================================== -->
+<!-- TECHNICAL CORRIGENDA for 9075                                        -->
+<!-- ==================================================================== -->
+<part number="99"    TC="true" shortname="Technical Corrigendum"
+      input="dummy-pointer"     output="9075_WDCOR-2020-06"
+      WG3="CMN-021p" H2="" documentSubtype="Working Draft Technical Corrigendum (WDCOR)" 
+      formalStage="WDCOR-20" docStage="WDCOR" dir="WDCOR"/>
+<part number="99-01" TC="true" shortname="TC for Framework"
+      input="TC-P01-framework"  output="9075_8WDCOR1-01-Framework-2024-01"
+      WG3="BGI-020"  H2="" documentSubtype="Working Draft Technical Corrigendum (WDCOR)" 
+      docYear="202x" formalStage="WDCOR-20" docStage="WDCOR" dir="WDCOR"
+      active="yes"/>
+<part number="99-02" TC="true" shortname="TC for Foundation"
+      input="TC-P02-foundation" output="9075_8WDCOR1-02-Foundation-2024-05"
+      WG3="SYX-025"  H2="" documentSubtype="Working Draft Technical Corrigendum (WDCOR)" 
+      docYear="202x" formalStage="WDCOR-20" docStage="WDCOR" dir="WDCOR"
+      active="yes"/>
+<part number="99-03" TC="true" shortname="TC for CLI"
+      input="TC-P03-CLI"        output="9075_8WDCOR1-03-CLI-2024-01"
+      WG3="BGI-020"  H2="" documentSubtype="Working Draft Technical Corrigendum (WDCOR)" 
+      docYear="202x" formalStage="WDCOR-20" docStage="WDCOR" dir="WDCOR"
+      active="yes"/>
+<part number="99-04" TC="true" shortname="TC for PSM"
+      input="TC-P04-PSM"        output="9075_9WDCOR1-04-PSM-20xx-nn"
+      WG3="STX-011"  H2="" documentSubtype="Working Draft Technical Corrigendum (WDCOR)" 
+      docYear="2023" formalStage="WDCOR-20" docStage="WDCOR" dir="WDCOR"
+      active="no"/>
+<part number="99-09" TC="true" shortname="TC for MED"
+      input="TC-P09-MED"        output="9075_9WDCOR1-09-MED-20xx-nn"
+      WG3="STX-011"  H2="" documentSubtype="Working Draft Technical Corrigendum (WDCOR)" 
+      docYear="2023" formalStage="WDCOR-20" docStage="WDCOR" dir="WDCOR"
+      active="no"/>
+<part number="99-10" TC="true" shortname="TC for OLB"
+      input="TC-P10-OLB"        output="9075_9WDCOR1-10-OLB-20xx-nn"
+      WG3="STX-011"  H2="" documentSubtype="Working Draft Technical Corrigendum (WDCOR)" 
+      docYear="2023" formalStage="WDCOR-20" docStage="WDCOR" dir="WDCOR"
+      active="no"/>
+<part number="99-11" TC="true" shortname="TC for Schemata"
+      input="TC-P11-schemata"   output="9075_9WDCOR1-11-Schemata-20xx-nn"
+      WG3="STX-011"  H2="" documentSubtype="Working Draft Technical Corrigendum (WDCOR)" 
+      docYear="2023" formalStage="WDCOR-20" docStage="WDCOR" dir="WDCOR"
+      active="no"/>
+<part number="99-13" TC="true" shortname="TC for JRT"
+      input="TC-P13-JRT"        output="9075_9WDCOR1-13-JRT-20xx-nn"
+      WG3="STX-011"  H2="" documentSubtype="Working Draft Technical Corrigendum (WDCOR)" 
+      docYear="2023" formalStage="WDCOR-20" docStage="WDCOR" dir="WDCOR"
+      active="no"/>
+<part number="99-14" TC="true" shortname="TC for XML"
+      input="TC-P14-XML"        output="9075_9WDCOR1-14-XML-20xx-nn"
+      WG3="STX-011"  H2="" documentSubtype="Working Draft Technical Corrigendum (WDCOR)" 
+      docYear="2023" formalStage="WDCOR-20" docStage="WDCOR" dir="WDCOR"
+      active="no"/>
+<part number="99-15" TC="true" shortname="TC for MDA"
+      input="TC-P15-MDA"        output="9075_8WDCOR1-15-MDA-2024-05"
+      WG3="SYX-025"  H2="" documentSubtype="Working Draft Technical Corrigendum (WDCOR)" 
+      docYear="202x" formalStage="WDCOR-20" docStage="WDCOR" dir="WDCOR"
+      active="yes"/>
+<part number="99-16" TC="true" shortname="TC for PGQ"
+      input="TC-P16-PGQ"        output="9075_8WDCOR1-16-PGQ-2024-01"
+      WG3="BGI-020"  H2="" documentSubtype="Working Draft Technical Corrigendum (WDCOR)" 
+      docYear="202x" formalStage="WDCOR-20" docStage="WDCOR" dir="WDCOR"
+      active="yes"/>
+</standard>
+
+<!-- ==================================================================== -->
+<!-- Guidance standards for 9075                                          -->
+<!-- ==================================================================== -->
+<standard number="19075"
+          docYear="20xx"
+          documentSubtype="Informal Working Draft (IWD)"
+          formalStage="IWD-20"
+          docStage="Informal_working_drafts">
+
+<part number="01" shortname="SQL Guide/Regex"
+      input="guide-regex" output="19075_3IWD1-01-Regex_2021-09-18"
+      WG3="W16-021" H2="2021-00463" dir="Informal_working_drafts"
+      active="no"
+      />
+<part number="02" shortname="SQL Guide/Time"
+      input="guide-time"  output="19075_3IWD1-02-Time_2021-09-18"
+      WG3="W16-022" H2="2021-00464" dir="Informal_working_drafts"
+      active="no"
+      />
+<part number="03" shortname="SQL Guide/OLB"
+      input="guide-olb"   output="19075_3IWD1-03-OLB_2021-09-18"
+      WG3="W16-023" H2="2021-00465" dir="Informal_working_drafts"
+      active="no"
+      />
+<part number="04" shortname="SQL Guide/JRT"
+      input="guide-jrt"   output="19075_3IWD1-04-JRT_2021-09-18"
+      WG3="W16-024" H2="2021-00466" dir="Informal_working_drafts"
+      active="no"
+      />
+<part number="05" shortname="SQL Guide/RPR" docYear="202x"
+      input="guide-rpr"   output="19075_3IWD2-05-RPR_2023-10-18"
+      WG3="W26-003" H2="2023-00404" dir="Informal_working_drafts"
+      documentSubtype="Informal working draft (IWD)"
+      formalStage="IWD-20" docStage="IWD"
+      />
+<part number="06" shortname="SQL Guide/JSON"
+      input="guide-json"  output="19075_3IWD1-06-JSON_2021-09-18"
+      WG3="W16-026" H2="2021-00468" dir="Informal_working_drafts"
+      active="no"
+      />
+<part number="07" shortname="SQL Guide/PTF"
+      input="guide-ptf"   output="19075_3IWD1-07-PTF_2021-09-18"
+      WG3="W16-027" H2="2021-00469" dir="Informal_working_drafts"
+      active="no"
+      />
+<part number="08" shortname="SQL Guide/MDA"
+      input="guide-mda"   output="19075_3IWD1-08-MDA_2021-09-18"
+      WG3="W16-028" H2="2021-00470" dir="Informal_working_drafts"
+      active="no"
+      />
+<part number="09" shortname="SQL Guide/OLAP" docYear="2022"
+      input="guide-olap"  output="19075_2FDIS1-09-OLAP_2022-07-13"
+      WG3="Wxx-nnn" H2="2022-00___" dir="FDIS"
+      formalStage="FDIS-50" docStage="ISO/IEC FDIS"
+      documentSubtype="Final Draft International Standard (FDIS)"
+      />
+<part number="10" shortname="SQL Guide/Model"
+      input="guide-model" output="19075_1IS1SP1-10-Model_2024-04-24"
+      WG3="SYX-024" H2="2024-00074" dir="Informal_working_drafts"
+      documentSubtype="International Standard (IS)"
+      formalStage="IWD-20" docStage="IWD"
+      docYear="2024"
+      />
+<!--
+<part number="11" shortname="SQL Guide/PGQ"
+      input="guide-pgq"    output="19075_1NP-11_PGQ_202x"
+      WG3="W04-xxx" H2="2020-00???" stage="NP" dir="Informal_working_drafts"
+      documentSubtype="Working Draft (WD)"
+      formalStage="NP-00" docStage="WD"/>
+-->
+
+<!-- ==================================================================== -->
+<!-- TECHNICAL CORRIGENDA for 19075                                        -->
+<!-- ==================================================================== -->
+<part number="99"    TC="true" shortname="Technical Corrigendum"
+      input="dummy-pointer"     output="19075_WDCOR-2022-03"
+      WG3="BER-026p" H2="" documentSubtype="Working Draft Technical Corrigendum (WDCOR)" 
+      formalStage="WDCOR-20" docStage="WDCOR" dir="WDCOR"/>
+<part number="99-01" TC="true" shortname="TC for SQL Guide/Regex"
+      input="TC-guide-regex"  output="19075_3WDCOR1-01-guide-regex-20xx-nn"
+      WG3="STX-011"  H2="" documentSubtype="Working Draft Technical Corrigendum (WDCOR)" 
+      formalStage="WDCOR-20" docStage="WDCOR" dir="WDCOR"
+      active="no"/>
+<part number="99-02" TC="true" shortname="TC for SQL Guide/Time"
+      input="TC-guide-time"  output="19075_3WDCOR1-02-guide-time-2023-10"
+      WG3="W26-020"  H2="" documentSubtype="Working Draft Technical Corrigendum (WDCOR)" 
+      formalStage="WDCOR-20" docStage="WDCOR" dir="WDCOR"
+      active="yes"/>
+<part number="99-03" TC="true" shortname="TC for SQL Guide/OLB"
+      input="TC-guide-olb"  output="19075_3WDCOR1-03-guide-OLB-20xx-nn"
+      WG3="STX-011"  H2="" documentSubtype="Working Draft Technical Corrigendum (WDCOR)" 
+      formalStage="WDCOR-20" docStage="WDCOR" dir="WDCOR"
+      active="no"/>
+<part number="99-04" TC="true" shortname="TC for SQL Guide/JRT"
+      input="TC-guide-jrt"  output="19075_3WDCOR1-04-guide-JRT-2023-10"
+      WG3="W26-020"  H2="" documentSubtype="Working Draft Technical Corrigendum (WDCOR)" 
+      formalStage="WDCOR-20" docStage="WDCOR" dir="WDCOR"
+      active="yes"/>
+<part number="99-05" TC="true" shortname="TC for SQL Guide/RPR"
+      input="TC-guide-rpr"  output="19075_3WDCOR1-05-guide-RPR-2023-10"
+      WG3="W26-020"  H2="" documentSubtype="Working Draft Technical Corrigendum (WDCOR)" 
+      formalStage="WDCOR-20" docStage="WDCOR" dir="WDCOR"
+      active="yes"/>
+<part number="99-06" TC="true" shortname="TC for SQL Guide/JSON"
+      input="TC-guide-json"  output="19075_3WDCOR1-06-guide-JSON-20xx-nn"
+      WG3="STX-011"  H2="" documentSubtype="Working Draft Technical Corrigendum (WDCOR)" 
+      formalStage="WDCOR-20" docStage="WDCOR" dir="WDCOR"
+      active="no"/>
+<part number="99-07" TC="true" shortname="TC for SQL Guide/PTF"
+      input="TC-guide-ptf"  output="19075_3WDCOR1-07-guide-PTF-2023-10"
+      WG3="W26-020"  H2="" documentSubtype="Working Draft Technical Corrigendum (WDCOR)" 
+      formalStage="WDCOR-20" docStage="WDCOR" dir="WDCOR"
+      active="yes"/>
+<part number="99-08" TC="true" shortname="TC for SQL Guide/MDA"
+      input="TC-guide-mda"  output="19075_3WDCOR1-08-guide-MDA-2022-03"
+      WG3="STX-011"  H2="" documentSubtype="Working Draft Technical Corrigendum (WDCOR)" 
+      formalStage="WDCOR-20" docStage="WDCOR" dir="WDCOR"
+      active="no"/>
+<part number="99-09" TC="true" shortname="TC for SQL Guide/OLAP"
+      input="TC-guide-olap"  output="19075_2WDCOR1-09-guide-OLAP-20xx-nn"
+      WG3="STX-011"  H2="" documentSubtype="Working Draft Technical Corrigendum (WDCOR)" 
+      formalStage="WDCOR-20" docStage="WDCOR" dir="WDCOR"
+      active="no"/>
+<part number="99-10" TC="true" shortname="TC for SQL Guide/Model"
+      input="TC-guide-model"  output="19075_1WDCOR1-10-guide-Model-20xx-nn"
+      WG3="STX-011"  H2="" documentSubtype="Working Draft Technical Corrigendum (WDCOR)" 
+      formalStage="WDCOR-20" docStage="WDCOR" dir="WDCOR"
+      active="no"/>
+</standard>
+
+
+<!-- ==================================================================== -->
+<!-- THE Function Library STANDARD                                        -->
+<!-- ==================================================================== -->
+<standard number="29075"
+          docYear="202x"
+          documentSubtype="Informal Working Draft (IWD)"
+          formalStage="IWD-20"
+          docStage="IWD">
+
+<part number="01" shortname="FuncLib/Framework"
+      input="funclib-framework"  output="29075_1IWD2-01-Framework_2024-05-22"
+      WG3="SYX-037" H2="2024-00094" dir="Informal_working_drafts"
+      />
+<part number="02" shortname="FuncLib/StatisticalFunctions"
+      input="funclib-statistical"  output="29075_1IWD2-02-Statistical_2024-05-31"
+      WG3="SYX-045" H2="2024-00104" dir="Informal_working_drafts"
+      />
+<part number="03" shortname="FuncLib/ArrayVectorMatrixFunctions"
+      input="funclib-array"  output="29075_1IWD1-03-Array_2022-mm-dd"
+      WG3="WNN-0pp" H2="2022-00xxx" dir="Informal_working_drafts"
+      />
+
+<!-- ==================================================================== -->
+<!-- TECHNICAL CORRIGENDA for 29075                                       -->
+<!-- ==================================================================== -->
+<part number="99"    TC="true" shortname="Technical Corrigendum"
+      input="dummy-pointer" output="29075_1WDCOR1-202z-mm"
+      WG3="xxx-0yyp" H2="" documentSubtype="Working Draft Technical Corrigendum (WDCOR)" 
+      formalStage="WDCOR-20" docStage="WDCOR" dir="WDCOR"/>
+<part number="99-01" TC="true" shortname="TC for FuncLib/Framework" 
+      input="TC-funclib-framework"    output="29075_1WDCOR1-01-Framework-202z-mm"
+      WG3="xxx-0yy"  H2="" documentSubtype="Working Draft Technical Corrigendum (WDCOR)" 
+      formalStage="WDCOR-20" docStage="WDCOR" dir="WDCOR"
+      active="no"/>
+<part number="99-02" TC="true" shortname="TC for FuncLib/StatisticalFunctions" 
+      input="TC-funclib-statistical" output="29075_1WDCOR1-02-Statistical-202z-mm"
+      WG3="xxx-0yy"  H2="" documentSubtype="Working Draft Technical Corrigendum (WDCOR)" 
+      formalStage="WDCOR-20" docStage="WDCOR" dir="WDCOR"
+      active="no"/>
+<part number="99-03" TC="true" shortname="TC for FuncLib/ArrayVectorMatrixFunctions" 
+      input="TC-funclib-array" output="29075_1WDCOR1-03-Array-202z-mm"
+      WG3="xxx-0yy"  H2="" documentSubtype="Working Draft Technical Corrigendum (WDCOR)" 
+      formalStage="WDCOR-20" docStage="WDCOR" dir="WDCOR"
+      active="no"/>
+</standard>
+
+
+<!-- ==================================================================== -->
+<!-- THE GQL STANDARD                                                     -->
+<!-- ==================================================================== -->
+<standard number="39075"
+          docYear="2024"
+          documentSubtype="Informal Working Draft (IWD)"
+          formalStage="IWD-20"
+          docStage="IWD">
+
+<part number="00" shortname="GQL"
+      input="gql-standard" output="39075_2IWD2-GQL_2024-05-16"
+      WG3="SYX-016R1" H2="2024-00088" dir="Informal_working_drafts"
+      artifactURI="https://standards.iso.org/iso-iec/39075/ed-2/en/">
+  <artifact type="BNFText" suffix=".bnf.txt"/>
+  <artifact type="BNFXML" suffix=".bnf.xml"/>
+  <artifact type="Conditions" suffix="-conditions.xml"/>
+  <artifact type="Features" suffix="-features.xml"/>
+  <artifact type="ImpDef" suffix="-implementation-defined.xml"/>
+  <artifact type="UnDef" suffix="-implementation-dependent.xml"/>
+</part>
+
+<!-- ==================================================================== -->
+<!-- TECHNICAL CORRIGENDA for 39075                                       -->
+<!-- ==================================================================== -->
+<part number="99"    TC="true" shortname="Technical Corrigendum"
+      input="dummy-pointer" output="39075_1WDCOR-202z-mm"
+      WG3="xxx-0yyp" H2="" documentSubtype="Working Draft Technical Corrigendum (WDCOR)" 
+      formalStage="WDCOR-20" docStage="WDCOR" dir="WDCOR"/>
+<part number="99-00" TC="true" shortname="TC for GQL" 
+      input="TC-P00-GQL"    output="39075_1WDCOR1-GQL-2024-05"
+      WG3="SYX-026"  H2="" documentSubtype="Working Draft Technical Corrigendum (WDCOR)" 
+      docYear="2024" formalStage="WDCOR-20" docStage="WDCOR" dir="WDCOR"
+      active="yes"/>
+</standard>
+
+
+<!-- ==================================================================== -->
+<!-- Guidance standards for 39075                                         -->
+<!-- ==================================================================== -->
+<standard number="49075"
+          docYear="202y"
+          documentSubtype="Informal Working Draft (IWD)"
+          formalStage="IWD-20"
+          docStage="IWD">
+
+<part number="00" shortname="GQL"
+      input="guide-gql"  output="49075_1IWD1-Guide-GQL"
+      WG3="W02-0xx" H2="2020-xxx" dir="Informal_working_drafts"
+      />
+
+<!-- ==================================================================== -->
+<!-- TECHNICAL CORRIGENDA for 49075                                       -->
+<!-- ==================================================================== -->
+<part number="99"    TC="true" shortname="Technical Corrigendum"
+      input="dummy-pointer" output="49075_1WDCOR-Guide-GQL-202z-mm"
+      WG3="xxx-0yyp" H2="" documentSubtype="Working Draft Technical Corrigendum (WDCOR)" 
+      formalStage="WDCOR-20" docStage="WDCOR" dir="WDCOR"/>
+<part number="99-00" TC="true" shortname="TC for Guide GQL" 
+      input="TC-guide-GQL"    output="49075_1WDCOR-Guide-GQL-202z-mm"
+      WG3="xxx-0yy"  H2="" documentSubtype="Working Draft Technical Corrigendum (WDCOR)" 
+      formalStage="WDCOR-20" docStage="WDCOR" dir="WDCOR"
+      active="no"/>
+</standard>
+
+<!-- ==================================================================== -->
+<!-- Test "standards"                                    -->
+<!-- ==================================================================== -->
+<standard number="99999" 
+          docYear="202z" 
+          docStage="IWD"
+          formalStage="IWD-20" 
+          documentSubtype="Informal Working Draft (IWD)">
+
+<part number="02" shortname="TST1"
+      input="testbed"  output="testbed"
+      WG3="XXX-nn1" H2="" dir="Informal_working_drafts"/>
+<part number="03" shortname="TST2"
+      input="testbed2"  output="testbed2"
+      WG3="XXX-nn2" H2="" dir="Informal_working_drafts"/>
+</standard>
+
+</parts>

@@ -1,0 +1,67 @@
+<h1>Conventions regarding Figures</h1>
+
+<ul>
+<li><p>All used (referenced) figures should be stored in <code>figures/</code>.</p></li>
+<li><p>All unused (unreferenced) figures should be stored in <code>figures/unused</code>.</p></li>
+<li><p>The naming convention for figures is <code>&lt;part&gt;&lt;name&gt;.&lt;extension&gt;</code>.</p>
+
+<ul>
+<li><code>&lt;part&gt;</code> is the part of the standard owning the figure, e.g. <code>sql_frm</code>.</li>
+<li><code>&lt;name&gt;</code> is the name of the figure using only underscores as separator and
+preferrably only using lower case.</li>
+<li><code>&lt;ext&gt;</code> is the extension of the figure using only lower case.</li>
+<li>If multiple documents reference the same figure, there should still only be
+one owning <code>&lt;part&gt;</code> and that <code>&lt;part&gt;</code> should not be a guide standard.
+If the owning <code>&lt;part&gt;</code> cannot be determined, use the standard itself, i.e.,
+<code>sql</code> or <code>gql</code> instead.</li>
+</ul></li>
+</ul>
+
+<h2>Figures created using drawio</h2>
+
+<p>drawio is a freely available cross-platform gui application for the creation of diagrams in SVG.</p>
+
+<p>It is possibly the only freely available such tool at the time of this writing.</p>
+
+<p>drawio can be accessed in a number of ways:</p>
+
+<ul>
+<li>By using the freely available <a href="https://app.diagrams.net/">online service</a>.</li>
+<li>By installing the <a href="https://github.com/jgraph/drawio-desktop/releases">desktop client</a>.</li>
+<li>By installing it via a linux package manager.</li>
+<li>By compiling it from <a href="https://github.com/jgraph/drawio-desktop">source</a>.</li>
+</ul>
+
+<p>There are some "gotchas" that one should be aware of when working with drawio.
+Consider following the following guidelines:</p>
+
+<ul>
+<li><p>As a baseline font, use Times New Roman, 10pt for serif text.
+Use Helvetica for sans serif text.</p></li>
+<li><p>Always store both the source file (<code>.drawio</code>) and the result file (<code>.svg</code>) in <code>figures/</code> 
+and make sure both files are tracked in git to support future editing of the figure.</p></li>
+<li><p>drawio was originially intended for the production of SVGs embeddeed in a web page.
+Therefore it relies on certain features usually only available in web browsers
+for text rendering.
+Because of this, text in a SVG directly exported from drawio sometimes does not render
+correctly in our PDFs.
+There are two approaches available to handle this issue and create a SVG
+ready for use in our PDFs:</p>
+
+<ul>
+<li>Use the online service and export to SVG using the option 'Convert labels to SVG'.
+This approach is convenient but will upload the drawing to the online service!</li>
+<li><p>Use the desktop client but instead of exporting to SVG:</p>
+
+<ul>
+<li>First, export to PDF from drawio with the option 'Crop'.</li>
+<li>Second, open the PDF in inkscape and save as SVG (using 'Save as').</li>
+</ul>
+
+<p><p><p>This approach is completely local and therefore preferred.</p></li>
+</ul></p></li>
+<li><p>drawio provides no way to specify padding.
+Use, e.g., <code>padding-after='10pt'</code> (or <code>padding-before='10pt'</code>) on figures to fix this.</p></li>
+</ul>
+This file: Copyright © 2021 Editors of ISO/IEC JTC 1/SC 32/WG 3:
+           Jim Melton, Stephen Cannan, Jörn Bartels, Stefan Plantikow</p>

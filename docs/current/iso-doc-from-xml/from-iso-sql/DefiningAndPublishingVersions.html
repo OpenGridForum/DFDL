@@ -1,0 +1,113 @@
+<h1>Defining and publishing versions</h1>
+
+<h2>Normal steps</h2>
+
+<ul>
+<li><p>Determine the <code>&lt;release identifier&gt;</code> for the version of the standard you are about to publish.
+(See <a href=".//ReleaseIdentifier.html">ReleaseIdentifier</a> for how these are to be constructed).</p></li>
+<li><p>Update <code>SQLParts.xml</code> for the documents you are intending to publish.</p>
+
+<blockquote>
+  <p>If the documents are not the final texts submitted to ISO/CS i.e. not one of the docStages:
+ISO/IEC, ISO/IEC PRF, COR, ISO/IEC TR, ISO/IEC TR PRF, or AMD
+then the value of the output="xxx" attribute of each <part> element must be the
+<code>&lt;release identifier&gt;</code>.
+If the documents are the final texts submitted to ISO/CS then then the value of the 
+output="xxx" attribute of each <part> element must be:</p>
+
+<ul>
+<li>If the documents are parts of the 9075 standard then the value of the "Expected filenames" 
+column of the Filenames conventions table in the 
+"Support for the use of inter-document links in ISO/IEC 9075" Annex of SQL/Framework omitting 
+the ".pdf".
+E.g., ISO_IEC_9075-11(E)_Schemata</li>
+<li>Otherwise, the concatenation of "ISO_IEC_", <code>standard-number</code>, "-", <code>standard-part</code>, "(E)_",
+a short name for the standard or part. 
+Note: if the standard is undivided the "-" and <code>standard-part</code>" are omitted.
+E.g., ISO_IEC_39075(E)_GQL</li>
+</ul>
+
+<p></blockquote></li>
+<li><p>Rebuild all parts for publication. </p></li>
+<li><p>Make all required changes, ensure that everything builds correctly (<code>make all</code>) and commit your
+changes.</p></li>
+<li><p>Rebuild for sanity (<code>make clean &amp;&amp; make all</code>).</p></li>
+<li><p>Manually verify that all generated PDFs are correct.</p></li>
+<li><p>Stage the files (<code>make stage&lt;standard-number&gt;</code>).</p></li>
+<li><p>Copy the staged files to the appropriate ISO directory:  </p></p>
+
+<blockquote>
+  <p>Pointer file PDFs to the appropriate subdirectory of the <code>01 Meetings-numbered documents</code> 
+directory.  </p>
+
+<p>The standard (part) PDFs to the appropriate subdirectory of the <code>02 Progression_Documents</code> 
+directory.  </p>
+
+<p>The zip file to the <code>Stable_Sources</code> subdirectory of the <code>09 Build_Environment</code> directory.  </p>
+</blockquote>
+
+<p><p>Note: If you are responsible for maintaining the ANSI copies then you should also copy the (ANSI)
+pointer file PDFs and the standard (part) PDFs to the appropriate ANSI directories.</p></li>
+<li><p>Consider placing a tag (See 'Additional tags' below).</p></li>
+</ul></p>
+
+<h2>Additional steps for ballot documents and final texts</h2>
+
+<ul>
+<li><p>If the documents are the subject of a CD, DIS, FDIS ballot or are the final 
+texts submitted to ISOCS as the IS.</p>
+
+<blockquote>
+  <p>Copy all relevant standard (part) PDFs to the <code>archive/</code> subdirectory in git.</p>
+</blockquote></li>
+<li><p>If the the documents are the final texts submitted to ISO/CS:</p>
+
+<blockquote>
+  <p>Copy all relevant standard (part) xml file (e.g. <code>sql-foundation.xml</code>) to the 
+<code>published/</code> subdirectory in git.</p>
+</blockquote></li>
+<li><p>Add all the new untracked files in <code>archive/</code> and <code>published/</code> to git.</p></li>
+<li><p>Commit using the message <code>Release of &lt;release identifier&gt;</code></p></li>
+<li><p>Tag the release with the <code>&lt;release identifier&gt;</code> (see below)</p></li>
+<li><p>Push commits to the remote repository, e.g. using <code>git push origin</code> </p></li>
+</ul>
+
+<h2>Additional tags</h2>
+
+<p>Additional tags may be used for the convenience of the editors.</p>
+
+<p>These should be prefixed with one of the following:</p>
+
+<ul>
+<li><p>The mark of the family of the standard in lowercase and with spaces replaced by dashes and
+followed by a dash that is followed by a descriptive name for the tagged commit</p></li>
+<li><p><code>before-&lt;place&gt;-&lt;yyyy&gt;-&lt;mm&gt;</code> to tag the state of the repository before a meeting of the editor's 
+at <code>&lt;place&gt;</code> in <code>&lt;yyyy&gt;</code> (this may include WG3 meetings)</p></li>
+<li><p><code>after-&lt;place&gt;-&lt;yyyy&gt;-&lt;mm&gt;</code> to tag the state of the repository after a meeting of the editor's 
+at <code>&lt;place&gt;</code> in <code>&lt;yyyy&gt;</code> (this may include WG3 meetings)</p></li>
+</ul>
+
+<h2>Tag using the command line</h2>
+
+<ul>
+<li><p>Using the command line: <code>git tag '&lt;release identifier&gt;'</code></p></li>
+<li><p><code>git push origin &lt;release identifier&gt;</code></p></li>
+</ul>
+
+<h2>Tag using git gui</h2>
+
+<ul>
+<li><p>Go to the Repository menu and choose "Visualize master's history" (Where master is the name of 
+the branch) </p></li>
+<li><p>This will show a list of all commits in that branch, right click on a commit and choose 
+"Create Tag"</p></li>
+<li><p>Use <code>&lt;release identifier&gt;</code> as the name of the tag </p></li>
+<li><p>Push the tag. Remember to set the check-box to also push the tag.</p></li>
+</ul>
+
+<!--
+1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
+-->
+
+<p>This file: Copyright © 2021 Editors of ISO/IEC JTC 1/SC 32/WG 3:
+           Jim Melton, Stephen Cannan, Jörn Bartels, Stefan Plantikow</p>
