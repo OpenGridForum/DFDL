@@ -115,7 +115,7 @@ Next action: **346**
 
 | 345        | Clarification of evaluation order for asserts/discriminators
 |------------|---|
-| 2025-01-09 | Action created. We discussed the ongoing email thread topics. Steve H. analyzed the issue well. Conclusion was that we are missing a clarification about when an annotation point has multiple asserts and a single discriminator, but all of those have testKind='pattern'. The spec needs to say that the order of evaluation of asserts of testKind='expression' is 'Implementation Dependent'. That term specifically needs to be used. A similar clarification is needed relative to multiple asserts and a discriminator with testKind 'pattern', but it is not completely clear what section of the spec should contain the clarification, or if a wording change to an existing statement would be sufficient. 
+| 2025-01-09 | Action created. We discussed the ongoing email thread topics. Steve H. analyzed the issue well. Conclusion was that we are missing a clarification about when an annotation point has multiple asserts and a single discriminator, but all of those have testKind='pattern'. The spec needs to say that the order of evaluation of asserts (whether testKind 'pattern' or 'expression') is 'Implementation Dependent'. The specific change is to this sentence in section 7.5.1 "However, within each group the order of execution among them is not specified." It should say "However, within each group the order of execution among them is not specified and is implementation dependent." That term specifically needs to be used.  
 
 ### Closed actions
 
