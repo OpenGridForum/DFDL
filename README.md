@@ -9,7 +9,7 @@ The [Official PDF of the DFDL v1.0 Specification](http://www.ogf.org/documents/G
 as well as being [ISO/IEC 23415:2024](https://www.iso.org/standard/87444.html). 
 
 Our plan is that future versions of the DFDL specification will also be submitted to become 
-[ISO/IEC Publicly Accessible Standards](https://en.wikipedia.org/wiki/Publicly_Available_Specification#cite_note-ISO_Deliverables-3) (PAS). 
+[ISO/IEC Publicly Accessible Standards (PAS)](https://www.iso.org/deliverables-all.html?type=pas#PAS). 
 
 You can also view an [HTML page of the DFDL v1.0 Spec](https://htmlpreview.github.io/?https://github.com/OpenGridForum/DFDL/blob/master/docs/current/gwdrp-dfdl-v1.0.8-GFD-R-P.240.htm).
 
