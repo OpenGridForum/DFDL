@@ -1,0 +1,91 @@
+name: spec
+
+# Builds the DFDL specification and runs the checks. Everything that renders
+# the spec happens inside the pinned Metanorma image the Makefile names, so
+# the runner installs nothing beyond ruff and black.
+#
+# Run it from the Actions tab. There is deliberately no push or pull_request
+# trigger: whether this repository runs CI automatically, and on what, is a
+# working group decision rather than something this workflow assumes. To make
+# it automatic, add the triggers you want:
+#
+#   on:
+#     workflow_dispatch:
+#     pull_request:
+#     push:
+#       branches: [master]
+
+on:
+  workflow_dispatch:
+
+# Read-only: this workflow never writes to the repository, publishes nothing,
+# and uses no secrets, so it behaves identically for pull requests from forks.
+permissions:
+  contents: read
+
+# A newer run for the same ref supersedes an older one.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  # Kept in step with IMAGE in the Makefile.
+  METANORMA_IMAGE: metanorma/metanorma:alpine-1.17.0
+
+jobs:
+  build:
+    name: build (both editions)
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Pull the pinned Metanorma image
+        run: docker pull "$METANORMA_IMAGE"
+
+      # Both editions, because a change can break one and not the other.
+      - name: Build the specification
+        run: make editions
+
+      - name: List the build output
+        run: ls -lR build
+
+      # The artifacts are how a reviewer reads the rendered spec without
+      # installing Docker, Metanorma or anything else.
+      - name: Upload the rendered specification
+        uses: actions/upload-artifact@v4
+        with:
+          name: dfdl-spec
+          path: |
+            build/iso/dfdl.pdf
+            build/iso/dfdl.html
+            build/ogf/dfdl.pdf
+            build/ogf/dfdl.html
+          if-no-files-found: error
+
+  check:
+    name: check (lint + validators)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          # Matches target-version in pyproject.toml.
+          python-version: '3.14'
+
+      - name: Install the linters
+        run: python -m pip install --disable-pip-version-check ruff==0.16.5 black==26.5.1
+
+      - name: Pull the pinned Metanorma image
+        run: docker pull "$METANORMA_IMAGE"
+
+      # `make check` runs ruff and black over tools/, builds the document,
+      # then runs each validator in tools/ against it. Any violation exits
+      # non-zero and fails this job.
+      - name: Lint and check fidelity
+        run: make check

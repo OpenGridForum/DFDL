@@ -1,0 +1,8 @@
+# Metanorma's ISO flavour labels a top-level clause "Clause", and generates
+# that word for every cross-reference to one. The specification calls them
+# sections throughout, and its own prose says "Section 11", so an unadjusted
+# build contradicts itself: a generated reference reads "Clause 11" in a
+# document whose heading and body text both say Section.
+#
+# isodoc carries both terms; this picks the one the specification uses.
+clause: Section

@@ -1,0 +1,26 @@
+= Data Format Description Language (DFDL) v1.0 Specification
+:doctype: international-standard
+:docnumber: 23415
+:edition: 1
+:copyright-year: 2026
+:language: en
+:script: Latn
+:title-intro-en: Information technology
+:title-main-en: Data Format Description Language (DFDL) v1.0 Specification
+:mn-document-class: iso
+:i18nyaml: i18n-en.yaml
+:mn-output-extensions: xml,html,pdf,rxl
+:local-cache-only:
+:presentation-metadata-ul-label-list: &#x2022;,&#x25CB;,&#x25AA;
+:data-uri-image:
+:source-highlighter: false
+:pdf-stylesheet-override: pdf-overrides.xsl
+:publisher: ISO
+:technical-committee-number: 1
+:technical-committee: Information technology
+:docstage: 60
+:docsubstage: 60
+
+include::frontmatter/iso.adoc[]
+
+include::body.adoc[]

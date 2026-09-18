@@ -1,0 +1,23 @@
+= Data Format Description Language (DFDL) v1.0 Specification
+:doctype: international-standard
+:docnumber: 240
+:edition: 1
+:copyright-year: 2026
+:language: en
+:script: Latn
+:title-main-en: Data Format Description Language (DFDL) v1.0 Specification
+:mn-document-class: iso
+:i18nyaml: i18n-en.yaml
+:mn-output-extensions: xml,html,pdf,rxl
+:local-cache-only:
+:presentation-metadata-ul-label-list: &#x2022;,&#x25CB;,&#x25AA;
+:data-uri-image:
+:source-highlighter: false
+:pdf-stylesheet-override: pdf-overrides.xsl
+:publisher: Open Grid Forum
+:docstage: 60
+:docsubstage: 60
+
+include::frontmatter/ogf.adoc[]
+
+include::body.adoc[]

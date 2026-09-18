@@ -1,1 +1,4 @@
 /_site/
+build/
+relaton/
+__pycache__/

@@ -1,0 +1,5 @@
+# Config only for the helper scripts in tools/. This is not a Python package.
+
+[tool.ruff]
+target-version = "py314"
+line-length = 88

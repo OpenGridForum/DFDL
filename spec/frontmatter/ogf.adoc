@@ -1,0 +1,43 @@
+// OGF edition front matter.
+// Content pages are identical to the ISO edition; only this file and the
+// master document's metadata differ. The ISO edition takes its cover,
+// copyright and licence from Metanorma; the OGF edition carries the OGF
+// document process wording instead.
+
+[abstract]
+== Abstract
+
+include::../abstract.adoc[]
+
+// The specification numbers its own clauses from the Introduction, so the
+// sections that precede it stay unnumbered in both editions.
+
+[.preface]
+include::../clauses/front-01-preamble.adoc[]
+
+[.preface]
+include::../clauses/front-02-document-change-history.adoc[]
+
+[.preface]
+include::../clauses/front-03-intellectual-property-statement.adoc[]
+
+[.preface]
+include::../clauses/front-04-disclaimer.adoc[]
+
+[.preface]
+include::../clauses/front-05-full-copyright-notice.adoc[]
+
+[.preface]
+include::../clauses/front-07-property-index.adoc[]
+
+[.preface]
+include::../clauses/front-08-authors-and-contributors.adoc[]
+
+[.preface]
+include::../clauses/front-09-scope-of-the-specification.adoc[]
+
+[.preface]
+include::../clauses/front-10-normative-references.adoc[]
+
+[.preface]
+include::../clauses/front-11-terms-and-definitions.adoc[]
