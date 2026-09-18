@@ -1,0 +1,76 @@
+[[notational-and-definitional-conventions]]
+== Notational and Definitional Conventions
+
+Examples of DFDL schemas provided herein are for illustration purposes only and
+for clarity they often do not include all the necessary DFDL properties that
+would be needed for a complete functional DFDL schema.
+
+[[glossary-and-terminology]]
+=== Glossary and Terminology
+
+This specification provides definitions of the terms it uses at the point of
+first use.
+However, as this specification will not generally be read linearly, but out of
+order, a complete glossary is provided in
+<<appendix-e-glossary-of-terms,Appendix E: Glossary of Terms>>.
+
+The capitalized key words MUST, MUST NOT, SHALL, SHALL NOT, SHOULD, SHOULD NOT,
+MAY, REQUIRED, OPTIONAL, and RECOMMENDED in this document are to be interpreted
+as described in [<<a-rfc2119,RFC2119>>].
+Such usage in capital letters is generally about DFDL implementations and their
+common or distinguishing characteristics.
+
+When describing requirements for correct usage of the DFDL language by a DFDL
+Schema author, these same words are used but are not capitalized.
+For example, the specification may state "The DFDL fillByte property _must_ be a
+single byte or single character." What is intended by "_must_" here is that if 
+the value for that property does not conform, that it is a Schema Definition
+Error by the schema author.
+
+Similarly, when describing characteristics of data being parsed or being
+unparsed, and whether that data conforms to the format described by a DFDL
+schema, these same words may be used.
+For example,the specification may state "The representation _must_ be followed
+by a terminating delimiter.", but what is intended by "_must_" in this case is
+that the consequence of the data not having that terminating delimiter is a
+Processing Error because the data does not comply with its format specification.
+
+When describing data, the uncapitalized terms _required_ and _optional_ in this
+document have specific formal meanings (introduced in Section
+<<minoccurs-maxoccurs>>,MinOccurs, MaxOccurs) having to do with the way element
+declarations are annotated in the DFDL language.
+The data corresponding to such an element declaration is also said to be either
+required or optional, and the DFDL element declaration is said to be for a
+required element, or an optional element.
+
+=== Failure Types
+
+Where the phrase "MUST be consistent with" is used, it is assumed that a
+conforming DFDL implementation MUST check for the consistency and issue
+appropriate diagnostic messages when an inconsistency is found.
+
+There are several kinds of failures that can occur when a DFDL processor is
+handling data and/or a DFDL schema.
+These are:
+
+* *_Schema Definition Error_* or *_SDE_* for short - these indicate the DFDL
+schema is not meaningful. They are generally fatal errors that prevent or stop
+processing of data.
+* *_Processing Error_* - These are errors that occur when parsing or unparsing.
+** At parse time, Processing Errors can cause the parser to search (such as via
+backtracking) for alternative ways to parse the data as are allowed by the DFDL
+schema. In that sense parse-time Processing Errors guide the parsing, and when
+the parser finds an alternative way to parse the data, a prior parse error is
+said to have been _suppressed_. A parse error that is not suppressed MUST
+terminate parsing with a diagnostic message.
+** At unparse-time, Processing Errors are generally fatal. They MUST cause
+unparsing to stop with a diagnostic message.
+* *_Validation Error_* - These are errors when optional validation checking is
+available and enabled. Validation Errors MUST NOT stop, nor influence, parsing
+or unparsing behavior. Validation Errors are effectively warnings indicating
+lack of conformance of the parser output, or the unparser input, with the XML
+Schema facet constraints, or  the XSD maxOccurs and XSD minOccurs values.
+* *_Recoverable Error_* - In addition to using XML Schema validation, DFDL also
+provides the ability to add Recoverable Error assertions to a DFDL schema. These
+cause diagnostic messages to be created but MUST NOT stop, nor influence,
+parsing or unparsing behavior.

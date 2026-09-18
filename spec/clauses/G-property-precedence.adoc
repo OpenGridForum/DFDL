@@ -1,0 +1,602 @@
+[appendix]
+[[appendix-g-property-precedence]]
+== Appendix G: Property Precedence
+
+=== Parsing
+
+The following list gives the order in which DFDL properties are examined when
+the DFDL parser is positioned at a particular component in the DFDL schema, and
+about to parse the bitstream modeled by that component.
+
+==== dfdl:element (simple) and dfdl:simpleType
+
+* _Parsing: calculated value (does not apply to dfdl:simpleType or to global
+elements)_
+** dfdl:inputValueCalc
+* _Parsing: common_
+** dfdl:bitOrder
+** dfdl:encoding
+*** 'UTF-16' 'UTF-16BE' 'UTF-16LE'
+**** dfdl:utf16Width
+** dfdl:encodingErrorPolicy
+** dfdl:ignoreCase
+* _Parsing: nillable_
+** XSD nillable _(does not apply to dfdl:simpleType)_
+*** dfdl:nilKind
+**** _"literalValue", "logicalValue", "literalCharacter"_
+***** dfdl:nilValue
+* _Parsing: occurrences (does not apply to dfdl:simpleType)_
+** dfdl:floating
+** (maxOccurs > 1 or unbounded) or (XSD minOccurs = 0 and XSD maxOccurs = 1)
+*** dfdl:occursCountKind
+**** _"expression"_
+***** dfdl:occursCount
+**** _"fixed", "implicit"_
+***** XSD minOccurs
+***** XSD maxOccurs
+**** _"parsed"_
+**** _"stopValue"_
+***** dfdl:occursStopValue
+* _Parsing: identification, framing & extraction_
+** dfdl:leadingSkip
+*** dfdl:alignmentUnits
+** dfdl:alignment
+*** dfdl:alignmentUnits
+** dfdl:initiator
+*** dfdl:nilValueDelimiterPolicy _(does not apply to dfdl:simpleType)_
+*** dfdl:emptyValueDelimiterPolicy
+** dfdl:representation _"text" or xs:simpleType is 'string'_
+*** dfdl:lengthKind
+**** _"implicit"_
+***** XSD maxLength _or_ dfdl:textBooleanTrueRep/dfdl:textBooleanFalseRep
+***** dfdl:lengthUnits
+**** _"explicit"_
+***** dfdl:length
+***** dfdl:lengthUnits
+**** _"prefixed"_
+***** dfdl:prefixLengthType
+***** dfdl:prefixIncludesPrefixLength
+***** dfdl:lengthUnits
+**** _"pattern"_
+***** dfdl:lengthPattern
+**** _"delimited",_ _"endOfParent"_
+***** _None_
+*** dfdl:textTrimKind
+**** dfdl:textStringPadCharacter, dfdl:textNumberPadCharacter,
+dfdl:textBooleanPadCharacter or dfdl:textCalendarPadCharacter
+**** dfdl:textStringJustification, dfdl:textNumberJustification,
+dfdl:textBooleanJustification or dfdl:textCalendarJustification
+*** dfdl:escapeSchemeRef
+** dfdl:representation _"binary" or xs:simpleType is 'hexBinary'_
+*** dfdl:lengthKind
+**** _"implicit"_
+***** XSD maxLength _or_ xs:simpleType
+***** dfdl:lengthUnits
+**** _"explicit"_
+***** dfdl:length
+***** dfdl:lengthUnits
+**** _"prefixed"_
+***** dfdl:prefixLengthType
+***** dfdl:prefixIncludesPrefixLength
+***** dfdl:lengthUnits
+**** _"delimited", "endOfParent"_
+***** _None_
+** dfdl:terminator
+*** dfdl:nilValueDelimiterPolicy _(does not apply to dfdl:simpleType)_
+*** dfdl:emptyValueDelimiterPolicy
+*** dfdl:documentFinalTerminatorCanBeMissing
+** dfdl:trailingSkip
+*** dfdl:alignmentUnits
+* _Parsing: conversion_
+** XSD type property
+*** _"Number"_
+**** dfdl: decimalSigned
+**** dfdl:representation
+***** _"text"_
+****** dfdl:textNumberRep
+******* _"standard"_
+******** dfdl:textNumberPattern
+******** dfdl:textStandardDecimalSeparator
+******** dfdl:textStandardGroupingSeparator
+******** dfdl:textStandardExponentRep
+******** dfdl:textNumberCheckPolicy
+******** dfdl:textStandardInfinityRep
+******** dfdl:textStandardNaNRep
+******** dfdl:textNumberRounding
+********* _"explicit"_
+* dfdl:textNumberRoundingMode
+* dfdl:textNumberRoundingIncrement
+******** dfdl:textStandardZeroRep
+******** dfdl:textStandardBase
+******* _"zoned"_
+******** __d__fdl:textNumberPattern
+******** dfdl:textNumberCheckPolicy
+******** dfdl:textNumberRounding
+********* _"explicit"_
+* dfdl:textNumberRoundingMode
+* dfdl:textNumberRoundingIncrement
+******** dfdl:textZonedSignStyle
+***** _"binary"_
+****** dfdl:byteOrder
+****** _xs:decimal and restrictions_
+******* dfdl:binaryNumberRep
+******** _"packed"_
+********* dfdl:binaryPackedSignCodes
+********* dfdl:binaryDecimalVirtualPoint
+********* dfdl:binaryNumberCheckPolicy
+******** _"bcd", "ibm4690Packed"_
+********* dfdl:binaryDecimalVirtualPoint
+********* dfdl:binaryNumberCheckPolicy
+******** _"binary"_
+********* dfdl:binaryDecimalVirtualPoint
+****** _xs:float, xs:double_
+******* dfdl:binaryFloatRep
+*** _"String"_
+*** _"Calendar"_
+**** dfdl:representation
+***** _"text"_
+****** dfdl:calendarPatternKind
+******* "_explicit_"
+******** dfdl:calendarPattern
+****** dfdl:calendarCheckPolicy
+****** dfdl:calendarTimeZone
+****** dfdl:calendarObserveDST
+****** dfdl:calendarFirstDayOfWeek
+****** dfdl:calendarDaysInFirstWeek
+****** dfdl:calendarCenturyStart
+****** dfdl:calendarLanguage
+***** _"binary"_
+****** dfdl:byteOrder
+****** dfdl:binaryCalendarRep
+******* _"packed"_
+******** dfdl:binaryPackedSignCodes
+******** dfdl:binaryNumberCheckPolicy
+******** dfdl:calendarPatternKind
+********* "_explicit_"
+* dfdl:calendarPattern
+******** dfdl:calendarCheckPolicy
+******** dfdl:calendarTimeZone
+******** dfdl:calendarObserveDST
+******** dfdl:calendarFirstDayOfWeek
+******** dfdl:calendarDaysInFirstWeek
+******** dfdl:calendarCenturyStart
+******* _"bcd", "ibm4690Packed"_
+******** dfdl:binaryNumberCheckPolicy
+******** dfdl:calendarPatternKind
+********* "_explicit_"
+* dfdl:calendarPattern
+******** dfdl:calendarCheckPolicy
+******** dfdl:calendarTimeZone
+******** dfdl:calendarObserveDST
+******** dfdl:calendarFirstDayOfWeek
+******** dfdl:calendarDaysInFirstWeek
+******** dfdl:calendarCenturyStart
+******* _"binarySeconds", "binaryMilliseconds"_
+******** dfdl:binaryCalendarEpoch
+*** _"Opaque"_
+*** _"Boolean"_
+**** dfdl:representation
+***** _"text"_
+****** dfdl:textBooleanTrueRep
+****** dfdl:textBooleanFalseRep
+***** _"binary"_
+****** dfdl:byteOrder
+****** dfdl:binaryBooleanTrueRep
+****** dfdl:binaryBooleanFalseRep
+** dfdl:useNilForDefault _(does not apply to dfdl:simpleType)_
+*** _"true"_
+**** _None_
+*** _"false"_
+**** XSD default or XSD fixed
+
+==== dfdl:element (complex)
+
+* _Parsing: common_
+** dfdl:bitOrder
+** dfdl:encoding
+*** 'UTF-16' 'UTF-16BE' 'UTF-16LE'
+**** dfdl:utf16Width
+** dfdl:encodingErrorPolicy
+** dfdl:ignoreCase
+* _Parsing: nillable_
+** XSD nillable
+*** dfdl:nilKind
+**** _"literalValue"_
+***** dfdl:nilValue (must be "%ES;")
+* _Parsing: occurrences_
+** dfdl:floating
+** (maxOccurs > 1 or unbounded) or (XSD minOccurs = 0 and XSD maxOccurs = 1)
+*** dfdl:occursCountKind
+**** _"expression"_
+***** dfdl:occursCount
+**** _"fixed" ,_ "_implicit_"
+***** XSD minOccurs
+***** XSD maxOccurs
+**** _"parsed"_
+* _Parsing: identification, framing & extraction_
+** dfdl:leadingSkip
+*** dfdl:alignmentUnits
+** dfdl:alignment
+*** not _"implicit"_
+**** dfdl:alignmentUnits
+** dfdl:initiator
+*** dfdl:nilValueDelimiterPolicy
+*** dfdl:emptyValueDelimiterPolicy
+** dfdl:lengthKind
+*** _"explicit"_
+**** dfdl:length
+**** dfdl:lengthUnits
+*** _"prefixed"_
+**** dfdl:prefixLengthType
+**** dfdl:prefixIncludesPrefixLength
+**** dfdl:lengthUnits
+*** _"pattern"_
+**** dfdl:lengthPattern
+*** _"implicit", "delimited", "endOfParent"_
+**** _None_
+** dfdl:terminator
+*** dfdl:nilValueDelimiterPolicy
+*** dfdl:emptyValueDelimiterPolicy
+*** dfdl:documentFinalTerminatorCanBeMissing
+** dfdl:trailingSkip
+*** dfdl:alignmentUnits
+
+==== dfdl:sequence and dfdl:group (when reference is to a sequence)
+
+* _Parsing: hidden (xs:sequence only)_
+** dfdl:hiddenGroupRef
+* _Parsing: common_
+** dfdl:bitOrder
+** dfdl:encoding
+*** 'UTF-16' 'UTF-16BE' 'UTF-16LE'
+**** dfdl:utf16Width
+** dfdl:encodingErrorPolicy
+** dfdl:ignoreCase
+* _Parsing: identification, framing & extraction_
+** dfdl:leadingSkip
+*** dfdl:alignmentUnits
+** dfdl:alignment
+*** _not "implicit"_
+**** dfdl:alignmentUnits
+** dfdl:initiator
+** dfdl:sequenceKind
+** dfdl:initiatedContent
+** dfdl:separator
+*** dfdl:separatorPosition
+*** dfdl:separatorSuppressionPolicy
+** dfdl:terminator
+*** dfdl:documentFinalTerminatorCanBeMissing
+** dfdl:trailingSkip
+*** dfdl:alignmentUnits
+
+==== dfdl:choice and dfdl:group (when reference is to a choice)
+
+* _Parsing: common_
+** dfdl:bitOrder
+** dfdl:encoding
+*** 'UTF-16' 'UTF-16BE' 'UTF-16LE'
+**** dfdl:utf16Width
+** dfdl:encodingErrorPolicy
+** dfdl:ignoreCase
+* _Parsing: identification, framing & extraction_
+** dfdl:leadingSkip
+*** dfdl:alignmentUnits
+** dfdl:alignment
+*** _not "implicit"_
+**** dfdl:alignmentUnits
+** dfdl:initiator
+** dfdl:choiceLengthKind
+*** _"explicit"_
+**** dfdl:choiceLength
+** dfdl:initiatedContent
+** dfdl:choiceDispatchKey
+** dfdl:choiceBranchKey (on elements)
+** dfdl:terminator
+*** dfdl:documentFinalTerminatorCanBeMissing
+** dfdl:trailingSkip
+*** dfdl:alignmentUnits
+
+=== Unparsing
+
+The following list gives the order in which DFDL properties are examined when
+the DFDL unparser is positioned at a particular component in the DFDL Infoset,
+and about to unparse and thereby create the bitstream which is the
+representation of that component.
+
+==== dfdl:element (simple) and dfdl:simpleType
+
+* Unparsing: calculated value (does not apply to dfdl:simpleType or to global
+elements)
+** dfdl:inputValueCalc (if set then element is ignored)
+** dfdl:outputValueCalc
+* _Unparsing: common_
+** dfdl:outputNewLine
+** dfdl:bitOrder
+** dfdl:encoding
+*** 'UTF-16' 'UTF-16BE' 'UTF-16LE'
+**** dfdl:utf16Width
+** dfdl:encodingErrorPolicy
+** dfdl:fillByte
+* _Unparsing: occurrences (does not apply to dfdl:simpleType)_
+** (maxOccurs > 1 or unbounded) or (XSD minOccurs = 0 and XSD maxOccurs = 1)
+*** dfdl:occursCountKind
+**** _"expression"_
+***** dfdl:occursCount
+**** _"fixed", "implicit"_
+***** XSD minOccurs
+***** XSD maxOccurs
+**** _"parsed"_
+**** _"stopValue"_
+***** dfdl:occursStopValue
+* Unparsing: conversion
+** dfdl:useNilForDefault (does not apply to dfdl:simpleType)
+*** "true"
+**** None
+*** "false"
+**** XSD default or XSD fixed
+** XSD nillable (does not apply to dfdl:simpleType)
+*** dfdl:nilKind
+**** "literalValue", "logicalValue", "literalCharacter"
+***** dfdl:nilValue
+** XSD type property
+*** _"Number"_
+**** dfdl:decimalSigned
+**** dfdl:representation
+***** _"text"_
+****** dfdl:textNumberRep
+******* _"standard"_
+******** dfdl:textNumberPattern
+******** dfdl:textStandardBase
+******** dfdl:textStandardDecimalSeparator
+******** dfdl:textStandardGroupingSeparator
+******** dfdl:textStandardExponentRep
+******** dfdl:textNumberCheckPolicy
+******** dfdl:textStandardInfinityRep
+******** dfdl:textStandardNaNRep
+******** dfdl:textNumberRounding
+********* _"explicit"_
+* dfdl:textNumberRoundingMode
+* dfdl:textNumberRoundingIncrement
+******** dfdl:textStandardZeroRep
+******* _"zoned"_
+******** __d__fdl:textNumberPattern
+******** dfdl:textNumberCheckPolicy
+******** dfdl:textNumberRounding
+********* _"explicit"_
+* dfdl:textNumberRoundingMode
+* dfdl:textNumberRoundingIncrement
+******** dfdl:textZonedSignStyle
+***** _"binary"_
+****** dfdl:byteOrder
+****** _xs:decimal and restrictions_
+******* dfdl:binaryNumberRep
+******** _"packed"_
+********* dfdl:binaryPackedSignCodes
+********* dfdl:binaryDecimalVirtualPoint
+******** _"bcd", "ibm4690Packed"_
+********* dfdl:binaryDecimalVirtualPoint
+******** _"binary"_
+********* dfdl:binaryDecimalVirtualPoint
+****** _xs:float, xs:double_
+******* dfdl:binaryFloatRep
+*** _"String"_
+*** _"Calendar"_
+**** dfdl:representation
+***** _"text"_
+****** dfdl:calendarPatternKind
+******* "_explicit_"
+******** dfdl:calendarPattern
+****** dfdl:calendarCheckPolicy
+****** dfdl:calendarTimeZone
+****** dfdl:calendarObserveDST
+****** dfdl:calendarFirstDayOfWeek
+****** dfdl:calendarDaysInFirstWeek
+****** dfdl:calendarLanguage
+***** _"binary"_
+****** dfdl:byteOrder
+****** dfdl:binaryCalendarRep
+******* _"packed"_
+******** dfdl:binaryPackedSignCodes
+******** dfdl:decimalVirtualPoint
+******** dfdl:calendarPatternKind
+********* "_explicit_"
+* dfdl:calendarPattern
+******** dfdl:calendarCheckPolicy
+******** dfdl:calendarTimeZone
+******** dfdl:calendarObserveDST
+******** dfdl:calendarFirstDayOfWeek
+******** dfdl:calendarDaysInFirstWeek
+******** dfdl:calendarCenturyStart
+******* _"bcd", "ibm4690Packed"_
+******** dfdl:decimalVirtualPoint
+******** dfdl:calendarPatternKind
+********* "_explicit_"
+
+dfdl:calendarPattern
+
+******** dfdl:calendarCheckPolicy
+******** dfdl:calendarTimeZone
+******** dfdl:calendarObserveDST
+******** dfdl:calendarFirstDayOfWeek
+******** dfdl:calendarDaysInFirstWeek
+******** dfdl:calendarCenturyStart
+******* _"binarySeconds", "binaryMilliseconds"_
+******** dfdl:binaryCalendarEpoch
+*** _"Opaque"_
+*** _"Boolean"_
+**** dfdl:representation
+***** _"text"_
+****** dfdl:textBooleanTrueRep
+****** dfdl:textBooleanFalseRep
+***** _"binary"_
+****** dfdl:byteOrder
+****** dfdl:binaryBooleanTrueRep
+****** dfdl:binaryBooleanFalseRep
+* Unparsing: insertion & framing
+** dfdl:leadingSkip
+*** dfdl:alignmentUnits
+** dfdl:alignment
+*** not "implicit"
+**** dfdl:alignmentUnits
+** dfdl:representation _"text" or xs:simpleType 'string'_
+*** dfdl:escapeSchemeRef
+*** dfdl:lengthKind
+**** _"implicit"_
+***** XSD maxLength _or_ dfdl:textBooleanTrueRep/dfdl:textBooleanFalseRep
+***** dfdl:lengthUnits
+***** dfdl:textPadKind
+****** dfdl:textStringPadCharacter, dfdl:textNumberPadCharacter,
+dfdl:textBooleanPadCharacter or dfdl:textCalendarPadCharacter
+****** dfdl:textStringJustification, dfdl:textNumberJustification,
+dfdl:textBooleanJustification or dfdl:textCalendarJustification
+***** dfdl:truncateSpecifiedLengthString
+**** _"explicit"_
+***** _not expression_
+****** dfdl:length
+****** dfdl:truncateSpecifiedLengthString
+***** _expression_
+****** XSD minLength _or_ dfdl:textOutputMinLength
+***** dfdl:lengthUnits
+***** dfdl:textPadKind
+****** dfdl:textStringPadCharacter, dfdl:textNumberPadCharacter,
+dfdl:textBooleanPadCharacter or dfdl:textCalendarPadCharacter
+****** dfdl:textStringJustification, dfdl:textNumberJustification,
+dfdl:textBooleanJustification or dfdl:textCalendarJustification
+**** _"prefixed"_
+***** dfdl:prefixLengthType
+***** dfdl:prefixIncludesPrefixLength
+***** dfdl:lengthUnits
+***** dfdl:textPadKind
+****** dfdl:textStringPadCharacter, dfdl:textNumberPadCharacter,
+dfdl:textBooleanPadCharacter or dfdl:textCalendarPadCharacter
+****** dfdl:textStringJustification, dfdl:textNumberJustification,
+dfdl:textBooleanJustification or dfdl:textCalendarJustification
+****** XSD minLength _or_ dfdl:textOutputMinLength
+**** _"pattern", "delimited",_ _"endOfParent"_
+***** dfdl:textPadKind
+****** dfdl:textStringPadCharacter, dfdl:textNumberPadCharacter,
+dfdl:textBooleanPadCharacter or dfdl:textCalendarPadCharacter
+****** dfdl:textStringJustification, dfdl:textNumberJustification,
+dfdl:textBooleanJustification or dfdl:textCalendarJustification
+****** XSD minLength _or_ dfdl:textOutputMinLength
+** dfdl:representation _"binary" or xs:simpleType 'hexBinary'_
+*** dfdl:lengthKind
+**** _"implicit"_
+***** XSD maxLength _or_ xs:simpleType
+***** dfdl:lengthUnits
+**** _"explicit"_
+***** dfdl:length
+***** dfdl:lengthUnits
+**** _"prefixed"_
+***** dfdl:prefixLengthType
+***** dfdl:prefixIncludesPrefixLength
+***** dfdl:lengthUnits
+**** _"delimited", "endOfParent"_
+***** _None_
+** dfdl:initiator
+*** dfdl:nilValueDelimiterPolicy (does not apply to dfdl:simpleType)
+*** dfdl:emptyValueDelimiterPolicy
+** dfdl:terminator
+*** dfdl:nilValueDelimiterPolicy (does not apply to dfdl:simpleType)
+*** dfdl:emptyValueDelimiterPolicy
+** dfdl:trailingSkip
+*** dfdl:alignmentUnits
+
+==== dfdl:element (complex)
+
+* Unparsing: common
+** dfdl:outputNewLine
+** dfdl:bitOrder
+** dfdl:encoding
+*** 'UTF-16' 'UTF-16BE' 'UTF-16LE'
+**** dfdl:utf16Width
+** dfdl:encodingErrorPolicy
+** dfdl:fillByte
+* Unparsing: nillable
+** XSD nillable (does not apply to dfdl:simpleType)
+**** dfdl:nilKind
+***** "literalValue"
+****** dfdl:nilValue (must be "%ES;")
+* _Unparsing: occurrences_
+** (maxOccurs > 1 or unbounded) or (XSD minOccurs = 0 and XSD maxOccurs = 1)
+*** dfdl:occursCountKind
+**** _"expression"_
+***** dfdl:occursCount
+**** _"fixed"_, _"implicit"_
+***** XSD minOccurs
+***** XSD maxOccurs
+**** _"parsed"_
+* Unparsing: insertion & framing
+** dfdl:leadingSkip
+*** dfdl:alignmentUnits
+** dfdl:alignment
+*** _not "implicit"_
+**** dfdl:alignmentUnits
+** dfdl:initiator
+*** dfdl:nilValueDelimiterPolicy
+*** dfdl:emptyValueDelimiterPolicy
+** dfdl:lengthKind
+*** _"explicit"_
+**** dfdl:length
+**** dfdl:lengthUnits
+*** _"prefixed"_
+**** dfdl:prefixLengthType
+**** dfdl:prefixIncludesPrefixLength
+**** dfdl:lengthUnits
+*** _"implicit", "pattern", "delimited", "endOfParent"_
+**** _None_
+** dfdl:terminator
+*** dfdl:nilValueDelimiterPolicy
+*** dfdl:emptyValueDelimiterPolicy
+** dfdl:trailingSkip
+*** dfdl:alignmentUnits
+
+==== dfdl:sequence and dfdl:group (when reference is a sequence)
+
+* _Unparsing: hidden (xs:sequence only)_
+** dfdl:hiddenGroupRef
+* Unparsing: common
+** dfdl:outputNewLine
+** dfdl:bitOrder
+** dfdl:encoding
+*** 'UTF-16' 'UTF-16BE' 'UTF-16LE'
+**** dfdl:utf16Width
+** dfdl:encodingErrorPolicy
+** dfdl:fillByte
+* Unparsing: insertion & framing
+** dfdl:leadingSkip
+*** dfdl:alignmentUnits
+** dfdl:alignment
+*** not "implicit"
+**** dfdl:alignmentUnits
+** dfdl:initiator
+** dfdl:separator
+*** dfdl:separatorPosition
+*** dfdl:separatorSuppressionPolicy
+** dfdl:terminator
+** dfdl:trailingSkip
+*** dfdl:alignmentUnits
+
+==== dfdl:choice and dfdl:group (when reference is a choice)
+
+* Unparsing: common
+** dfdl:outputNewLine
+** dfdl:bitOrder
+** dfdl:encoding
+*** 'UTF-16' 'UTF-16BE' 'UTF-16LE'
+**** dfdl:utf16Width
+** dfdl:encodingErrorPolicy
+** dfdl:fillByte
+* Unparsing: insertion & framing
+** dfdl:leadingSkip
+*** dfdl:alignmentUnits
+** dfdl:alignment
+*** not "implicit"
+**** dfdl:alignmentUnits
+** dfdl:initiator
+** dfdl:choiceLengthKind
+*** _"explicit"_
+**** dfdl:choiceLength
+** dfdl:terminator
+** dfdl:trailingSkip
+*** dfdl:alignmentUnits

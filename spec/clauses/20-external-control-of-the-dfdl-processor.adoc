@@ -1,0 +1,26 @@
+[[external-control-of-the-dfdl-processor]]
+== External Control of the DFDL Processor
+
+In addition to providing the DFDL schema and data to be parsed or serialized,
+DFDL Schemas can also be parameterized by external variables.
+
+DFDL processors can provide implementation-defined means to specify:
+
+[arabic]
+. The data to be processed: a data stream when parsing or an Infoset when
+unparsing.
+. The DFDL schema to be used
+. The _distinguished global element declaration_ to be used (specifying both
+name of element and namespace of that name)
+. Values for external variables
+
+Notice also that a DFDL Schema, like any XML schema, can have multiple top-level
+element declarations; hence, the distinguished global element declaration is
+necessary to indicate which of these top-level element declarations is to be the
+starting point for processing data.
+
+The mechanism by which a DFDL processor is controlled is not specified by this
+standard.
+For example, command line DFDL processors MAY use command line options, but DFDL
+processors embedded in other kinds of software systems may need other
+mechanisms.

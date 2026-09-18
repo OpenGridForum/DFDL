@@ -1,0 +1,427 @@
+[appendix]
+[[appendix-d-dfdl-standard-encodings]]
+== Appendix D: DFDL Standard Encodings
+
+This appendix provides a specification template for the definition of DFDL
+standard encodings and defines two such encodings for use in DFDL
+schemas.footnote:[It is anticipated this appendix will be migrated into a separate document to facilitate the addition of new encodings without revising the DFDL specification.]
+
+These encodings are optional - DFDL implementations are not required to support
+them to be in conformance with the DFDL specification.
+
+However, if implemented, then a conformant DFDL implementation MUST follow the
+specification in this appendix.
+
+=== Purpose
+
+Additional encoding names are needed for several reasons:
+
+[arabic]
+. Incomplete Information: the definitions of IANA [<<a-iana,IANA>>] and CCSID
+[<<a-ccsid,CCSID>>] character set encodings are not sufficiently specific about
+the encoding, omitting important characteristics such as alignment or bit order.
+An example of this is the encoding X-DFDL-US-ASCII-7-BIT-PACKED, defined herein.
+. Unnamed or Legacy Encodings: There are many legacy encodings that have no IANA
+or CCSID identifiers. For example, ITA2 [<<a-ita2,ITA2>>] is a 5-bit-per
+character encoding that is very old, yet still has modern uses.
+
+=== Conventions
+
+All indexing of positions is 1-based meaning the first position is position 1.
+
+Bytes are unsigned integers with values from 0 to 255 (decimal).
+
+Hexadecimal numbers have the prefix "0x".
+
+Decimal numbers have no prefix when the context is clear and are explicitly
+labeled with (decimal) to resolve ambiguity.
+
+=== Specification Template
+
+A DFDL standard encoding specification SHOULD include:
+
+[arabic]
+. _Name_: All DFDL standard encoding names begin with the prefix "X-DFDL-". Note
+that encoding names are not case-sensitive.
+. _Translation table:_ An encoding/decoding algorithm that provides a complete
+bi-directional mapping between encoded characters and UTF-16 character codes.
+Many encodings share character code definitions and describe only different ways
+of representing those values; hence, this section may reference other IANA,
+CCSID or DFDL standard encoding definitions.
+. _Width_: Whether the character set is fixed or variable width. If fixed width,
+the size of a code unit in bits or bytes.
+. _Alignment:_  Alignment and alignment units for a code unit.
+. _Byte order:_  When a code unit consists of more than one byte of data, the
+byte order of the code units. Note that the dfdl:byteOrder property does not
+apply to text.
+
+=== Encoding X-DFDL-US-ASCII-7-BIT-PACKED
+
+This encoding is used by MIL-STD-2045 [<<a-milstd2045,MILSTD2045>>] and a
+variety of related binary data standards.
+
+==== Name
+
+X-DFDL-US-ASCII-7-BIT-PACKED
+
+==== Translation table
+
+The characters are exactly the 128 US-ASCII characters with the same code unit
+values.
+
+==== Width
+
+Fixed width.
+Each code unit is 7-bits wide.
+
+This encoding differs from US-ASCII in that it specifically uses only 7-bits per
+character within each
+bytefootnote:[Though US-ASCII contains only 128 characters DFDL assumes the US-ASCII encoding to use one character per 8-bit byte.].
+A subsequent character or the next data field may begin in the very next bit
+after a 7-bit character code of this encoding.
+
+Hence, 8 characters fit exactly into 7 bytes of data as no bits are wasted.
+
+==== Alignment
+
+1 bit.
+That is, a code unit may begin on any bit boundary.
+
+==== Byte Order
+
+Not applicable - code units are always smaller than 1 byte.
+
+==== Example 1
+
+The table below shows how the 8-character string 'UNIT1234' is encoded into 7
+bytes, when the bit order is least-significant-bit first.
+
+.Example of DFDL Standard Encoding X-DFDL-US-ASCII-7-BIT-PACKED
+[cols="2,1,1,1,1",options="header"]
+|===
+
+| Logical character
+| 7-bit code unit
+a| Bit placement
+
+2^7^            2^0^
+| Byte value
+| Byte number
+
+| U
+| 1010101
+| X**1010101**
+|
+|
+
+| N
+| 1001110
+a| **0**XXXXXXX
+
+XX**100111**
+| pass-format:straightquotes[0x55]
+| 1
+
+| I
+| 1001001
+a| **01**XXXXXX
+
+XXX**10010**
+| pass-format:straightquotes[0x67]
+| 2
+
+| T
+| 1010100
+a| **100**XXXXX
+
+XXXX**1010**
+| pass-format:straightquotes[0x92]
+| 3
+
+| 1
+| 0110001
+a| **0001**XXXX
+
+XXXXX**011**
+| pass-format:straightquotes[0x1A]
+| 4
+
+| 2
+| 0110010
+a| **10010**XXX
+
+XXXXXX**01**
+| pass-format:straightquotes[0x93]
+| 5
+
+| 3
+| 0110011
+a| **110011**XX
+
+XXXXXXX**0**
+| pass-format:straightquotes[0xCD]
+| 6
+
+| 4
+| 0110100
+| **0110100**X
+| pass-format:straightquotes[0x68]
+| 7
+|===
+
+The bits corresponding to the characters are shown in distinct colors below.
+The characters that each bit contributes to are written below each of the bits
+and in the corresponding color.
+
+[source%unnumbered,subs="+macros"]
+----
+pass:[<span style="color:#FF0000">     0</span>]1010101 pass:[<span style="color:#92D050">01</span>]pass:[<span style="color:#FF0000">100111</span>] pass:[<span style="color:#7030A0">100</span>]pass:[<span style="color:#92D050">10010</span>] pass:[<span style="color:#FFC000">0001</span>]pass:[<span style="color:#7030A0">1010</span>] pass:[<span style="color:#00B0F0">10010</span>]pass:[<span style="color:#FFC000">011</span>] pass:[<span style="color:#C00000">110011</span>]pass:[<span style="color:#00B0F0">01</span>] 0110100pass:[<span style="color:#C00000">0</span>]
+Byte -----1-- -----2-- -----3-- -----4-- -----5-- -----6-- -----7--
+Char pass:[<span style="color:#FF0000">N</span>]UUUUUUU pass:[<span style="color:#92D050">II</span>]pass:[<span style="color:#FF0000">NNNNNN </span>]pass:[<span style="color:#7030A0">TTT</span>]pass:[<span style="color:#92D050">IIIII</span>] pass:[<span style="color:#FFC000">1111</span>]pass:[<span style="color:#7030A0">TTTT</span>] pass:[<span style="color:#00B0F0">22222</span>]pass:[<span style="color:#FFC000">111</span>] pass:[<span style="color:#C00000">333333</span>]pass:[<span style="color:#00B0F0">22 </span>]4444444pass:[<span style="color:#C00000">3</span>]
+----
+
+This kind of data is often better visualized by numbering the bytes in the
+opposite direction that is _right to left_, which leads to this presentation:
+
+[source%unnumbered,subs="+macros"]
+----
+     0110100pass:[<span style="color:#FF0000">0 110011</span>]pass:[<span style="color:#00B0F0">01 10010</span>]pass:[<span style="color:#FFC000">011 0001</span>]pass:[<span style="color:#7030A0">1010 100</span>]pass:[<span style="color:#92D050">10010 01</span>]pass:[<span style="color:#FF0000">100111 0</span>]1010101
+Byte -----7-- -----6-- -----5-- -----4-- -----3-- -----2-- -----1--
+Char 4444444pass:[<span style="color:#FF0000">3 333333</span>]pass:[<span style="color:#00B0F0">22 22222</span>]pass:[<span style="color:#FFC000">111 1111</span>]pass:[<span style="color:#7030A0">TTTT TTT</span>]pass:[<span style="color:#92D050">IIIII II</span>]pass:[<span style="color:#FF0000">NNNNNN N</span>]UUUUUUU
+----
+
+In the above, the bits corresponding to each character code unit are more easily
+recognized, but the characters appear right-to-left (i.e., backward for
+English).
+
+==== Example 2
+
+The bits below represent a 3-bit unsigned integer containing value 7, followed
+by the ASCII string 'ABC' followed by the ASCII DEL character (character code
+pass-format:straightquotes[0x7F]).
+This illustrates a string not beginning on a byte boundary.
+Again, the bit ordering is least-significant-bit first.
+
+The bits are written in increasing position and place value from
+_right-to-left_:
+
+[source%unnumbered]
+----
+1111111 1000011 1000010 1000001 111
+DEL     C       B       A       7
+----
+
+In the above example, if one numbers the bits from the right, starting with
+position 1, the character code for 'A' occupies bits 4 to 10. Ifone divides the
+data above into bytes with vertical bars one must start on the right to get:
+
+[source%unnumbered]
+----
+char:      DEL       C       B         A
+bits:     01111111 | 1000011 1 |000010 10 | 00001 111
+byte:     7F         87         1C          0F
+byte pos: 4          3          2           1
+----
+
+[[encoding-x-dfdl-us-ascii-6-bit-packed]]
+=== Encoding X-DFDL-US-ASCII-6-BIT-PACKED
+
+This encoding is used by MIL-STD-6016D (See [<<a-milstd6016,MILSTD6016>>]) and a
+variety of related binary data standards.
+
+==== Name
+
+X-DFDL-US-ASCII-6-BIT-PACKED
+
+==== Translation Table
+
+The characters are a subset of the 128 US-ASCII characters.
+The assignment of numeric code units to the characters is different for some of
+the characters and the same for others.
+
+The correspondence of ASCII characters to their code point values is given by
+the table below.
+
+.Translation Table for DFDL Standard Encoding X-DFDL-US-ASCII-6-BIT-PACKED
+[cols="1,1,4",options="header"]
+|===
+
+| Character
+| Code Point Value (Decimal)
+| Notes
+
+| @
+| 0
+.7+| These characters' code points are the same as the US-ASCII code point, minus 64 (decimal)
+
+| A to Z
+| 1 through 26
+
+| {empty}[
+| 27
+
+| \
+| 28
+
+| ]
+| 29
+
+| ^
+| 30
+
+| _
+| 31
+
+| SPACE
+| 32
+.23+| These characters' code points are the same as in US-ASCII.
+
+| !
+| 33
+
+| "
+| 34
+
+| pass-format:straightquotes[#]
+| 35
+
+| $
+| 36
+
+| %
+| 37
+
+| &
+| 38
+
+| '  APOSTROPHE
+| 39
+
+| (
+| 40
+
+| )
+| 41
+
+| *
+| 42
+
+| {plus}
+| 43
+
+| ,  COMMA
+| 44
+
+| -
+| 45
+
+| {empty}.  PERIOD
+| 46
+
+| /
+| 47
+
+| 0 to 9
+| 48 through 57
+
+| :
+| 58
+
+| ;
+| 59
+
+| <
+| 60
+
+| =
+| 61
+
+| >
+| 62
+
+| ?
+| 63
+|===
+
+==== Width
+
+Fixed width.
+Each code unit is 6-bits wide.
+A subsequent character or the next data field may begin in the very next bit
+after a 6-bit character code of this encoding.
+
+Hence, 4 characters fit into 3 bytes of data as no bits are wasted.
+
+==== Alignment
+
+1 bit.
+That is, a code unit may begin on any bit boundary.
+
+==== ByteOrder
+
+Not applicable.
+Code units are always less than 1 byte in size.
+
+==== Example 1
+
+The table below shows how the 8 character string '1234' is encoded into 3 bytes.
+The bit order is least-significant-bit first:
+
+.Example of DFDL Standard Encoding X-DFDL-US-ASCII-6-BIT-PACKED
+[cols="2,1,1,1,1",options="header"]
+|===
+
+| Logical character
+| 6-bit code unit
+a| Bit placement
+
+2^7^            2^0^
+| Byte value
+| Byte number
+
+| 1
+| 110001
+| XX**110001**
+|
+|
+
+| 2
+| 110010
+a| **10**XXXXXX
+
+XXXX**1100**
+| pass-format:straightquotes[0xB1]
+| 1
+
+| 3
+| 110011
+a| **0011**XXXX
+
+XXXXXX**11**
+| pass-format:straightquotes[0x3C]
+| 2
+
+| 4
+| 110100
+| **110100**XX
+| pass-format:straightquotes[0xD3]
+| 3
+|===
+
+=== References for Appendix D
+
+[%plain%unnumbered,cols="1,6"]
+|===
+
+| [[a-ita2]][[a-dfdl]][ITA2]footnote:[This list is maintained separately from the other references in the specification to facilitate future migration of this material into a separate document.]
+| Wikipedia: Baudot code,  link:http://en.wikipedia.org/wiki/Baudot_code%23ITA2[http://en.wikipedia.org/wiki/Baudot_code#ITA2]
+
+| [[a-milstd2045]][MILSTD2045]
+| CONNECTIONLESS DATA TRANSFER APPLICATION LAYER STANDARD, MIL-STD-2045-47001D w/CHANGE 1, 23 June 2008 link:http://everyspec.com/MIL-STD/MIL-STD-2000-2999/MIL-STD-2045_47001D_CHANGE-1_25098/[http://everyspec.com/MIL-STD/MIL-STD-2000-2999/MIL-STD-2045_47001D_CHANGE-1_25098/])
+
+| [[[a-milstd6016]]MILSTD6016]
+a| Tactical Data Link Message Standard MIL-STD-6016
+
+(This standard requires authorization to access.)
+link:http://en.wikipedia.org/wiki/Link_16[http://en.wikipedia.org/wiki/Link_16]
+|===

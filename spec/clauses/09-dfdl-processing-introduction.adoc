@@ -1,0 +1,1339 @@
+[[dfdl-processing-introduction]]
+== DFDL Processing Introduction
+
+A _DFDL Parser_ is an application or code library that takes as input:
+
+* A DFDL annotated XML schema
+* A data stream
+
+It uses the DFDL schema description to interpret the data stream and realize the
+DFDL Information Set.
+If successful the data stream is said to be _well-formed_ for the data format
+described by the DFDL Schema.
+The information set can then be written out (for example it could be realized as
+an XML or JSON text string) or it can be accessed by an application through an
+API (for example, a DOM-like tree could be created in memory for access by
+applications).
+
+Symmetrically, there is a notion of a _DFDL Unparser._ The unparser works from
+an instance of the DFDL Information Set, a DFDL annotated schema and writes out
+to a target data stream in the appropriate representation formats.
+
+Often both parser and unparser are implemented in the same body of software and
+so are not always distinguished.
+Collectively they are called a _DFDL_ _Processor_.
+The parser and unparser MAY, of course, be different bodies of software.
+Conforming DFDL processors MAY implement only a parser, because the unparser is
+an optional feature of DFDL.
+
+[[parser-overview]]
+=== Parser Overview
+
+The DFDL logical parser is a recursive-descent parserfootnote:[A "top-down"
+parser built from a set of mutually recursive procedures or a non-recursive
+equivalent where each such procedure usually implements one of the productions
+of the grammar.
+Thus, the structure of the resulting program closely mirrors that of the grammar
+it recognizes.
+See [<<a-rdp,RDP>>\].] having guided, but potentially unbounded look ahead__.__
+A DFDL parser reads a specification (the DFDL schema) and it recursively walks
+down and up the schema as it processes the data.
+This is done in a manner consistent with the scoping of properties and variables
+described in <<property-scoping-and-dfdl-schema-checking>> Property Scoping and
+DFDL Schema Checking.
+
+The unbounded look ahead means that there are situations where the parser MUST
+speculatively attempt to parse data where the occurrence of a Processing Error
+causes the parser to suppress the error, back out and make another attempt.
+
+Implementations of DFDL MAY provide control mechanisms for limiting the
+speculative search behavior of DFDL parsers.
+The nature of these mechanisms is beyond the scope of the DFDL specification
+which defines the behavior of conforming parsers only on data that does not
+cause an implementation to reach such a control-mechanism limit.
+Any such control mechanisms MUST be documented by the implementation and are
+thus _implementation-defined_.
+
+The logical parser recursively descends the DFDL schema beginning with the
+global element that is the document root.
+This is specified for the processor in an implementation-defined manner, see
+<<external-control-of-the-dfdl-processor>> External Control of the DFDL
+Processor.
+Depending on the kind of schema construct that is encountered and the DFDL
+annotations on it, and the pre-existing context, the parser performs specific
+parsing operations on the data stream.
+These parsing operations typically recognize and consume data from the stream
+and construct values in the logical model.
+For values of complex types and for arrays, these logical model values may
+incorporate values created by recursive parsing.
+
+DFDL Implementations are free to use whatever techniques for parsing they wish
+so long as the semantics are equivalent to that of the speculative
+recursive-descent logical parser described in this specification.
+Implementations MUST distinguish the various kinds of errors (Schema Definition
+Error, Processing Error, etc.) no matter what time they are detected.
+Some implementations MAY NOT detect certain Schema Definition Errors until data
+are being parsed; however, they MUST still distinguish Schema Definition Errors
+from Processing Errors.
+
+==== Points of Uncertainty
+
+A _point of uncertainty_ occurs when there is more than one schema component
+that might be applied based on parsing up to the current point in the data
+stream.
+
+Any one of the following constructs is a point of uncertainty:
+
+* An xs:choice
+* All xs:elements in an unordered xs:sequence
+(dfdl:sequenceKindfootnote:[For dfdl:sequenceKind, see Section 14 Sequence Groups.] is 'unordered')
+* All xs:elements in an xs:sequence containing one or more
+dfdl:floatingfootnote:[For dfdl:floating elements, see Section <<floating-elements>> Floating Elements.] xs:elements
+
+Any one of the following constructs is a _potential_ point of uncertainty:
+
+* An
+optionalfootnote:[For optional and array elements, see Section 16 Properties for Array Elements and Optional Elements.] xs:element
+* An array xs:element.
+
+Examples of potential points of uncertainty are in Section
+<<resolving-points-of-uncertainty>> Resolving Points of Uncertainty.
+
+==== Processing Error
+
+If a DFDL schema contains no Schema Definition Errors, then there is the
+additional possibility of a _Processing Error_ when processing data using a DFDL
+schema.
+A Processing Error occurs when parsing if the data does not conform to the
+format described by the schema, that is to say, the data is not well-formed
+relative to the schema.
+A Processing Error occurs when unparsing when the incoming Infoset does not
+conform to the logical structure described by the schema.
+
+Processing Errors interact with the schema's points of uncertainty.
+When a DFDL parser encounters a Processing Error, then that error is said to be
+_suppressed_ by a point of uncertainty if there is another schema component that
+can be selected by the parsing algorithm.
+The details of the DFDL parsing algorithm are described in Section
+<<parsing-algorithm>>.
+
+Processing Errors MUST be able to be suppressed by a point of uncertainty.
+See Section <<resolving-points-of-uncertainty>>.
+
+Note that unlike Processing Errors, Schema Definition Errors cannot be
+suppressed by points of uncertainty when parsing data.
+That is, a Schema Definition Error is fatal.
+It does not trigger search or backtracking to find alternative ways to parse the
+data.
+
+==== Recoverable Error
+
+This error type is used with the dfdl:assert annotation when parsing to permit
+the checking of physical format constraints without terminating a parse.
+For example, some formats have redundancy by having known lengths, as well as
+delimiters.
+A Recoverable Error can be issued, using an assert to check a physical length
+constraint when property lengthKind is 'delimited'.
+
+Recoverable Errors are independent of validation, and when resolving points of
+uncertainty, Recoverable Errors are ignored.
+
+[[dfdl-data-syntax-grammar]]
+=== DFDL Data Syntax Grammar
+
+Data in a format describable via a DFDL schema obeys the grammar given here.
+A given DFDL schema is read by the DFDL processor to provide specific meaning to
+the terminals and decisions in this grammar.
+
+The bits of the data are divided into two broad categories:
+
+[arabic]
+. Content
+. Framing
+
+The content is the bits of data that are interpreted to compute a logical value.
+
+_Framing_ is the term used to describe the delimiters, length fields, and other
+parts of the data stream which are present and may be necessary to determine the
+length or position of the content of DFDL Infoset items.
+
+Note that sometimes the framing is not strictly necessary for parsing, but adds
+useful redundancy to the data format, allowing corrupt data to be more robustly
+detected, and sometimes the framing adds human readability to the data format.
+
+In the grammar tables below, the terminal symbols are shown in bold italic font.
+
+.DFDL Grammar Productions
+[cols="6,1,15",options="header",class="bnf"]
+|===
+
+| Productions
+|
+|
+
+| Document
+| ::=
+| SimpleElement \| ComplexElement
+
+| SimpleElement
+| ::=
+| SimpleLiteralNilElementRep \| SimpleEmptyElementRep \| SimpleNormalRep
+
+| SimpleEnclosedElement
+| ::=
+| SimpleElement \| AbsentElementRep
+
+| ComplexElement
+| ::=
+| ComplexLiteralNilElementRep \| ComplexNormalRep \| ComplexEmptyElementRep
+
+| ComplexEnclosedElement
+| ::=
+| ComplexElement \| AbsentElementRep
+
+| tr-style:[border-bottom:0.5pt solid black] EnclosedElement
+| ::=
+| SimpleEnclosedElement \| ComplexEnclosedElement
+
+| AbsentElementRep
+| ::=
+| *_Absent_*
+
+| SimpleEmptyElementRep
+| ::=
+| EmptyElementLeftFraming EmptyElementRightFraming
+
+| ComplexEmptyElementRep
+| ::=
+| EmptyElementLeftFraming EmptyElementRightFraming
+
+| EmptyElementLeftFraming
+| ::=
+| LeadingAlignment *_EmptyElementInitiator_* PrefixLength
+
+| tr-style:[border-bottom:0.5pt solid black] EmptyElementRightFraming
+| ::=
+| *_EmptyElementTerminator_* TrailingAlignment
+
+| SimpleLiteralNilElementRep
+| ::=
+| NilElementLeftFraming [*_NilLiteralCharacters_* \| NilElementLiteralContent] NilElementRightFraming
+
+| ComplexLiteralNilElementRep
+| ::=
+| NilElementLeftFraming *_NilLiteralValue_* NilElementRightFraming
+
+| NilElementLeftFraming
+| ::=
+| LeadingAlignment *_NilElementInitiator_* PrefixLength
+
+| NilElementRightFraming
+| ::=
+| *_NilElementTerminator_* TrailingAlignment
+
+| tr-style:[border-bottom:0.5pt solid black] NilElementLiteralContent
+| ::=
+| *_LeftPadding_* *_NilLiteralValue_* RightPadOrFill
+
+| SimpleNormalRep
+| ::=
+| LeftFraming PrefixLength SimpleContent RightFraming
+
+| ComplexNormalRep
+| ::=
+| LeftFraming PrefixLength ComplexContent RightFraming
+
+| LeftFraming
+| ::=
+| LeadingAlignment *_Initiator_*
+
+| RightFraming
+| ::=
+| *_Terminator_* TrailingAlignment
+
+| PrefixLength
+| ::=
+| SimpleContent \| PrefixPrefixLength SimpleContent
+
+| tr-style:[border-bottom:0.5pt solid black] PrefixPrefixLength
+| ::=
+| SimpleContent
+
+| SimpleContent
+| ::=
+| *_LeftPadding_* [ SimpleLogicalValue ]  RightPadOrFill
+
+| SimpleLogicalValue
+| ::=
+| *_SimpleNormalValue_* \| *_NilLogicalValue_*
+
+| ComplexContent
+| ::=
+| ComplexValue *_ElementUnused_*
+
+| tr-style:[border-bottom:0.5pt solid black] ComplexValue
+| ::=
+| Sequence \| Choice
+
+| Sequence
+| ::=
+| LeftFraming SequenceContent RightFraming
+
+| tr-style:[border-bottom:0.5pt solid black] SequenceContent
+| ::=
+| {empty}[ *_PrefixSeparator_*  EnclosedContent [ *_Separator_* EnclosedContent ]* *_PostfixSeparator_* ]
+
+| Choice
+| ::=
+| LeftFraming ChoiceContent RightFraming
+
+| tr-style:[border-bottom:0.5pt solid black] ChoiceContent
+| ::=
+| {empty}[ EnclosedContent ] *_ChoiceUnused_*
+
+| EnclosedContent
+| ::=
+| {empty}[ EnclosedElement \| Array \| Sequence \| Choice ]
+
+| Array
+| ::=
+| {empty}[ EnclosedElement [ *_Separator_* EnclosedElement ]*  [ *_Separator_* StopValue] ]
+
+| tr-style:[border-bottom:0.5pt solid black] StopValue
+| ::=
+| SimpleElement
+
+| LeadingAlignment
+| ::=
+| *_LeadingSkip_* *_AlignmentFill_*
+
+| TrailingAlignment
+| ::=
+| *_TrailingSkip_*
+
+| RightPadOrFill
+| ::=
+| *_RightPadding_* \| *_RightFill_* \| *_RightPadding RightFill_*
+|===
+
+XML Schema and DFDL properties are used to control constraints on the terminals
+of the above grammar, as well as repetition (the "*" operator), and alternatives
+(the "|" operator).
+For a given set of XML Schema and DFDL properties, and prior data, any terminal
+may be allowed to be length zero, to contain specific data, or to contain a
+variety of different admissible data.
+
+Some definitions are needed to cover the range of representations that are
+possible in the data stream for an occurrence of an element.
+The representations are:
+
+* Nil Representation
+* Empty Representation
+* Normal Representation
+* Absent Representation
+
+These additional concepts are also defined:
+
+* Zero-Length Representation
+* Missing
+
+These definitions are with respect to the grammar above, and they do reference
+some DFDL properties necessary for their definitions.
+These properties are defined in Sections
+<<properties-common-to-both-content-and-framing>> and beyond.
+
+Some examples follow the definitions.
+
+[[nil-representation]]
+==== Nil Representation
+
+An element occurrence has a _nil representation_ if the element declaration has
+XSD nillable property 'true' and the occurrence either:
+
+* conforms to the grammar for SimpleNilLiteralElementRep or
+ComplexNilLiteralElementRep. Specifically, the *_NilElementInitiator_* and
+*_NilElementTerminator_* regions must be conformant with property
+dfdl:nilValueDelimiterPolicyfootnote:[For dfdl:nilValueDelimiterPolicy, see Section <<properties-for-nillable-elements>> Properties for Nillable Elements.]. (If non-conformant it is not a Processing Error and the representation is not nil).
+* conforms to the grammar for SimpleNormalRep and its SimpleLogicalValue is
+*_NilLogicalValue_*.
+
+The LeadingAlignment, TrailingAlignment, PrefixLength regions may be present.
+
+[[empty-representation]]
+==== Empty Representation
+
+An element occurrence has an _empty representation_ if the occurrence does not
+have a nil representation and it conforms to the grammar for
+SimpleEmptyElementRep or ComplexEmptyElementRep.
+Specifically, the *_EmptyElementInitiator_* and *_EmptyElementTerminator_*
+regions must be conformant with
+dfdl:emptyValueDelimiterPolicyfootnote:[For dfdl:emptyValueDelimiterPolicy, see Section <<properties-for-specifying-delimiters>> Properties for Specifying Delimiters.] and the occurrence's SimpleContent or ComplexContent region in the data must be of length zero.
+(If non-conformant it is not a Processing Error and the representation is not
+empty).
+
+LeadingAlignment, TrailingAlignment, PrefixLength regions may be present.
+
+The _empty representation_ is special in DFDL because when parsing it is used to
+determine when default values are created in the Infoset.
+The empty representation can require initiators or terminators be present to
+enable data formats which explicitly distinguish occurrences with empty
+string/hexBinary values from occurrences that are _missing_ or are _absent_.
+See Section <<element-defaults>> Element Defaults below about default values.
+Hence, the empty representation might not be zero-length. it may require
+specific non-zero-length syntax in the data stream.
+
+The empty representation is not possible for fixed-length elements with a
+non-zero length.
+
+==== Normal Representation
+
+An element occurrence has a normal representation if the occurrence does not
+have the nil representation or the empty representation and it conforms to the
+grammar for SimpleNormalRep or ComplexNormalRep.
+
+Note that it is possible for the normal representation to be of zero length, but
+this can only happen when zero-length is not the nil nor empty representation,
+and the simple type is xs:string or xs:hexBinary.
+For all other simple types, the normal representation cannot be zero length.
+
+==== Absent Representation
+
+Often,it is possible to know the location where an element or group's
+representation would be in the data based on the delimiters of an enclosing
+group.
+(An example: if there are adjacent delimiters of an enclosing sequence.) When
+this location in the data, which is of zero length, cannot be a nil, empty, or
+normal representation, then it is said to have _absent representation_, or "the
+representation is absent".
+
+More formally, an element occurrence has an _absent representation_ if the
+occurrence does not have a nil or empty or normal representation, and it
+conforms to the grammar for AbsentElementRep.
+Specifically, the occurrence's representation in the data stream must be of
+length zero.
+Consequently, the Initiator, Terminator, LeadingAlignment, TrailingAlignment,
+PrefixLength regions must not be present.
+
+As an example of an absent representation: during unparsing, if an optional
+element does not have an item in the Infoset then nothing is output.
+However, if a separator of an enclosing structure is subsequently output as the
+immediate next thing, then a subsequent parse of the element may return a
+representation of length zero.
+If this happens, and this zero-length representation does not conform to any of
+the nil representation, the empty representation, or the normal representation,
+then it is the absent representation, and it behaves _as if the element
+occurrence is 'missing'_.
+(The term 'missing' is defined below.)
+
+[[zero-length-representation]]
+==== Zero-length Representation
+
+The term _zero-length representation_ is used to describe the situations where
+any of the above representations turn out to be of length zero due to specific
+combinations of data type and format properties:
+
+* The nil representation can be a zero-length representation if dfdl:nilValue is
+'%ES;' or '%WSP*;' appearing on its own as a literal nil value and there is no
+framing or framing is suppressed by dfdl:nilValueDelimiterPolicy.
+* The empty representation can be a zero-length representation if there is no
+framing or framing is suppressed by dfdl:emptyValueDelimiterPolicy.
+* The normal representation can be a zero-length representation if the type is
+xs:string or xs:hexBinary and there is no framing.
+* The absent representation always has a zero-length representation.
+
+If the nil representation may be zero-length, then the absent representation
+cannot occur because zero-length is interpreted as nil representation.
+
+If the nil representation may not be zero length, but the empty representation
+is zero-length, then the absent representation cannot occur because zero-length
+is interpreted as the empty representation.
+
+If the nil and empty representations cannot be zero-length, but the normal
+representation may be zero length then the absent representation cannot occur
+because zero length is interpreted as a normal representation.
+
+If the nil representation may not be zero-length, the empty representation may
+not be zero-length, and the normal representation may not be zero-length, then a
+zero-length representation is the absent representation, or "is absent".
+
+==== Missing
+
+When parsing, an element occurrence is missing if it does not have nil, empty,
+or normal representations, or it has the absent representation.
+
+When parsing, the term missing really covers two situations.
+First, it subsumes absent representation.
+Secondly it applies when an element does not have a representation at all in the
+data stream, that is, when there are insufficient constructs in the data stream
+to determine the location of the representation of the element; hence, none of
+the concepts above apply.
+This is made clearer in the examples below.
+If an element occurrence is missing when parsing, no item is ever added to the
+Infoset.
+
+When unparsing, an element occurrence is missing if there is no item in the
+Infoset.
+For a required element occurrence, it is this condition that can trigger the
+creation of a default value in the augmented Infoset.
+See Section <<element-defaults>> Element Defaults below about default values.
+For an optional element occurrence, no item is ever added to the augmented
+Infoset nor any representation ever output in the data stream.
+
+==== Examples of Missing and Empty Representation
+
+The following examples illustrate missing and empty representation.
+
+[source%unnumbered,xml]
+----
+<xs:sequence dfdl:separator="," dfdl:terminator="@"
+             dfdl:separatorSuppressionPolicy="trailingEmpty" ...>
+    <xs:element name="A" type="xs:string"
+                  dfdl:lengthKind="delimited"/>
+    <xs:element name="B" type="xs:string" minOccurs="0"
+                  dfdl:lengthKind="delimited"/>
+    <xs:element name="C" type="xs:string" minOccurs="0"
+                  dfdl:lengthKind="delimited"/>
+</xs:sequence>
+----
+
+In data stream '``++aaa,@++``' element B has the empty representation, and
+element C does not have a representation so is missing.
+
+[source%unnumbered,xml]
+----
+<xs:sequence dfdl:separator=","
+             dfdl:separatorSuppressionPolicy="trailingEmpty"...>
+    <xs:element name="A" type="xs:string"
+                  dfdl:lengthKind="delimited" dfdl:initiator="A:"
+                  dfdl:emptyValueDelimiterPolicy=initiator"/>
+    <xs:element name="B" type="xs:string" minOccurs="0"
+                  dfdl:lengthKind="delimited" dfdl:initiator="B:"
+                  dfdl:emptyValueDelimiterPolicy="initiator"/>
+    <xs:element name="C" type="xs:string" minOccurs="0"
+                  dfdl:lengthKind="delimited" dfdl:initiator="C:"
+                  dfdl:emptyValueDelimiterPolicy=initiator"/>
+</xs:sequence>
+----
+
+In data stream '``++A:aaaa,C:cccc++``' element B does not have a representation
+at all, so is missing.
+
+In data stream '``++A:aaaa,B:,C:cccc++``' element B has the empty
+representation.
+The format definition requires element B to have its initiator in order to
+indicate the empty representation.
+
+In the data stream '``++A:aaaa,,C:cccc++``' element B has the absent
+representation, because the processor is able to tell where element B would
+appear, but the syntax there does not contain the needed initiator delimiter;
+hence, it does not satisfy any of nil, empty, or normal representation.
+Since the processor knows its location, and the data stream there (between the
+two separators) is zero-length, it is the absent representation, and so is
+missing.
+
+==== Round Trip Ambiguities
+
+The overlapping nature of the possible representations: normal, empty, nil, and
+absent, creates a number of ambiguities where taking an Infoset, unparsing it,
+and reparsing it results in a second Infoset that is not the same as the
+original.
+However, taking the second Infoset, unparsing it, and reparsing it, results in a
+third Infoset which is the same as the second.
+
+When unparsing, if a string Infoset item happens to contain a string that
+matches either one of the dfdl:nilValue list values or the default value, it is
+not given any special treatment.
+The string's characters are output, or if the value is the empty string, zero
+length content is output.
+(In both cases along with an initiator or terminator if applicable.) This
+creates an ambiguity where one can unparse an Infoset item which has member
+*[nilled]* true, but when reparsed produces an Infoset item which has member
+*[nilled]* false.
+
+These ambiguities are natural and unavoidable.
+For example, if the dfdl:nilValue is the 3-character string "nil", then
+encountering the characters "nil" in the data stream results in an Infoset item
+with *[nilled]* true.
+If a processor unparsed a string Infoset item with contents of the 3 characters
+"nil", this is output as the letters "nil", which on parse does not produce a
+string with the characters "nil", but rather an Infoset item with no data value
+and member *[nilled]* true.
+
+To avoid this issue, one can use validation, along with a pattern that prevents
+the string from matching any of the nil values.
+
+[[parsing-algorithm]]
+=== Parsing Algorithm
+
+A DFDL parser proceeds by determining the existence of occurrences of schema
+components.
+It does this by examining the data and the schema, to:
+
+[loweralpha]
+. Establish representation
+. Resolve points of uncertainty
+
+These two activities are defined below.
+They are mutually recursive in the expected way as a DFDL schema is a recursive
+nest of schema components.
+
+The parsing algorithm described here has many aspects which depend on the
+definitions of numerous DFDL properties.
+The properties are defined in sections
+<<overview-representation-properties-and-their-format-semantic>> and beyond.
+
+Establishing the representation of an occurrence of a schema component and
+resolving points of uncertainty involve the concepts of _known-to-exist_ and
+_known-not-to-exist_.
+
+==== Known-to-exist and Known-not-to-exist
+
+===== Known-to-exist
+
+An occurrence of a schema component is said to be _known-to-exist_ when any of
+these positive determinations hold:
+
+[arabic]
+. There is a
+dfdl:discriminatorfootnote:[DFDL discriminators are described in Section: 7.6 The dfdl:discriminator Statement Annotation Element.] applying to the component and its expression evaluates to true or regular expression pattern matches.
+. The component is a direct child of an xs:sequence or xs:choice with
+dfdl:initiatedContentfootnote:[For dfdl:initiator and dfdl:initiatedContent, see Section <<properties-for-specifying-delimiters>> Properties for Specifying Delimiters.] 'yes' and a dfdl:initiator defined for the component is found.
+. The component is a direct child of an xs:choice with
+dfdl:choiceDispatchKeyfootnote:[For dfdl:choiceDispatchKey and dfdl:choiceBranchKey, see Section <<resolving-choices-via-direct-dispatch>> Resolving Choices via Direct Dispatch.] and the result of the dfdl:choiceDispatchKey expression matches one of the dfdl:choiceBranchKey property values of the child.
+
+If none of those hold because they are not applicable then the occurrence is
+still known-to-exist if ALL of the following hold, and no Processing Error
+occurs during their determination:
+
+[arabic]
+. When there are
+dfdl:assertfootnote:[DFDL asserts are described in Section <<the-dfdl-assert-statement-annotation-element>> The dfdl:assert Statement Annotation Element.] statements with failureType 'processingError' on the component, all their expressions evaluate to true or their regular expression patterns match.
+. It has nil, empty, or normal representation.
+. When it has normal representation the content of the representation is
+convertible to the element type without error.
+
+Note that Validation Errors or Recoverable Errors do not prevent determination
+that a component is known-to-exist.
+
+===== Processing Error After Determining Known-to-exist
+
+Note that it is possible for an occurrence of a schema component to be
+known-to-exist due to a positive discrimination, but then subsequently a
+Processing Error occurs when evaluating a statement annotation such as a
+dfdl:assert or a dfdl:setVariable, or a Processing Error occurs when determining
+the representation, or in the case of normal representation and simple type,
+when converting that representation's content into a value of the type.
+This Processing Error does not change the fact that the schema component was
+determined to be known-to-exist.
+This is important in the discussion in Section
+<<resolving-points-of-uncertainty>>, Resolving Points of Uncertainty below.
+
+===== Known-not-to-exist
+
+An occurrence of a schema component is _known-not-to-exist_ when any of these
+_negative determinations_ holds:
+
+[arabic]
+. There is a dfdl:discriminator applying to the component and its expression
+evaluates to false or regular expression pattern fails to match, or a Processing
+Error occurs while processing the dfdl:discriminator.
+. The component is a direct child of an xs:sequence or xs:choice with
+dfdl:initiatedContent 'yes' and an initiator defined for the component is not
+found.
+. The component is a direct child of an xs:choice with dfdl:choiceDispatchKey
+and the result of the dfdl:choiceDispatchKey expression does not match any of
+the dfdl:choiceBranchKey property values of the child.
+. The component is an element of complex type, the model group of which is a
+sequence group, and the sequence group is known not to exist.
+
+If none of those hold because they are not applicable, then a schema component
+is known-not-to-exist when any of the following hold:
+
+[arabic]
+. The occurrence is missing
+. There is a dfdl:assert with failureType 'processingError' on the component and
+its expression evaluates to false or its regular expression pattern fails to
+match, or a Processing Error occurs while processing the dfdl:assert.
+. A Processing Error occurs when parsing the component. Processing Errors
+include, but are not limited to, inability to identify any of nil, empty, normal
+or absent representations, or failure to convert a value to the built-in logical
+type.
+
+Note that Validation Errors or Recoverable Errors do not cause a component to be
+known-not-to-exist.
+
+Note: based on the above, when processing a sequence for which a separator is
+defined, the presence of a match in the data for the separator is not sufficient
+to cause the parser to determine that an associated component is known-to-exist.
+See Section <<sequence-groups-with-separators>> Sequence Groups with Separators 
+for details.
+
+[[establishing-representation]]
+==== Establishing Representation
+
+Unless an element occurrence is known-not-to-exist, the parsing algorithm
+establishes if it has the nil, empty, normal, or absent representation.
+
+The first step is to see if the SimpleContent or ComplexContent region is of
+length zero as a first approximation.
+This is dfdl:lengthKind dependent.
+
+* explicit pass-format:straightquotes[=>] length is zero (either fixed or from
+expression evaluation)
+* prefixed pass-format:straightquotes[=>] length given by the prefix is zero
+* implicit (simple) pass-format:straightquotes[=>] length is
+zerofootnote:[This is a corner case that only happens when type is xs:string or xs:hexBinary and the maxLength facet is 0. Such an element can only be of length 0.]
+* implicit (complex) pass-format:straightquotes[=>] not possible.
+* delimited pass-format:straightquotes[=>] length is zero (in scope delimiter is
+immediately encountered)
+* pattern pass-format:straightquotes[=>] pattern returns zero length match
+* endOfParent pass-format:straightquotes[=>] already positioned at parent's end
+so length is zero
+
+===== Simple element
+
+If the result is length zero as described above, the representation is then
+established by checking, in order, for:
+
+[arabic]
+. nil representation (if %ES; or %WSP*; on its own is a literal nil value).
+. empty representation.
+. normal representation (xs:string or xs:hexBinary only)
+. absent representation (if none of the prior representations apply).
+
+If the result is not length zero, the representation is then established by
+checking, in order, for:
+
+[arabic]
+. nil representation (as a literal nil value)
+. nil representation (as a logical nil value)
+. normal representation
+
+===== Complex element
+
+If the result is length zero as described above, the representation is then
+established by checking for:
+
+* nil representation (if %ES; is a literal nil
+value).footnote:[It is a Schema Definition Error if a complex element has XSD nillable 'true' and dfdl:lengthKind 'implicit'.]
+
+To establish any other representations requires that the parser descends into
+the complex type for the element, and returns successfully (that is, no
+unsuppressed Processing Error occurs).
+If the result is zero bits consumed, the representation is then established by
+checking, in order, for:
+
+[arabic]
+. empty representation.
+. absent representation (if none of the prior representations apply).
+
+Otherwise the element has normal representation.
+
+Note: The DFDL parser SHALL NOT recursively parse the schema components inside a
+complex element when it has already established that the element occurrence is
+missingfootnote:[The rationale for this is that otherwise this could give rise to misleading error messages where the parser reported that required child elements were missing required occurrences. (This is consistent with XML Schema validation, where if a required element is missing, it gets reported as such, and there is nothing reported about its children).].
+
+[[resolving-points-of-uncertainty]]
+==== Resolving Points of Uncertainty
+
+A point of uncertainty occurs when there is more than one schema component that
+might be applied at the current point in the data stream.
+Points of uncertainty can be nested.
+
+The parser resolves these points of uncertainty by way of a set of
+construct-specific rules given below along with determining whether schema
+components are known-to-exist or known-not-to-exist.
+For some of these constructs, whether there is an actual point of uncertainty
+depends on the representation of the constructs in the data.
+
+An xs:choice is always a point of uncertainty.
+It is resolved sequentially, or by direct dispatch.
+Sequential choice resolution occurs by parsing each choice branch in schema
+definition order until one is known-to-exist.
+It is a Processing Error if none of the choice branches are known-to-exist.
+Direct-dispatch choice resolution occurs by matching the value of the
+dfdl:choiceDispatchKey property to the value of one of the dfdl:choiceBranchKey
+property values of one of the choice branches.
+It is a Processing Error if none of the choice branches have a matching value in
+their dfdl:choiceBranchKey property.
+
+An element in an unordered xs:sequence is always a point of uncertainty.
+It is resolved by parsing for the child components of the sequence in schema
+definition order at each point in the data stream where a component can exist
+until the required number of occurrences of each child component is
+known-to-exist or the sequence is terminated by delimiters or specified length.
+
+An element in a sequence with one or more floating elements is always a point of
+uncertainty.
+It is resolved by parsing for the expected element at that point in the data
+stream.
+If the expected element is known-not-to-exist then an occurrence of each
+floating element is parsed in schema definition order.
+
+When parsing an array or optional element, points of uncertainty only occur for
+certain values of
+dfdl:occursCountKindfootnote:[Property dfdl:occursCountKind is defined in Section <<the-dfdl-occurscountkind-property>>.], as follows:
+
+.Points of Uncertainty and dfdl:occursCountKind
+[cols="1,3",options="header"]
+|===
+
+| dfdl:occursCountKind
+| Details of Point of Uncertainty
+
+| fixed
+| No point of uncertainty (XSD maxOccurs occurrences expected).
+
+| implicit
+| A point of uncertainty exists after XSD minOccurs occurrences are found and until XSD maxOccurs occurrences are found.
+
+| parsed
+| A point of uncertainty exists for all occurrences
+
+| expression
+| No point of uncertainty (dfdl:occursCountfootnote:[Property dfdl:occursCount is defined in Section 16.] values are expected)
+
+| stopValue
+| No point of uncertainty (The stop value must always be present, even when XSD minOccurs is 0).
+|===
+
+An optional element point of uncertainty is resolved by parsing the element
+until it is either known-to-exist or known-not-to-exist.
+Whether an optional element is an actual point of uncertainty depends on
+property dfdl:occursCountKind as described above.
+
+For an array element, the point of uncertainty is resolved for each occurrence
+separately by parsing the occurrence until it is either known-to-exist or
+known-not-to-exist.
+
+===== Nested Points of Uncertainty
+
+A point of uncertainty can be resolved because a schema component has been
+determined to be known-to-exist due to positive discrimination.
+In that case, if a subsequent Processing Error occurs when completing the
+parsing of that schema component this causes the next enclosing schema component
+surrounding this point of uncertainty to be determined to be known-not-to exist.
+
+For example, when parsing an element occurrence for an array with a variable
+number of occurrences, a positive discrimination tells the parser that the
+currently-being-parsed occurrence is known-to-exist.
+If a subsequent Processing Error occurs while completing the parsing of this
+occurrence, then the entire array is then known-not-to-exist.
+
+Another example is a choice.
+If a discriminator resolves the choice point of uncertainty to the first of the
+choice's alternatives, a subsequent Processing Error causes the entire choice
+construct to be determined to be known-not-to-exist.
+
+This causes the next enclosing point of uncertainty to try the next possible
+alternative, or if there isn't one, causes an unsuppressed Processing Error.
+
+The behavior of a DFDL processor on an unsuppressed Processing Error is not
+specified, but it is allowable for implementations to abort further parsing.
+Any other behavior is implementation-defined.
+
+A discriminator always resolves the nearest enclosing point of uncertainty that
+is unresolved.
+If more than one discriminator is evaluated, the first resolves the nearest
+enclosing point of uncertainty, the second the next nearest enclosing point of
+uncertainty, and so on.
+
+[[element-defaults]]
+=== Element Defaults
+
+A DFDL processor can create element defaults in the Infoset for both simple and
+complex elements.
+This happens quite differently for parsing and unparsing as is explained in this
+section.
+
+==== Definitions
+
+===== Default Value
+
+A simple element has a default value if any of these are true:
+
+[arabic]
+. The XSD default property exists. The default value is the XSD default
+property's value.
+. The XSD fixedfootnote:[For the XSD fixed property see Section <<fixed>>.]
+property exists. The default value is the XSD fixed property's value.
+. The element has XSD nillable is 'true' and
+dfdl:useNilForDefaultfootnote:[For dfdl:useNilForDefault see Section <<properties-for-nillable-elements>>.] is 'yes'. The corresponding Infoset item has the *[nilled]* member true, and the *[dataValue]* member has no value.
+
+===== Required/Optional Occurrence
+
+An occurrence of an element with an index less than or equal to XSD minOccurs is
+said to be a _required occurrence_.
+
+An occurrence of an element with an index greater than XSD minOccurs is said to
+be an _optional occurrence_.
+
+[[element-defaults-when-parsing]]
+==== Element Defaults When Parsing
+
+If _empty_ representation is established when parsing, the possibility of
+applying an element default arises.
+Essentially, if a required occurrence of an element has empty representation,
+then an element default is applied if present, though there are a couple of
+variations on this rule.
+Remember that in order to have established empty representation, the occurrence
+must be compliant with the dfdl:emptyValueDelimiterPolicy for the element, and
+for a complex element the parser must have descended into the type and returned
+with no unsuppressed Processing Error.
+
+The rules for applying element defaults are not dependent on
+dfdl:occursCountKind.
+However, if a required occurrence does not produce an item in the Infoset after
+the rules have been applied, then whether it is a Processing Error or a
+Validation Error (if validation is enabled) _does_ depend on
+dfdl:occursCountKind (see Section <<the-dfdl-occurscountkind-property>>
+dfdl:occursCountKind property).
+
+The sections below indicate when an item is added to the Infoset, and whether it
+has a default or other value.
+If there is no Processing Error then regardless of whether an item is added to
+the Infoset or not, any side-effects due to dfdl:discriminator statements
+evaluating to true, or dfdl:setVariable statements, are retained.
+
+Assuming the empty representation has been established, there are three cases to
+consider:
+
+* Simple element (not type xs:string or xs:hexBinary)
+* Simple element (type xs:string or xs:hexBinary)
+* Complex element
+
+Each is described in a section below.
+
+===== Simple element (not xs:string and not xs:hexBinary)
+
+Required occurrence: If the element has a default value then an item is added to
+the Infoset using the default value, otherwise nothing is added to the Infoset.
+
+Optional occurrence: Nothing is added to the Infoset.
+
+===== Simple element (xs:string or xs:hexBinary)
+
+Required occurrence: If the element has a default value then an item is added to
+the Infoset using the default value, otherwise an item is added to the Infoset
+using empty string (type xs:string) or empty hexBinary (type xs:hexBinary) as
+the value.
+
+Optional occurrence: if dfdl:emptyValueDelimiterPolicy is applicable and is not
+'none'footnote:[If other than 'none', either an initiator, terminator or both must have been found in the data stream.], then an item is added to the Infoset using empty string (type xs:string) or empty hexBinary (type xs:hexBinary) as the value, otherwise nothing is added to the Infoset.
+
+Note: To prevent unwanted empty strings or empty hexBinary values from being
+added to the Infoset, use XSD minLength > '0' and a dfdl:assert that uses the
+dfdl:checkConstraints()footnote:[For dfdl:checkConstraints function see Section <<dfdl-functions>>] function, to raise a Processing Error.
+
+===== Complex element
+
+Required occurrence: An item is added to the Infoset.
+
+Optional occurrence: if dfdl:emptyValueDelimiterPolicy is applicable and is not
+'none'footnote:[If other than 'none', either an initiator, terminator or both must have been found in the data stream.], then an item is added to the Infoset, otherwise nothing is added to the Infoset.
+
+For both required and optional occurrences, the parser, by recursive descent,
+may create the Infoset item and a single child Infoset item.
+This can occur when:
+
+[arabic]
+. the first child element of the complex type is a required simple element, then
+an empty string (type xs:string), empty hexBinary (type xs:hexBinary), or
+default value is alsoadded to the Infoset.
+. the first child element of the complex type is a required complex element,
+then an item is added to the Infoset (which may itself have a child via (1))
+
+===== Example: Complex Optional Empty Element Not Added to Infoset
+
+Below is an example where an optional complex element with empty representation
+has nothing added to the infoset. consider the following:
+
+[source%unnumbered,xml]
+----
+<xs:sequence dfdl:separator="|"> <!-- sequence S0 -->
+  ...prior schema components ...
+  <xs:element name="E1" minOccurs="0"
+    dfdl:lengthKind="delimited"
+    dfdl:occursCountKind="implicit">
+    <xs:complexType>
+      <xs:sequence dfdl:separator=";"> <!-- sequence S1 -->
+        <xs:element name="E2" type="xs:string" dfdl:lengthKind="delimited"/>
+        ... other optional content ...
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  ...
+</xs:sequence>
+----
+
+In the above there is a sequence S0 with a separator that contains among other
+content an optional, non-nillable, non-initiated, non-terminated element E1 of
+complex type.
+The content of the E1 type is a sequence S1 with a different separator and the
+first child is a required, non-initiated, non-terminated element E2 of type
+xs:string.
+The dfdl:lengthKind of both E1 and E2 is 'delimited'.
+
+Now consider a data stream '``++...||...++``' which has two adjacent S0
+separators, and where the parser has successfully parsed the schema components
+prior to E1 within S0, which is what the pass-format:straightquotes[“...”] prior
+to the two separators represents.
+That prior parse is delimited by the first S0 "|" separator, and E1's
+representation begins immediately after that first S0 separator.
+
+The representation of E1 has zero length because of these two adjacent S0
+separators.
+On processing E1, the parser establishes a point of uncertainty with the data
+stream positioned after the first S0 separator.
+The parserthen descends into E1's complex type to process E2. It scans for
+in-scope delimiters and immediately encounters the second S0 separator.
+E2 has the empty representation, so E1 is added to the Infoset along with a
+value of empty string for E2. All other content of S1 is missing, so the parser
+returns from the descent into E1 with this temporary Infoset (illustrated as
+XML):
+
+[source%unnumbered,xml]
+----
+<E1>
+  <E2></E2>
+</E1>
+----
+
+Upon this successful parse of E1, it is therefore known-to-exist.
+However, because the position in the data has not changed, E1 therefore has the
+empty representation.
+Because E1 is empty and optional (it has XSD minOccurs='0') and
+dfdl:emptyValueDelimiterPolicy does not apply, it is not added to the Infoset,
+and the temporary Infoset item for E1 containing E2 is discarded.
+
+===== Example: Complex Optional Empty Element with Delimiters
+
+This example is similar, but the E1 element has a few additional DFDL properties
+highlighted in bold below:
+
+[source%unnumbered,xml]
+----
+<xs:sequence dfdl:separator="|"> <!-- sequence S0 -->
+  ...prior schema components ...
+  <xs:element name="E1" minOccurs="0"
+    dfdl:initiator="("
+    dfdl:terminator=")"
+    dfdl:emptyValueDelimiterPolicy="both"
+    dfdl:lengthKind="delimited"
+    dfdl:occursCountKind="implicit">
+    <xs:complexType>
+      <xs:sequence dfdl:separator=";"> <!-- sequence S1 -->
+        <xs:element name="E2" type="xs:string" dfdl:lengthKind="delimited"/>
+        ... other optional content ...
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  ...
+</xs:sequence>
+----
+
+This changes the definition of element E1 to have an empty representation only
+if the initiator and terminator are present in the data stream.
+
+Consider has the same data stream '``++...||...++``' where there are two
+adjacent S0 separators.
+In this case the representation of E1 does not match the empty representation,
+because the initiator and terminator are not present as the
+dfdl:emptyValueDelimiterPolicy requires.
+It also does not have the normal representation, again as the initiator and
+terminator are not present.
+E1's representation is absent.
+Hence, nothing is added to the infoset.
+
+However, if the data stream
+'pass-format:straightquotes[...]|()|pass-format:straightquotes[...]' is
+encountered, there are two S0 separators, but between them there are the
+initiator and terminator of element E1. This satisfies the requirements for the
+empty representation, but it is not zero length.
+The recursive parse of E1's complex type constructs these elements (illustrated
+as XML):
+
+[source%unnumbered,xml]
+----
+<E1>
+  <E2></E2>
+</E1>
+----
+
+These elements for E1 with E2 child would be added to the infoset.
+
+[[element-defaults-when-unparsing]]
+==== Element Defaults When Unparsing
+
+If an element is _missing_ from the Infoset when unparsing, the possibility of
+applying an element default arises.
+Essentially if a required occurrence of an element is missing, then an element
+default is applied if present, and the resulting item is added to the _augmented
+Infoset (See Section_ <<unparser-infoset-augmentation-algorithm>>__)__
+
+The rules for applying element defaults are not dependent on
+dfdl:occursCountKind.
+However if a required occurrence does not produce an item in the augmented
+Infoset after the rules have been applied then whether it is a Processing Error
+or a Validation Error (if enabled) _is_  dependent on dfdl:occursCountKind (see
+Section <<the-dfdl-occurscountkind-property>> dfdl:occursCountKind property).
+
+There are two cases to consider.
+
+===== Simple element
+
+Required occurrence: If an element has a default value then an item is added to
+the augmented Infoset using the default value, otherwise nothing is added.
+
+Optional occurrence: Nothing is added to the augmented Infoset.
+
+===== Complex element
+
+Required occurrence: An item is added to the augmented Infoset as specified
+below.
+
+Optional occurrence: Nothing is added to the augmented Infoset.
+
+For a required occurrence, the unparser descends into the complex type:
+
+For a sequence, each child element is examined in schema order and the rules for
+simple and complex elements applied (recursively).
+The lack of a default may give rise to a Processing Error, as described above.
+
+For a choice, each branch is examined in schema order and the above rules
+applied recursively to the branch.
+The lack of a default may give rise to a Processing Error, as described above,
+and if so the error is suppressed and the next branch is tried, otherwise that
+branch is selected.
+It is a Processing Error if no choice branch is ultimately selected.
+If no choice branch is selected, then there must be a choice branch with no
+required elements, and the first such branch would be selected.
+
+[[evaluation-order-for-statement-annotations]]
+=== Evaluation Order for Statement Annotations
+
+Given a component of a DFDL schema, there is a resolved set of annotations for
+it.
+
+Of these, some are statement annotations and the order of their evaluation
+relative to the actual processing of the schema component itself (parsing or
+unparsing via its format annotations) is as defined in the ordered lists below.
+
+For elements and element references:
+
+[arabic]
+. dfdl:discriminator or dfdl:assert(s) with testKind 'pattern' (parsing only)
+. dfdl:element following property scoping rules, which includes establishing
+representation as described in Section <<establishing-representation>> and
+conversion to the element type for simple types
+. dfdl:setVariable(s) - in lexical order, innermost schema component first
+. dfdl:discriminator or dfdl:assert(s) with testKind 'expression' (parsing only)
+
+For sequences, choices and group references:
+
+[arabic]
+. dfdl:discriminator or dfdl:assert(s) with testKind 'pattern' (parsing only)
+. dfdl:newVariableInstance(s) - in lexical order, innermost schema component
+first
+. dfdl:setVariable(s) - in lexical order, innermost schema component first
+. dfdl:sequence or dfdl:choice or dfdl:group following property scoping rules
+and evaluating any property expressions (corresponds to ComplexContent grammar
+region)
+. dfdl:discriminator or dfdl:assert(s) with testKind 'expression' (parsing only)
+
+The dfdl:setVariable annotations at any one annotation point of the schema are
+always executed in lexical order.
+However, dfdl:setVariable annotations can also be found in different annotation
+points that are combined into the resolved set of annotations for one schema
+component.
+In this case, the order of execution of the dfdl:setVariable statements from any
+one annotation point remains lexical.
+The order of execution of the dfdl:setVariable annotations different annotation
+points follows the principle of innermost first, meaning that a schema component
+that references another schema component has its dfdl:setVariable statements
+executed _after_ those of the referenced schema component.
+For example, if an element reference and an element declaration both have
+dfdl:setVariable statements, then those on the element declaration execute
+before those on the element reference.
+Similarly, dfdl:setVariable statements on a base simple type execute before
+those of a simple type derived from it.
+The dfdl:setVariable statements on a simple type execute before those on an
+element having that simple type (whether that type is by reference, or when the
+simple type is lexically nested within the element declaration).
+The dfdl:setVariable statements on the sequence or choice within a global group
+definition execute before those on a group reference.
+
+The dfdl:newVariableInstance annotations at any one annotation point of the
+schema are always executed in lexical order.
+However, dfdl:newVariableInstance annotations can also be found in different
+annotation points that are combined into the resolved set of annotations for one
+schema component.
+In this case, the order of execution of the dfdl:newVariableInstance statements
+from any one annotation point remains lexical.
+The order of execution of the dfdl:newVariableInstance annotations different
+annotation points follows the principle of innermost first, meaning that a
+schema component that contains or references another schema component has its
+dfdl:newVariableInstance statements executed _after_ those of the contained or
+referenced schema component.
+For example, if a group reference and the sequence or choice group of a group
+definition both have dfdl:newVariableInstance statements, then those on the
+global group definition execute before those on the group reference.
+
+==== Asserts and Discriminators with testKind 'expression'
+
+Implementations are free to optimize by recognizing and executing discriminators
+or asserts with testKind 'expression' earlier so long as the resulting behavior
+is consistent with what results from the description above.
+
+==== Discriminators with testKind 'expression'
+
+When parsing, an attempt to evaluate a discriminator MUST be made even if
+preceding statements or the parse of the schema component ended in a Processing
+Error.
+
+This is because a discriminator's expression can evaluate to true thereby
+resolving a point of uncertainty even if the complete parsing of the construct
+ultimately caused a Processing Error.
+
+Such discriminator evaluation has access to the DFDL Infoset of the attempted
+parse as it existed immediately before detecting the parse failure.
+Attempts to reference parts of the DFDL Infoset that do not exist are Processing
+Errors.
+
+==== Elements and setVariable
+
+The resolved set of dfdl:setVariable statements for an element are executed
+*after* the parsing of the element.
+This contrasts with the resolved set of dfdl:setVariable statements for a group
+which are executed *before* the parsing of the group.
+(Note that dfdl:setVariable for an element is only allowed on elements of simple
+type per Section <<the-dfdl-setvariable-statement-annotation-element>>.)
+
+For elements, this implies that these variables are set after the evaluation of
+expressions corresponding to any computed DFDL properties for that element, and
+so the variables may not be referenced from expressions that compute these DFDL
+properties.
+
+That is, if an expression is used to provide the value of a property (such as
+dfdl:terminator or dfdl:byteOrder), the evaluation of that property expression
+occurs before any dfdl:setVariable annotation from the resolved set of
+annotations for that element are executed; hence, the expression providing the
+value of the property may not reference the variable.
+Schema authors can insert sequences to provide more precise control over when
+variables are set.
+
+==== Controlling the Order of Statement Evaluation
+
+Schema authors can insert xs:sequence constructs to control the timing of
+evaluation of statements more precisely.
+For example:
+
+[source%unnumbered,xml]
+----
+<xs:sequence dfdl:separator=",">
+   ...
+   <xs:element ref="a" .../>
+   <xs:sequence>
+     <xs:sequence>
+       <xs:annotation><xs:appinfo source="http://www.ogf.org/dfdl/" >
+         <dfdl:assert  test="{test expression}" />
+       </xs:appinfo></xs:annotation>
+     </xs:sequence>
+     <xs:element ref="b" .../>
+   </xs:sequence>
+   ...
+</xs:sequence>
+----
+
+In the above, the assert test expression is evaluated after parsing element 'a',
+and before parsing element "b".
+The use of two nested interior sequences surrounding element 'b' in this manner
+ensures that the outermost sequence's separator usage is not disrupted.
+
+[[validation]]
+=== Validation
+
+Logical validation checks are constraints expressed in XSD, and they apply to
+the logical values of the Infoset.
+Hence, parsing MUST successfully construct the Infoset before validation checks
+can be performed.
+This implies that DFDL Validation Errors cannot affect the parsing of data.
+
+DFDL processors MAY provide both validating and non-validating behaviors on
+either or both of parse and unparse.
+(A DFDL implementation could support validate on parse, but not support it on
+unparse and still be considered conforming.)
+
+Validation on unparsing takes place on the augmented Infoset that is created by
+the unparser as a side-effect of creating the output data stream.
+Validation errors do not affect unparser behavior.
+
+When resolving points of uncertainty (during parsing), Validation Errors are
+ignored.
+
+The way a Validation Error is presented to the execution context of a DFDL
+processor is not specified by the DFDL specification.
+The validity of an element is recorded in the DFDL Infoset, see
+<<the-dfdl-information-set-infoset>> The DFDL Information Set (Infoset).
+
+The following DFDL schema constructs are allowed in DFDL and are checked if
+applicable when validating:
+
+[arabic]
+. XSD pattern facet
+. XSD minLength, maxLength
+. XSD minInclusive, minExclusive, maxInclusive, maxExclusive
+. XSD enumeration
+. XSD maxOccurs
+
+Note that validation is distinct from the checking of DFDL assert or
+discriminator predicates.
+Both DFDL asserts and discriminators are essential to parsing and are evaluated
+irrespective of whether validation is enabled or disabled.
+
+There is also a function dfdl:checkConstraints available in the DFDL Expression
+language.
+This can be used to explicitly include checking of the XSD constructs as part of
+parsing a specific element.
+Such checking is part of parsing and does not create Validation Errors.
+See Section <<dfdl-functions>> DFDL Functions for details.
+
+[[unparser-infoset-augmentation-algorithm]]
+=== Unparser Infoset Augmentation Algorithm
+
+As unparsing progresses and fills in these defaultable and calculated elements,
+these new item values augment the Infoset, that is, make it bigger.
+
+The unparsing algorithm fills in default values for required elements that are
+not present, and computes calculated elements by use of the dfdl:outputValueCalc
+property (see <<calculated-value-properties>> Calculated Value Properties).
+
+When unparsing, an element declaration and the Infoset are considered as
+follows.
+An implementation MAY use any technique consistent with this algorithm:
+
+[loweralpha]
+. If the element declaration has a dfdl:outputValueCalc property, then the
+expression which is the dfdl:outputValueCalc property value is evaluated, and
+the resulting value becomes the value of the element item in the augmented
+Infoset. Any pre-existing value for the Infoset item is superseded by this new
+value.
++
+References to other augmented Infoset items from within the dfdl:outputValueCalc
+expression MUST obtain their values from the augmented Infoset directly (when
+the value is already present) or by recursively using these methods (a) and (b)
+as needed.
+
+. If the element declaration has no corresponding value in the augmented
+Infoset, and the element declaration is for a _required_ occurrence, and it _has
+a default value specified_, then an element item having the default value is
+created in the augmented Infoset.
+. If any Infoset item's value is requested recursively as a part of (a) above
+and (a) does not apply, and the corresponding value is not present, and (b) does
+not apply then it is a Processing Error.
+
+Given this augmented Infoset, then if the element declaration has a
+corresponding Infoset item then that item is converted to its representation
+according to its DFDL properties.
+If the element declaration is for a required occurrence, and there is no value
+in the augmented Infoset then it is a Processing Error.

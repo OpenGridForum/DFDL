@@ -1,0 +1,800 @@
+[[dfdl-syntax-basics]]
+== DFDL Syntax Basics
+
+Using DFDL, a data format is described by placing special annotations at various
+positions within an XML schema.
+A DFDL processor requires these annotations, along with the structural
+information of the enclosing XML schema, to make sense of the physical data
+model.
+
+=== Namespaces
+
+The xs:appinfo source URI http://www.ogf.org/dfdl/ is used to distinguish DFDL
+annotations from other annotations.
+
+The element and attribute names in the DFDL syntax are in a namespace defined by
+the URI
+link:http://www.ogf.org/dfdl/dfdl-1.0/[http://www.ogf.org/dfdl/dfdl-1.0/]footnote:[Note that the trailing slash is required.].
+All symbols in this namespace are reserved.
+DFDL implementations MUST NOT provide extensions to the DFDL standard using
+names in this namespace.
+Within this specification, the namespace prefix for DFDL is "dfdl" referring to
+the namespace http://www.ogf.org/dfdl/dfdl-1.0/.
+
+Attributes on DFDL annotations that are not in the DFDL namespace or in no
+namespace are ignored by a DFDL processor.
+
+A DFDL Schema document contains XML schema annotation elements that define and
+assign names to parts of the format specification.
+These names are defined using the target namespace of the schema document where
+they reside and are referenced using QNames in the usual manner.
+A DFDL schema document can include or import another schema document, and
+namespaces work in the usual manner for XML schema documents.
+The _schema_ as a whole includes all additional schema documents referenced
+through import and include.
+Generally, in this specification, when referring to the DFDL Schema this is
+intended to mean the schema as a whole.
+When referring to a specific document, the term DFDL Schema document is used.
+
+=== The DFDL Annotation Elements
+
+DFDL annotations must be positioned specifically where DFDL annotations are
+allowed within an XML schema document.
+These positions are known as _annotation points_.
+When an annotation is positioned at an annotation point, it binds some
+additional information to the schema component that encloses it.
+The description of a data format is achieved by correctly placing annotations on
+the structural components of the schema.
+
+DFDL specifies a collection of annotations for different purposes.
+They are organized into three different annotation types: Format Annotations,
+Statement Annotations, and Defining Annotations
+
+At any single annotation point of the schema there can be only one format
+annotation, but there can be several statement annotations.
+There are rules about which of these are allowed to co-exist which are described
+in sections about those specific annotation types.
+
+The _resolved set of annotations_ for an annotation point is a combined set of
+annotations taken from:
+
+[arabic]
+. a simple type definition and the base simple type it references.
+. an element declaration and the type definition from (1) it references.
+. an element reference and the global element declaration from (2) it
+references.
+. a group reference and the global group definition it references
+
+[[dfdl-annotation-elements]]
+.DFDL Annotation Elements
+[cols="1,2,4",options="header"]
+|===
+
+| Annotation Type
+| Annotation Element
+| Description
+
+.8+| Format Annotation
+| dfdl:choice
+| Defines the physical data format properties of an xs:choice group. See Section <<component-format-annotations>>.
+
+| dfdl:element
+| Defines the physical data format properties of an xs:element and xs:element reference. See Section <<component-format-annotations>>.
+
+| dfdl:format
+| Defines the physical data format properties for multiple DFDL schema constructs. Used on an xs:schema and as a child of a dfdl:defineFormat annotation. This includes aspects such as the encodings, separators, and many more. See Section <<component-format-annotations>>.
+
+| dfdl:group
+| Defines the physical data format properties of an xs:group reference. See Section <<component-format-annotations>>.
+
+| dfdl:property
+| Used in the syntax of format annotations. See Section <<property-binding-syntax-element-form>>.
+
+| dfdl:sequence
+| Defines the physical data format properties of an xs:sequence group. See Section <<component-format-annotations>>.
+
+| dfdl:simpleType
+| Defines the physical data format properties of an xs:simpleType. See Section <<component-format-annotations>>.
+
+| dfdl:escapeScheme
+| Defines the scheme by which quotation marks and escape characters can be specified. This is for use with delimited text formats. See Section <<the-dfdl-escapescheme-annotation-element>>.
+
+.4+| Statement Annotation
+| dfdl:assert
+| Defines a test to be used to ensure the data are well formed. Assert is used only when parsing data. See Section <<the-dfdl-assert-statement-annotation-element>>
+
+| dfdl:discriminator
+| Defines a test to be used when resolving choice branches and optional element occurrences. A dfdl:discriminator is used only when parsing data. See Section <<the-dfdl-discriminator-statement-annotation-element>>
+
+| dfdl:newVariableInstance
+| Creates a new instance of a variable. See Section <<the-dfdl-newvariableinstance-statement-annotation-element>>
+
+| dfdl:setVariable
+| Sets the value of a variable whose declaration is in scope See Section <<the-dfdl-setvariable-statement-annotation-element>>
+
+.3+| Defining Annotation
+| dfdl:defineEscapeScheme
+| Defines a named, reusable escapeScheme See Section <<the-dfdl-defineescapescheme-defining-annotation-element>>
+
+| dfdl:defineFormat
+| Defines a reusable data format by collecting together other annotations and associating them with a name that can be referenced from elsewhere. See Section <<dfdl-defineformat-reusable-data-format-definitions>>
+
+| dfdl:defineVariable
+| Defines a variable that can be referenced elsewhere. This can be used to communicate a parameter from one part of processing to another part. See Section <<dfdl-variable-annotations>>
+|===
+
+DFDL defining annotation elements may only appear at _top-level_, that is, as
+annotation children of the xs:schema element.
+The order of their appearance does not matter, nor does their position relative
+to other children of the xs:schema.
+
+[[dfdl-properties]]
+=== DFDL Properties
+
+A DFDL _property_ is a specific DFDL construct that tells the DFDL processor
+some characteristic about the data format.
+
+Properties carried on the component format annotations (See Section
+<<component-format-annotations>>) are called _format properties_.
+A format property that is used to describe a physical characteristic of a
+component is called a _representation_ property.
+
+Properties on DFDL annotations may have values of one or more of the following
+types
+
+* Enumeration The property value is an XSD xs:token the value of which is one of
+the allowed values listed in the property description.
+
+Example: the dfdl:lengthKind property, which has values taken from "delimited",
+"fixed", "explicit", "implicit", "prefixed", "pattern", and "endOfParent".
+For example:
+
+[source%unnumbered,xml]
+----
+lengthKind='delimited'
+----
+
+* <<dfdl-string-literals,DFDL string literal>> (Section
+<<dfdl-string-literals>>):  The property value represents a sequence of literal
+bytes or characters which represent data which appears in the data stream. The
+value type is a restriction of the XSD xs:token that further disallows the space
+character.
+<<dfdl-character-entities-character-class-entities-and-byte-va,DFDL entities>>
+must be used to express whitespace in a DFDL String Literal.
+
+Example: the dfdl:terminator property, which expresses characters or bytes to be
+found in the data stream to mark the termination of an element or model group
+instance.
+An example terminator might be:
+
+[source%unnumbered,xml]
+----
+terminator='%NL;'
+----
+
+This uses DFDL's string-literal character class entity syntax (see Section
+<<dfdl-character-class-entities-in-dfdl-string-literals>>) to express that the
+element or model group is terminated by a line ending in the data stream.
+
+* <<dfdl-expressions,DFDL expression>> (Section <<dfdl-expressions>>)  The
+property is an xs:string the value of which is a DFDL expression that returns a
+value derived from other property values and/or from the DFDL Infoset. Leading
+and trailing whitespace is trimmed for DFDL expressions.
+
+Example: the dfdl:occursCount property takes an expression which commonly looks
+in the Infoset via an expression, to obtain the count from another element.
+An example dfdl:occursCount property might be:
+
+[source%unnumbered,xml]
+----
+occursCount='{ ../hdr/count }'
+----
+
+* <<dfdl-regular-expressions,DFDL regular expression>> (Section
+<<dfdl-regular-expressions>>)  The property is an xs:string the value of which
+is a regular expression that can be used as a pattern to calculate the length of
+an element by applying that pattern to the sequence of literal bytes or
+characters which appear in the data stream. Note that leading and trailing
+whitespace is not trimmed and is part of the regular expression value.
+
+Example: the dfdl:lengthPattern property takes a regular expression which is
+used to scan the data stream for matching data.
+An example might be:
+
+[source%unnumbered,xml]
+----
+lengthPattern="\w{1,5};"
+----
+
+This scans the data stream for from 1 to 5 word-characters followed by a
+semi-colon character.
+
+* Logical Value. The property value is a string that describes a logical value.
+The type of the logical value is one of the XML schema simple types. The string
+must conform to the XML schema lexical representation for the type.
+
+Example: the dfdl:nilValue property can be used to provide a logical value that
+if it matches the element's logical value is used to indicate the data is
+nilled.
+For example for an element of type xs:int:
+
+[source%unnumbered,xml]
+----
+nilValue='0'
+----
+
+* QName The property value is an XML Qualified Name as specified in "Namespaces
+in XML"  [<<a-xmlnamespaces,XMLNamespaces>>]
+
+Example: The dfdl:escapeSchemeRef property refers to a named escape scheme
+definition via its qualified name.
+For example:
+
+[source%unnumbered,xml]
+----
+escapeSchemeRef='ex:backslashScheme'
+----
+
+Some properties accept a list or union of types
+
+* List of DFDL String Literals or Logical Values   The property value is a
+whitespace separated list of the specified type. When parsing, if more than one
+string literal in the list matches the portion of the data stream being
+evaluated then the longest matching value in the list must be used. When
+unparsing, the first value in the list must be used.  String literals containing
+whitespace or string literals representing the empty string must use character
+class entities in their syntax.
+
+Example: The dfdl:separator property below indicates that the items of a
+sequence are separated either by a comma or a tab character.
+
+[source%unnumbered,xml]
+----
+separator=', %HT;'
+----
+
+* Union of types and expressions. The property value is a union of DFDL
+expression and exactly one of the other types. The expression must resolve to a
+value of the other type.
+
+Example: Below are two examples of the dfdl:length property.
+One uses an expression that resolves to an unsigned integer, the other a literal
+unsigned integer.
+
+[source%unnumbered,xml]
+----
+length='{ xs:unsignedInt(../hdr/len) }'
+
+length='14'
+----
+
+* Union of types. The property value is a union of two or more types. The type
+is often dependent on the value of another property.
+
+For example, dfdl:nilValue can be a List of DFDL String Literals or a List of
+Logical Values depending on dfdl:nilKind.
+Another example is the dfdl:alignment property which can have as its value an
+unsigned integer or the distinguished enum value 'implicit'.
+
+[[dfdl-string-literals]]
+==== DFDL String Literals
+
+DFDL String Literals represent a sequence of literal bytes or characters which
+appear in the data stream.
+This presents the following challenges:
+
+* the literal characters in the data stream might not be in the same character
+set encoding as the DFDL schema
+* it may be necessary to specify a literal character which is not valid in an
+XML document
+* it may be necessary to specify one or more raw byte values
+
+A DFDL string literal can describe any of the following types of literal data in
+any combination:
+
+* a single literal character in any encoding
+* a string of literal characters in any encoding
+* one or more characters from a set of related characters (e.g. end-of-line
+characters)
+* a literal byte value
+
+A DFDL string literal is therefore able to describe any arbitrary sequence of
+bytes and characters.
+
+Details on how a string literal is matched against the data stream for parsing
+are given in
+<<appendix-c-processing-of-dfdl-string-literals,Appendix C: Processing of DFDL String literals>>.
+
+*_Empty String:_* The special DFDL entity %ES; is provided for describing an
+empty string or an empty byte sequence. The %ES; entity is the only way to do
+this. A DFDL string literal with value "" (the empty string) is usually invalid.
+There are a few properties that explicitly allow an empty DFDL String Literal,
+and these properties assign a property-specific meaning to the empty string
+value.
+
+*_Whitespace:_* When whitespace must be used as part of a property value, the
+DFDL string literal must use entities (such as %WSP;) to represent the
+whitespace. (This allows a property to represent lists of DFDL string literals
+by using literal spaces to separate list elements.)
+
+===== Character strings in DFDL String Literals
+
+A literal string in a DFDL Schema is written in the character set encoding
+specified by the XML directive that begins all XML documents:
+
+[source%unnumbered,xml]
+----
+<?xml version="1.0" encoding="UTF-8" ?>
+----
+
+In this example, the DFDL schema is written in UTF-8, so any literal strings
+contained in it, and particularly string literals found in its representation
+property bindings in the format annotations, are expressed in UTF-8.
+
+However, these strings are being used to describe features of text data that are
+commonly in other character set encodings.
+For example,a DFDL schema may describe EBCDIC data that is comma separated.
+A comma in EBCDIC has a single-byte code unit of
+pass-format:straightquotes[0x6B] in the data, the numeric value of which does
+not correspond to the Unicode character code for comma which is U+002C.
+However, when the schema indicates that an item is "," (comma) separated and
+specifies this using a string literal along with specifying the 'encoding'
+property to be 'ebcdic-cp-us' then this means that the data are separated by
+EBCDIC commas regardless of what character set encoding is used to write the
+DFDL Schema.
+
+[source%unnumbered,xml]
+----
+<?xml version="1.0" encoding="UTF-8">
+<xs:schema ... >
+    ...
+    <dfdl:format encoding="ebcdic-cp-us" separator=","/>
+    ...
+</xs:schema>
+----
+
+When a DFDL processor uses the separator expressed in this manner, the string
+literal "," is _translated_ into the character set encoding of the data it is
+separating as specified by the dfdl:encoding representation property.
+Hence, in this case the processor would be searching the data for a character
+with codepoint pass-format:straightquotes[0x6B] (the EBCDIC comma), not a UTF-8
+or Unicode (pass-format:straightquotes[0x2C]) comma which is what exists in the
+DFDL schema document.
+
+[[dfdl-character-entities-character-class-entities-and-byte-va]]
+===== DFDL Character Entities, Character Class Entities, and Byte Values in String Literals
+
+DFDL character entities specify a single Unicode character and provide a
+convenient way to specify code points that appear in the data stream but would
+be difficult to specify in XML strings.
+For example, DFDL character entities can express common non-printable characters
+or code points, such as pass-format:straightquotes[0x00], that are not valid in
+XML documents.
+DFDL entities are based on XML entities, which can also be used in a DFDL
+schema.
+Examples:
+
+[source%unnumbered,xml]
+----
+separator='%HT;'
+terminator='%WSP*;//'
+fillByte='%#x00;'
+textStringPadCharacter='%#x7F;'
+----
+
+In some cases, regular XML character entities may be used instead.
+For example, the above pass-format:straightquotes[‘%#x7F;’] could be expressed
+as '``+++&amp;#x7F;+++``' but this is not always the case.
+There is no way in XSD to express the character code 0 (i.e., the ASCII NUL code
+point), even as an XML character entity; hence, one must often use DFDL
+character entities like pass-format:straightquotes[‘%#x00;’] above, or their
+named equivalents.
+The DFDL string literal syntax allows the author to always use DFDL character
+entity syntax instead of jumping back and forth between XSD character entities
+and DFDL character entities.
+
+The following grammar gives the syntax of DFDL String Literals generally,
+including the various kinds of entities.
+
+[[dfdl-character-entity-character-class-entity-and-byte-value]]
+.DFDL Character Entity, Character Class Entity, and Byte Value Entity Syntax
+[cols="5,1,15",class="bnf"]
+|===
+
+| DfdlStringLiteral
+| ::=
+| (DfdlStringLiteralPart){plus} \| DfdlESEntity
+
+| DfdlStringLiteralPart
+| ::=
+| LiteralString \| DfdlCharEntity \| DfdlCharClass \| ByteValue
+
+| LiteralString
+| ::=
+| A string of literal characters
+
+| DfdlCharEntity
+| ::=
+| DfdlEntity \| DecimalCodePoint \| HexadecimalCodePoint
+
+| DfdlCharClass
+| ::=
+| '%' DfdlCharClassName ';'
+
+| ByteValue
+| ::=
+| pass-format:straightquotes[‘%#r’] [0-9a-fA-F]\{2} ';'
+
+| DfdlEntity
+| ::=
+| '%' DfdlEntityName ';'
+
+| DecimalCodePoint
+| ::=
+| pass-format:straightquotes[‘%#’] [0-9]{plus} ';'
+
+| HexadecimalCodePoint
+| ::=
+| pass-format:straightquotes[‘%#x’] [0-9a-fA-F]{plus} ';'
+
+| DfdlEntityName
+| ::=
+a| 'NUL'\|'SOH''\|'STX'\|'ETX'\|
+
+'EOT'\|'ENQ'\|'ACK'\|'BEL'\|
+
+'BS'\|'HT'\|'LF'\|'VT'\|'FF'\|
+
+'CR'\|'SO'\|'SI'\|'DLE'\|
+
+'DC1'\|'DC2'\|'DC3'\|'DC4'\|
+
+'NAK'\|'SYN'\|'ETB'\|'CAN'\|
+
+'EM'\|'SUB'\|'ESC'\|'FS'\|
+
+'GS'\|'RS'\|'US'\|'SP'\|
+
+'DEL'\|'NBSP'\|'NEL'\|'LS'
+
+| DfdlCharClassName
+| ::=
+| DfdlNLEntity \| DfdlWSPEntity \| DfdlWSPStarEntity \| DfdlWSPPlusEntity
+
+| DfdlNLEntity
+| ::=
+| 'NL'
+
+| DfdlWSPEntity
+| ::=
+| 'WSP'
+
+| DfdlWSPStarEntity
+| ::=
+| 'WSP*'
+
+| DfdlWSPPlusEntity
+| ::=
+| 'WSP+'
+
+| DfdlESEntity
+| ::=
+| 'ES'
+|===
+
+Using %% inserts a single literal "%" into the string literal.
+This "%" is subject to character set encoding translation as is any other
+character.
+
+A HexadecimalCodePoint provides a hexadecimal representation of the character's
+code point in ISO/IEC 10646.
+
+A DecimalCodePoint provides a decimal representation of the character's code
+point in ISO/IEC 10646.
+
+A DfdlEntityName is one of the mnemonics given in the following tables.
+
+.DFDL Entities
+[cols="1,2,2",options="header"]
+|===
+
+| Mnemonic
+| Meaning
+| Unicode Character Code
+
+| NUL
+| null
+| U+0000
+
+| SOH
+| start of heading
+| U+0001
+
+| STX
+| start of text
+| U+0002
+
+| ETX
+| end of text
+| U+0003
+
+| EOT
+| end of transmission
+| U+0004
+
+| ENQ
+| enquiry
+| U+0005
+
+| ACK
+| acknowledge
+| U+0006
+
+| BEL
+| bell
+| U+0007
+
+| BS
+| backspace
+| U+0008
+
+| HT
+| horizontal tab
+| U+0009
+
+| LF
+| line feed
+| U+000A
+
+| VT
+| vertical tab
+| U+000B
+
+| FF
+| form feed
+| U+000C
+
+| CR
+| carriage return
+| U+000D
+
+| SO
+| shift out
+| U+000E
+
+| SI
+| shift in
+| U+000F
+
+| DLE
+| data link escape
+| U+0010
+
+| DC1
+| device control 1
+| U+0011
+
+| DC2
+| device control 2
+| U+0012
+
+| DC3
+| device control 3
+| U+0013
+
+| DC4
+| device control 4
+| U+0014
+
+| NAK
+| negative acknowledge
+| U+0015
+
+| SYN
+| synchronous idle
+| U+0016
+
+| ETB
+| end of transmission block
+| U+0017
+
+| CAN
+| cancel
+| U+0018
+
+| EM
+| end of medium
+| U+0019
+
+| SUB
+| substitute
+| U+001A
+
+| ESC
+| escape
+| U+001B
+
+| FS
+| file separator
+| U+001C
+
+| GS
+| group separator
+| U+001D
+
+| RS
+| record separator
+| U+001E
+
+| US
+| unit separator
+| U+001F
+
+| SP
+| space
+| U+0020
+
+| DEL
+| delete
+| U+007F
+
+| NBSP
+| no break space
+| U+00A0
+
+| NEL
+| Next line
+| U+0085
+
+| LS
+| Line separator
+| U+2028
+|===
+
+[[dfdl-character-class-entities-in-dfdl-string-literals]]
+===== DFDL Character Class Entities in DFDL String Literals
+
+The following DFDL character classes are provided to specify one or more
+characters from a set of related characters.
+
+[[dfdl-character-class-entities]]
+.DFDL Character Class Entities
+[cols="1,5,2",options="header"]
+|===
+
+| Mnemonic
+| Meaning
+| Unicode Character Code(s)
+
+| NL
+a| Newline
+
+On parse any one of the single characters CR, LF, NEL or LS or the character
+combination CRLF.
+
+On unparse the value of the dfdl:outputNewLine property is output, which must
+specify one of the single characters %CR;, %LF;,  %NEL;, or %LS; or the
+character combination %CR;%LF;.
+a| U+000A LF
+
+U+000D CR
+
+U+000D U+000A CRLF
+
+U+0085 NEL
+
+U+2028  LS
+
+| WSP
+a| Single whitespace
+
+On parse any whitespace character
+
+On unparse a space (U+0020) is output
+a| U+0009-U+000D (Control characters)
+
+U+0020 SPACE
+
+U+0085 NEL
+
+U+00A0 NBSP
+
+U+1680 OGHAM SPACE MARK
+
+U+180E MONGOLIAN VOWEL SEPARATOR
+
+U+2000-U+200A (different sorts of spaces)
+
+U+2028 LSP
+
+U+2029 PSP
+
+U+202F NARROW NBSP
+
+U+205F MEDIUM MATHEMATICAL SPACE
+
+U+3000 IDEOGRAPHIC SPACE
+
+| WSP*
+a| Optional Whitespaces
+
+On parse whitespace characters are ignored.
+
+On unparse nothing is output
+| Same as WSP
+
+| WSP+
+a| Whitespaces
+
+On parse one or more whitespace characters are ignored.
+It is a Processing Error if no whitespace character is found.
+
+On unparse a space (U+0020) is output.
+| Same as WSP
+
+| ES
+a| Empty String
+
+Used in whitespace separated lists when empty string is one of the values.
+|
+|===
+
+===== DFDL Byte Value Entities in DFDL String Literals
+
+DFDL byte-value entities provide a way to specify a single byte as it appears in
+the data stream without any character set encoding translation.
+To specify a string of byte values, a sequence of two or more byte-value
+entities must be used.
+The syntax is in <<dfdl-character-entity-character-class-entity-and-byte-value>>
+DFDL Character Entity, Character Class Entity, and Byte Value Entity Syntax
+above.
+Example:
+
+[source%unnumbered,xml]
+----
+%#rFF;
+----
+
+In this notation the "r" can be thought of as short for "raw", as byte value
+entities are said to denote "raw bytes".
+
+[[dfdl-expressions]]
+==== DFDL Expressions
+
+Some DFDL properties allow DFDL expressions (see <<dfdl-expression-language>>
+DFDL Expression Language) to be used so that the property can be set dynamically
+at processing-time.
+
+The general syntax of expressions is "{" expression "}"
+
+The rules for recognizing DFDL expressions are
+
+* Discard any leading and trailing whitespace.
+* Must start with a '{' in the first position and end with '}' in the last
+position.
+* '{' in any position other than the first is treated as a literal.
+* '}' in any position other than the last position is treated as a literal.
+* '{{' as the first characters are treated as the literal '{' and not as the
+start of a DFDL expression.
+
+DFDL expressions reference other items in the Infoset or augmented Infoset using
+absolute or relative paths.
+
+DFDL expressions that are used to provide the value of DFDL properties in the
+dfdl:format annotation on the top level xs:schema declaration must not contain
+relative paths.
+
+[[dfdl-regular-expressions]]
+==== DFDL Regular Expressions
+
+Some properties expect a regular expression to be specified.
+The DFDL Regular Expression language is defined in
+<<dfdl-regular-expressions-2>>, DFDL Regular Expressions.
+
+==== Enumerations in DFDL
+
+Some DFDL properties accept an enumerated list of valid values.
+It is a Schema Definition Error if a value other than one of the enumerated
+values is specified.
+The case of the specified value must match the enumeration.
+An enumeration is of type string unless otherwise stated.

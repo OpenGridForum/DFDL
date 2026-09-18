@@ -1,0 +1,122 @@
+[appendix]
+[[appendix-f-specific-errors-classified]]
+== Appendix F: Specific Errors Classified
+
+This appendix clarifies which errors are Schema Definition Errors and which are
+Processing Errors.
+
+The following are Processing Errors:
+
+* Arithmetic Errors
+** Division by zero
+** Integer Arithmetic Underflow
+** Integer Arithmetic Overflow
+** Note: Floating point math can produce NaN (Not a Number) values. This is not
+an error, nor are properly typed operations on floating point NaN values.
+* Expression Errors
+** Dynamic Type  Error – unable to convert expression result value to target
+type
+*** Example: non-digits found in string argument to xs:int(…) constructor.
+*** Note: if a DFDL Implementation cannot distinguish Dynamic Type Errors from
+Static Type Errors, then a Dynamic Type Error MUST cause a Schema Definition
+Error
+** Index out of bounds error – index exceeds the number of occurrences or is
+less than 1.
+*** Note: same error for dfdl:testBit if bitPos is not 1..8, or for character
+positions in a string-value
+** Indexing of non-array non-optional element
+*** Example: x[1] when x is declared and has both XSD minOccurs="1" and XSD
+maxOccurs="1" explicitly, or by not stating either or both of them.
+** Illegal argument value (correct type, illegal value)
+* Parse Errors
+** Delimiter not found
+** Data from the data stream is not convertible to element type
+** Assertion failed
+** Discriminator failed
+** Required occurrence not found
+** All choice alternatives fail to parse
+** Character set decoding failure and dfdl:encodingErrorPolicy is 'error'
+* Unparse Errors
+** Truncation scenarios where truncation is being disallowed
+** Rounding error – rounding needed but not allowed. (Unparsing)
+** No choice alternative matching the Infoset can be identified for unparsing.
+Character set encoding failure and dfdl:encodingErrorPolicy is 'error'
+* Implementation-defined Limit Errors - Implementations can have fixed or
+adjustable limits that some formats and some data may exceed at processing time.
+This specification does not further specify what these errors are, but some
+possible examples are:
+** Data longer than allowed for representation of a given data type
+*** Example: exceed maximum length of representation of xs:decimal when
+dfdl:representation is "text".
+** Expression references too far back into Infoset (parsing)
+** Expression references too far forward into Infoset (unparsing)
+** Number of array elements exceeds limit.
+** Regular expression exceeds time limit
+
+The following are Schema Definition Errors, regardless of whether they are
+detected in advance of processing or once processing begins:
+
+* Errors in XML Schema Construction and Structure
+** See XML Schema Specification Part 1, Section <<dfdl-simple-types>>
+[<<a-xsdl-part1,XSDLV1>>]
+* Use of XSD constructs outside of DFDL subset
+* Implementation-defined Limitations
+** Use of DFDL schema constructs not supported by this implementation.
+*** Example: xs:choice is an optional part of the DFDL specification (see
+<<optional-dfdl-features>>). If not supported, it MUST be rejected as a Schema
+Definition Error.
+*** Example: use of packed-decimal when it is not supported by the
+implementation.
+*** Example: use of dfdl:assert when it is not supported by the implementation
+(See Spec <<optional-dfdl-features>> on DFDL Subsets)
+*** Note: Unrecognized DFDL properties or property values can produce a warning
+and an implementation can attempt to process data despite the warning.
+** Exceeding implementation-dependent limits for schema size/complexity
+*** Example: schema too large – simply a limit on how large the schema can be,
+how many files, how many top-level constructs, etc.
+* Schema Not Valid
+** See XML Schema Specification Part 1, Section <<dfdl-subset-of-xml-schema>>
+[<<a-xsdl-part1,XSDLV1>>]
+* UPA violation (Unique Particle Attribution)
+* Reference to DFDL global definition not found
+** Format definition (dfdl:defineFormat)
+** Escape schema definition (dfdl:defineEscapeScheme)
+** Variable Definition (dfdl:defineVariable)
+* DFDL Annotations not well-formed or not valid
+* DFDL Annotations Incompatible
+** E.g., dfdl:assert and dfdl:discriminator at same combined annotation point,
+or more than one format annotation at an annotation point.
+* DFDL Properties and their values
+** Property not applicable to DFDL annotation
+** Property value not suitable for property
+** Property conflict
+*** Between Element Reference and Element Declaration
+*** Between Element Declaration and Simple Type Definition
+*** Between Simple Type Definition and Base Simple Type Definition
+*** Between Group Reference and Sequence/Choice of Group Definition
+** Required property not found
+* Expressions
+** Expression syntax error
+** Named child element doesn't exist – E.g., /a/b, and there is no child b in
+existence.
+*** Note: no child possible in the schema is a different error, but also a
+Schema Definition Error, as /a/b would not have a type in that case.
+*** Note: This is a Schema Definition Error, as schema authors are advised to
+use fn:exists(…) to test for existence of elements when it is possible that they
+not exist.
+** Variable read but not defined
+** Variable assigned after read
+** Variable assigned more than once
+** Static Type error – type is incorrect for usage
+*** Note: if an implementation is unable to distinguish Static Type Errors from
+Dynamic Type Errors, then both MUST cause Schema Definition Errors.
+** Path step definition not found – e.g., /a/n:b but no definition for n:b as
+local or global element.
+** Not enough arguments for function
+** Expression value is not single node
+*** Most DFDL expression contexts require an expression to identify a single
+node, not a sequence of nodes.
+**** There is an exception for the fn:count(…) function, where the path
+expression must be to a node sequence (usually an array or optional element.)
+* Regular Expressions
+** Syntax error

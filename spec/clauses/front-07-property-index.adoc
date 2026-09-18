@@ -1,0 +1,29 @@
+== Property Index
+
+// MS-Word generates an index of marked terms, but does not hyperlink them (useless) rather it just lists page numbers.
+
+// So instead we just create a clickable index here by using "links" to bookmarks.
+
+// Keep alphabetical order here please.
+
+[%unnumbered,cols="1,1,1",options="header"]
+|===
+
+| A-K
+| L-Q
+| R-Z
+
+a| <<p-bitorder,bitOrder>>
+
+<<p-byteorder,byteOrder>>
+
+<<p-encoding,encoding>>
+
+<<p-encodingerrorpolicy,encodingErrorPolicy>>
+
+<<p-ignorecase,ignoreCase>>
+|
+a| <<p-representation,representation>>
+
+<<p-utf16width,utf16Width>>
+|===

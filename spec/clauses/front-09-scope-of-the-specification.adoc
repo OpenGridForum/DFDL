@@ -1,0 +1,8 @@
+// (mandatory)
+== Scope of the Specification
+
+// (This section is supposed to be titled just Scope, but for no clear reason MS-Word cannot properly create a ToC line for a section with just Scope as the title. The only reliable fix has been to make the title longer with real text, not just spaces.)
+
+// (This repeats the OGF "Abstract" content from the OGF Cover page.)
+
+include::../abstract.adoc[]

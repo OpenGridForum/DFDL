@@ -1,0 +1,44 @@
+[[overview-representation-properties-and-their-format-semantic]]
+== Overview: Representation Properties and their Format Semantics
+
+The next sections specify the set of DFDL v1.0 properties that may be used in
+DFDL annotations in DFDL Schemas to describe data formats.
+
+It is a Schema Definition Error when a DFDL schema does _not_ contain a
+definition for a representation property that is needed to interpret the data.
+For example, a DFDL schema containing any textual data must provide a definition
+of the character set encoding property (dfdl:encoding) for that textual data,
+and if it is not part of the format properties context for that data, then it is
+a Schema Definition Error.
+
+Furthermore, no default values are provided for representation properties as
+built-in definitions by any DFDL processor.
+This requires DFDL schemas to be explicit about the representation properties of
+the data they describe and avoids any possibility of DFDL schemas that are
+meaningful for some DFDL processors but not others.
+
+The properties are organized as follows:
+
+* Common to both Content and Framing (see
+<<properties-common-to-both-content-and-framing>>)
+* Common Framing, Position, and Length (see <<framing>>)
+* Simple Type Content (see <<simple-types>>)
+* Sequence Groups (see <<sequence-groups>>)
+* Choice Groups (see <<choice-groups>>)
+* Array elements and optional elements (see
+<<properties-for-array-elements-and-optional-elements>>)
+* Calculated Values (see <<calculated-value-properties>>)
+
+Where properties are specific to a physical representation, the property name
+may choose to reflect this.
+Where properties are related to a specific logical type grouping (defined
+below), the property name may choose to reflect this.
+
+A limited number of properties can take a DFDL expression which must return a
+value of the proper type for the property.
+Those properties that take an expression explicitly state in the description.
+Other properties do not take an expression.
+
+The property description defines which schema component that the property may be
+specified on.
+In addition, most DFDL properties may be specified on a dfdl:format annotation.

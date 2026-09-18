@@ -1,0 +1,137 @@
+[bibliography]
+== References
+
+* [[[a-asn1,ASN1]]] "Introduction to ASN.1",
+link:https://www.itu.int/en/ITU-T/asn1/Pages/introduction.aspx[https://www.itu.int/en/ITU-T/asn1/Pages/introduction.aspx]
+* [[[a-asn1cer,ASN1CER]]] X.690 : Information technology - ASN.1 encoding rules:
+Specification of Basic Encoding Rules (BER), Canonical Encoding Rules (CER) and
+Distinguished Encoding Rules (DER)
+link:https://www.itu.int/rec/dologin_pub.asp?lang=e&id=T-REC-X.690-200811-S!!PDF-E&type=items[https://www.itu.int/rec/dologin_pub.asp?lang=e&id=T-REC-X.690-200811-S!!PDF-E&type=items]
+* [[[ref-asn1ecn,ASN1ECN]]] "ASN.1 Encoding Control Notation,"
+link:https://www.itu.int/en/ITU-T/asn1/Pages/ecn.aspx[https://www.itu.int/en/ITU-T/asn1/Pages/ecn.aspx]
+* [[[ref-asn1per,ASN1PER]]] [[a-asn1per]]"ASN.1 Packed Encoding Rules (PER),"
+link:https://www.itu.int/rec/dologin_pub.asp?lang=e&id=T-REC-X.691-200811-S!!PDF-E&type=items[https://www.itu.int/rec/dologin_pub.asp?lang=e&id=T-REC-X.691-200811-S!!PDF-E&type=items]
+* [[[a-avro,AVRO]]] "Avro,"
+link:http://avro.apache.org/docs/1.3.0/spec.html[http://avro.apache.org/docs/1.3.0/spec.html]
+* [[[a-bfd,BFD]]] "Binary Format Description (BFD) Language,"
+link:https://web.archive.org/web/20040331210530/http://collaboratory.emsl.pnl.gov/sam/bfd/[https://web.archive.org/web/20040331210530/http://collaboratory.emsl.pnl.gov/sam/bfd/]
+* [[[a-carealia,CARealia]]] Disc Interchange Service Company, Inc., Westford,
+MA, USA., "EBCDIC to ASCII Conversion of Signed Fields,"
+link:http://www.3480-3590-data-conversion.com/article-signed-fields.html[http://www.3480-3590-data-conversion.com/article-signed-fields.html]
+* [[[a-ccsid,CCSID]]] "Coded Character Set Identifiers (CCSID)," 
+link:https://www.ibm.com/support/knowledgecenter/SS4SVW_3.0.0/designing/ccsid_list.html[https://www.ibm.com/support/knowledgecenter/SS4SVW_3.0.0/designing/ccsid_list.html]
+* [[[a-composite,Composite]]] Composite Design Pattern:
+link:https://en.wikipedia.org/wiki/Composite_pattern[https://en.wikipedia.org/wiki/Composite_pattern]
+* [[[dfdlschemas,DFDLSchemas]]] DFDL Schemas for Commercial and Scientific Data
+Formats link:https://github.com/DFDLSchemas[https://github.com/DFDLSchemas]
+* [[[a-exi,EXI]]] W3C, "Efficient XML Interchange (EXI) Format 1.0 (Second
+Edition),"  link:http://www.w3.org/TR/exi[http://www.w3.org/TR/exi]
+* [[[gpb,GPB]]] Google Protocol Buffers:
+link:https://developers.google.com/protocol-buffers[https://developers.google.com/protocol-buffers]
+* [[[a-hdf,HDF]]] Hierarchical Data Format (HDF)
+link:http://www.hdfgroup.org/[http://www.hdfgroup.org/]
+* [[[a-iana,IANA]]] IANA, "Character Sets,"
+link:http://www.iana.org/assignments/character-sets[http://www.iana.org/assignments/character-sets]
+* [[[a-icuconvexp,ICUConvExp]]] ICU Converter Explorer
+(link:http://demo.icu-project.org/icu-bin/convexp[http://demo.icu-project.org/icu-bin/convexp]).
+* [[[a-icudatetime,ICUDateTime]]] icu-project.org, "Formatting Dates and Times,"
+link:http://userguide.icu-project.org/formatparse/datetime[http://userguide.icu-project.org/formatparse/datetime]
+* [[[a-icudecimal,ICUDecimal]]] icu-project.org, "icu::DecimalFormat Class
+Reference,"
+link:https://unicode-org.github.io/icu-docs/apidoc/released/icu4c/classDecimalFormat.html[https://unicode-org.github.io/icu-docs/apidoc/released/icu4c/classDecimalFormat.html]
+* [[[a-iculocale,ICULocale]]] icu-project.org, "Locale,"
+link:http://userguide.icu-project.org/locale[http://userguide.icu-project.org/locale]
+* [[[a-icuregex,ICURegex]]] icu-project.org, "Regular Expressions,"
+link:http://userguide.icu-project.org/strings/regexp[http://userguide.icu-project.org/strings/regexp]
+* [[[a-iso10646,ISO10646]]] Universal Coded Character Set
+link:https://www.iso.org/standard/69119.html[https://www.iso.org/standard/69119.html]
+* [[[iso8583,ISO8583]]] ISO8583: Financial transaction card originated messages
+— Interchange message specifications — Part 1: Messages, data elements and code
+values
+link:https://www.iso.org/obp/ui/[https://www.iso.org/obp/ui/#iso:std:iso:8583:-1:ed-1:v1:en]
+* [[[a-iso8601,ISO8601]]] Date and Time Format - ISO 8601
+link:http://www.iso.org/iso/home/standards/iso8601.htm[http://www.iso.org/iso/home/standards/iso8601.htm]
+* [[[a-javaregex,JavaRegex]]] Oracle, "Class Pattern," 
+link:http://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html[http://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html]
+* [[[ref-obsolete-dfdl-174,OBSOLETE_DFDL_174]]] [[ref-obsolete-dfdl]]Michael J
+Beckerle, Stephen M Hanson, Alan W Powell.  GFD-P-R.174: Data Format Description
+Language (DFDL) v1.0 Specification.  Open Grid Forum.  January 2011.
+link:http://www.ogf.org/documents/GFD.174.pdf[http://www.ogf.org/documents/GFD.174.pdf]
+* [[[ref-obsolete-dfdl-207,OBSOLETE_DFDL_207]]] Michael J Beckerle, Stephen M
+Hanson  GFD-P-R.207: Data Format Description Language (DFDL) v1.0 Specification.
+ Open Grid Forum.  September 2014.
+link:http://www.ogf.org/documents/GFD.207.pdf[http://www.ogf.org/documents/GFD.207.pdf]
+* [[[a-ianatimezone,IANATimeZone]]] IANA - Internet Assigned Numbers Authority,
+"Time Zone Database," 
+link:http://www.iana.org/time-zones[http://www.iana.org/time-zones]
+* [[[a-immutable,Immutable]]] See
+link:https://en.wikipedia.org/wiki/Immutable_object[https://en.wikipedia.org/wiki/Immutable_object]
+* [[[a-json,JSON]]] Introducing JSON
+link:http://www.json.org/[http://www.json.org]
+* [[[a-mixedcontent,MixedContent]]] See
+link:https://www.w3.org/TR/xml/[https://www.w3.org/TR/xml/#sec-mixed-content]
+* [[[a-netcdf,NETCDF]]] Network Common Data Form (NetCDF)
+link:http://www.unidata.ucar.edu/software/netcdf/[http://www.unidata.ucar.edu/software/netcdf/]
+* [[[a-omg-eai,OMG_EAI]]] OMG "CAM" TD Model: Object Management Group (OMG) "UML
+Profile and Interchange Models for Enterprise Application Integration (EAI)
+Specification" formal/04-03-26, March 2004. Section 7.3.2. Available at
+link:http://www.omg.org/cgi-bin/doc?formal/2004-03-26[http://www.omg.org/cgi-bin/doc?formal/2004-03-26]
+* [[[a-psvi,PSVI]]] Post Schema Validation Infoset. In W3C XML Schema Definition
+Language (XSD) 1.1 Part 1: Structures
+link:https://www.w3.org/TR/xmlschema11-1/[https://www.w3.org/TR/xmlschema11-1/]
+* [[[a-rdp,RDP]]] William H. Burge, "Recursive Programming Techniques,"
+Addison-Wesley Longman, Incorporated, 1975. ISBN-10: 0201144506, ISBN-13:
+978-0201144505 0
+* [[[a-rfc2119,RFC2119]]] S. Bradner, "RFC 2119: Key words for use in RFCs to
+Indicate Requirement Levels," IETF (Internet Engineering Task Force).
+link:http://www.ietf.org/rfc/rfc2119.txt[_RFC 2119: Key words for use in RFCs to Indicate Requirement Levels_]. S. Bradner. 1997.
+* [[[a-xsd-scd,SCD]]] [[a-scd]]W3C, "W3C XML Schema Definition Language (XSD):
+Component Designators," 
+link:http://www.w3.org/TR/xmlschema-ref/[http://www.w3.org/TR/xmlschema-ref/]
+* [[[a-thrift,Thrift]]] M. Slee, A. Agarwal and M. Kwiatkowski, "Thrift:
+Scalable Cross-Language Services Implementation," 
+link:https://thrift.apache.org/static/files/thrift-20070401.pdf[https://thrift.apache.org/static/files/thrift-20070401.pdf]
+* [[[a-uml,UML]]] Unified Modeling Language 
+link:http://www.uml.org/[http://www.uml.org/]
+* [[[a-unicode,Unicode]]] The Unicode Consortium, "Unicode," 
+link:https://home.unicode.org/[https://home.unicode.org/].
+* [[[a-cldr,UnicodeCLDR]]] Unicode, Inc., "Unicode Common Locale Data
+Repository," 
+link:http://sites.google.com/site/cldr/[http://sites.google.com/site/cldr/].
+* [[[a-unicoderegex,UnicodeRegex]]] Unicode, Inc., "Unicode Regular
+Expressions," 
+link:http://www.unicode.org/reports/tr18/[http://www.unicode.org/reports/tr18/]
+* [[[a-ldml,UnicodeLDML]]] Unicode, Inc., "Unicode Locale Data Markup Language
+(LDML),"
+link:http://www.unicode.org/reports/tr35/[http://www.unicode.org/reports/tr35/.]
+* [[[a-w3datetime,W3DateTime]]] Note-datetime "Date and Time Formats"
+link:https://www.w3.org/TR/NOTE-datetime[https://www.w3.org/TR/NOTE-datetime]
+* [[[walmsely,Walmsley]]] Definitive XML Schema (Walmsley, ISBN 0-13-065567-8)
+page 390, Section 17.8, Table 17-6 says "A child element-type name which must be
+prefixed if it is in a namespace".
+* [[[a-xdr,XDR]]] RFC 4506:  XDR: External Data Representation Standard. IETF
+(Internet Engineering Task Force), 2006.
+link:http://tools.ietf.org/html/rfc4506[http://tools.ietf.org/html/rfc4506]
+* [[[a-xml10,XML1.0]]] W3C, "Extensible Markup Language (XML) 1.0 (Fifth
+Edition)," 26 November 2008. 
+link:http://www.w3.org/TR/REC-xml[http://www.w3.org/TR/REC-xml]
+* [[[a-xml11,XML1.1]]] W3C, "Extensible Markup Language (XML) 1.1 (Second
+Edition)," 16 August 2006. 
+link:http://www.w3.org/TR/xml11/[http://www.w3.org/TR/xml11/]
+* [[[a-xmlinfoset,XMLInfoset]]] W3C, "XML Information Set (Second Edition)," 4
+February 2004. 
+link:http://www.w3.org/TR/xml-infoset[http://www.w3.org/TR/xml-Infoset]
+* [[[a-xmlnamespaces,XMLNamespaces]]] W3C, "Namespaces in XML 1.0 (Third
+Edition)," 8 December 2009. 
+link:http://www.w3.org/TR/REC-xml-names/[http://www.w3.org/TR/REC-xml-names/]
+* [[[a-xsdl,XSD]]] W3C, "XML Schema," 
+link:http://www.w3.org/XML/Schema[http://www.w3.org/XML/Schema]
+* [[[a-xpath,XPath]]] W3C, "XML Path Language (XPath) 2.0 (Second Edition)," 
+link:http://www.w3.org/TR/xpath20/[http://www.w3.org/TR/xpath20/]
+* [[[a-xsdl-part1,XSDLV1]]] W3C, XML Schema Part 1: Structures 
+link:http://www.w3.org/TR/xmlschema-1/[http://www.w3.org/TR/xmlschema-1/] XML
+Schema Part 2: Datatypes
+link:http://www.w3.org/TR/xmlschema-2/[http://www.w3.org/TR/xmlschema-2/] , 28
+October 2004.
+* [[[a-xslt,XSLT]]] W3C, "XSL Transformations (XSLT)"
+link:https://www.w3.org/TR/xslt/[https://www.w3.org/TR/xslt/]

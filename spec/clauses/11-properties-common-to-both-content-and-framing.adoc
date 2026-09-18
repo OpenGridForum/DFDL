@@ -1,0 +1,502 @@
+[[properties-common-to-both-content-and-framing]]
+== Properties Common to both Content and Framing
+
+.Properties Common to both Content and Framing
+[cols="1,4",options="header"]
+|===
+
+| Property Name
+| Description
+
+| [[p-byteorder]]byteOrder
+a| Enum or DFDL Expression
+
+Valid values 'bigEndian', 'littleEndian'.
+
+This property can be computed by way of an expression which returns the string
+'bigEndian' or 'littleEndian'.
+The expression must not contain forward references to elements which have not
+yet been processed.
+
+Note that there is, intentionally, no such thing as 'native'
+endianfootnote:[The concept of native-endian is avoided in DFDL since a DFDL schema containing such a property binding would not contain a complete description of data, but rather an incomplete one which would behave differently based on characteristics of the machine and implementation where the DFDL processor is executed. In DFDL this same behavior is achieved through the use of explicit parameterization using DFDL variables to set dfdl:byteOrder. See Section <<predefined-variables>> Predefined Variables.].
+
+This property applies to all Number, Calendar (date and time), and Boolean types
+with representation binary.
+Specifically, that is binary integers, binary booleans, all packed decimals,
+binary floats, binary seconds and binary milliseconds.
+
+This property is never used to establish the byte order for text /strings, as
+each character set encoding involving multiple bytes of data per code unit
+specifies its byte order.
+
+Annotation: dfdl:element, dfdl:simpleType
+
+| [[p-bitorder]]bitOrder
+a| Enum
+
+Valid values 'mostSignificantBitFirst', 'leastSignificantBitFirst'.
+
+The bits of a byte each have a place value or significance of 2^n^, for _n_ from
+0 to 7. Hence, the byte value 255 = 2^7^ {plus} 2^6^ {plus} 2^5^ {plus} 2^4^
+{plus} 2^3^ {plus} 2^2^ {plus} 2^1^ {plus} 2^0^.
+A bit can always be unambiguously identified as the 2^n^-bit.
+
+The bit order is the correspondence of a bit's numeric significance to the bit
+position (1 to 8) within the byte.
+
+Value 'mostSignificantBitFirst' means:
+
+* The 2^7^ bit is first, i.e., has bit position 1.
+* In general, the 2^n^ bit has position 8 - _n._
+* The least significant bits of byte N are considered to be adjacent to the most
+significant bits of byte N+1.
+
+Value 'leastSignificantBitFirst' means:
+
+* The 2^0^ bit is first, i.e., has bit position 1.
+* In general, the 2^n^ bit has position _n_ {plus} 1__.__
+* The most significant bits of byte N are considered to be adjacent to the least
+significant bits of byte N+1.
+
+This property applies to all content and framing since it determines which bits
+of a byte occupy what bit positions.
+Content and framing are defined in terms of regions of the data stream, and
+these regions are defined in terms of the starting bit position and ending bit
+position; hence, dfdl:bitOrder is relevant to determining the specific bits of
+any grammar region (see Section <<dfdl-data-syntax-grammar>> DFDL Data Syntax
+Grammar) when the region's starting bit position or ending bit position are not
+on a byte boundary.
+
+The bit order can only change on byte boundaries, and alignment of up to 7 bits
+is skipped (parsing) or inserted (unparsing) to ensure byte-alignment whenever
+the bit order changes.
+
+Annotation: dfdl:element, dfdl:simpleType, dfdl:sequence, dfdl:choice,
+dfdl:group
+
+| [[p-encoding]]encoding
+a| Enum or DFDL Expression
+
+Values are one of:
+
+* IANA charset
+namefootnote:[IANA is the Internet Assigned Names Authority. See <<a-iana,[IANA\]>>]
+* CCSIDfootnote:[CCSID stands for Coded Character Set ID, a decimal number syntax for a coded character set specifier. <<a-ccsid,[CCSID\]>>]
+* DFDL standard encoding name
+* Implementation-specific encoding name
+
+This property can be computed by way of an expression which returns an
+appropriate string value.
+The expression must not contain forward references to elements which have not
+yet been processed.
+
+Note that there is, deliberately, no concept of 'native'
+encodingfootnote:[The concept of native character encoding is avoided in DFDL since a DFDL schema containing such a property binding would not contain a complete description of data, but rather an incomplete one which would behave differently based on characteristics of the operating environment where the DFDL processor executes. In DFDL this same behavior is achieved through the use of explicit parameterization using DFDL variables to set dfdl:encoding. See Section <<predefined-variables>> Predefined Variables.].
+
+Conforming DFDL v1.0 processors MUST accept at least 'UTF-8', 'UTF-16',
+'UTF-16BE', 'UTF-16LE', 'ASCII', and 'ISO-8859-1' as encoding names.
+
+The encoding name "UTF-16" is equivalent to "UTF-16BE" and for processors that
+implement UTF-32, the encoding name "UTF-32" is equivalent to "UTF-32BE".
+
+Unlike most other properties with Enum values, encoding names are
+case-insensitive, so for example 'utf-8', 'Utf-8', and 'UTF-8' are equivalent.
+
+The encoding name 'UTF-8' is interpreted strictly and does not include variants
+such as CESU-8.
+
+DFDL standard encoding names are defined in
+<<appendix-d-dfdl-standard-encodings>> Appendix D: DFDL Standard Encodings.
+When supported, a conforming DFDL implementation MUST implement them in a
+uniform manner so that they are portable across all DFDL implementations that
+implement them.
+
+Additional implementation-defined encoding names MAY be provided only for
+character set encodings for which there is no IANA name standard nor CCSID
+standard nor DFDL standard encoding.
+These implementation-defined encodings MUST have "X-" as a prefix to their name,
+as they are subject to being superseded by IANA or DFDL standard encoding names.
+
+Annotation: dfdl:element, dfdl:simpleType, dfdl:sequence, dfdl:choice,
+dfdl:group
+
+| [[p-utf16width]]utf16Width
+a| Enum
+
+Valid values are 'fixed', 'variable'.
+
+Applies only when encoding is 'UTF-16', 'UTF-16BE', UTF16-LE' or their CCSID
+equivalents.
+
+Specifies whether the encoding 'UTF-16' is treated as a fixed or variable width
+encoding. 'UTF-16' can contain characters which require two codepoints (called a
+surrogate pair) to represent.
+When utf16Width is 'fixed', these surrogate code points are treated as separate
+characters.
+When utf16Width is 'variable', then surrogate pairs are converted into a single
+character on parsing, and such a character is split into two characters on
+unparsing.
+
+When utf16Width is 'variable', then on parsing an un-paired surrogate codepoint
+causes a decode error, which can be controlled via dfdl:encodingErrorPolicy
+described below.
+
+Annotation: dfdl:element, dfdl:simpleType, dfdl:sequence, dfdl:choice,
+dfdl:group
+
+| [[p-ignorecase]]ignoreCase
+a| Enum
+
+Valid values are 'yes', 'no'.
+
+Whether mixed case data is accepted when matching delimiters and data values on
+input.
+
+This affects the behavior of matching for these properties: dfdl:initiator,
+dfdl:terminator, dfdl:separator, dfdl:nilValue, dfdl:textStandardExponentRep,
+dfdl:textStandardInfinityRep, dfdl:textStandardNaNRep, dfdl:textStandardZeroRep,
+dfdl:textBooleanTrueRep, and dfdl:textBooleanFalseRep.
+
+Property ignoreCase plays no part when comparing an element value with an XSD
+enum facet, matching an element value to an XSD pattern facet, or comparing an
+element value with the XSD fixed property.
+It is therefore not used by validation (when validation is enabled), nor by the
+dfdl:checkConstraints function.
+
+On unparsing always use the delimiters or value as specified.
+
+Annotation: dfdl:element, dfdl:simpleType, dfdl:sequence, dfdl:choice,
+dfdl:group
+
+| [[p-encodingerrorpolicy]]encodingErrorPolicy
+a| Enum
+
+Valid values are 'error' or 'replace'.
+
+This property applies whenever dfdl:encoding is applicable.
+
+This property provides control of how decoding and encoding errors are handled
+when converting the data to text, or text to data.
+This includes converting when scanning for delimiters, matching regular
+expression length or test patterns, matching textual data type representation
+patterns against the data, and of course isolating the text content that becomes
+the value of an element (parsing) or constructing the content from the value
+(unparsing).
+
+When parsing, an error can occur when decoding characters from their encoded
+form into the DFDL Infoset character set, ISO 10646 [<<a-iso10646,ISO10646>>].
+This can occur due to invalid byte sequences, or not enough bytes found to make
+up the full encoding of a character.
+
+If 'replace', then the Unicode replacement character (U+FFFD) is substituted for
+the offending errors, one replacement character for any incorrect fragment of an
+encoding.
+
+If 'error' then a Processing Error occurs.
+
+When unparsing, the errors that can occur when encoding characters from
+Unicode/ISO 10646 into the specified encoding include when no mapping is
+provided by the encoding character set specification and when there is not
+enough space to output the entire encoding of the character (e.g., need 2 bytes
+for a 2-byte character codepoint, but only 1 byte remains in the available
+length.)
+
+If 'replace' then encoding-specific replacement/substitution character is
+output.
+It is a Processing Error if no such character is defined, and it is a Processing
+Error if there is any error when attempting to output the replacement (such as
+not enough room for the representation of the entire encoding of the replacement
+character).
+
+If 'error' then a Processing Error occurs.
+
+See Section <<character-encoding-and-decoding-errors>> Character Encoding and
+Decoding Errors for further details.
+
+Annotation: dfdl:element, dfdl:simpleType, dfdl:sequence, dfdl:choice,
+dfdl:group
+|===
+
+=== Unicode Byte Order Mark (BOM)
+
+DFDL does not provide any special treatment of Unicode Byte-Order Marks.
+They are treated as a Unicode ZWNBS character.
+
+[[character-encoding-and-decoding-errors]]
+=== Character Encoding and Decoding Errors
+
+When parsing, these are the errors that can occur when decoding characters into
+Unicode/ISO 10646.
+
+[arabic]
+. The data is broken - invalid bit/byte sequences are found which do not match
+the definition of a character for the encoding.
+. Not enough data is found to make up the entire encoding of a character. That
+is, a fragment of a valid encoding is found.
+
+When unparsing, these are the errors that can occur when encoding characters
+from Unicode/ISO 10646 into the specified encoding.
+
+[arabic]
+. No mapping provided by the encoding specification.
+. Not enough room to output the entire encoding of the character (e.g., need 3
+bytes for a character encoding that uses 3-bytes for that character, but only 1
+byte remains in the available length.
+
+The subsections below describe how these errors are handled.
+
+[[property-dfdl-encodingerrorpolicy]]
+==== Property dfdl:encodingErrorPolicy
+
+The property dfdl:encodingErrorPolicy has two possible values: 'error' and
+'replace'.
+
+===== dfdl:encodingErrorPolicy 'error'
+
+If 'error', then any error when decoding characters while parsing causes a
+Processing Error.
+For unparsing, any error when encoding characters causes a Processing Error.
+
+When parsing, it does not matter if this happens when scanning for delimiters,
+matching a regular expression, matching a literal nil value, or constructing the
+value of a textual element.
+
+There is one exception.
+When dfdl:lengthUnits is 'bytes', the 'not enough data' decoding error is
+ignored, and the data making up the fragment character is skipped over.
+Symmetrically, when unparsing the 'not enough room' encoding error is ignored
+and the left-over bytes are filled with the dfdl:fillByte.
+
+Detection of character set decoding errors is often implementation-dependent
+because DFDL Implementations are free to optimize processing speed by skipping
+character decoding or encoding whenever possible.
+For example: when character set encodings are fixed-width, it is possible to
+determine lengths in bytes or bits from the length in characters by multiplying
+the length value by the character width, without having to decode any
+characters.
+
+When parsing, character decoding errors MUST be detected when
+
+[loweralpha]
+. the decoding results in a character being placed into the DFDL Infoset
+. the decoding is necessary to identify a delimiter
+. the decoding is necessary to determine a match or non-match of a regular
+expression in a dfdl:assert or dfdl:discriminator with testKind='pattern'.
+
+When unparsing, character encoding errors MUST be detected when
+
+[loweralpha,start=4]
+. an unmapped character appears in the Infoset value of an element.
+
+In all other cases, character set decoding and encoding errors MAY not be
+detected.
+
+Implementations MAY pre-decode a limited number of characters for efficiency;
+however, such implementation-dependent pre-decoding can cause parse errors to be
+detected in some implementations of DFDL that are not detected by others.
+
+Schema authors are advised not to rely on decoding errors for backtracking to
+control the behavior of the parser.
+
+===== dfdl:encodingErrorPolicy 'replace' for parsing
+
+If 'replace' then any error when decoding characters results in the insertion of
+the Unicode Replacement Character (U+FFFD) as the replacement for that error.
+
+It does not matter if this error and replacement happens when scanning for
+delimiters, matching a regular expression, matching a literal nil value, or
+constructing the value of a textual element.
+
+There is one exception.
+When dfdl:lengthUnits is 'bytes', the 'not enough data' decoding error is
+ignored, no replacement character is created.
+The data making up the fragment character is skipped over.
+(It is filled with the dfdl:fillByte when unparsing.)
+
+Note that the "." wildcard in regular expressions matches the Unicode
+Replacement Character, so ".*" and ".{plus}" regular expressions can potentially
+cause very large matches (up to the entire data stream) to occur when data
+contains errors and dfdl:encodingErrorPolicy 'replace'.
+DFDL Schema authors are advised that bounded length negated regular expressions
+can help in this case.
+E.g., "[^\uFFFD]{0,50}" says to match any character (excluding the Unicode
+Replacement Character), but only up to length 50.
+
+It is also worth noting that the Unicode Replacement Character can appear in
+data as an ordinary character, and this cannot be distinguished from the
+insertion of the Unicode Replacement Character due to a decoding error.
+This is likely to happen for data that is (a) initially parsed by a DFDL parser
+with dfdl:encodingErrorPolicy 'replace', and (b) which contains some decoding
+errors, but pass-format:straightquotes[(c)] is nevertheless successfully parsed,
+(d) is written back out to a file or other data repository, and (e) is parsed
+again.
+The written data has replaced data errors with the Unicode Replacement
+Character, and so if the data is parsed again, it no longer produces errors, but
+instead contains the Unicode Replacement Character as a regular character in the
+data.
+
+If dfdl:lengthUnits is 'characters', then a Unicode Replacement Character counts
+as contributing a single character to the length.
+
+If the data contains more than one adjacent decode error, then the specific
+number of Unicode Replacement Characters that are inserted as the replacement of
+these errors is implementation- dependent.
+That is, some implementations MAY view, for example, three consecutive erroneous
+bytes as three separate decode errors, others MAY view them as a single or two
+decode errors.
+All implementations MUST, however, insert some number of Unicode Replacement
+Characters, and then continue to decode characters following the erroneous data.
+
+The trimming of pad characters always happens after Unicode Replacement
+Characters have been inserted into the data.
+
+===== dfdl:encodingErrorPolicy 'replace' for unparsing
+
+For unparsing, each encoding has a replacement/substitution character specified
+by the ICU.
+This character is substituted for the unmapped character or the character that
+has too large an encoding to fit in the available space.
+
+There is one exception.
+When dfdl:lengthUnits is 'bytes', the 'not enough room' encoding error is
+ignored.
+The left-over bytes are filled with the dfdl:fillByte (they are skipped when
+parsing.)
+
+The definitions of these substitution characters can be conveniently found for
+many encodings in the ICU Converter Explorer [<<a-icuconvexp,ICUConvExp>>].
+
+An encoding error is a Processing Error if the encoding does not provide a
+substitution/replacement character definition.
+(This would be rare but can occur if a DFDL implementation allows many encodings
+beyond the minimum set.)
+
+==== Unicode UTF-16 Decoding/Encoding Non-Errors
+
+The following specific situations involving encodings UTF-16, UTF-16LE, and
+UTF-16BE when dfdl:utf16Width "fixed", and they do not cause a decoding or
+encoding error.
+
+* unpaired surrogate codepoint
+* out-of-order surrogate codepoint pair
+* surrogate codepoint pair is encountered
+
+In all these cases the code-point(s) becomes a character code in the DFDL
+Information Item for the string.
+
+==== Preserving Data Containing Decoding Errors
+
+There can be situations where data wants to be preserved exactly even if it
+contains errors.
+
+It is suggested that if a DFDL schema author wants to preserve information
+containing data where the encodings have these kinds of errors, that they model
+such data as xs:hexBinary, or as xs:string but using an encoding such as
+iso-8859-1 which preserves all bytes.
+
+=== Byte Order and Bit Order
+
+Byte order and bit order are separate concepts.
+However, of the possible combinations, only the following are allowed:
+
+[arabic]
+. 'bigEndian' with 'mostSignificantBitFirst'
+. 'littleEndian' with 'mostSignificantBitFirst'
+. 'littleEndian' with 'leastSignificantBitFirst'
+footnote:[Used by data format MIL-STD-2045]
+
+Other combinations MUST produce Schema Definition Errors.
+
+=== dfdl:bitOrder Example
+
+Consider a structure of 4 logical elements.
+The total length is 16 bits.
+
+Assume the lengths here are measured in bits
+(dfdl:lengthUnitsfootnote:[For dfdl:lengthUnits, see Section <<properties-for-specifying-lengths>> Properties for Specifying Lengths.] is 'bits'), and that these are binary integers (dfdl:representation is 'binary', dfdl:binaryNumberRepfootnote:[For dfdl:binaryNumberRep, see Section <<properties-specific-to-number-with-binary-representation>> Properties Specific to Number with Binary Representation.] is 'binary'):
+
+[source%unnumbered,subs="+macros"]
+----
+pass:[<span style="color:#0070C0">&lt;element name="A" type="xs:int" dfdl:length="3"/&gt; &lt;!-- having value 3 --&gt;</span>]
+pass:[<span style="color:#FF0000">&lt;element name="B" type="xs:int" dfdl:length="7"/&gt; &lt;!-- having value 9 --&gt;</span>]
+pass:[<span style="color:#00B050">&lt;element name="C" type="xs:int" dfdl:length="4"/&gt; &lt;!-- having value 5 --&gt;</span>]
+pass:[<span style="color:#BF8F00">&lt;element name="D" type="xs:int" dfdl:length="2"/&gt; &lt;!-- having value 1 --&gt;</span>]
+----
+
+The above are colorized to highlight the corresponding bits in the data below.
+
+In a format where dfdl:bitOrder is 'mostSignificantBitFirst':
+
+[source%unnumbered,subs="+macros"]
+----
+              pass:[<span style="color:#0070C0">011</span>]pass:[<span style="color:#FF0000">00010 01</span>]pass:[<span style="color:#00B050">0101</span>]pass:[<span style="color:#7030A0">01</span>]
+              pass:[<span style="color:#0070C0">AAA</span>]pass:[<span style="color:#FF0000">BBBBB BB</span>]pass:[<span style="color:#00B050">CCCC</span>]pass:[<span style="color:#7030A0">DD</span>]
+Significance  M      L M      L
+Bit Position  pass:[<span style="color:#00B0F0">123</span>]pass:[<span style="color:#FF0000">45678 12</span>]pass:[<span style="color:#00B050">3456</span>]pass:[<span style="color:#7030A0">78</span>]
+Byte Position ----1--- ----2---
+----
+
+As presented here, the bits corresponding to each element appear left to right,
+and all bits for an individual element are adjacent.
+Within the bits of an individual element the most significant bit is on the
+left, least significant on the right, consistent with the way the bytes
+themselves are presented.
+
+In contrast, in a format where dfdl:bitOrder is 'leastSignificantBitFirst':
+
+[source%unnumbered,subs="+macros"]
+----
+              pass:[<span style="color:#FF0000">01001</span>]pass:[<span style="color:#0070C0">011</span>] pass:[<span style="color:#7030A0">01</span>]pass:[<span style="color:#00B050">0101</span>]pass:[<span style="color:#FF0000">00</span>]
+              pass:[<span style="color:#FF0000">BBBBB</span>]pass:[<span style="color:#0070C0">AAA</span>] pass:[<span style="color:#7030A0">DD</span>]pass:[<span style="color:#00B050">CCCC</span>]pass:[<span style="color:#FF0000">BB</span>]
+Significance  M      L M      L
+Bit Position  pass:[<span style="color:#FF0000">87654</span>]pass:[<span style="color:#0070C0">321</span>] pass:[<span style="color:#7030A0">87</span>]pass:[<span style="color:#00B050">6543</span>]pass:[<span style="color:#FF0000">21</span>]
+Byte Position ----1--- ----2---
+----
+
+In the above presentation note how the bits of the element 'B' do not appear
+adjacent to each other.
+The most significant bits of byte N are adjacent to the least significant bits
+of byte N+1.
+
+==== Example Using Right-to-Left Display for 'leastSignificantBitFirst'
+
+When working exclusively with data having dfdl:bitOrder
+'leastSignificantBitFirst', it is useful to present data with bytes Right to
+Left.
+That is, with the bytes starting at byte 1 on the right and increasing to the
+left.
+
+[source%unnumbered,subs="+macros"]
+----
+              pass:[<span style="color:#7030A0">01</span>]pass:[<span style="color:#00B050">0101</span>]pass:[<span style="color:#FF0000">00 01001</span>]pass:[<span style="color:#0070C0">011</span>]
+              pass:[<span style="color:#7030A0">DD</span>]pass:[<span style="color:#00B050">CCCC</span>]pass:[<span style="color:#FF0000">BB BBBBB</span>]pass:[<span style="color:#0070C0">AAA</span>]
+Significance  M      L M      L
+Bit Position  pass:[<span style="color:#7030A0">87</span>]pass:[<span style="color:#00B050">6543</span>]pass:[<span style="color:#FF0000">21 87654</span>]pass:[<span style="color:#0070C0">321</span>]
+Byte Position ----2--- ----1---
+----
+
+With this reorientation, the bits of the element 'B' are once again displayed
+adjacently.
+Within the bits of an individual element the most significant bit is on the
+left, least significant on the right, consistent with the way the bytes
+themselves are presented.
+
+Often the specification documents for data formats using
+least-significant-bit-first bit order describe data using this Right-to-Left
+presentation style.
+
+==== dfdl:bitOrder and Grammar Regions
+
+When any grammar region appears before (to the left of) or after (to the right
+of) another grammar region in the grammar rules of Section
+<<dfdl-data-syntax-grammar>>, and the boundary between the two falls within a
+byte rather than on a byte boundary, then the dfdl:bitOrder determines which
+bits are occupied by the regions.
+
+In general, the notion of _before_ means occupying lower-numbered bit positions,
+and the bit positions are numbered according to dfdl:bitOrder.
+Hence, when dfdl:bitOrder is 'mostSignificantBitFirst', grammar regions that are
+before, occupy more-significant bits, and when dfdl:bitOrder is
+'leastSignificantBitFirst', grammar regions that are before occupy
+less-significant bits.

@@ -1,0 +1,345 @@
+[appendix]
+[[appendix-a-escape-scheme-use-cases]]
+== Appendix A: Escape Scheme Use Cases
+
+This appendix gives additional examples of escape schemes and how they affect
+interpretation of (parsing) or creation of (unparsing) the data stream.
+
+The tables can be interpreted as the physical data column on the right is parsed
+to obtain the logical data on the left, or the logical data on the left is
+unparsed to create the physical representation on the right.
+
+=== Escape Character Same as dfdl:escapeEscapeCharacter
+
+dfdl:escapeKind 'escapeCharacter', dfdl:escapeCharacter '/',
+dfdl:escapeEscapeCharacter '/', dfdl:separator ';', dfdl:extraEscapedCharacters
+'?'
+
+.Examples of Escape Character Same as dfdl:escapeEscapeCharacter
+[cols="1,1",options="header"]
+|===
+
+| Logical Data
+| Physical Data / Representation
+
+| *…………….………………..*
+| *…………….………………..*
+
+| *……………/.………………..*
+| *……………//.………………..*
+
+| *……………/.…/……………..*
+| *……………//.…//……………..*
+
+| *……………//.………………..*
+| *……………////.………………..*
+
+| */…………….………………..*
+| *//…………….………………..*
+
+| *…………….………………../*
+| *…………….………………..//*
+
+| */……………/.………………..*
+| *//……………//.………………..*
+
+| *……………./………………../*
+| *…………….//………………..//*
+
+| *…………….;………………..*
+| *……………./;………………..*
+
+| *……………./;………………..*
+| *…………….///;………………..*
+
+| *;…………….………………..*
+| */;…………….………………..*
+
+| *…………….?………………..*
+| *……………./?………………..*
+|===
+
+=== Escape Character Different from dfdl:escapeEscapeCharacter
+
+==== Example 1 - Separator ';'
+
+dfdl:escapeKind 'escapeCharacter', dfdl:escapeCharacter '/',
+dfdl:escapeEscapeCharacter
+'%%'footnote:[The '%' character needs escaping as part of DFDL syntax when used as a literal character in DFDL properties. It is escaped by doubling it, i.e., preceding it by another '%' character. In this examplethe dfdl:escapeEscapeCharacter is defined to be a single '%' character in the data stream.], dfdl:separator ';'', dfdl:extraEscapedCharacters '?'
+
+.Examples (1) of Escape Character Different from dfdl:escapeEscapeCharacter
+[cols="1,1",options="header"]
+|===
+
+| Logical Data
+| Physical Data / Representation
+
+| *…………….………………..*
+| *…………….………………..*
+
+| *……………/.………………..*
+| *……………%/.………………..*
+
+| *……………/.…/……………..*
+| *……………%/.…%/……………..*
+
+| *……………//.………………..*
+| *……………%/%/.………………..*
+
+| */…………….………………..*
+| *%/…………….………………..*
+
+| *…………….………………../*
+| *…………….………………..%/*
+
+| */……………/.………………..*
+| *%/……………%/.………………..*
+
+| *……………./………………../*
+| *…………….%/………………..%/*
+
+| *…………….;………………..*
+| *……………./;………………..*
+
+| *……………./;………………..*
+| *…………….%//;………………..*
+
+| *;…………….………………..*
+| */;…………….………………..*
+
+| *…………….?………………..*
+| *……………./?………………..*
+
+| *…………….%………………..*
+| *…………….%………………..*
+
+| *…………….%/………………..*
+| *…………….%%/………………..*
+
+| *……………./%………………..*
+| *…………….%/%………………..*
+|===
+
+==== Example 2 - Separator 'sep'
+
+Dfdl:escapeKind 'escapeCharacter', dfdl:escapeCharacter '/',
+dfdl:escapeEscapeCharacter '%%', dfdl:separator 'sep'
+
+.Examples (2) of Escape Character Different from dfdl:escapeEscapeCharacter
+[cols="1,1",options="header"]
+|===
+
+| Logical Data
+| Physical Data / Representation
+
+| *…………….sep………………..*
+| *……………./sep………………..*
+
+| *……………./sep………………..*
+| *…………….%//sep………………..*
+
+| *sep…………….………………..*
+| */sep…………….………………..*
+|===
+
+=== Escape Block with Different Start and End Characters
+
+dfdl:escapeKind 'escapeBlock', dfdl:escapeBlockStart '[', dfdl:escapeBlockEnd
+']', dfdl:escapeEscapeCharacter '%%', dfdl:separator ';', 
+dfdl:extraEscapedCharacters '?'
+
+.Examples of Escape Block with Different Start and End Characters
+[cols="1,1",options="header"]
+|===
+
+| Logical Data
+| Physical Data / Representation
+
+| *…………….………………..*
+| *…………….………………..*
+
+| *[…………….………………..*
+| *[[…………….………………..]*
+
+| *]…………….………………..*
+| *]…………….………………..*
+
+| *……………[.………………..*
+| *……………[.………………..*
+
+| *……………].………………..*
+| *……………].………………..*
+
+| *…………….………………..]*
+| *…………….………………..]*
+
+| *[[…………….………………..*
+| *[[[…………….………………..]*
+
+| *…………….………………..]]*
+| *…………….………………..]]*
+
+| *…………….[[………………..*
+| *…………….[[………………..*
+
+| *…………….]]………………..*
+| *…………….]]………………..*
+
+| *[…………….………………..]*
+| *[[…………….………………..%]]*
+
+| *[…………….]………………..*
+| *[[…………….%]………………..]*
+
+| *…………….[………………..]*
+| *…………….[………………..]*
+
+| *[……………[.………………..]*
+| *[[……………[.………………..%]]*
+
+| *[…………….]………………..]*
+| *[[…………….%]………………..%]]*
+
+| *[[…………….………………..]*
+| *[[[…………….………………..%]]*
+
+| *[…………….………………..]]*
+| *[[…………….………………..%]%]]*
+
+| *[[…………….………………..]]*
+| *[[[…………….………………..%]%]]*
+
+| *…………….%………………..*
+| *…………….%………………..*
+
+| *…………….%%………………..*
+| *…………….%%………………..*
+
+| *…………….%[………………..*
+| *…………….%[………………..*
+
+| *…………….%]………………..*
+| *…………….%]………………..*
+
+| *%[…………….………………..*
+| *%[…………….………………..*
+
+| *…………….………………..%]*
+| *…………….………………..%]*
+
+| *%[…………….………………..%]*
+| *%[…………….………………..%]*
+
+| *[…………%….………………..]*
+| *[[…………%….………………..%]]*
+
+| *[…………%]….………………..]*
+| *[[…………%%]….………………..%]]*
+
+| *…………….;………………..*
+| *[…………….;………………..]*
+
+| *…………….%;………………..*
+| *[…………….%;………………..]*
+
+| *[…………….;………………..]*
+| *[[…………….;………………..%]]*
+
+| *…………….?………………..*
+| *[…………….?………………..]*
+|===
+
+=== Escape Block with Same Start and End Characters
+
+dfdl:escapeKind 'escapeBlock', dfdl:escapeBlockStart ' ``+++&amp;apos;+++``',
+dfdl:escapeBlockEnd '``+++&amp;apos;+++``', dfdl:escapeEscapeCharacter '%',
+dfdl:separator ';',  dfdl:extraEscapedCharacters '?'
+
+.Examples of Escape Block with Same Start and End Characters
+[cols="1,1",options="header"]
+|===
+
+| Logical Data
+| Physical Data / Representation
+
+| *…………….………………..*
+| *…………….………………..*
+
+| *'…………….………………..*
+| *'%'…………….………………..'*
+
+| *……………'.………………..*
+| *……………'.………………..*
+
+| *…………….………………..'*
+| *…………….………………..'*
+
+| *''…………….………………..*
+| *'%'%'…………….………………..'*
+
+| *…………….………………..''*
+| *…………….………………..''*
+
+| *…………….''………………..*
+| *…………….''………………..*
+
+| *'…………….………………..'*
+| *'%'…………….………………..%''*
+
+| *'…………….'………………..*
+| *'%'…………….%'………………..'*
+
+| *…………….'………………..'*
+| *…………….'………………..'*
+
+| *'……………'.………………..'*
+| *'%'……………%'.………………..%''*
+
+| *''…………….………………..'*
+| *'%'%'…………….………………..%''*
+
+| *'…………….………………..''*
+| *'%'…………….………………..%'%''*
+
+| *''…………….………………..''*
+| *'%'%'…………….………………..%'%''*
+
+| *…………….%………………..*
+| *…………….%………………..*
+
+| *…………….%%………………..*
+| *…………….%%………………..*
+
+| *…………….%'………………..*
+| *…………….%'………………..*
+
+| *%'…………….………………..*
+| *%'…………….………………..*
+
+| *…………….………………..%'*
+| *…………….………………..%'*
+
+| *'…………….………………..%'*
+| *'%'…………….………………..%%''*
+
+| *%'…………….………………..%'*
+| *%'…………….………………..%'*
+
+| *'…………%….………………..'*
+| *'%'…………%….………………..%''*
+
+| *'…………%'….………………..'*
+| *'%'…………%%'….………………..%''*
+
+| *…………….;………………..*
+| *'…………….;………………..'*
+
+| *…………….%;………………..*
+| *'…………….%;………………..'*
+
+| *'…………….;………………..'*
+| *'%'…………….;………………..%''*
+
+| *…………….?………………..*
+| *'…………….?………………..'*
+|===

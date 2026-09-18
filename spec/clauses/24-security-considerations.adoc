@@ -1,0 +1,22 @@
+== Security Considerations
+
+All locations MUST be properly initialized before writing to prevent accidental
+(or purposeful) transmission of data in the unused parts of data formats.
+Even when a DFDL description does not specify that data must be written to a
+particular part of the output representation, a defined pattern MUST always be
+written.
+
+When unparsing data it is a Schema Definition Error if the representation
+properties that control filling and padding are not defined by the DFDL schema.
+The DFDL processor MUST fail if they are not defined so that it is certain no
+region of the output data has unspecified contents.
+
+If regions within a DFDL-described data object are encrypted, then when
+decrypting them proper means MUST be used to assure secure passage of passwords
+to the decrypting software.
+Such means are beyond the scope of the DFDL language specification.
+
+In addition, if encryption passwords/keys are stored in DFDL schema-described
+data, then proper means MUST be used to assure that the decrypted form of these
+passwords is not revealed.
+Such means are beyond the scope of the DFDL language specification.

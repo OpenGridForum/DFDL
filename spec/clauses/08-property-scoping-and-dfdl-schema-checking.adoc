@@ -1,0 +1,434 @@
+[[property-scoping-and-dfdl-schema-checking]]
+== Property Scoping and DFDL Schema Checking
+
+=== Property Scoping
+
+==== Property Scoping Rules
+
+This section describes the rules that govern the scope over which DFDL
+representation properties apply
+
+The scope of the representational properties on each of the component format
+annotations is given in <<dfdl-annotation-scoping>> DFDL annotation scoping
+
+[[dfdl-annotation-scoping]]
+.DFDL annotation scoping
+[cols="1,4",options="header"]
+|===
+
+| Annotation Point
+| Property Scope
+
+| Schema declaration
+| dfdl:format representation properties apply _lexically_ as default properties over all components in the schema
+
+| Element declaration
+| dfdl:element properties apply locally
+
+| Element reference
+| dfdl:element properties apply locally
+
+| Simple type definition
+| dfdl:simpleType properties apply locally
+
+| Sequence
+| dfdl:sequence properties apply locally
+
+| Choice
+| dfdl:choice properties apply locally
+
+| Group reference
+| dfdl:group properties apply locally
+|===
+
+Note: This table lists DFDL annotations on schema components.
+DFDL annotations can also be placed on other DFDL annotations, such as a
+dfdl:format within a dfdl:defineFormat, to provide a named reusable format
+definition.
+In this case the annotation applies only where the named format is referenced.
+
+DFDL representation properties explicitly defined on annotations, other than a
+dfdl:format on an xs:schema declaration, apply locally to that component only.
+The explicitly defined properties are the combination of any defined locally on
+the annotation and any defined on the dfdl:defineFormat annotation referenced by
+a local dfdl:ref property.
+When a property is defined both locally and on the dfdl:defineFormat, the
+locally defined property takes precedence.
+
+The dfdl:format annotation on the top level xs:schema declaration provides
+defaults for the DFDL representation properties at every DFDL-annotatable
+component contained in the schema document.
+They do not apply to any components in any included or imported schema document
+(these may have their own defaults).
+
+[[providing-defaults-for-dfdl-properties]]
+==== Providing Defaults for DFDL properties
+
+A dfdl:format annotation on the top level xs:schema declaration may provide
+defaults for some or all the DFDL representation properties at every annotation
+point within the schema document.
+The default properties may be specified in attribute or element form.
+(Short form is not allowed on the xs:schema element.)
+
+The dfdl:ref property is not a representation property so no default can be set.
+
+The dfdl:escapeSchemeRef property provides a default reference to a
+dfdl:defineEscapeScheme, the properties of dfdl:escapeScheme are not defaulted
+individually.
+
+DFDL representation properties defined explicitly on a component apply only to
+that component and override the default value of that property provided by a
+default format specified by an xs:schema dfdl:format annotation.
+
+The example below demonstrates the overriding of the encoding property.
+The  value ``++'ASCII'++`` is the default value for the ``++title++`` element,
+but then it is overridden by the locally defined ``++utf-8++`` value for the
+encoding property, which takes precedence.
+
+[source%unnumbered,xml]
+----
+<xs:schema>
+  <xs:annotation>
+    <xs:appinfo source="http://www.ogf.org/dfdl/">
+      <dfdl:format encoding="ASCII" />
+    </xs:appinfo>
+  </xs:annotation>
+
+  <xs:element name="book">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="title" type="xs:string">
+          <xs:annotation>
+            <xs:appinfo source="http://www.ogf.org/dfdl/">
+              <dfdl:element encoding="utf-8" />
+            </xs:appinfo>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="pages" type="xs:int"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
+----
+
+==== Combining DFDL Representation Properties from a dfdl:defineFormat
+
+The DFDL representation properties contained in a referenced dfdl:defineFormat
+are combined with any DFDL representation properties defined locally on a
+construct as if they had been defined locally.
+If the same property is defined locally in and in the referenced
+dfdl:defineFormat then the local property takes precedence.
+The combined set of explicit DFDL properties has precedence over any defaults
+set by a dfdl:format on the xs:schema.
+
+[source%unnumbered,xml]
+----
+<xs:schema>
+  <xs:annotation>
+    <xs:appinfo source="http://www.ogf.org/dfdl/">
+      <dfdl:defineFormat name='myFormat'>
+        <dfdl:format encoding="ASCII" />
+      </dfdl:defineFormat>
+    </xs:appinfo>
+  </xs:annotation>
+
+  <xs:element name="book">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="title" type="xs:string">
+          <xs:annotation>
+            <xs:appinfo source="http://www.ogf.org/dfdl/">
+              <dfdl:element ref='myFormat' encoding="UTF-8" />
+            </xs:appinfo>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="pages" type="xs:int"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
+----
+
+The example above demonstrates the overriding of an encoding property.
+The 'ASCII' format encoding from the 'myFormat' is overridden by the UTF-8
+format encoding, which as a locally defined property takes precedence.
+
+==== Combining DFDL Properties from References
+
+The DFDL properties from the following types of reference are combined using the
+rules below:
+
+* An xs:element and its referenced xs:simpleType restriction
+* An xs:element reference and its referenced global xs:element
+* An xs:group reference and an xs:sequence or xs:choice in its referenced global
+xs:group
+* An xs:simpleType restriction and its base xs:simpleType restriction
+
+Rules
+
+[arabic]
+. Create (a) an empty working set of "explicit" properties, and (b) an empty
+working set of "default" properties.
+. Move to the innermost schema component in the chain of references.
+. Assemble its applicable "explicit" properties from its local dfdl:ref (if
+present) and its local properties (if present), the latter overriding the former
+(that is, local wins over referenced).
+. Combine these with the current working set of "explicit" properties. It is a
+Schema Definition Error if the same property appears twice. The result is a new
+working set of "explicit" properties.
+. Obtain applicable "default" properties from a dfdl:format annotation on the
+xs:schema that contains the component (if such annotation is present).  Combine
+these with the current working set of "default" properties, the latter
+overriding the former (that is, inner wins). Result is a new working set of
+"default" properties.
+. Move to the schema component that references the current component and repeat
+starting at step 3. If there is no referencing component, carry out step 5 and
+then go to step 7.
+. Combine the resultant sets of properties. The "explicit" properties take
+priority, "defaults" only used when no "explicit" property is present. It is a
+Schema Definition Error if a required property is in neither the "explicit" nor
+the "default" working sets.
+
+The "Applicable" properties are all the DFDL properties that apply to that
+schema component.
+For example, all the DFDL properties that apply to a particular xs:simpleType
+(as defined by Section 13).
+
+[source%unnumbered,xml]
+----
+<xs:simpleType name="newType">
+  <xs:annotation>
+    <xs:appinfo source="http://www.ogf.org/dfdl/">
+      <dfdl:simpleType alignment="16"/>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:restriction base="xs:integer">
+    <xs:maxInclusive value="10"/>
+  </xs:restriction>
+</xs:simpleType>
+
+<xs:element name="testElement1" type="newType">
+  <xs:annotation>
+    <xs:appinfo source="http://www.ogf.org/dfdl/">
+      <dfdl:element representation="binary"/>
+    </xs:appinfo>
+  </xs:annotation>
+</xs:element>
+----
+
+The locally defined dfdl:alignment property with value '16' from the
+xs:simpleType 'newType' is combined with the locally defined dfdl:representation
+property with value 'binary' and applied to element 'testElement1',
+
+[source%unnumbered,xml]
+----
+<xs:simpleType name="otherNewType">
+  <xs:annotation>
+    <xs:appinfo source="http://www.ogf.org/dfdl/">
+      <dfdl:simpleType alignment="64"/>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:restriction base="newType">
+    <xs:maxInclusive value="5"/>
+  </xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name="newType">
+  <xs:annotation>
+    <xs:appinfo source="http://www.ogf.org/dfdl/">
+      <dfdl:simpleType representation='binary'/>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:restriction base="xs:int">
+    <xs:maxInclusive value="10"/>
+  </xs:restriction>
+</xs:simpleType>
+----
+
+The locally defined dfdl:representation property with value 'binary' is combined
+with the locally defined dfdl:alignment property with value '64' from the
+xs:simpleType restriction 'otherNewType'.
+
+[source%unnumbered,xml]
+----
+<xs:sequence>
+  <xs:element ref="testElement1">
+    <xs:annotation>
+      <xs:appinfo source="http://www.ogf.org/dfdl/">
+        <dfdl:element binaryNumberRep ="binary"/>
+      </xs:appinfo>
+    </xs:annotation>
+  </xs:element>
+</xs:sequence>
+
+<xs:element name="testElement1" type="newType">
+  <xs:annotation>
+    <xs:appinfo source="http://www.ogf.org/dfdl/">
+      <dfdl:element representation="binary"/>
+    </xs:appinfo>
+  </xs:annotation>
+</xs:element>
+
+<xs:simpleType name="newType">
+  <xs:annotation>
+    <xs:appinfo source="http://www.ogf.org/dfdl/">
+      <dfdl:simpleType alignment="16"/>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:restriction base="xs:int">
+    <xs:maxInclusive value="10"/>
+  </xs:restriction>
+</xs:simpleType>
+----
+
+The locally defined dfdl:alignment property with value '16' from the
+xs:simpleType 'newType' is combined with the locally defined dfdl:representation
+property with value 'binary' and locally defined dfdl:binaryNumberRep with a
+value of 'binary'
+
+[source%unnumbered,xml]
+----
+<!-- SCHEMA1 -->
+<xs:schema targetNamespace="" xmlns:tns1="http://tns1">
+
+  <xs:annotation>
+    <xs:appinfo source="http://www.ogf.org/dfdl/">
+      <dfdl:format encoding="ASCII" byteOrder="littleEndian"
+                initiator="" terminator=""
+                sequenceKind="ordered"  />
+    </xs:appinfo>
+  </xs:annotation>
+
+  <xsd:import namespace="http://tns2" schemaLocation="SCHEMA2.xsd"/>
+
+  <xs:element name="book">
+    <xs:complexType>
+      <xs:group ref="tns2:ggrp1" dfdl:separator=","></xs:group>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>
+----
+
+[source%unnumbered,xml]
+----
+<!-- SCHEMA2 -->
+<xs:schema targetNamespace="" xmlns:tns2="http://tns2">
+
+  <xs:annotation>
+    <xs:appinfo source="http://www.ogf.org/dfdl/">
+      <dfdl:format encoding="UTF-8" byteOrder="littleEndian"
+                initiator=""
+                sequenceKind="ordered"  />
+    </xs:appinfo>
+  </xs:annotation>
+
+  <xs:group name="ggrp1" >
+    <xs:sequence dfdl:separatorPosition="infix" >
+      <xs:element name="customer" type="xs:string"
+              dfdl:length="8" dfdl:lengthKind="explicit" />
+    </xs:sequence>
+  </xs:group>
+</xs:schema>
+----
+
+The DFDL properties applied to the xs:sequence in xs:group "ggrp1" in SCHEMA2
+when referenced from the group reference in SCHEMA1 are
+
+[arabic]
+. dfdl:separator "," from the group reference in SCHEMA1
+. dfdl:separatorPosition "infix" from the group declaration in SCHEMA2
+. dfdl:encoding "UTF-8", dfdl:initiator ''"  from the default dfdl:format
+annotation in SCHEMA2
+. dfdl:terminator ""   from the default dfdl:format annotation in SCHEMA1
+
+=== DFDL Schema Checking
+
+When the DFDL schema itself contains an error, it implies that the DFDL
+processor cannot process data because the DFDL schema is not meaningful.
+All conforming DFDL processors MUST detect all Schema Definition Errors and MUST
+issue appropriate diagnostic messages.
+The behavior of a DFDL processor after a Schema Definition Error is detected is
+out of scope for this specification.
+There is no centralized listing of the Schema Definition Errors; they are
+defined throughout this specification.
+
+When a Schema Definition Error can be detected _statically_, that is given only
+the schema, it is desirable, though not required by the DFDL 1.0 specification,
+that diagnostic messages SHOULD be issued before any data are processed.
+However, because some representation properties may obtain their values from the
+data, not all Schema Definition Errors can be detected without reference to data
+so some Schema Definition Error diagnostics MAY of necessity be issued once data
+is being processed.
+
+The expression language included within DFDL is strongly, statically type
+checkable.
+This means that type checking of expressions MAY be performed statically, that
+is, without processing data, and implementations are encouraged to perform this
+checking statically so that _Static Type Errors_ (Schema Definition Errors
+having to do with type inconsistencies) can be detected before processing data.
+
+==== Schema Component Constraint: Unique Particle Attribution
+
+The term _particle_ is used in XSD to refer to a schema component that can have
+dimension (XSD minOccurs and/or XSD maxOccurs) expressed on it.
+In DFDL only local element declarations and element references are particles.
+
+A DFDL processor MUST implement the Schema Component Constraint: Unique Particle
+Attribution defined in _XML Schema Part 1: Structures_ [<<a-xsdl-part1,XSDLV1>>]
+that applies to the DFDL schema subset.
+
+Two elements *overlap* if
+
+* They are both element declaration particles whose declarations have the same
+name and target namespace.
+
+A schema violates the unique attribution constraint if it contains two particles
+which overlap and which either
+
+* are both in the particles of a _choice_ group.
+
+or
+
+* either describes adjacent information items in an xs:sequence and the first
+has XSD minOccurs less than XSD maxOccurs.
+
+==== Optional Checks and Warnings
+
+* A DFDL processor that only implements a DFDL parser does not have to perform
+Schema Definition Error checking for properties that are solely used when
+unparsing, though it is RECOMMENDED that it does so for portability reasons.
+* A DFDL processor that does not implement some optional DFDL language features
+does not have to check properties or annotations needed by those optional
+language features but MUST issue a warning that an unrecognized property or
+annotation has been encountered.
+* A DFDL processor MUST NOT check global element declarations nor type or group
+definitions as they may legitimately be incomplete due to properties intended to
+be supplied based on scoping rules and the context at the point of use. There
+are two exceptions to this, which MUST be checked:
+.. Global simple type definitions that are referenced by the dfdl:prefixLengthType property
+.. Global element declarations that are the document root.
+
+Some situations suggest likely errors, but a DFDL processor cannot be certain.
+In these situations, a DFDL processor MAY issue warnings to assist a DFDL schema
+author in identifying likely errors.
+An important case of this is when the DFDL processor encounters a schema
+component and annotation where there are explicitly properties that are not
+relevant to the component as defined.
+Depending on the specifics of the component and property the DFDL processor MUST
+take certain actions.
+If the:
+
+* Property is not applicable to the component's DFDL annotation.
+** Schema Definition Error. Example is dfdl:lengthKind on xs:sequence.
+
+However, for these situations, the DFDL processor MAY take certain actions:
+
+* Property is not applicable because of simple type.
+** Warning (optional). Example is dfdl:calendarPatternKind on xs:string.
+* Property is not applicable because of another DFDL property setting.
+** Warning (optional). Example is dfdl:binaryNumberRep when dfdl:representation
+is text.
+* Invalid value for a property that is unused or ignored.
+** Warning (optional). Example is dfdl:lengthKind is not 'explicit' but
+dfdl:length is an expression and that expression contains invalid syntax.

@@ -1,0 +1,49 @@
+[appendix]
+[[appendix-b-rationale-for-single-assignment-variables]]
+== Appendix B: Rationale for Single-Assignment Variables
+
+DFDL is intended to be a description language.
+That is, the capture of a data format should be as descriptive/declarative as
+possible.
+
+An additional quite critical goal for DFDL is that it allows high-performance
+implementations, including use of parallel processing wherever possible.
+
+DFDL contains an expression language with variables for use in creating
+parameterized DFDL schemas.
+
+However, the way variables can be used in DFDL is quite constrained.
+Specifically, the variables are single-assignment.
+This is a form of immutable object (See <<a-immutable,[Immutable]>>).
+
+Single-assignment variables solve a number of problems.
+
+First, they keep the schema more declarative, because the name of a variable
+represents a value, not a location.
+Before assignment, the value is not yet known, after the assignment the value is
+known, but the consumer of the value need only know the name and need not be
+aware of the mechanism by which it gets its value or when.
+
+Second, single-assignment variables avoid over-constraining the implementation,
+thereby preserving the potential for high-performance and parallel processing.
+
+Some digression is useful here: Any variable creates a data dependency in order
+of processing.
+The part of the schema reading/using the variable's value depends upon the data
+value coming from the part of the schema providing that value.
+This kind of data dependency is inherent and inescapable.
+Values must be created before they can be used.
+
+However, if one considers a variable to be a location that can be assigned
+repeatedly, then things are more complex because there is not only data
+dependency on the value (one part of the schema writes the location, another
+reads that location), but there is dependency in the other direction: one must
+read the location before it can be used again for the _next_ value.
+This is usually called anti-dependency.
+Anti-dependency is the enemy of high-performance and parallel execution.
+It forces specific and artificial sequential ordering on things that is due to
+the way variable names are allocated to storage locations.
+
+If variables are single-assignment only, then only data-dependencies exist.
+Anti-dependencies don't exist, and implementations are free to work in any way
+consistent with the (inescapable) data dependencies.image:images/image6.gif[]

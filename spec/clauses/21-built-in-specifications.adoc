@@ -1,0 +1,5 @@
+== Built-in Specifications
+
+For convenience, a standard set of named DFDL format definitions MAY be provided
+with DFDL processors by implementations.
+These built-in format definitions may be imported by DFDL schema authors.
