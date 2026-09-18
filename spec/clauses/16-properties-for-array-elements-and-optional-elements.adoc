@@ -1,0 +1,335 @@
+[[properties-for-array-elements-and-optional-elements]]
+== Properties for Array Elements and Optional Elements
+
+These properties are for array elements (XSD maxOccurs >1 or unbounded) or
+optional elements (XSD minOccurs 0 and XSD maxOccurs 1).
+The properties handle a logical one-dimensional array of any simple or complex
+type.
+
+.Properties for Array Elements and Optional Elements
+[cols="1,5",options="header"]
+|===
+
+| Property Name
+| Description
+
+| occursCountKind
+a| Enum
+
+Specifies how the actual number of occurrences is to be established.
+
+Valid values 'fixed', 'expression', 'parsed', 'implicit' ,'stopValue'.
+
+'fixed' means use the XSD maxOccurs property.
+
+'expression' means use the dfdl:occursCount property.
+
+'parsed' means that the number of occurrences is determined solely by
+speculative parsing.
+
+'implicit' means that the number of occurrences is determined by speculative
+parsing in conjunction with the XSD minOccurs and XSD maxOccurs properties.
+
+'stopValue' means look for a mandatory logical stop value which signifies the
+end of the occurrences.
+
+These values are described in detail in Section
+<<the-dfdl-occurscountkind-property>>.
+
+Annotation: dfdl:element
+
+| occursCount
+a| DFDL Expression
+
+Specifies the number of occurrences of the element.
+
+Required only when dfdl:occursCountKind is 'expression'.
+
+This property is computed by way of an expression which returns a non-negative
+integer.
+The expression must not contain forward references to elements which have not
+yet been processed.
+
+Annotation: dfdl:element,
+
+| occursStopValue
+a| List of DFDL Logical Values
+
+A whitespace separated list of logical values that specify  the alternative
+logical stop values for the element.
+
+Required only when dfdl:occursCountKind is 'stopValue'.
+
+When parsing then if an occurrence of the element has a logical value that
+matches one of the values in this list then the parser MUST NOT expect any more
+occurrences of the element.
+
+On unparsing the first value is inserted as an additional final occurrence in
+the array after all the occurrences in the Infoset have been output.
+
+The dfdl:occursStopValue property must not be empty string.
+
+Annotation: dfdl:element
+|===
+
+When XSD minOccurs 1 and XSD maxOccurs 1, the above properties are not used, and
+the behavior is as if dfdl:occursCountKind is 'fixed' as described in Section
+<<dfdl-occurscountkind-fixed>>.
+
+[[the-dfdl-occurscountkind-property]]
+=== The dfdl:occursCountKind property
+
+[[dfdl-occurscountkind-fixed]]
+==== dfdl:occursCountKind 'fixed'
+
+The enum 'fixed' should be used when the number of occurrences is always the
+same.
+The number is provided by the XSD maxOccurs property.
+
+When parsing, maxOccurs occurrences are expected in the data.
+It is a Processing Error if less than maxOccurs occurrences are found or
+defaulted.
+The parser stops looking for occurrences when maxOccurs have been found or
+defaulted.
+When maxOccurs is 0, no occurrences are looked for in the data.
+
+When unparsing, maxOccurs occurrences are expected in the Infoset.
+It is a Processing Error if less than maxOccurs occurrences are found or
+defaulted.
+The processor stops looking for more occurrence in the Infoset after maxOccurs
+occurrences have been found.
+When maxOccurs is 0, no occurrences are looked for in the Infoset or written.
+
+It is a Schema Definition Error if XSD minOccurs is not equal to XSD maxOccurs.
+
+==== dfdl:occursCountKind 'implicit'
+
+The enum 'implicit' should be used when the number of occurrences is to be
+established using speculative parsing, and there are lower and upper bounds to
+control the speculation.
+The bounds are provided by the XSD minOccurs and XSD maxOccurs properties.
+
+When parsing, up to maxOccurs occurrences are expected in the data.
+It is a Processing Error if less than XSD minOccurs occurrences are found or
+defaulted.
+The parser stops looking for occurrences when either XSD minOccurs have been
+found or defaulted and speculative parsing does not find another occurrence, or
+XSD maxOccurs have been found or defaulted.
+When XSD maxOccurs is 0, no occurrences are looked for in the data.
+
+When unparsing, up to XSD maxOccurs occurrences are expected in the Infoset.
+It is a Processing Error if less than XSD minOccurs occurrences are found or
+defaulted.
+The processor stops looking for more occurrences in the Infoset after XSD
+maxOccurs occurrences have been found.
+When XSD maxOccurs is 0, no occurrences are looked for in the Infoset or
+written.
+
+==== dfdl:occursCountKind 'parsed'
+
+The enum 'parsed' should be used when the number of occurrences is to be
+established solely using speculative parsing.
+
+When parsing, any number of occurrences is expected in the data.
+The parser stops looking for occurrences when speculative parsing does not find
+another occurrence.
+If validation is enabled, it is a Validation Error if less than XSD minOccurs
+occurrences are found or defaulted, or greater than XSD maxOccurs occurrences
+are found.
+
+When unparsing, any number of occurrences is expected in the Infoset.
+If validation is enabled, it is a Validation Error if less than XSD minOccurs
+occurrences are found or defaulted, or if more than XSD maxOccurs occurrences
+are found.
+
+==== dfdl:occursCountKind 'expression'
+
+The enum 'expression' should be used when the number of occurrences is
+calculated by evaluating a DFDL expression.
+
+When parsing, the dfdl:occursCount expression is evaluated and provides the
+number of occurrences expected in the data.
+It is a Processing Error if less than dfdl:occursCount occurrences are found or
+defaulted.
+The parser stops looking for occurrences when dfdl:occursCount occurrences have
+been found.
+If validation is enabled, it is a Validation Error if less than XSD minOccurs
+occurrences are found or defaulted, or more than XSD maxOccurs occurrences are
+found.
+When dfdl:occursCount is 0, no occurrences are looked for in the data.
+
+When unparsing, any number of occurrences are expected in the Infoset.
+If validation is enabled, it is a Validation Error if less than XSD minOccurs
+occurrences are found or defaulted, or if more than XSD maxOccurs occurrences
+are found.
+The dfdl:occurs expression is not evaluated.
+The 'count' is the number of occurrences in the augmented Infoset.
+
+It is a Schema Definition Error if dfdl:occursCount is not provided or in scope.
+
+==== dfdl:occursCountKind 'stopValue'
+
+The enum 'stopValue' should be used when the end of the array is signaled by an
+occurrence having a logical value that is equal to one of the specified 'stop
+values'.
+
+When parsing, any number of occurrences is expected in the data, followed by an
+occurrence which is a stop value as specified by dfdl:occursStopValue.
+It is a Processing Error if a stop value occurrence is not found in the data
+(including when there are zero other occurrences).
+The parser stops looking for occurrences once a stop value has been found.
+If validation is enabled, it is a Validation Error if less than XSD minOccurs
+occurrences are found or defaulted, or more than XSD maxOccurs occurrences are
+found, not including the stop value.
+
+When unparsing, the behavior is the same as for 'parsed', with the addition that
+a stop value occurrence is output after the last Infoset occurrence.
+If dfdl:occursStopValue provides multiple stop values then the first is used.
+
+The stop value itself is *not* added to the Infoset when parsing.
+It is a Processing Error if a stop value is found in the Infoset when unparsing.
+(This ensures that the array can be reparsed, as the stop value is placed
+automatically and only at the end.)
+
+It is a Schema Definition Error if dfdl:occursStopValue is not provided or in
+scope.
+
+It is a Schema Definition Error if the type of the element is complex.
+
+It is a Schema Definition Error if any of the stop values provided by
+dfdl:occursStopValue do not conform to the simple type of the element.
+
+=== Default Values for Arrays
+
+When parsing, required occurrences that have empty representation may trigger
+the application of a default value, as described in Section
+<<element-defaults-when-parsing>> Element Defaults When Parsing.
+
+When unparsing, required occurrences that are missing from the Infoset may
+trigger the application of a default value, as described in Section
+<<element-defaults-when-unparsing>> Element Defaults When Unparsing.
+
+The application of default values is *not* dependent on dfdl:occursCountKind,
+only on whether the occurrence is required or optional, whether there is a
+default value specified, and whether the data contains the empty representation
+(parsing) or is missing (unparsing).
+Section <<element-defaults>> Element Defaults contains the details.
+
+=== Arrays with DFDL Expressions
+
+If the value of a DFDL property of an array element (other than
+dfdl:occursCount) is given by a DFDL Expression, then the expression MUST be
+re-evaluated for each occurrence of the element in case the value changes.
+
+=== Points of Uncertainty
+
+Arrays can have points of uncertainty depending on the value of
+dfdl:occursCountKind.
+See Section <<resolving-points-of-uncertainty>> Resolving Points of Uncertainty
+for details.
+
+=== Arrays and Sequences
+
+In some situations, arrays of elements and sequence groups of elements seem to
+be similar; however, there is no notion of the array itself independent of its
+contained elements.
+Arrays are distinctly different from sequence groups in this way.
+
+A sequence can have its own initiator, and a complex element having that
+sequence as its content can also have its own initiator, so one can express two
+different initiators.
+
+Unlike a sequence group, an array does not have its own initiator, terminator,
+or alignment.
+Those properties apply to each element occurrence of the array.
+To give an alignment, initiator, separator, or terminator to an entire array one
+must enclose the element declaration for the array in a sequence group and
+specify the alignment, separator, initiator, and terminator on the sequence
+group.
+
+=== Forward Progress Requirement
+
+An array is potentially unbounded if any of the following are true:
+
+* dfdl:occursCountKind is 'stopValue'
+* dfdl:occursCountKind is 'parsed'
+* dfdl:occursCountKind is 'implicit' and XSD maxOccurs is unbounded
+
+To prevent an infinite loop, the parsing of an array that is potentially
+unbounded MUST terminate when the parsing of an occurrence makes no forward
+progress.
+This is detected when the following are true:
+
+* The occurrence is a point of uncertainty;
+* The position in the data does not move during the parsing of the occurrence
+(including any associated Separator, PrefixSeparator or PostfixSeparator
+region);
+* The occurrence is known-to-exist with empty representation or nil
+representation.
+
+In this situation, no forward progress occurs, and no way of ever detecting the
+end of the array is possible.
+
+Upon termination of the array, any Infoset items already added to the array are
+retained except when dfdl:occursCountKind is 'stopValue' in which case this
+results in a Processing Error because the stop value will never be encountered.
+
+Further, to prevent unnecessary consumption of resources for large bounded
+values of XSD maxOccurs, the parsing of an array must similarly terminate when
+the following are true:
+
+* dfdl:occursCountKind is 'implicit';
+* The occurrence is a point of uncertainty;
+* The position in the data does not move during the parsing of the occurrence
+(including any associated Separator, PrefixSeparator, or PostfixSeparator
+region);
+* The occurrence is known to exist with empty representation.
+
+In this situation no forward progress occurs, and nothing is being added to the
+infoset.
+Note that this differs from the above array termination because nil
+representation does not cause detection of this lack of forward progress as
+nilled element items are added to the Infoset, and the array eventually
+terminates when it contains XSD maxOccurs occurrences.
+
+=== Parsing Occurrences with Non-Normal Representation
+
+When parsing a single array, it is possible to extract occurrences that have
+different representations (nil, empty, normal, absent) although with some values
+of dfdl:lengthKind certain combinations of representations are not possible.
+
+Occurrences with nil representation are added to the Infoset with *[nilled]*
+member true.
+
+Occurrences with empty representation may or may not be added to the Infoset, as
+described in Section <<element-defaults>>.
+If a required occurrence is not added to the Infoset, it may be a Processing
+Error, dependent on dfdl:occursCountKind as described in Section
+<<the-dfdl-occurscountkind-property>>.
+
+Occurrences with absent representation are not added to the Infoset.
+For a required occurrence it may be a Processing Error, dependent on
+dfdl:occursCountKind as described in Section
+<<the-dfdl-occurscountkind-property>>.
+
+=== Sparse Arrays
+
+Consider parsing an array where optional occurrences with empty representation
+are present in the data, but there are also later optional occurrences present
+with normal representation.
+Such an array is called a 'sparse array'.
+
+If the indices of the occurrences are significant and need to be preserved, then
+the array may be modelled using an element with XSD nillable 'true',
+dfdl:nilKind 'literalValue', dfdl:nilValue '%ES;' and
+dfdl:nilValueDelimiterPolicy the same as dfdl:emptyValueDelimiterPolicy.
+The occurrences with empty representation now become occurrences with nil
+representation, and produce nil values in the Infoset, so the absolute positions
+of all occurrences are preserved.
+
+If the indices of the occurrences are not significant, then the array should be
+modelled using an element with XSD nillable 'false'.
+Optional occurrences with empty representation do not create items in the
+Infoset, so the absolute positions of any optional occurrences with normal
+representation are not preserved.
+Optional occurrences with empty representation are therefore skipped.

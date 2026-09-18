@@ -1,0 +1,535 @@
+[appendix]
+[[appendix-e-glossary-of-terms]]
+== Appendix E: Glossary of Terms
+
+*_Adjacent_* - Two _addressable units_ of the input/output stream are adjacent
+if they are at consecutive positions.
+
+*_Addressable Unit_* - This is the unit of storage that makes up the input or
+output stream holding the representation of the data. The units are bits, bytes,
+or characters.
+
+*_Annotation point_* - A location within a DFDL schema where DFDL annotation
+elements are allowed to appear.
+
+*_Applicable Properties_* - All the DFDL properties that apply to a given type
+of schema construct. For example, all the DFDL properties that apply to an
+xs:simpleType.
+
+*_Array_* - A set of adjacent elements whose XSD element declaration specifies
+the potential for it to have more than one occurrence (XSD maxOccurs > '1' or
+'unbounded'). Of course, any given array can have any number of element
+occurrences, including zero elements or exactly 1 element as long as the
+occurrence constraints are met. If XSD maxOccurs is 'unbounded' then there is no
+constraint to the maximum number of occurrences, though implementations may have
+implementation-defined maximum capabilities. An optional element (where XSD
+maxOccurs is '1', and XSD minOccurs is '0') is not considered to be an array as
+described in this document. Note that a sequence is not to be confused with an
+array. A sequence is a complex tuple type for an element; the children of a
+sequence can be of different types. All elements of an array have the same type
+and if the type is simple, then they have the same information item members
+except for the value member.
+
+*_Array Element_* – An element declaration or reference with XSD property
+maxOccurs > '1' or 'unbounded'.
+
+*_Augmented Infoset_* - When unparsing one begins with the DFDL schema and
+conceptually with the logical DFDL Infoset. As the values of items are filled in
+by defaulting, and by use of the DFDL outputValueCalc property (including on
+hidden items), these new item values augment the Infoset. The resulting Infoset
+is called the augmented Infoset.
+
+*_Binary_* - There are two meanings for this word depending on context.
+
+[arabic]
+. Data is divided into two broad categories of representations, which are _text_
+and _binary_. Hence, binary representation includes any kind of non-text
+representation.
+. Within binary (not text) data, one distinguishes base-10 representations which
+are called _packed decimal_, from base-2 representations which are called
+_binary_. The common _twos-complement_ representation used for signed integers
+is a base-2 binary representation.
+
+*_Binary Representation_* - Of type xs:hexBinary, or of other type with property
+dfdl:representation 'binary'. Note that type xs:string can never have binary
+representation.
+
+*_Bit Order_* - .Within a binary integer, if the most-significant bit is
+assigned bit position 1, then the bit order is _most-significant-bit first_. If
+the least-significant bit is assigned bit position 1, then the bit order is
+_least-significant-bit first_. When the bit order is most-significant-bit first,
+then the least-significant bit of byte N is considered to be adjacent to the
+most-significant bit of byte N+1. When the bit order is least-significant-bit
+first, then the most-significant bit of byte N is considered to be adjacent to
+the least-significant bit of byte N+1.
+
+*_Bit Position_* - The data stream is assumed to be a collection of
+consecutively numbered unsigned bytes. Each byte is a numeric value from 0
+to 255. The bits of a byte are referred to by their numerical significance as
+the 2^n^ bit, for _n_ from 0 to 7. Hence, the byte value 255 = 2^7^ {plus} 2^6^
+{plus} 2^5^ {plus} 2^4^ {plus} 2^3^ {plus} 2^2^ {plus} 2^1^ {plus} 2^0^. The
+2^7^-bit is the most-significant bit, and the 2^0^-bit is the least significant
+bit. The bits within each byte are assigned numbered bit positions 1 to 8
+according to the _bit order._  Given a bit-order, every bit in the data stream
+has a unique bit position.
+
+*_Bit String_* - The ordered set of bits from a first bit with _bit position_ N,
+to bit position N+M is a bit string of length M bits.
+
+*_Byte_* - The term "byte" refers to an 8-bit octet. Can also refer to an
+integer with value from 0 to 255 inclusive. Hexadecimal digit pairs are commonly
+used to illustrate byte values.
+
+*_CCSID_* - see Coded Character Set Identifier.
+
+*_Character_* - An ISO 10646 [<<a-iso10646,ISO10646>>] character having a unique
+character code as its identifier. This concept is independent of font, typeface,
+size, and style, so '*F*', '*F*', 'F', are all the same character 'F'.
+
+*_Character Code_* - The canonical integer used to identify a character in the
+ISO 10646 [<<a-iso10646,ISO10646>>] standards. This number uniquely identifies
+the character independently of the various ways it is represented by different
+_character set encodings_ of the character. For example: The '{' character known
+in Unicode [<<a-unicode,Unicode>>] as LEFT CURLY BRACKET has character code
+U+007B. In both ASCII and UTF-8 character set encodings the representation of
+this character is as a single byte _code point_
+pass-format:straightquotes[0x7B]. However, in EBCDIC-based character set
+encodings the representation of this same character code is the single byte code
+point pass-format:straightquotes[0xC0].
+
+*_Character Set_* - An abstract set of characters that are assigned (or mapped
+to) a representation by a particular character set encoding. For most character
+set encodings their character set is a subset of the Unicode character set.
+
+*_Character Set Encoding_* - Often abbreviated to just 'encoding'. A specific
+representation of a character set as bytes or bits of data. A character set
+encoding is usually identified by a standard character set encoding name or a
+recognized alias name, or by a coded character set identifier or CCSID
+[<<a-ccsid,CCSID>>]. These identifiers are standardized. The names and aliases
+are standardized by the IANA [<<a-iana,IANA>>] (where unfortunately, they are
+called character set names). CCSIDs are an industry standard. Examples of
+character set encoding names are UTF-8, USASCII, GB2312, ebcdic-cp-it,
+ISO-8859-5, UTF-16BE, Shift_JIS. There are also additional DFDL standard
+character set encodings, see _DFDL Standard Encoding._ The DFDL standard also
+allows for implementation-defined character set encodings to be supported.
+
+*_Character Width_* - The number of code units or alternatively the number of
+bytes or bits used to represent a character in a specific character set encoding
+is called the character width. Encodings are either fixed width (all characters
+encoded using the same width), or variable-width (different characters are
+encoded using different widths). For example, the UTF-32 character set encoding
+has 4-byte character width, whereas USASCII has a 1-byte character width. UTF-8
+is variable width, and any specific character in that encoding has width 1, 2,
+3, or 4 bytes. See also _Fixed-Width Character Encoding_ and _Variable-Width
+Character Encoding._
+
+*_Code Point_* - The integer that identifies a character within a character set
+encoding. A code point is represented by one or more code units.  When a
+character set is fixed width, then there is no distinction between a code unit
+and a code point. For Unicode character set encodings, there is no distinction
+between a character code and a code point. Examples:
+
+* € - character code U+20AC
+** IBM01148 encoding - the code point is pass-format:straightquotes[0x9F], and
+this encoding is fixed width so there is no distinction between the code point
+pass-format:straightquotes[0x9F] and the code unit
+pass-format:straightquotes[0x9F] that represents the encoded character.
+** UTF-8 encoding - there is no distinction between the character code
+pass-format:straightquotes[0x20AC] and the code point
+pass-format:straightquotes[0x20AC]. However, it is represented by 3 code units
+pass-format:straightquotes[0xE2] pass-format:straightquotes[0x82]
+pass-format:straightquotes[0xAC]
+
+*_Code Unit_* - When a character set encoding uses differing variable width
+representations for characters, the units making up these variable width
+representations are called code units. For example, the UTF-8 encoding uses
+between 1 and 4 code units to represent characters, and for UTF-8, the
+individual code units are single bytes. DFDL's interpretation of the UTF-16
+encoding is either fixed or variable width. When format property dfdl:utf16Width
+'variable' then UTF-16 is variable width and this encoding uses either one or
+two code units per character, but in this case each individual code unit is a
+16-bit value. When a character set is fixed width, then there is no distinction
+between a code unit and a code point.
+
+*_Coded Character Set Identifier_* (CCSID) - An alternate identifier of a
+character set encoding. Originally created by IBM, CCSIDs are a broadly used
+industry standard. See [<<a-ccsid,CCSID>>].]
+
+*_Component_* - A construct within a DFDL schema. These constructs include XSD
+element declarations, type definitions, group definitions, sequence definitions,
+choice definitions, element references, and group references. DFDL schema
+annotations are not components of the schema, rather they appear on components
+of the schema or on the top-level xs:schema element of a schema document.
+
+*_Content_* - The bits of the data stream data that are interpreted when parsing
+to compute the logical value of a simple type, and when unparsing are computed
+from the logical value for incorporation into the data stream.
+
+*_Content Model_* – One of 3 kinds of syntactic structure of XSD element
+declarations. The DFDL subset of XSD includes only empty, simple, and
+element-only content models, and not mixed content
+<<a-mixedcontent,[MixedContent]>>. An XSD element declaration for an element of
+complex type containing a xs:sequence element is said to have a sequence in its
+content model. (DFDL's usage is derived from Section 13.3 of <<walmsely,[]>>).
+
+*_Contiguous_* - An element has a contiguous representation if all parts of its
+representation are adjacent in the input/output stream. Most simple types have
+contiguous representations naturally. Groups containing elements that are
+themselves contiguous are also considered to have contiguous representations
+irrespective of alignment fill or padding of any kind that exists within the
+group. Similarly, arrays of elements that are themselves contiguous are also
+contiguous. An example of a non-contiguous representation would be a nillable
+element, where a flag is used to determine whether the element is nil, and the
+location of that flag is not adjacent to the value representation.
+
+*_Count_* - The number of occurrences of an element.
+
+*_Data Stream_* - Data where the format is being described by a DFDL schema.
+Often abbreviated to just "data" for short. This use of 'stream' implies only
+that there is a numbering scheme that specifies a unique _bit position_ for
+every bit within the data. This use of 'stream' does not imply anything about
+whether the data is persistently stored or not, nor does it imply anything about
+whether there are sequential or random-access capabilities for access to the
+data. When parsing, the data stream may be referred to as the input stream, and
+when unparsing the output stream.
+
+*_DBCS_* - See Double-Byte Character Set
+
+*_Decimal_* - This term is used several different ways distinguished by context:
+
+[arabic]
+. Base 10. When data has text representation, a decimal number has base-10
+digits.
+. Type xs:decimal - a logical type of number that has an integer component and
+an optional base-10 fractional component. This type subsumes all integer types,
+as they are of type xs:decimal but with the further restriction that the
+fractional part doesn't exist. Note that a base-10 fraction has different
+rounding properties than a base-2 or floating point numeric fraction; hence,
+xs:decimal is the type commonly used to represent currency/money in data.
+. Packed Decimal - A binary data representation. See separate glossary entry
+below.
+
+*_Defining Annotations_* - The annotation elements dfdl:defineFormat,
+dfdl:defineVariable, and dfdl:defineEscapeScheme
+
+*_Delimiter_* - A character or string used to separate, or mark the start and
+end of, items of data. In DFDL, dfdl:lengthKind 'delimited' scans the data for
+initiators, separators, and terminators.
+
+*_Delimiter scanning_* - When parsing, the process of scanning for a specific
+item in the input data which either marks the end of an item or the beginning of
+a subsequent item. Delimiter scanning also takes into account escape schemes so
+as to allow the delimiters to appear within data if properly escaped.
+
+*_DFDL_* – Data Format Description Language
+
+*_DFDL Infoset_* - The abstract data structure that must be provided:
+
+* To an invoking application by a DFDL parser when parsing DFDL-described data
+using a DFDL Schema;
+* To a DFDL unparser by an invoking application when generating DFDL-described
+data using a DFDL Schema
+
+*_DFDL Processor_* - A program that uses DFDL schemas in order to process data
+described by them.
+
+*_DFDL Schema_* - An XML schema containing DFDL annotations to describe data
+format and using only the DFDL subset of the XSD language. This includes all
+included and imported schemas taken together. This also includes both the XSD
+declarations and definitions and the DFDL definitions provided in the top-level
+DFDL annotations.
+
+*_DFDL Standard Encoding_* - A character set for which there is no IANA name or
+CCSID but the name and definition of which DFDL implementations must agree on.
+See <<appendix-d-dfdl-standard-encodings>> Appendix D: DFDL Standard Encodings.
+
+*_Double-Byte Character Set_* (DBCS) - A character set encoding where each
+character code consists of one code unit which uses exactly 2 bytes.
+
+*_Dynamic extent_* - This is a characteristic of the data stream. When parsing
+data corresponding to a schema component, the collection of bits within the data
+stream that contain any aspect of the representation of that schema component
+make up the component's dynamic extent.
+
+*_Dynamic scope_* - This is a characteristic of parts of the DFDL schema. When a
+definition or declaration contains or references another declaration or
+definition, then the contained definition or declaration is said to be in the
+dynamic scope of the enclosing one. The important characteristic of dynamic
+scoping is that it traverses references. When parsing, the dynamic scope of an
+element declaration includes all definitions and declarations used as part of
+parsing that element.
+
+*_Element_* - A part of the data described by an element declaration in the
+schema and presented as an element information item in the Infoset.
+
+*_Encoding_* - See Character Set Encoding.
+
+*_Explicit Properties_* - The explicit properties are the combination of any
+defined locally on the annotation and any defined by a dfdl:defineFormat
+annotation referenced by a local dfdl:ref property.
+
+*_Fixed-Length Element_* - An element of specified length where dfdl:lengthKind
+is 'explicit' but dfdl:length is not an expression, or dfdl:lengthKind is
+'implicit' (of simple type only). Note that choice branches where
+dfdl:choiceLengthKind is 'explicit' are also referred to as 'fixed-length' but
+are not necessarily elements.
+
+*_Fixed-Width Character Encoding -_* A character set encoding where all
+characters are encoded using a single code unit for their representation. Note
+that a code unit is not necessarily a single byte. It may be more than one byte,
+or some number of bits less than a byte.  Examples of different fixed widths
+are:
+
+* 1-byte wide: ASCII, ebcdic-cp-us, iso-8859-1. See also SBCS (Single-Byte
+Character Set)
+* 2-bytes wide: UTF-16 when dfdl:utf16Width is 'fixed'. See also DBCS
+(Double-Byte Character Set)
+* 4-bytes wide: UTF-32.
+* 7-bits wide:
+X-DFDL-US-ASCII-7-BIT-PACKEDfootnote:[X-DFDL-US-ASCII-7-BIT-PACKED is a DFDL standard encoding, which uses the US-ASCII characters, but each code unit is stored occupying only 7 bits, not a whole 8-bit-byte. DFDL standard encodings are defined in a separate specification. See <<appendix-d-dfdl-standard-encodings>> Appendix D: DFDL Standard Encodings.].
+
+*_Fixed Array Element_* - An array element where XSD minOccurs is equal to XSD
+maxOccurs.
+
+*_Format Annotations_* - The annotation elements dfdl:format, dfdl:element,
+dfdl:simpleType, dfdl:group, dfdl:sequence, dfdl:choice, and dfdl:escapeScheme.
+
+*_Format Property_* – A DFDL property carried on a DFDL format annotation.
+
+*_Framing_* - The term used to describe the delimiters, length fields, and other
+parts of the data stream which are present and may be necessary to determine the
+length or position of the content of an element.
+
+*_Implementation-Defined_* *_Feature_* - A feature where the implementation has
+discretion in how it is performed, and the implementation MUST document how it
+is performed.
+
+*_Implementation-Dependent_* *_Feature_* - A feature where the implementation
+has discretion in how it is performed, but the implementation is not required to
+document how the feature is performed.
+
+*_Index_* - The position of an occurrence in a count, starting at 1.
+
+*_Infoset_* – See DFDL Infoset
+
+*_Item_* - A DFDL information set consists of a number of *information items*;
+or just _items_ for short.
+
+*_Least-Significant Bit_* - Often abbreviated to *_LSB_*. In a binary integer
+the least significant bit is the bit having the least place value. Within an
+8-bit unsigned byte, the bit with place value 2^0^ (or 1) is the least
+significant bit.
+
+*_Length_* - When discussing data items and their representations, the term
+'length' is used to refer to the measure of the size of the representation of an
+item in units of bits, bytes, or characters. The length of an array is the
+number of bits, bytes, or characters making up its representation, and has
+nothing to do with the number of occurrences of the array. Any element
+occurrence has length. Only array elements and optional elements have numbers of
+occurrences other than 1.
+
+*_Lexical scope_* - In a DFDL Schema document, the lexical scope of any element
+is the collection of schema declarations, definitions, and annotations contained
+within the element textually.
+
+*_Local properties_* – Local properties are the properties defined on an
+annotation in either short, attribute or element form
+
+*_Logical layer_* - A DFDL Schema with all the DFDL annotations ignored is an
+ordinary XSD schema. The logical structure described by this XSD is called the
+DFDL _logical layer_. The logical layer of a DFDL schema describes the DFDL
+Infoset of the data format.
+
+*_Most-Significant Bit_* - Often abbreviated to *_MSB_*. In a binary integer the
+most significant bit is the bit having the greatest place value. Within an 8-bit
+unsigned byte, the bit with place value 2^7^ is the most significant bit.
+
+*_Nibble_* - 4 bits. A single hexadecimal digit (0 to F) is often referred to as
+a nibble as it can be represented in exactly 4 bits.
+
+*_Node_* - The term Node is a shorter equivalent to Element Information Item of
+the DFDL Infoset described in Section <<element-information-items>> Element
+Information Items.
+
+*_Non-Representation Property_* – A format property that is not a representation
+property, specifically dfdl:ref, dfdl:hiddenGroupRef, dfdl:choiceBranchKey,
+dfdl:choiceDispatchKey, dfdl:inputValueCalc, dfdl:outputValueCalc. See also
+representation property.
+
+*_Occurrence_* - An instance of an element in the data, or an item in the DFDL
+Infoset.
+
+*_Optional Element_* - An element declaration or reference where XSD minOccurs
+is equal to zero.
+
+*_Optional Occurrence_* - An occurrence with an index greater than XSD
+minOccurs.
+
+*_Packed Decimal_* – A physical representation of a decimal and integer numbers
+where each digit is packed into one nibble (4 bits) of a byte. There are several
+variants, some also include a sign nibble, and some include a padding nibble.
+The term covers all the following enums of the dfdl:binaryNumberRep and
+dfdl:binaryCalendarRep properties – 'packed' (IBM 390 packed), 'bcd' (standard
+binary coded decimals or BCDs) and 'ibm4690Packed' (IBM 4690 packed).
+
+*_Parse_* - To construct an Infoset from the data stream representation of the
+data, based on its DFDL format description.
+
+*_Physical Layer_* - A DFDL Schema adds DFDL annotations onto an XSD language
+schema. The annotations describe the physical representation or _physical layer_
+of the data. The physical layer of a DFDL schema describes the representation in
+the data stream.
+
+*_Point of Uncertainty_* - A point of uncertainty occurs in the data stream when
+there is more than one schema component that might occur based on parsing up to
+that point. These arise from the xs:choice model group, use of optional and
+array elements with varying numbers of occurrences, use of unordered sequences,
+and use of sequences with floating elements.
+
+*_Representation Property_* - A format property that is used to describe a
+physical characteristic of a component. Such a property appliesies to one or
+more grammar regions of the component. See also non-representation property.
+
+*_Required Element_* _-_ An element declaration or reference where XSD minOccurs
+is greater than zero.
+
+*_Required Occurrence_* - An occurrence with an index less than or equal to XSD
+minOccurs.
+
+*_Required Property_* – A DFDL property that must have a value. The required
+properties for each schema component are listed in
+<<appendix-g-property-precedence,Appendix G: Property Precedence>>.
+
+*_Resolved Set of Annotations_* - When DFDL annotations appear on
+
+[arabic]
+. a simple type definition and the base simple type it references (recursively,
+if the base simple type also references another base simple type).
+. an element declaration and the simple type definition from (1) it references.
+. an element reference and the global element declaration from (2) it
+references.
+. a group reference and the global group definition it references
+
+They are combined, and the resulting set of annotations is referred to as the
+_resolved set of annotations_ for the schema component.
+
+*_SBCS_* - See Single Byte Character Set
+
+*_Scan_* – Examine the input data looking for delimiters such as separators and
+terminators or matches to regular expressions.
+
+*_Signed Number_* - The signed number types are byte, short, int, long, integer,
+float, and double. (The unsigned number types have names beginning with
+"unsigned", as well as nonNegativeInteger.) For type xs:decimal the decimal is
+considered signed if dfdl:decimalSigned="yes" and unsigned if
+dfdl:decimalSigned="no".
+
+*_Single-Byte Character Set_* (SBCS) - A character set encoding where each
+character code consists of one code unit which is exactly a single byte (8
+bits).
+
+*_Schema_* – see DFDL Schema.
+
+*_Schema Component Designator_* (SCD) - A notation for referring to one of the
+components of a DFDL Schema. This is a W3C Candidate Recommendation (inactive
+since Jan 2010). See
+link:http://www.w3.org/TR/xmlschema-ref[http://www.w3.org/TR/xmlschema-ref]. If
+not finalized, then a future DFDL specification version may define its own SCD
+syntax.
+
+*_Schema Definition Order_* – The order that the schema components are defined
+in a schema document.
+
+*_Specified Length_* - An item has specified length when dfdl:lengthKind is
+"implicit" (simple type only), "explicit", or "prefixed".
+
+*_Speculative Parsing_* – When the parser reaches a point of uncertainty it
+attempts to parse each option in turn until one is known-to-exist or
+known-not-to-exist.
+
+*_Statement Annotations_* - The annotation elements dfdl:assert,
+dfdl:discriminator, dfdl:setVariable, and dfdl:newVariableInstance. Also called
+DFDL Statements.
+
+*_Static Analysis_* - A DFDL Implementation can analyze a DFDL schema and
+determine the presence of many kinds of errors. This is called static analysis,
+compilation of the schema, or determining the presence of the error
+_statically_.
+
+*_Surrogate Pair_* - A Unicode character whose character code value is greater
+than pass-format:straightquotes[0xFFFF] can be encoded into variable-width
+UTF-16BE or UTF-16LE (which are variable-width encodings when the DFDL property
+dfdl:utf16Width is 'variable'). In this case the representation uses two
+adjacent code units each of which is called a surrogate, and the pair of which
+is called a surrogate pair.
+
+*_Target Length_* - When unparsing, the length (in dfdl:lengthUnits) of an
+item's representation is the target length. The length of the content
+corresponding to a logical data value in the Infoset may be shorter or longer
+than the target length, in which case padding or truncation may be necessary to
+make the logical data content conform to the target length. Rules for when
+padding and truncation occur, and how they are applied are specific to simple
+data types and are controlled by a number of DFDL format properties.
+
+*_Text_* - Consisting of characters in some character set encoding. Normally
+text data is expected to be human-readable, but many character set encodings
+contain special control characters that are not human-readable, but one calls
+data containing these control charaters _text_ anyway. The dfdl:encoding
+property is required in order to decode/encode the text.
+
+*_Text Representation_* - Of type xs:string, or of other types (except
+xs:hexBinary) with property dfdl:representation 'text'. Note that type
+xs:hexBinary never has text representation. This term specifically refers to the
+representation of the SimpleContent region being textual.
+
+*_Textual_* – Of type Text.
+
+*_Twos-Complement_* - A very common scheme for representing binary integers
+within data.  A positive integer consisting of N bits is represented as its
+base-2 absolute value. A negative integer is represented as the complement (all
+bits inverted) of its absolute value plus 1.
+
+*_Unicode_* - A character set defined by the Unicode Consortium, and
+standardized at the International Standards Organization (ISO) as ISO 10646.
+
+*_Unit_* - See Addressable Unit.
+
+*_Unpadded Length_* - This is the length of the content of an item of the
+Infoset, prior to any filling or padding which might be introduced due to
+dfdl:lengthKind "prefixed" or dfdl:lengthKind "explicit". It is equal to or
+smaller than the target length.
+
+*_Unparse_* - The process of recreating the data representation in a data stream
+of the Infoset according to its DFDL format description. The terms
+_marshalling_, and data _serialization_ are sometimes used, but they connote a
+sequentiality that is not necessarily the case when using DFDL.
+
+*Unsigned Number* - The unsigned number types have names beginning with
+"unsigned", as well as nonNegativeInteger. (The signed number types are byte,
+short, int, long, integer, float, and double.) For type xs:decimal the decimal
+is considered unsigned if dfdl:decimalSigned="no" and signed if
+dfdl:decimalSigned="yes".
+
+*_Validity_* - A DFDL Infoset is said to be valid with respect to a DFDL schema
+if each Infoset item is valid with respect to its corresponding DFDL schema
+component. Validity is about the Infoset and the values it holds. It is
+independent of the data representation when parsing or unparsing. See Section
+<<validation>> Validation, for a list of the specific value checks that are
+performed when validating a DFDL Infoset against a DFDL schema.
+
+*_Variable-Width Character Encoding_* - A character set encoding where
+characters are encoded using one or more code units for their representation
+depending on which specific character is being encoded. Examples with their
+ranges of varying width:
+
+* 1 to 4 bytes: UTF-8
+* 1 or 2 16-bit code units: UTF-16 when property dfdl:utf16Width is 'variable'
+* 1 or 2 bytes: Shift-JIS
+
+*_Well-Formed_* – A data stream is said to be well-formed with respect to a DFDL
+schema if a DFDL processor can parse the data into a DFDL Infoset, or there
+exists a DFDL Infoset such that a DFDL processor can unparse to that data
+stream. The validity of values in the Infoset is not necessary for data to be
+well-formed.
+
+*_Width_* - See Character Width.

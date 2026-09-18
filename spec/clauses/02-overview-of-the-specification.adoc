@@ -1,0 +1,58 @@
+== Overview of the Specification
+
+The sections of the specification are
+
+* <<notational-and-definitional-conventions>>, Notational and Definitional
+Conventions - provides definitions used throughout the specification. Note that
+terminology is defined at point of first use, but there is a complete Glossary
+in <<appendix-e-glossary-of-terms,Appendix E: Glossary of Terms>>.
+* <<the-dfdl-information-set-infoset>>, The DFDL Information Set
+(Infoset) - describes the abstract data structure produced by parsing data using
+a DFDL processor, and which is consumed by a DFDL processor when unparsing data.
+DFDL contains an expression language, and it is this data structure that the
+expression language operates on.
+* <<dfdl-schema-component-model>>, DFDL Schema Component Model describes the
+components that makes up a DFDL schema, and the subset of XML Schema that is
+used to express them.
+* Sections <<dfdl-syntax-basics>>, DFDL Syntax Basics and
+<<syntax-of-dfdl-annotation-elements>>, Syntax of DFDL Annotation
+Elements - describes the syntactic structure of DFDL annotations and introduces
+the purposes of the various annotations.
+* <<property-scoping-and-dfdl-schema-checking>>, Property Scoping and DFDL
+Schema Checking describes the way DFDL annotations that provide format
+properties are combined across the parts of the DFDL schema, and also describes
+static checking that is done on the DFDL schema.
+* <<dfdl-processing-introduction>>, DFDL Processing Introduction covers
+processing, including the core algorithms for parsing and unparsing data, as
+well as validation. It introduces the
+<<dfdl-data-syntax-grammar,DFDL Data Syntax Grammar>>, which captures the
+structure of data that can be described with DFDL, and which is referenced
+throughout the rest of the specification.
+* <<overview-representation-properties-and-their-format-semantic>>, Overview:
+Representation Properties and their Format Semantics provides an overview of,
+and Sections <<properties-common-to-both-content-and-framing>> to
+<<calculated-value-properties>> describe in detail, all the DFDL properties. The
+properties are organized as follows:
+** <<properties-common-to-both-content-and-framing,Common to both Content and Framing>> (see <<properties-common-to-both-content-and-framing>>)
+** <<framing,Common Framing, Position, and Length>> (see <<framing>>)
+** <<simple-types,Simple Type Content>> (see <<simple-types>> ) - This is the
+largest section as it covers properties for all the various simple types,
+starting with properties that apply to all simple types, then properties for all
+types with textual representation, and then proceeding through the types,
+covering textual and binary format properties for each type.
+** <<sequence-groups,Sequence Groups>> (see <<sequence-groups>> )
+** <<choice-groups,Choice Groups>> (see <<choice-groups>> )
+** <<properties-for-array-elements-and-optional-elements,Array (i.e., recurring) elements and optional elements>> (see <<properties-for-array-elements-and-optional-elements>> )
+** <<calculated-value-properties,Calculated Values>> (see
+<<calculated-value-properties>> )
+* <<dfdl-expression-language>>, DFDL Expression Language covers the
+XPath-derived expression language that is embedded in DFDL and is used for
+computing the values of many properties dynamically, as well as for calculated
+value elements, and assertion checking.
+* <<dfdl-regular-expressions-2>>, DFDL Regular Expressions, covers the regular
+expression language used when parsing to isolate elements within the data
+stream, as well as to check assertions.
+
+The remaining sections and appendices supply additional details of particular
+importance to implementors of DFDL, or they provide detail and reference
+material and are referenced from other parts of the specification.

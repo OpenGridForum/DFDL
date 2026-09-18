@@ -1,0 +1,92 @@
+[[dfdl-regular-expressions-2]]
+== DFDL Regular Expressions
+
+A DFDL regular expression may be specified for the dfdl:lengthPattern format
+property and the dfdl:testPattern property of the dfdl:assert and
+dfdl:discriminator annotations.
+DFDL regular expressions do not interpret DFDL entities.
+
+A DFDL regular expression is defined by a set of valid pattern characters.
+For portability, a DFDL regular expression pattern is restricted to the
+inclusive subset of the ICU regular expression [<<a-icuregex,ICURegex>>] and the
+pass-format:straightquotes[Java(R)] 7 regular expression
+[<<a-javaregex,JavaRegex>>] with the Unicode flags UNICODE_CASE and
+UNICODE_CHARACTER_CLASS turned on.
+DFDL regular expressions thereby conform to Unicode Technical Standard
+pass-format:straightquotes[#18] , Unicode Regular Expressions, level 1
+[<<a-unicoderegex,UnicodeRegex>>].
+
+The following regular expression constructs are not common to both ICU and
+pass-format:straightquotes[Java(R)] 7 and it is a Schema Definition Error if any
+are used in a DFDL regular expression:
+
+.Disallowed Regular Expression Constructs
+[cols="2,6,1",options="header"]
+|===
+
+| Construct
+| Meaning
+| Notes
+
+| \N{UNICODE CHARACTER NAME}
+| Match the named character
+| ICU only
+
+| \X
+| Match a Grapheme Cluster
+| ICU only
+
+| \Uhhhhhhhh
+| Match the character with the hex value hhhhhhhh
+| ICU only
+
+| (pass-format:straightquotes[?#] pass-format:straightquotes[...] )
+| Free-format comment
+| ICU only
+
+| (?w-w)
+| UREGEX_UWORD - Controls the behaviour of \b in a pattern
+| ICU only
+
+| (?d-d)
+| UNIX_LINES - Enables Unix lines mode
+| Java 7 only
+
+| (?u-u)
+| UNICODE_CASE - Enables Unicode-aware case folding
+| Java 7 only (1)
+
+| (?U-U)
+| UNICODE_CHARACTER_CLASS - Enables the Unicode version of predefined character classes and POSIX  character classes
+| Java 7 only (2)
+|===
+
+Notes:
+
+[arabic]
+. Implementations using Java 7 MUST set flag UNICODE_CASE by default to match
+ICU.
+. Implementations using Java 7 MUST set flag UNICODE_CHARACTER_CLASS by default
+to match ICU.
+
+Additionally, the behaviour of the word character construct (\w) is not
+consistent in ICU and Java 7. In Java 7 \w is
+
+[%plain%unnumbered,cols="1,9"]
+|===
+|  | {empty}[\p\{Alpha}\p{gc=Mn}\p{gc=Me}\p{gc=Mc}\p\{Digit}\p{gc=Pc}],
+|===
+
+which is a larger set than ICU where \w is
+
+[%plain%unnumbered,cols="1,9"]
+|===
+|  | {empty}[\p\{Ll}\p\{Lu}\p\{Lt}\p\{Lo}\p\{Nd}].
+|===
+
+The use of \w is not recommended in DFDL regular expressions in conjunction with
+Unicode encodings, and an implementation MUST issue a warning if such usage is
+detected.
+
+Character properties are detailed by the Unicode Regular Expressions
+[<<a-unicoderegex,UnicodeRegex>>].

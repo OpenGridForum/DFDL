@@ -1,0 +1,1321 @@
+[[syntax-of-dfdl-annotation-elements]]
+== Syntax of DFDL Annotation Elements
+
+This section describes the syntax of each of the DFDL annotation elements along
+with discussion of their basic meanings.
+
+The DFDL annotation elements are listed in <<dfdl-annotation-elements>> DFDL
+Annotation Elements
+
+[[component-format-annotations]]
+=== Component Format Annotations
+
+A data format can be 'used' or put into effect for a part of the schema by use
+of the component format annotation elements.
+
+There are specific annotations for each type of schema component that supports
+only the representation properties applicable to that component.
+The table below gives the specific annotation for each schema component.
+
+.DFDL Component Format Annotations
+[cols="1,1",options="header"]
+|===
+
+| Schema component
+| DFDL annotation
+
+| xs:choice
+| dfdl:choice
+
+| xs:element
+| dfdl:element
+
+| xs:element reference
+| dfdl:element
+
+| xs:group reference
+| dfdl:group
+
+| xs:schema
+| dfdl:format
+
+| xs:sequence
+| dfdl:sequence
+
+| xs:simpleType
+| dfdl:simpleType
+|===
+
+Below are a few examples followed by sections which describe each kind of
+annotation element in detail.
+Here is an example of DFDL component format annotation, specifically use of
+dfdl:element on an xs:element declaration:
+
+[source%unnumbered,xml]
+----
+<xs:schema ...>
+  ...
+  <xs:element name="root">
+    <xs:annotation>
+      <xs:appinfo source="http://www.ogf.org/dfdl/">
+
+        <dfdl:element ref="aBaseConfig"
+                     representation="text"
+                     encoding="UTF-8"/>
+
+      </xs:appinfo>
+    </xs:annotation>
+  </xs:element>
+  ...
+</xs:schema>
+----
+
+Note that in the above, the DFDL annotation lives inside this surrounding
+context of xs:annotation and xs:appinfo elements.
+This is just the standard XSD way of doing annotations.
+The source attribute is an identifier that separates different families of
+appinfo annotations.
+
+Belowa dfdl:format annotation is used inside a dfdl:defineFormat annotation to
+define a named reusable set of format properties that can be referenced from
+another format annotation.
+
+[source%unnumbered,xml]
+----
+<xs:schema ...>
+  ...
+  <xs:annotation>
+    <xs:appinfo source="http://www.ogf.org/dfdl/">
+
+      <dfdl:defineFormat name="baseFormat">
+        <dfdl:format byteOrder="bigEndian" encoding="ascii"/>
+      </dfdl:defineFormat>
+
+    </xs:appinfo>
+  </xs:annotation>
+  ...
+</xs:schema>
+----
+
+A dfdl:format annotation at the top level of a schema, that is as an annotation
+child element on the xs:schema, provides a set of default properties for the
+lexically enclosed schema document.
+(See <<providing-defaults-for-dfdl-properties>> Providing Defaults for DFDL
+properties.)
+
+[source%unnumbered,xml]
+----
+<xs:schema ...>
+  ...
+  <xs:annotation>
+    <xs:appinfo source="http://www.ogf.org/dfdl/">
+
+        <dfdl:format
+           representation="binary"
+           byteOrder="bigEndian"
+           encoding="ascii"/>
+
+    </xs:appinfo>
+  </xs:annotation>
+  ...
+</xs:schema>
+----
+
+==== Property Binding Syntax
+
+A _property binding_ is the syntax in a DFDL schema that gives a value to a
+property.
+Up to this point, the examples in this document have all used a specific syntax
+for property bindings called _attribute form_.
+However, the format properties may be specified in any one of three forms:
+
+[arabic]
+. Attribute form
+. Element form
+. Short form
+
+A DFDL property may be specified using any of the forms with the following
+exceptions:
+
+* The dfdl:ref property may be specified in attribute or short form
+* The dfdl:escapeSchemeRef property may be specified in attribute or short form
+* The dfdl:hiddenGroupRef  property may be specified in attribute or short form
+* The dfdl:prefixLengthType property may be specified in attribute or short form
+* Short form must not be used on the xs:schema element.
+
+It is a Schema Definition Error if the same property is specified in more than
+one form.
+That is, there is no priority ordering where one form takes precedent over
+another.
+
+===== Property Binding Syntax: Attribute Form
+
+Within the format annotation elements are bindings for properties of the form:
+
+[source%unnumbered,xml]
+----
+ PropertyName="Value"
+----
+
+For example:
+
+[source%unnumbered,xml]
+----
+  <xs:annotation>
+    <xs:appinfo source="http://www.ogf.org/dfdl/">
+      <dfdl:format encoding="utf-8" separator="%NL;"/>
+    </xs:appinfo>
+  </xs:annotation>
+----
+
+This is the attribute form of property binding.
+
+[[property-binding-syntax-element-form]]
+===== Property Binding Syntax: Element Form
+
+The representation properties can sometimes have complex syntax, so an element
+form for individual property bindings is provided to ease syntactic expression
+difficulties.
+The annotation element is dfdl:property and it has one attribute 'name' which
+provides the name of the property.
+
+For example:
+
+[source%unnumbered,xml]
+----
+  <xs:annotation>
+    <xs:appinfo source="http://www.ogf.org/dfdl/">
+      <dfdl:format>
+        <dfdl:property name='encoding'>utf-8</dfdl:property>
+        <dfdl:property name='separator'>%NL;</dfdl:property>
+      </dfdl:format>
+    </xs:appinfo>
+  </xs:annotation>
+----
+
+Element form is mostly used for properties that themselves contain the quotation
+mark characters and escape characters so that the property value can be
+expressed without concerns about confusion with the XSD syntax use of these same
+characters.
+XML's CDATA encapsulation can be used to allow malformed XML and mismatched
+quotes to be easily used as representation property values.
+
+Here is an example where a delimiter has a syntax that overlaps with what XML
+comments look like.
+Use of XML's CDATA bracketing makes this less clumsy to express than using XML
+escape characters:
+
+[source%unnumbered,xml]
+----
+<dfdl:property name='initiator'><[CDATA[<!-- ]]></dfdl:property>
+----
+
+===== Property Binding Syntax: Short Form
+
+To save textual clutter, short-form syntax for format annotations is also
+allowed on xs:element, xs:sequence, xs:choice, xs:group (for group references
+only), and xs:simpleType schema elements.
+The xs:schema element cannot carry short-form annotations; attribute form must
+be used instead.
+Attributes which are in the namespace
+'link:http://www.ogf.org/dfdl/dfdl-1.0/[http://www.ogf.org/dfdl/dfdl-1.0/]' and
+whose local name matches one of the DFDL representation properties are assumed
+to be equivalent to specific DFDL attribute form annotations.
+
+For example, the two forms below are equivalent in that they describe the same
+data format.
+The first is the short form of the second:
+
+[source%unnumbered,xml]
+----
+<xs:element name="elem1">
+  <xs:complexType>
+     <xs:sequence dfdl:separator="%HT;" >
+       ...
+     </xs:sequence>
+  </xs:complexType>
+</xs:element>
+
+<xs:element name="elem2">
+  <xs:complexType>
+    <xs:sequence>
+      <xs:annotation><xs:appinfo source="http://www.ogf.org/dfdl/">
+        <dfdl:sequence separator="%HT;" />
+      </xs:appinfo></xs:annotation>
+      ...
+    </xs:sequence>
+  </xs:complexType>
+</xs:element>
+----
+
+Another example:
+
+[source%unnumbered,xml]
+----
+<xs:sequence dfdl:separator=",">
+  <xs:element name="elem1" type="xs:int" maxOccurs="unbounded"
+                       dfdl:representation="text"
+                       dfdl:textNumberRep="standard"
+                       dfdl:initiator="["
+                       dfdl:terminator="]"/>
+
+  <xs:element name="elem2" type="xs:int" maxOccurs="unbounded">
+    <xs:annotation><xs:appinfo source="http://www.ogf.org/dfdl/">
+      <dfdl:element representation="text"
+                    textNumberRep="standard"
+                    initiator="["
+                    terminator="]"/>
+    </xs:appinfo></xs:annotation>
+  </xs:element>
+</xs:sequence>
+----
+
+The above show use of short-form property binding syntax for annotating elements
+and sequences.
+
+==== Empty String as a Representation Property Value
+
+DFDL provides no mechanism to un-set a property.
+Setting a representation property's value to the empty string doesn't remove the
+value for that property but sets it to the empty string value.
+This may not be a valid value for certain properties.
+
+For example, in non-delimited text data formats, it is sensible for the
+separator to be defined to be the empty string.
+This turns off use of separator delimiters.
+For many other string-valued properties, it is a Schema Definition Error to
+assign them the empty string value.
+For example, the character set encoding property (dfdl:encoding) cannot be set
+to the empty string.
+
+[[dfdl-defineformat-reusable-data-format-definitions]]
+=== dfdl:defineFormat - Reusable Data Format Definitions
+
+To avoid error-prone redundant expression of properties in DFDL schemas, a
+collection of DFDL properties can be given a name so that they are reusable by
+way of a _format reference_.
+
+One or more dfdl:defineFormat annotation elements can appear within the
+annotation children of the xs:schema element.
+
+Each dfdl:defineFormat has a required name attribute.
+
+The construct creates a named data format definition.
+The value of the name attribute is of XML type NCName.
+The format name becomes a member of the schema's target namespace.
+These names must be unique within the namespace.
+
+If multiple format definitions have the same 'name' attribute, in the same
+namespace, then it is a Schema Definition Error.
+
+Here is an example of a format definition:
+
+[source%unnumbered,xml]
+----
+<xs:schema ...>
+  <xs:annotation>
+    <xs:appinfo source="http://www.ogf.org/dfdl/">
+      <dfdl:defineFormat name="baseFormat" >
+        <dfdl:format representation="text"
+                     encoding="ascii" />
+      </dfdl:defineFormat>
+    </xs:appinfo>
+  </xs:annotation>
+  ...
+</xs:schema>
+----
+
+A dfdl:defineFormat serves only to supply a named definition for a format for
+reuse from other places.
+It does not cause any use of the representation properties it contains to
+describe any actual data.
+
+==== Using/Referencing a Named Format Definition: The dfdl:ref Property
+
+A named, reusable, dfdl:defineFormat definition is used by referring to its name
+from a format annotation using the dfdl:ref property.
+For example, here this annotation reuses the format named 'baseFormat':
+
+[source%unnumbered,xml]
+----
+<dfdl:element ref="baseFormat" encoding="ebcdic-cp-us" />
+----
+
+The behavior of this dfdl:element definition is as if all representation
+properties defined by the named dfdl:defineFormat definition for 'baseFormat'
+were instead written directly on this dfdl:element annotation; however, these
+are superseded by any representation properties that are defined here such as
+the dfdl:encoding property in the example above.
+
+==== Inheritance for dfdl:defineFormat
+
+A dfdl:defineFormat declaration can inherit from another named format definition
+by use of the dfdl:ref property of the dfdl:format annotation.
+This allows a single-inheritance hierarchy that reuses definitions.
+When one definition extends another in this way, any property definitions
+contained in its direct elements override those in any inherited definition.
+
+An example format that inherits from a named format definition is:
+
+[source%unnumbered,xml]
+----
+<xs:schema ...>
+  <xs:annotation>
+    <xs:appinfo source="http://www.ogf.org/dfdl/">
+      <dfdl:defineFormat name="myConfig" >
+        <dfdl:format representation="binary"
+                     ref="baseFormat" />
+      </dfdl:defineFormat>
+    </xs:appinfo>
+  </xs:annotation>
+  ...
+</xs:schema>
+----
+
+Conceptually, the dfdl:ref inheritance chains can be _flattened_ and removed by
+copying all inherited property bindings and then superseding those for which
+there is a local binding.
+Throughout this document the discussion assumes inheritance is fully flattened.
+That is, all dfdl:ref inheritance is first removed by flattening before any
+other examination of properties occurs.
+
+It is a Schema Definition Error if use of the dfdl:ref property results in a
+circular path.
+
+[[the-dfdl-defineescapescheme-defining-annotation-element]]
+=== The dfdl:defineEscapeScheme Defining Annotation Element
+
+One or more dfdl:defineEscapeScheme annotation elements can appear within the
+annotation children of the xs:schema.
+The dfdl:defineEscapeScheme elements may only appear as annotation children of
+the xs:schema.
+
+The order of their appearance does not matter, nor does their position relative
+to other annotation or non-annotation children of the xs:schema.
+
+Each dfdl:defineEscapeScheme has a required name attribute and a required
+dfdl:escapeScheme child element.
+
+The construct creates a named escape scheme definition.
+The value of the name attribute is of XML type NCName.
+The name becomes a member of the schema's target namespace.
+These names must be unique within the namespace among escape schemes.
+
+If multiple dfdl:defineEscapeScheme definitions have the same 'name' attribute,
+in the same namespace, then it is a Schema Definition Error.
+
+Each dfdl:defineEscapeScheme annotation element contains a dfdl:escapeScheme
+annotation element as detailed below.
+
+Here is an example of an escapeScheme definition:
+
+[source%unnumbered,xml]
+----
+<xs:schema ...>
+  <xs:annotation>
+    <xs:appinfo source="http://www.ogf.org/dfdl/">
+      <dfdl:defineEscapeScheme name="myEscapeScheme">
+        <dfdl:escapeScheme escapeKind="escapeCharacter"
+                           escapeCharacter='/' />
+        ...
+      </dfdl:defineEscapeScheme>
+    </xs:appinfo>
+  </xs:annotation>
+  ...
+</xs:schema>
+----
+
+A dfdl:defineEscapeScheme serves only to supply a named definition for a
+dfdl:escapeScheme for reuse from other places.
+It does not cause any use of the representation properties it contains to
+describe any actual data.
+
+==== Using/Referencing a Named escapeScheme Definition
+
+A named, reusable, escape scheme is used by referring to its name from a
+dfdl:escapeSchemeRef property on an element.
+For example:
+
+[source%unnumbered,xml]
+----
+<xs:element name="foo" type="xs:string" >
+  <xs:annotation><xs:appinfo source="http://www.ogf.org/dfdl/">
+    <dfdl:element representation="text"
+                  escapeSchemeRef="myEscapeScheme"/>
+  </xs:appinfo></xs:annotation>
+</xs:element>
+----
+
+[[the-dfdl-escapescheme-annotation-element]]
+=== The dfdl:escapeScheme Annotation Element
+
+The dfdl:escapeScheme annotation is used within a dfdl:defineEscapeScheme
+annotation to group the properties of an escape scheme and allows a common set
+of properties to be defined that can be reused.
+
+An escape scheme defines the properties that describe the text escaping rules in
+force when data such as text delimiters are present in the data.
+There are two variants on such schemes,
+
+* The use of a single escape character to cause the next character to be
+interpreted literally. The escape character itself is escaped by the
+escape-escape character.
+* The use of a pair of escape strings to cause the enclosed group of characters
+to be interpreted literally. The ending escape string is escaped by the
+escape-escape character.
+
+On parsing, the escape scheme is applied after pad characters are trimmed and on
+unparsing before pad characters are added.
+
+DFDL does not perform any substitutions for ampersand notations like
+``+++&amp;lt;+++``.
+
+The properties of dfdl:escapeScheme are defined in Section
+<<the-dfdl-escapescheme-properties>> The dfdl:escapeScheme Properties.
+
+[[the-dfdl-assert-statement-annotation-element]]
+=== The dfdl:assert Statement Annotation Element
+
+The dfdl:assert statement annotation element is used to assert truths about a
+DFDL model that are used when parsing to ensure that the data are well-formed.
+They are not used when unparsing.
+
+There is a critical distinction between dfdl:assert checks and XSD validation
+checks.
+
+The dfdl:assert checks guide parsing and the creation of the DFDL Infoset by
+causing Processing Errors on failure.
+Conversely XSD validation inspects the values within the Infoset.
+Validation failures never affect whether the parser is able to produce a DFDL
+Infoset.
+
+The dfdl:assert checks are performed even when validation is off.
+
+Examples of dfdl:assert elements are below:
+
+[source%unnumbered,xml]
+----
+<dfdl:assert message="Value is not zero." test="{ ../x eq 0}" />
+
+<dfdl:assert message="Precondition violation." >
+        {../x le 0 and ../y ne "-->" and ../y ne "<!—" }
+</dfdl:assert>
+
+<dfdl:assert message="Postcondition violation."  testKind='expression'>
+     {../x ne "'"}
+</dfdl:assert>
+----
+
+==== Properties for dfdl:assert
+
+A dfdl:assert annotation contains a test expression or a test pattern.
+The dfdl:assert is said to be successful if the test expression evaluates to
+true or the test pattern returns a non-zero length match, and unsuccessful if
+the test expression evaluates to false or the test pattern returns a zero length
+match.
+An unsuccessful dfdl:assert causes either a Processing Error or a Recoverable
+Error to be issued, as specified by the failureType property of the dfdl:assert.
+
+The testKind property specifies whether an expression or pattern is used by the
+dfdl:assert.
+The expression or pattern can be expressed as an attribute or as a value.
+
+[source%unnumbered,xml]
+----
+<dfdl:assert  test="{test expression}" />
+
+<dfdl:assert>
+  {test expression}
+</dfdl:assert>
+----
+
+It is a Schema Definition Error if a test expression or test pattern is
+specified in more than one form.
+
+It is a Schema Definition Error if both a test expression and a test pattern are
+specified.
+
+A dfdl:assert can appear as an annotation on these schema components:
+
+* an xs:element declaration (local or global)
+* an xs:element reference
+* an xs:group reference
+* an xs:sequence
+* an xs:choice
+* an xs:simpleType definition (local or global)
+
+If the resolved set of statement annotations for a schema component contains
+multiple dfdl:assert statements, then the subset with testKind 'pattern' are
+executed before the subset with testKind 'expression' (the default).
+However, within each subset the order of execution of the statements is not
+specified and is implementation dependent.
+
+If one of the resolved set of asserts for a schema component is unsuccessful,
+and the failureType of the assert is 'processingError', then no further asserts
+in the set are executed.
+
+.dfdl:assert properties
+[cols="1,6",options="header"]
+|===
+
+| Property Name
+| Description
+
+| testKind
+a| Enum (optional)
+
+Valid values are 'expression',  'pattern'
+
+Default value is 'expression'
+
+Specifies whether a DFDL expression or DFDL regular expression pattern is used
+in the dfdl:assert.
+
+Annotation: dfdl:assert
+
+| test
+a| DFDL Expression
+
+Applies when testKind is 'expression'
+
+A DFDL expression that evaluates to true or false.
+If the expression evaluates to true then parsing continues.
+If the expression evaluates to false then a Processing Error is raised.
+
+Any element referred to by the expression must have already been processed or
+must be a descendent of this element.
+
+If a Processing Error occurs during the evaluation of the test expression then
+the dfdl:assert also fails.
+
+It is a Schema Definition Error if testKind is 'expression' or not specified,
+and an expression is not supplied by either the value of the dfdl:assert element
+or the value of the test attribute.
+
+Annotation: dfdl:assert
+
+| testPattern
+a| DFDL Regular Expression
+
+Applies when testKind is 'pattern'
+
+A DFDL regular expression that is applied against the data stream starting at
+the data position corresponding to the beginning of the representation.
+Consequently, the framing (including any initiator) is visible to the pattern.at
+the start of the component on which the dfdl:assert is positioned.
+
+If the pattern matching of the regular expression reads data that cannot be
+decoded into characters of the current encoding, then the behavior is controlled
+by the dfdl:encodingErrorPolicy property.
+See Section <<property-dfdl-encodingerrorpolicy>>   Property
+dfdl:encodingErrorPolicy for details.
+
+If the length of the match is zero then the dfdl:assert evaluates to false and a
+Processing Error is raised.
+
+If the length of the match is non-zero then the dfdl:assert evaluates to true.
+
+If a Processing Error occurs during the evaluation of the test regular
+expression then the dfdl:assert also fails.
+
+It is a Schema Definition Error if testKind is 'pattern', and a pattern is not
+supplied by either the value of the dfdl:assert element or the value of the
+testPattern property.
+
+It is a Schema Definition Error if there is no value for the dfdl:encoding
+property in scope.
+
+It is a Schema Definition Error if dfdl:leadingSkip is other than 0.
+
+It is a Schema Definition Error if the dfdl:alignment is not 1 or 'implicit'
+
+Annotation: dfdl:assert
+
+| message
+a| String or DFDL Expression
+
+Defines text to be used as a diagnostic code or for use in an error message,
+when the assert is unsuccessful.
+
+The DFDL Expression must return type xs:string.
+Any element referred to by the message expression must have already been
+processed or must be a descendent of this element.
+There is special treatment for errors that occur while evaluating the message
+expression.
+See below for details.
+
+Annotation: dfdl:assert
+
+| failureType
+a| Enum (optional)
+
+Valid values are 'processingError', 'recoverableError'.
+
+Default value is 'processingError'.
+
+Specifies the type of failure that occurs when the dfdl:assert is unsuccessful.
+
+When 'processingError', a Processing Error is raised.
+
+When 'recoverableError', a Recoverable Error is raised.
+
+If an error occurs while evaluating the test expression, a Processing Error
+occurs, not a Recoverable Error.
+
+Recoverable Errors do not cause backtracking like Processing Errors.
+
+Annotation: dfdl:assert
+|===
+
+Example of a dfdl:assert with a message expression:
+
+[source%unnumbered,xml]
+----
+<dfdl:assert message="{ fn:concat('unknown case ', ../data1) }">
+{  if (...pred1...) then ...expr1...
+   else if (...pred2...) then ...expr2...
+   else fn:false()
+}
+</dfdl:assert>
+----
+
+The message specified by the message property is issued only if the dfdl:assert
+is unsuccessful, that is, the test expression  evaluates to false or the test
+pattern returns a zero-length match.
+If so, and the message property is an expression, the message expression is
+evaluated at that time.
+
+If a Processing Error or Schema Definition Error occurs while evaluating the
+message expression, a Recoverable Error is issued to record this error
+(containing implementation-dependent content), then processing of the assert
+continues as if there were no problem and in a manner consistent with the
+failureType property, but using an implementation-dependent substitute message.
+
+[[the-dfdl-discriminator-statement-annotation-element]]
+=== The dfdl:discriminator Statement Annotation Element
+
+DFDL discriminator statement annotations are used during parsing to:
+
+[arabic]
+. resolve _points of uncertainty_ (choices, optional elements, array repetition)
+that cannot be resolved by speculative parsing. See Section <<parser-overview>>
+Parser Overview.
+. remove ambiguity during speculative parsing
+. improve diagnostic behavior when a DFDL parser encounters malformed data.
+
+Discriminators are not used during unparsing.
+
+A DFDL discriminator may contain a test expression that evaluates to true or
+false.
+The discriminator is said to be successful if the test evaluates to true and
+unsuccessful (or fails) if the test evaluates to false.
+A discriminator may alternatively contain a test regular expression pattern and
+the discriminator is successful if the test pattern matches with non-zero length
+and is unsuccessful (or fails) if there is no match or a zero-length match.
+
+A discriminator determines the existence or non-existence of a schema component
+in the data stream.
+If the discriminator is successful, then the component is said to be _known to
+exist_, and any subsequent errors do not cause backtracking at the nearest point
+of uncertainty.
+Details of the behavior of a DFDL parser and the role of discriminators are
+given in Section <<parsing-algorithm>> Parsing Algorithm.
+
+Discriminators can also be used to force a resolution earlier during the parsing
+of a model group so that subsequent parsing errors are treated as Processing
+Errors of a known schema component rather than a failure to find that schema
+component.
+This may greatly improve the efficiency of DFDL parsing in some implementations,
+as well as improving the diagnostic information provided by a DFDL parser when
+given malformed data.
+
+Examples of dfdl:discriminator annotation are below :
+
+[source%unnumbered,xml]
+----
+<dfdl:discriminator>
+  { ../recType eq 0 }
+</dfdl:discriminator>
+
+<dfdl:discriminator test="{ ../recType eq 0}" />
+----
+
+When the discriminator's expression evaluates to "false", then it causes a
+Processing Error, and the discriminator is said to fail.
+
+==== Properties for dfdl:discriminator
+
+Within a dfdl:discriminator, the testKind property specifies whether an
+expression or pattern is used by the dfdl:discriminator.
+The expression or pattern can be expressed as an attribute or as a value.
+
+[source%unnumbered,xml]
+----
+<dfdl:discriminator test="{test expression}" />
+
+<dfdl:discriminator>
+    { test expression }
+</dfdl:discriminator>
+----
+
+It is a Schema Definition Error if the test expression or test pattern is
+specified in more than one form.
+
+It is a Schema Definition Error if both a test expression and a test pattern are
+specified.
+
+A dfdl:discriminator can be an annotation on these schema components:
+
+* an xs:element declaration (local or global)
+* an xs:element reference
+* an xs:group reference
+* an xs:sequence
+* an xs:choice
+* an xs:simpleType definition (local or global)
+
+The resolved set of statement annotations for a schema component can contain
+only a single dfdl:discriminator or one or more dfdl:assert annotations, but not
+both.
+To clarify: dfdl:assert annotations and dfdl:discriminator annotations are
+exclusive of each other.
+It is a Schema Definition Error otherwise.
+
+.dfdl:discriminator properties
+[cols="1,6",options="header"]
+|===
+
+| Property Name
+| Description
+
+| testKind
+a| Enum
+
+Valid values are 'expression', 'pattern'
+
+Default value is 'expression'
+
+Specifies whether a DFDL expression or DFDL regular expression is used in the
+dfdl:discriminator .
+
+Annotation: dfdl:discriminator
+
+| test
+a| DFDL Expression
+
+Applies when testKind is 'expression'
+
+A DFDL expression that evaluates to true or false.
+If the expression evaluates to true then the discriminator succeeds, and parsing
+continues.
+If the expression evaluates to false then the discriminator fails, and a
+Processing Error is raised.
+If a Processing Error occurs during the evaluation of the test expression then
+the discriminator also fails.
+
+Any element referred to by the expression must have already been processed or is
+a descendent of this element.
+
+The expression must have been evaluated by the time this element and its
+descendants have been processed or when a Processing Error occurs when
+processing this element or its descendants.
+
+It is a Schema Definition Error if testKind is 'expression' or not specified,
+and an expression is not supplied by either the value of the dfdl:discriminator
+element or the value of the test attribute.
+
+Annotation: dfdl:discriminator
+
+| testPattern
+a| DFDL Regular Expression
+
+Applies when testKind is 'pattern'
+
+A DFDL regular expression that is applied against the data stream starting at
+the data position corresponding to the beginning of the representation.
+Consequently, the framing (including any initiator) is visible to the pattern.at
+the start of the component on which the dfdl:discriminator is positioned.
+
+If the pattern matching of the regular expression reads data that cannot be
+decoded into characters of the current encoding, then the behavior is controlled
+by the dfdl:encodingErrorPolicy property.
+See Section <<property-dfdl-encodingerrorpolicy>>   Property
+dfdl:encodingErrorPolicy for details.
+
+If the length of the match is zero then the dfdl:discriminator evaluates to
+false and a Processing Error is raised.
+
+If the length of the match is non-zero then the dfdl:discriminator evaluates to
+true.
+
+It is a Schema Definition Error if testKind is 'pattern', and a pattern is not
+supplied by either the value of the dfdl:discriminator element or the value of
+the testPattern property.
+
+It is a Schema Definition Error if there is no value for the dfdl:encoding
+property in scope.
+
+It is a Schema Definition Error if dfdl:leadingSkip is other than 0.
+
+It is a Schema Definition Error if the dfdl:alignment is not 1 or 'implicit'
+
+Annotation: dfdl:discriminator
+
+| message
+a| String or DFDL Expression
+
+Defines text to be used as a diagnostic code or for use in an error message,
+when the discriminator is unsuccessful.
+
+The DFDL Expression must return type xs:string.
+Any element referred to by the message expression must have already been
+processed or must be a descendent of this element.
+There is special treatment for errors that occur while evaluating the message
+expression.
+See below for details.
+
+Annotation: dfdl:discriminator
+|===
+
+The message specified by the message property is issued only if the
+discriminator is unsuccessful, that is, the test expression  evaluates to false
+or the test pattern returns a zero-length match.
+If so, and the message property is an expression, the message expression is
+evaluated at that time.
+
+If a Processing Error or Schema Definition Error occurs while evaluating the
+message expression, a Recoverable Error is issued to record this error
+(containing implementation-dependent content), then processing of the
+discriminator continues as if there were no problem, but in the case of failure
+using an implementation-dependent substitute message.
+
+Examples of dfdl:discriminator annotations:
+
+[source%unnumbered,xml]
+----
+<xs:sequence>
+  <xs:choice>
+    <xs:element  name='branchSimple' >
+      <xs:annotation>
+        <xs:appinfo source="http://www.ogf.org/dfdl/">
+          <dfdl:discriminator test='{. eq "a"}'       />
+        </xs:appinfo>
+      </xs:annotation>
+    </xs:element>
+
+    <xs:element name='branchComplex' >
+      <xs:annotation>
+        <xs:appinfo source="http://www.ogf.org/dfdl/">
+          <dfdl:discriminator test='{./identifier eq "b"}' />
+        </xs:appinfo>
+      </xs:annotation>
+      <xs:complexType >
+         <xs:sequence>
+           <xs:element name='identifier'  />
+           ...
+         </xs:sequence>
+      </xs:complexType>
+    </xs:element>
+
+    <xs:element name='branchNestedComplex' >
+      <xs:annotation>
+       <xs:appinfo source="http://www.ogf.org/dfdl/">
+          <dfdl:discriminator test='{./Header/identifier eq "c"}'/>
+        </xs:appinfo>
+      </xs:annotation>
+      <xs:complexType >
+        <xs:sequence>
+          <xs:element name='Header'  />
+            <xs:complexType >
+              <xs:sequence>
+                <xs:element name='identifier'  />
+                ...
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:element>
+  </xs:choice>
+</xs:sequence>
+----
+
+[[dfdl-variable-annotations]]
+=== DFDL Variable Annotations
+
+_DFDL Variables_ provide a means for communication and parameterization within a
+DFDL schema.
+Use of variables increases the modularity of a schema by enabling some parts of
+a schema to be parameterized so that they are reusable.
+
+There are 3 DFDL annotation elements associated with DFDL variables:
+
+* dfdl:defineVariable - defines a variable and creates a global instance of it.
+* dfdl:newVariableInstance - creates a scoped instance of a variable.
+* dfdl:setVariable - assigns the value of a variable instance, which can be
+global or scoped.
+
+Variables are defined at the top-level of a schema and have a specific simple
+type.
+
+A distinction is made between the variable as defined, and an _instance_ of the
+variable where a value can be stored.
+
+The dfdl:defineVariable annotation defines the name, type, and optionally
+default value for the variable.
+It is like defining a class of variables, instances of which actually store
+values.
+The dfdl:defineVariable also introduces a single unique global instance of the
+variable.
+Additional instances may be allocated in a stack-like fashion using
+dfdl:newVariableInstance which causes new instances to come into existence upon
+entry to the scope of a model group, and these instances go away on exit from
+the same.
+
+DFDL variables only _vary_ in the sense that different instances of the same
+variable can have different values.
+A single instance of a variable only ever takes on a single value.
+Each variable instance is a _single-assignment_ location for a
+valuefootnote:[The rationale for single-assignment variables is to keep DFDL schemas _declarative_ by preventing variables from being used as algorithmic accumulators. See the <<appendix-b-rationale-for-single-assignment-variables,Appendix B: Rationale for Single-Assignment Variables>>.].
+Once a variable instance's value has been read, it can never be assigned again.
+If it has not yet been assigned, and its default value has not been read, then a
+variable instance can be assigned _once_ using dfdl:setVariable.
+
+Variables are used by referencing them in DFDL expressions by prefixing their
+QNames with '$'.
+
+More information about variables and how they work operationally is in Section
+<<variables>> Variables.
+The remaining sub-sections of this section focus only on the variable-related
+DFDL annotations and their syntax.
+
+==== dfdl:defineVariable Annotation Element
+
+A global variable is introduced using dfdl:defineVariable:
+
+[source%unnumbered,xml]
+----
+<dfdl:defineVariable
+    name = NCName
+    type? = QName
+      defaultValue? = logical value or dfdl expression
+      external? = 'false' | 'true' >
+  <!-- Contains: logical value or dfdl expression (default value) -->
+</dfdl:defineVariable>
+----
+
+The name of a newly defined variable is placed into the target namespace of the
+schema containing the annotation.
+Variable names are distinct from format and escape scheme names and so cannot
+conflict with them.
+A variable can have any type from the DFDL subset of XML schema simple types.
+If no type is specified, the type is xs:string.
+
+The defaultValue is optional.
+This is a literal value or an expression which evaluates to a constant, and it
+can be specified as an attribute or as the element value.
+If specified, the default value must match the type of the variable (otherwise
+it is a Schema Definition Error).
+If the defaultValue is given by an expression that expression must not contain
+any relative path (otherwise it is a Schema Definition Error).
+
+Note that the syntax supports both a defaultValue attribute and the default
+value being specified by the element value.
+Only one or the other may be present (otherwise it is a Schema Definition
+Error).
+To set the default value to "" (empty string), the defaultValue attribute syntax
+must be used, or the expression { "" } must be used as the element value.
+
+Note also that the value of the name attribute is an NCName (non-colon name
+pass-format:straightquotes[-] that is, may not have a prefix).
+The name of a variable is defined in the target namespace of the schema
+containing the definition.
+If multiple dfdl:defineVariable definitions have the same 'name' attribute in
+the same namespace then it is a Schema Definition Error.
+
+A default _instance_ of the variable is automatically created (with global
+scope) at the start of a DFDL parse or unparse.
+Additional instances of a variable can be created with the scope of other schema
+components.
+See Section <<the-dfdl-newvariableinstance-statement-annotation-element>> The
+dfdl:newVariableInstance Statement Annotation Element.
+
+The external property is optional.
+If not specified it takes the default value 'false'.
+If true, the value may be provided by the DFDL processor and this external value
+is used as the global default value overriding any defaultValue specified on the
+dfdl:defineVariable annotation.
+The mechanism by which the processor provides this value is
+_implementation-defined_.
+
+A variable instance gets its value either from the default value provided in the
+dfdl:defineVariable definition, from an external binding of the variable if the
+definition has the external attribute, from a dfdl:setVariable statement (See
+Section <<the-dfdl-setvariable-statement-annotation-element>>, The
+dfdl:setVariable Statement Annotation Element), or from the default value of a
+dfdl:newVariableInstance statement (See Section
+<<the-dfdl-newvariableinstance-statement-annotation-element>> The
+dfdl:newVariableInstance Statement Annotation Element.)
+
+There is no required order between dfdl:defineVariable and other schema level
+defining annotations or a dfdl:format annotation that may refer to the variable.
+
+A defaultValue expression MUST be evaluated before processing of the data stream
+begins.
+
+A defaultValue expression can refer to other variables but not to the Infoset
+(so no path locations).When a defaultValue expression references other
+variables, the referenced variables each must either have a defaultValue or be
+external.
+It is a Schema Definition Error otherwise.
+
+If a defaultValue expression references another variable then the
+single-assignment nature of variables prevents the referenced variable's value
+from ever changing, that is, it is considered to be a read of the variable's
+value, and once read, a variable's value cannot be changed.
+
+If a defaultValue expression references another variable and this causes a
+circular reference, it is a Schema Definition Error.
+
+It is a Schema Definition Error if the type of the variable is a user-defined
+simple type restriction.
+
+===== Examples
+
+[source%unnumbered,xml]
+----
+ <dfdl:defineVariable name="EDIFACT_DS" type="xs:string"
+                     defaultValue="," />
+
+<dfdl:defineVariable name="codepage" type="xs:string"
+                     external="true">utf-8</dfdl:defineVariable>
+----
+
+[[predefined-variables]]
+===== Predefined Variables
+
+The following variables are predefined, and their names are in the DFDL
+namespace (http://www.ogf.org/dfdl/dfdl-1.0/)
+
+.Pre-defined variables
+[cols="2,1,2,1",options="header"]
+|===
+
+| Name
+| Type
+| Default value
+| External
+
+| dfdl:encoding
+| xs:string
+| 'UTF-8'
+| true
+
+| dfdl:byteOrder
+| xs:string
+| 'bigEndian'
+| true
+
+| dfdl:binaryFloatRep
+| xs:string
+| 'ieee'
+| true
+
+| dfdl:outputNewLine
+| xs:string
+| '%LF;'
+| true
+|===
+
+These variables are expected to be commonly set externally so are predefined for
+convenience.
+Below the DFDL encoding property is being set to the value of a DFDL expression
+(between "{" and "}"), and that expression just returns the value of the
+dfdl:encoding variable which is being referenced as $dfdl:encoding below.
+
+[source%unnumbered,xml]
+----
+      <xs:element name="title" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element encoding="{$dfdl:encoding}" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+----
+
+[[the-dfdl-newvariableinstance-statement-annotation-element]]
+==== The dfdl:newVariableInstance Statement Annotation Element
+
+Scoped instances of defined variables are created using
+dfdl:newVariableInstance:
+
+[source%unnumbered,xml]
+----
+<dfdl:newVariableInstance
+    ref = QName
+      defaultValue? = logical value or dfdl expression >
+  <!-- Contains: logical value or dfdl expression (value) -->
+</dfdl:newVariableInstance>
+----
+
+All instances share the same name, type, and default value if provided, but they
+have distinct storage for separate values using a stack-like mechanism where a
+new instance is introduced for a model group.
+These new instances are associated with a schema component using
+dfdl:newVariableInstance.
+These instances have the lifetime of the schema component.
+While that schema component is being parsed/unparsed, the new variable instance
+is used and other scoped variable instances for the same variable are not
+available.
+
+Since an initial global instance is created when the variable is defined, the
+use of dfdl:newVariableInstance is optional.
+
+The dfdl:newVariableInstance annotation can be used on a group reference,
+sequence or choice only.
+It is a Schema Definition Error otherwise.
+
+The lifetime of the instance of a variable is the _dynamic scope_ of the schema
+component and its content model and so is inherited by any contained constructs
+or construct references.
+
+The ref property is a QName.
+That is, it may be qualified with a namespace prefix.
+
+An optional defaultValue _for the instance_ may be specified.
+It can be specified as an attribute or as the element value.
+The expression must not contain forward references to elements which have not
+yet been processed nor to the current component.
+If specified the default value must match the type of the variable as specified
+by dfdl:defineVariable.
+If the instance is not assigned a new default value then it inherits the default
+value specified by dfdl:defineVariable or externally provided by the DFDL
+processor.
+If a default value is not specified (and has not been specified by
+dfdl:defineVariable) then the value of this instance is undefined until
+explicitly set (using dfdl:setVariable).
+
+If a default value is specified this initial value of the instance is created
+when the instance is created.
+The value overrides any (global) default value which was specified by
+dfdl:defineVariable or which was provided externally to the DFDL processor.
+A variable instance with a valid value (specified or default) can be referenced
+anywhere within the scope of the element on which the instance was created.
+
+Note that the syntax supports both a defaultValue attribute and the default
+value being specified by the annotation element value.
+Only one or the other may be present.
+(Schema definition error otherwise.)
+
+To set the default value to "" (empty string), the defaultValue attribute syntax
+must be used, or the expression { "" } must be used as the element value.
+
+The resolved set of annotations for a component may contain multiple
+dfdl:newVariableInstance statements.
+They must all be for unique variables; it is a Schema Definition Error
+otherwise.
+The order of execution is specified in Section
+<<evaluation-order-for-statement-annotations>> Evaluation Order for Statement
+Annotations.
+
+There is no short form syntax for creating variable instances.
+
+===== Examples
+
+[source%unnumbered,xml]
+----
+<dfdl:newVariableInstance ref="EDIFACT_DS" defaultValue=","/>
+
+<dfdl:newVariableInstance ref="lengthUnitBits">
+    { if (../hdr/fmtCode eq "bits") then 1 else 8 }
+</dfdl:newVariableInstance>
+----
+
+[[the-dfdl-setvariable-statement-annotation-element]]
+==== The dfdl:setVariable Statement Annotation Element
+
+Variable instances get their values either by default, by external definition,
+or by subsequent assignment using the dfdl:setVariable statement annotation.
+
+[source%unnumbered,xml]
+----
+<dfdl:setVariable
+    ref = QName
+    value? = logical value or dfdl expression >
+  <!-- Contains: logical value or dfdl expression (value) -->
+</dfdl:setVariable>
+----
+
+The dfdl:setVariable annotation can be used on a simple type, group reference,
+sequence or choice.
+It may be used on an element or element reference only if the element is of
+simple type.
+It is a Schema Definition Error if dfdl:setVariable appears on an element of
+complex type, or an element reference to an element of complex type.
+
+The ref property is a QName.
+That is, it may be qualified with a namespace prefix.
+
+The syntax supports both a value attribute and the 'value' being specified by
+the element value.
+Only one or the other may be present (otherwise it is a Schema Definition
+Error).
+To set the value to "" (empty string), the value attribute syntax must be used,
+or the expression { "" } must be used as the element value.
+
+The value must match the type of the variable as specified by
+dfdl:defineVariable.
+
+A dfdl:setVariable value expression may refer to the value of this element using
+a relative path value ".".
+Use of relative path expressions is recommended wherever possible as this allows
+the behavior of the parser to be more effectively scoped.
+However, this practice is not enforced and there may be situations in which use
+of an absolute path is in fact necessary.
+
+The expression must not contain forward references to elements which have not
+yet been processed.
+
+In normal processing, the value of an instance can only be set once using
+dfdl:setVariable.
+Attempting to set the value of the variable instance for a second time is a
+Schema Definition Error.
+In addition, if a reference to the variable's value has already occurred and
+returned a default or an externally supplied value, then no assignment (even a
+first one) can occur.
+An exception to this behavior occurs whenever the DFDL processor backtracks
+because it is processing multiple branches of a choice or as a result of
+speculative parsing.
+In this case the variable state is also rewound.
+See <<dfdl-processing-introduction>> DFDL Processing Introduction.
+
+A dfdl:setVariable overrides any default value specified on either
+dfdl:defineVariable or dfdl:newVariableInstance, or externally.
+
+The resolved set of annotations for an annotation point may contain multiple
+dfdl:setVariable statements.
+They must all be for unique variables (different name and/or namespace) and it
+is a Schema Definition Error otherwise.
+The order of execution is specified in Section
+<<evaluation-order-for-statement-annotations>> Evaluation Order for Statement
+Annotations.
+
+There is no short form syntax for variable assignment.
+
+===== Examples
+
+[source%unnumbered,xml]
+----
+<xs:element name="ds" type="xs:string">
+   <xs:annotation>< xs:appinfo source="http://www.ogf.org/dfdl/">
+      <dfdl:setVariable ref="EDI:EDIFACT_DS" value="{.}" />
+      <dfdl:setVariable ref="delimiter"> {.} </dfdl:setVariable>
+   </xs:appinfo></xs:annotation>
+</xs:element>
+----
+
+In the above example, the element named "ds" contains the string to be used as
+the EDI:EDIFACT_DS delimiter at other places in the data, so the above defines
+the value of the EDI:EDIFACT_DS variable to take on the value of this element.
+The variable delimiter (in the default namespace) is also being assigned the
+same value using other syntax.

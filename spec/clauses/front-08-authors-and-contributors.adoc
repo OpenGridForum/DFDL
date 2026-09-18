@@ -1,0 +1,87 @@
+== Authors and Contributors
+
+Michael J. Beckerle, [[ole-link1]][[ole-link2]](corresponding author)
+
+ASF (Apache Software Foundation) daffodil.apache.org
+
+Owl Cyber Defense (formerly known as Tresys Technology) (retired)
+
+Columbia, MD
+
+USA
+
+Email: mailto:mbeckerle.dfdl@gmail.com[mbeckerle.dfdl@gmail.com],
+mailto:mbeckerle@apache.org[mbeckerle@apache.org]
+
+Stephen M. Hanson, (corresponding author)
+
+IBM UK (retired)
+
+Email: mailto:smhdfdl@gmail.com[smhdfdl@gmail.com]
+
+Alan W. Powell,
+
+IBM UK (retired)
+
+Email: mailto:apowell888@googlemail.com[apowell888@googlemail.com]
+
+The authors greatly acknowledge the contributions made to this document by the
+following and all the other people who provided constructive and valuable input
+in the group discussions.
+
+Tim Kimber, Prolifics, UK
+
+Suman Kalia, IBM, Markham, Ontario, Canada
+
+Stephanie Fetzer, HCL, USA
+
+Martin Westhead, Netgear, San Jose, CA, USA
+
+James Myers, USA
+
+Jonathan W. Cranford, Keyfactor, GA, USA
+
+Tom Sugden, UBS Investment Bank, UK
+
+Tara Gibson, PNNL, Richland, WA, USA
+
+Robert McGrath, NCSA, Urbana-Champaign, IL, USA (retired)
+
+Geoff Judd, IBM UK (retired)
+
+Dewey M. Sasser, MA, USA
+
+David A. Loose, Abacus Insights, MA, USA
+
+Eric S. Smith, Quill Health, MA, USA
+
+Kristoffer H. Rose, Two Sigma Investments, NY, USA
+
+Simon Parker, Bloomberg Polar Lake, Dublin, IE (retired)
+
+Peter A. Lambros, IBM UK (retired)
+
+Dave Glick, SIPC, USA
+
+Steve Marting, Progeny, USA
+
+Alejandro Rodriguez, Amazon, WA, USA
+
+Foreword
+
+// (ISO Template has this section with some ISO boilerplate and a section on deltas for this edition.)
+
+// (This repeats the OGF "Obsoletes" content from the OGF Cover page.)
+
+Obsoletes
+
+include::../obsoletes.adoc[]
+
+This document has several errata corrections since the original February 2021
+version that are detailed in the Document Change History on page ii.
+
+Data Format Description Language (DFDL) v1.0 Specification
+
+// (The above must be style 'Heading', not 'Title" to avoid a ToC entry.)
+
+// (These mandatory sections are not numbered consistent with the ISO template. This avoids renumbering all the sections of the DFDL Spec, which would make this version inconsistent with prior versions of the spec, and cause all the inter-section cross references to need updating.)

@@ -1,0 +1,83 @@
+[align=center]
+pass:[<span style="font-size:16;font-family:Arial"><strong>Data Format Description Language (DFDL) v1.0 Specification</strong></span>]
+
+// (The above must be style 'Heading', not 'Title" to avoid a ToC entry.)
+
+// Instructions and Note to Editors
+
+// This document uses an adaptation of the ISO Standards format, adapted for use in creating an OGF DFDL specification which can subsequently be easily adapted to be an ISO PAS Submission.
+
+// Care has been taken to ensure that the section numbers and page numbers will not change between the OGF and ISO editions with the exception of the front matter pages.
+
+// The front matter pages are all numbered separately with roman numerals. The ISO PAS submission will replace the front matter with ISO front matter, and change page headers and footers but preserving the size of the headers and footers. This ensures the Table of Contents will be the same except for references to front-matter sections.
+
+// Sections prior to the Introduction are not numbered. This ensures section numbers are consistent with the OGF GFD R-P 240 Feb 2021 Updated June 2023 edition, and the first ISO/IEC 23415:2004 (PAS) version of this specification.
+
+// About cross-reference links and Bibliography links.
+
+// MS Word has a few ways to put these in, but some do not work for HTML creation.
+
+// We want text like "See Section 11 Properties Common to both Content and Framing." to do 3 things:
+
+// Update the section number automatically if it changes
+// Update the section title text if it changes
+// Create a hyperlink that works in both PDF and HTML versions, and which is formatted so it is obviously a hyperlink (e.g., blue text underlined.)
+
+// Unfortunately this requires one actually do these 3 tedious steps for every such cross reference.
+
+// For (1) you must insert a cross-reference to the paragraph number.
+
+// For (2) you must insert a cross reference to the paragraph text.
+
+// For (3) you must insert a link by selecting the section number and title text, and then use "Insert" then click the "Link" button (note: not "Cross Reference") Then choose "Place in this document". You can then choose a section heading or a bookmark (scroll up for section headings. Unfortuntately, this dialog does not show you the section numbers.
+
+// The net result from these tedious steps is that you get a clickable link in the docx, PDF, and HTML versions.
+
+// Bibiliography entries are slightly easier. You do these steps:
+
+// add the bibliography entry (if it doesn't exist)
+// add a bookmark for it (naming convention is prefix with 'a_' so one bookmark is 'a_PSVI' for example).
+// insert a "link" per the above but choose the bookmark as the place in the document.
+
+// About a Property Hyperlinked Index
+
+// MS-Word lets you create an index, but it doesn't create a hyperlinked one, just a page number index.
+
+// So to create a clickable index to the table entries for properties you must
+
+// Add a bookmark at the primary table entry for the property. For properties I suggest the name is p_byteOrder, i.e., begin them all with 'p_'. Other things that are not actually properties like dfdl:format and dfdl:setVariable can still be done the same way, using 'p_' prefixes.
+// Insert a "link" to the bookmark (note: not a cross reference to it) See (3) above in the discussion of cross-reference and bibliography links.
+
+[.underline]#Status of This Document#
+
+Grid Final Draft (GFD)
+
+In preparation.
+Click the MS-Word Home menu Paragraph '¶' button to see instructions in hidden
+text.
+
+Note that this preparation draft has change tracking enabled.
+
+Highlighted text here and in the Document Change History is to be deleted.
+
+[.underline]#Obsoletes#
+
+include::../obsoletes.adoc[]
+
+This document has several errata corrections since the original February 2021
+version that are detailed in
+<<document-change-history,Document Change History>>.
+
+[.underline]#Copyright Notice#
+
+Copyright © Global Grid Forum (2004-2006).
+Some Rights Reserved.
+Distribution is unlimited.
+
+Copyright © Open Grid Forum (2006-2026).
+Some Rights Reserved.
+Distribution is unlimited.
+
+[.underline]#Abstract#
+
+include::../abstract.adoc[]

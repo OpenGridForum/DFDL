@@ -1,0 +1,13 @@
+// (mandatory)
+== Terms and Definitions
+
+See section <<glossary-and-terminology>> Glossary and Terminology, and
+<<appendix-e-glossary-of-terms,Appendix E: Glossary of Terms>>.
+
+ISO and IEC maintain terminology databases for use in standardization at the
+following addresses:
+
+* ISO Online browsing platform: available at
+link:https://www.iso.org/obp[https://www.iso.org/obp]
+* IEC Electropedia: available at
+link:https://www.electropedia.org/[https://www.electropedia.org/]

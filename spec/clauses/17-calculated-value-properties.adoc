@@ -1,0 +1,316 @@
+[[calculated-value-properties]]
+== Calculated Value Properties
+
+This section describes properties which allow the creation of calculated
+elements.
+When parsing, the value of a calculated element is derived using a DFDL
+Expression, and not by processing bytes from the data stream.
+When unparsing, the value of a calculated element is derived using a DFDL
+Expression and is not obtained from the Infoset in the usual way.
+
+Calculated elements allow a technique that is commonly called layering.
+In this technique, some elements are said to be in the physical layer, and some
+in the logical layer.
+When parsing, the logical layer values are computed from physical layer values.
+When unparsing the opposite occurs, that is the physical layer values are
+computed from the logical layer values.
+
+Calculated elements are commonly used with hidden elements to hide the physical
+layer elements so that they do not become part of the Infoset.
+
+When a DFDL Schema is used to both parse and unparse data, then a calculated
+element on parsing normally implies use of one or more calculated elements on
+unparsing.
+
+These properties apply to elements of simple type.
+
+.Calculated Value Properties
+[cols="1,5",options="header"]
+|===
+
+| Property Name
+| Description
+
+| inputValueCalc
+a| DFDL Expression
+
+An expression that calculates the value of the element when parsing.
+
+It is a Schema Definition Error if the result type of the expression does not
+conform to the base type of the element.
+
+The element value created using dfdl:inputValueCalc is validated like any other
+element value (when validation is enabled).
+
+An element that specifies a dfdl:inputValueCalc expression has no representation
+of its own in the data stream.
+All other DFDL representation properties are ignored.
+
+When an element which carries this property appears in a sequence that has a
+separator, no separator is associated with the element.
+When parsing, no separator is expected in the input data.
+When unparsing, no separator is written to the output data.
+
+The element must not be optional nor an array nor be global.
+
+The DFDL Expression must not refer to this element nor cause a circular
+reference to this element.
+The expression must not contain forward references to elements which have not
+yet been processed.
+
+It is a Schema Definition Error if this property is specified on an element
+which has an XSD fixed or default property.
+
+It is a Schema Definition Error if dfdl:inputValueCalc and dfdl:outputValueCalc
+are specified on the same element.
+
+It is not possible to place this property in scope on a dfdl:format annotation.
+
+If this property appears on an element declaration or element reference schema
+component, the appearance of any other DFDL properties on that component is a
+Schema Definition Error.
+
+If this property appears on an element reference, then DFDL properties expressed
+on the referenced global element declaration or its type are ignored.
+
+If this property appears on an element declaration, then DFDL properties
+expressed on its type are ignored.
+
+Annotation: dfdl:element
+
+| outputValueCalc
+a| DFDL Expression
+
+An expression that calculates the value of the current element when unparsing.
+
+The element must not be optional nor an array nor be global.
+
+It is a Schema Definition Error if the result type of the expression does not
+conform to the base type of the element.
+
+The value created using dfdl:outputValueCalc is validated like any other element
+value (when validation is enabled).
+
+The value for the element, if any, in the Infoset is ignored.
+
+The DFDL expression must not refer to this element nor cause a circular
+reference to this element.
+The expression may contain forward references to elements which have not yet
+been processed.
+
+It is a Schema Definition Error if dfdl:outputValueCalc is specified on an
+element which has an XSD fixed or default property.
+
+It is a Schema Definition Error if dfdl:inputValueCalc and dfdl:outputValueCalc
+are specified on the same element.
+
+It is not possible to place this property in scope on a dfdl:format annotation.
+
+Annotation: dfdl:element
+|===
+
+=== Example: 2d Nested Array
+
+Consider this simple example.
+The data stream contains two elements giving the number of rows and number of
+columns of an array of numbers.
+The representation of the array is stored after these two elements.
+
+[source%unnumbered,xml]
+----
+<xs:complexType name="array">
+  <xs:sequence dfdl:initiator="" >
+
+    <xs:sequence dfdl:hiddenGroupRef="tns:hiddenArrayCounts"/>
+
+    <xs:element name="rows" maxOccurs="unbounded"
+                dfdl:occursCountKind="expression"
+                dfdl:occursCount="{ ../nrows }">
+      <xs:complexType>
+        <xs:sequence>
+          <xs:element name="cols" type="xs:float" maxOccurs="unbounded"
+                      dfdl:occursCountKind="expression"
+                      dfdl:occursCount=" { ../../ncols } " />
+        </xs:sequence>
+      </xs:complexType>
+    </xs:element>
+  </xs:sequence>
+</xs:complexType>
+
+<xs:group name="hiddenArrayCounts" >
+  <xs:sequence>
+    <xs:element name="nrows" type="xs:unsignedInt"
+                dfdl:representation="binary"
+                dfdl:lengthKind="implicit"
+                dfdl:outputValueCalc="{ count(../rows) }"/>
+    <xs:element name="ncols" type="xs:unsignedInt"
+                dfdl:representation="binary"
+                dfdl:lengthKind="implicit"
+                dfdl:outputValueCalc=
+                "{  if ( count(../rows) ge 1 )
+                   then
+                      count(../rows[1]/cols)
+                   else
+                      0
+                  }"/>
+  </xs:sequence>
+</xs:group>
+----
+
+In the example abovethere are two hidden elements named 'nrows' and 'ncols'.
+These hidden elements' values are computed when unparsing from the number of
+occurrences in the 'rows' and 'cols' repeating elements.
+The 'rows' and 'cols' repeating elements number of occurrences are computed when
+parsing from the hidden elements 'nrows' and 'ncols'.
+
+=== Example: Three-Byte Date
+
+Logically, the data is a date.
+
+[source%unnumbered,xml]
+----
+<xs:element name="d" type="date"/>
+----
+
+Physically, it is stored as 3 single byte integers.
+
+The format of this data is expressed as this schema:
+
+[source%unnumbered,xml]
+----
+<xs:sequence dfdl:representation="binary">
+              <xs:element name="mm" type="byte" />
+              <xs:element name="dd" type="byte" />
+              <xs:element name="yy" type="byte"/>
+</xs:sequence>
+----
+
+This physical representation can be hidden so that it does not become part of
+the Infoset:
+
+[source%unnumbered,xml]
+----
+<xs:sequence>
+  <xs:sequence dfdl:hiddenGroupRef="tns:hiddenpDate"/>
+
+  <xs:element name="d" type="date">
+    …
+  </xs:element>
+</xs:sequence>
+
+<xs:group name="hiddenpDate" >
+  <xs:sequence>
+    <xs:element name="pdate">
+      <xs:complexType>
+        <xs:sequence dfdl:representation="binary">
+          <xs:element name="mm" type="byte" />
+          <xs:element name="dd" type="byte" />
+          <xs:element name="yy" type="byte"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:element>
+  </xs:sequence>
+</xs:group>
+----
+
+A calculation can be used to compute the logical date element 'd' from the
+physical 'pdate' when parsing:
+
+[source%unnumbered,xml]
+----
+<xs:sequence>
+  ... hidden pdate here ...
+
+  <xs:element name="d" type="date">
+    <xs:annotation><xs:appinfo source="http://www.ogf.org/dfdl/">
+      <dfdl:element>
+        <dfdl:property name="inputValueCalc">
+          {
+           fn:date(fn:concat(if(../pdate/yy gt 50 )then "19" else "20",
+                             if ( ../pdate/yy gt 9 )
+                                then xs:string(../pdate/yy)
+                                else fn:concat("0",
+                                        xs:string(../pdate/yy)),
+                                        "-",
+                                        xs:string(../pdate/mm),
+                                        "-",
+                                        xs:string(../pdate/dd)))
+          }
+        </dfdl:property>
+      </dfdl:element>
+    </xs:appinfo></xs:annotation>
+  </xs:element>
+  ...
+</xs:sequence>
+----
+
+The expression above assembles a string resembling, for example, "2005-12-17" or
+"1957-3-9" which is the string representation of a date that is acceptable to
+the ``++fn:date++`` constructor function.
+The hidden element ``++'pdate'++`` is referenced by relative paths.
+The expression ``++'../pdate/yy'++`` accesses an element of type ``++'int'++``,
+and the ``++xs:string++`` constructor function turns it into an integer.
+
+Finally,one must handle the unparse case where the physical layer is computed
+from the logical layer:
+
+[source%unnumbered,xml]
+----
+<xs:sequence dfdl:representation="binary"
+  <xs:element name="mm" type="byte"
+       dfdl:outputValueCalc="{ fn:month-from-date(../d) }" />
+  <xs:element name="dd" type="byte"
+       dfdl:outputValueCalc="{ fn:day-from-date(../d) }" />
+  <xs:element name="yy" type="byte"
+       dfdl:outputValueCalc="{ fn:year-from-date(../d) mod 100 }"/>
+</xs:sequence>
+----
+
+The entire example in one place:
+
+[source%unnumbered,xml]
+----
+<xs:sequence>
+  <xs:sequence dfdl:hiddenGroupRef="tns:hiddenpDate"/>
+
+  <xs:element name="d" type="date">
+    <xs:annotation><xs:appinfo source="http://www.ogf.org/dfdl/">
+      <dfdl:element>
+        <dfdl:property name="inputValueCalc">
+          {
+           fn:date(fn:concat(if(../pdate/yy gt 50) then "19" else "20",
+                             if ( ../pdate/yy gt 9 )
+                                then xs:string(../pdate/yy)
+                                else fn:concat("0",
+                                       xs:string(../pdate/yy)),
+                                       "-",
+                                       xs:string(../pdate/mm),
+                                       "-",
+                                       xs:string(../pdate/dd)))
+          }
+        </dfdl:property>
+      </dfdl:element>
+    </xs:appinfo></xs:annotation>
+  </xs:element>
+  ...
+</xs:sequence>
+
+<xs:group name="hiddenpDate" >
+  <xs:sequence>
+    <xs:element name="pdate">
+      <xs:complexType>
+        <xs:sequence dfdl:representation="binary">
+          <xs:element name="mm" type="byte"
+                 dfdl:outputValueCalc="{ fn:month-from-date(../d) }" />
+          <xs:element name="dd" type="byte"
+                 dfdl:outputValueCalc="{ fn:day-from-date(../d) }" />
+          <xs:element name="yy" type="byte"
+                 dfdl:outputValueCalc="{ fn:year-from-date(../d) idivmod 100 }" />
+        </xs:sequence>
+      </xs:complexType>
+    </xs:element>
+  </xs:sequence>
+</xs:group>
+----
+
+The above sequence contains logically only a single date element.

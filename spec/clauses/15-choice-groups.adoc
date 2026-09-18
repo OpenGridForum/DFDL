@@ -1,0 +1,237 @@
+[[choice-groups]]
+== Choice Groups
+
+A choice corresponds to concepts variously called variant records, multi-format
+records, discriminated unions, or tagged unions in various programming
+languages.
+In some contexts, choices are referred to generally as 'unions'.
+However, this should not be confused with XSD unions which are an unrelated
+concept.
+
+The following properties are specific to xs:choice.
+
+.Properties for Choice Groups
+[cols="1,4",options="header"]
+|===
+
+| Property Name
+| Description
+
+| choiceLengthKind
+a| Enum
+
+Valid values are 'implicit', 'explicit'
+
+'implicit' means the branches of the choice are not filled, so the ChoiceContent
+region is variable length depending on which branch appears.
+
+'explicit' means that the branches of the choice are always filled to the
+fixed-length specified by dfdl:choiceLength, so the ChoiceContent region is
+fixed-length regardless of which branch appears.
+
+Annotation: dfdl:choice, dfdl:group (choice)
+
+| choiceLength
+a| Integer
+
+Only used when dfdl:choiceLengthKind is 'explicit'.
+
+Specifies the length of the choice in bytes, so the ChoiceContent region is
+fixed-length regardless of which branch appears.
+A *_ChoiceUnused_* region is therefore possible which when unparsing is filled
+with dfdl:fillByte.
+
+Annotation: dfdl:choice, dfdl:group (choice)
+
+| initiatedContent
+a| Enum
+
+Valid values are 'yes', 'no'
+
+When 'yes' indicates that all the branches of the choice are initiated.
+It is a Schema Definition Error if any children have their dfdl:initiator
+property set to the empty string.
+The branch is known to exist when its initiator has been found.
+Any subsequent error parsing the branch does not cause the parser to backtrack.
+
+When 'no', the branches of the choice may have their dfdl:initiator property set
+to the empty string.
+
+Annotation: dfdl:sequence, dfdl:choice, dfdl:group
+
+| choiceDispatchKey
+a| DFDL Expression
+
+The expression must evaluate to an xs:string.
+It is a Schema Definition Error if the expression returns an empty string.
+
+It is a Schema Definition Error if the expression contains forward references to
+elements which have not yet been processed.
+
+This property is used only when parsing.
+
+The resultant string must match one of the dfdl:choiceBranchKey property values
+of one of the branches of the choice.
+This match is _case sensitive_.
+If so, it discriminates to that branch.
+The parser then goes straight to that branch, ignoring consideration of any
+other choice branches.
+No backtracking of this decision occurs if there is a subsequent Processing
+Error.
+
+It is a Processing Error if the value of the expression does not match any of
+the dfdl:choiceBranchKey property values for any of the branches.
+
+It is a Schema Definition Error if any choice branch does not specify a
+dfdl:choiceBranchKey in a choice that carries choiceDispatchKey.
+
+It is not possible to place this property in scope on a dfdl:format annotation.
+
+Annotation: dfdl:choice
+
+| choiceBranchKey
+a| List of DFDL String Literals
+
+This literal provides an alternate way to discriminate a choice to a branch.
+When the dfdl:choiceDispatchKey expression evaluates to a string matching one of
+this property's values, the choice is discriminated to this branch.
+The match is case sensitive.
+
+It is a Schema Definition Error if individual dfdl:choiceBranchKey values are
+not unique across all branches of a choice that carries dfdl:choiceDispatchKey.
+
+It is a Schema Definition Error if dfdl:choiceBranchKey is specified on a global
+element, or on a sequence or choice that is the child of a global group
+definition.
+
+It is a Schema Definition Error if any choice branch does not specify a
+dfdl:choiceBranchKey in a choice that carries choiceDispatchKey.
+
+Byte value entities are not allowed.
+
+Character classes are not allowed.
+
+This property is only used when parsing.
+
+It is not possible to place this property in scope on a dfdl:format annotation.
+
+Annotation: dfdl:element, dfdl:sequence, dfdl:choice, dfdl:group
+|===
+
+A choice can have a dfdl: initiator and/or a dfdl:terminator as described
+earlier.
+
+The explanation of choices requires this terminology:
+
+*_Branch_* - A _branch_ is one of the available alternatives within a choice. A
+branch can be an element of simple type or complex type, or it can be an
+embedded sequence, choice or group reference.
+
+*_Root of the Branch_* - Each branch conceptually has a single schema component
+at its root which is an element, sequence, choice or group reference. This
+component is known as the Root of the Branch
+
+The Root of the Branch must not be optional.
+That is XSD minOccurs must be greater than zero.
+
+A choice that declares no branches in the DFDL schema is a Schema Definition
+Error.
+
+When processing a choice group, the parser validates any contained path
+expressions.
+If a path expression contained inside a choice branch refers to any other branch
+of the choice, then it is a Schema Definition Error.
+Note that this rule handles nested choices also.
+A path that navigates outward from an inner choice to another alternative of an
+outer choice is violating this rule with respect to the outer choice.
+
+=== Resolving Choices
+
+When processing a choice, there are two ways to resolve the intended branch.
+In one, speculative parsing is used.
+In the other, a constant-time direct dispatch to a branch is performed.
+
+==== Resolving Choices via Speculation
+
+Speculative resolution works as follows:
+
+[arabic]
+. Attempt to parse the first branch of the choice.
+. If this fails with a Processing Error
+[loweralpha]
+.. If a dfdl:discriminator evaluated to true earlier on this branch  then the parser is 'bound' to this branch and parsing of the entire choice construct fails with a Processing Error.
+.. If the branch has a dfdl:initiator and the choice has dfdl:initiatedContent 'yes'  then the parser is 'bound' to this branch and parsing of the entire choice construct fails with a Processing Error.
+.. Otherwise repeat from step 1 for the next branch of the choice.
+. It is a Processing Error if the branches of the choice are exhausted.
+. If a branch is successfully parsed without error, then that branch's Infoset
+becomes the Infoset for the parse of the choice construct.
+. If the branch is an element declaration having
+dfdl:occursCountKind='expression' or dfdl:occursCountKind='parsed', then zero
+instances are possible. If the branch parses successfully without a
+discriminator but produces no element occurrences, then the branch is considered
+missing, and the parser looks for the next branch
+
+It is not possible for variable settings to be communicated from the speculative
+attempt to parse a branch to any other parsing situation.
+The speculative effort is completely isolated.
+Whether it succeeds or fails, neither the parse position in the source data, nor
+anything in the variable memory, nor the Infoset is affected.
+
+Nested choices can require
+unboundedfootnote:[Because DFDL v1.0 does not allow recursive definitions, the notion of unbounded here is limited by the depth of the DFDL schema, so is not truly unbounded as it would be if recursion were allowed.] look ahead into the data.
+
+[[resolving-choices-via-direct-dispatch]]
+==== Resolving Choices via Direct Dispatch
+
+Direct dispatch provides a constant-time dispatch to a choice branch independent
+of how many choice branches there are.
+
+Direct dispatch is indicated by the dfdl:choiceDispatchKey property.
+This expression is evaluated to compute the string matching (case sensitive) one
+of the dfdl:choiceBranchKey property values of one of the choice branches.
+
+When a match is found, it is as if a dfdl:discriminator had evaluated to true on
+that branch.
+It is selected as resolution of the choice, and there is no backtracking to try
+other alternative selections if a Processing Error occurs.
+
+The dfdl:choiceBranchKey property can be placed on element references, local
+element declarations, local sequences, local choices, or group references.
+All values of dfdl:choiceBranchKey properties must be unique across all branches
+of a choice that carries a dfdl:choiceDispatchKey property and it is a Schema
+Definition Error otherwise.
+
+Note that it is a Schema Definition Error if both dfdl:initiatedContent and
+dfdl:choiceDispatchKey are provided on the same choice.
+However, it is not an error if a discriminator exists on a choice branch along
+with a dfdl:choiceBranchKey.
+
+==== Unparsing Choices
+
+On unparsing there is the question of how one identifies the appropriate schema
+choice branch corresponding to the data in the Infoset.
+This is complicated by the fact that the children may not be elements.
+They may themselves be sequences or choices.
+The selection of the choice branch is as follows: The element in the Infoset is
+used to search the choice branches in the schema, in schema definition order,
+but without looking inside any complex elements.
+If the element occurs in a branch, then that branch is selected and if
+subsequently a Processing Error occurs, this selection is not revisited (that
+is, there is no backtracking).
+If the next element to unparse does not identify any branch of the choice, or
+there is no next element to unparse, then there must be a choice branch with no
+required elements and the first such branch would be selected for unparsing.
+A choice branch can consist only of a nest of model groups with no actual
+element content or only optional element content.
+
+To avoid any unintended behavior, all the children of a choice can be modeled as
+elements.
+
+===== Unparsing Choices in Hidden Groups
+
+When a choice appears inside a hidden group, there are no corresponding Infoset
+elements as there are none for hidden groups.
+The first branch of the choice is unparsed.
+All elements contained in the branch must have default values or must have
+dfdl:outputValueCalc properties to compute their values, and it is a Schema
+Definition Error otherwise.

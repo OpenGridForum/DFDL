@@ -1,0 +1,1115 @@
+[[dfdl-expression-language]]
+== DFDL Expression Language
+
+The DFDL expression language allows the processing of values conforming to the
+data model defined in the DFDL Infoset.
+It allows properties in the DFDL schema to be dependent on the value of an
+occurrence of an element or the value of a DFDL variable.
+For example, the length of the content of an element can be made dependent on
+the value of another element in the document.
+
+The main uses of the expression language are as follows:
+
+[arabic]
+. When a DFDL property needs to be set dynamically at parse time from the value
+of one or more elements of the data. Properties such as dfdl:initiator,
+dfdl:terminator, dfdl:length, dfdl:occursCount, and dfdl:separator accept an
+expression.
+. In a dfdl:assert annotation
+. In a dfdl:discriminator annotation to resolve uncertainty when parsing
+. In a dfdl:inputValueCalc property to derive the value of an element in the
+logical model that doesn't exist in the physical data.
+. In a dfdl:outputValueCalc property to compute the value of an element on
+unparsing.
+. As the value in a dfdl:setVariable annotation or the dfdl:defaultValue in a
+dfdl:defineVariable or dfdl:newVariableInstance.
+
+The DFDL expression language is a subset of XPath 2.0 [<<a-xpath,XPath>>].
+DFDL uses a subset of XML schema and has a simpler information model, so only a
+subset of XPath 2.0 expressions is meaningful in DFDL Schemas.
+For example, there are no attributes in DFDL, so the attribute axis is not
+needed.
+
+XPath 2.0 specification [XPATH2] allows implementation-dependent evaluation of
+expressions thereby allowing either lazy (sequential) evaluation or full
+(parallel) evaluation of expressions with OR and AND clauses.
+This flexibility is not desirable in DFDL 1.0 implementations, so the
+specification is changed to prescribe lazy (sequential) evaluation
+left-to-right.
+
+In addition, DFDL expressions never return node-sequences having more than one
+node.
+DFDL expressions either return a simple value, a node sequence containing
+exactly one node/value, or an empty node sequence.
+Node sequences of length greater than one can be used within the expression,
+just not as the final result.
+Alternatively, one can state this as there are no constructs in DFDL which can
+accept a node sequence of more than one node; hence, DFDL expressions can never
+return a node sequence of more than one node as their final result.
+
+For nilled elements, an attempt to get the value of a nilled element returns an
+empty node sequence.
+
+DFDL implementations MUST comply with the error code behaviour in Appendix G of
+the XPath 2.0 spec and map these to the correct DFDL failure type.
+All but one of XPath's errors map to a Schema Definition Error.
+The exception is XPTY0004, which is used both for static and dynamic cases of
+type mismatch.
+A static type mismatch maps to a Schema Definition Error, whereas a dynamic type
+mismatch maps to a Processing Error.
+A DFDL implementation SHOULD distinguish the two kinds of XPTY0004 error if it
+is able to do so, but if unable it MUST map all XPTY0004 errors to a Schema
+Definition Error
+
+Implementation Note: DFDL implementations MAY use off-the-shelf XPath 2.0
+processors, but must pre-process DFDL expressions to ensure that the behaviour
+matches the DFDL specification:
+
+* Ensure that what is returned as the result is not a sequence with length > 1
+by appropriate use of fn:exactly-one().
+* Check for the disallowed use of those XPath 2.0 functions that are not in the
+DFDL subset
+
+XPath 2.0 specification [XPATH2] defines its functions to be in namespace
+link:http://www.w3.org/2005/xpath-functions[http://www.w3.org/2005/xpath-functions]. The DFDL specification assumes namespace prefix "fn:" is bound to this namespace.
+
+=== Expression Language Data Model
+
+The DFDL expression language operates on the DFDL augmented Infoset with the
+addition of the hidden elements.
+
+Relative path expressions are evaluated relative to the current Infoset Element
+Information Item, also referred to as the _current element_ for short.
+
+In general, a DFDL expression can only reference an element that precedes the
+position in the schema where the expression is declared, and it is a schema
+definition otherwise, with the following exceptions:
+
+* An assert or discriminator on a component may reference an element that is a
+descendent of the component.
+* A dfdl:outputValueCalc property may reference an element that follows the
+position in the schema where the property is specified.
+
+Implementations MAY have implementation-defined limitations on the use of
+forward or backward reference or MAY provide controls for bounding the reach of
+such references.
+These mechanisms are beyond the scope of this specification.
+
+[[variables]]
+=== Variables
+
+A variable is a binding between a (qualified) name and a (typed) value.
+Variables are defined using the dfdl:defineVariable annotation (see
+<<dfdl-variable-annotations>>); defining a variable causes an initial instance
+also to be created.
+Further instances of variables are created using the dfdl:newVariableInstance
+annotation.
+Instances of variables are assigned a value using the dfdl:setVariable
+annotation.
+Variables are referenced in expressions by preceding the QName with '$'.
+
+This section describes the semantics of variables.
+Any implementation consistent with the behavior described here is acceptable.
+
+The memory where the information about a variable is stored during DFDL
+processing is called the _variable memory_.
+A variable is a name that is associated with a storage tuple in the variable
+memory.
+
+Specifically, the variable memory contains:
+
+* a counter used to generate locations for new tuples. Initial value is 1.
+* an ordered list of locations. Each location contains a tuple of values:
+** has-been-set flag. This Boolean is originally false. dfdl:setVariable changes
+this flag to true.
+** has-been-referenced flag. This Boolean is originally false. Evaluation of an
+expression that uses the variable value changes the value to true.
+** has-value flag. This Boolean is originally true if the dfdl:defineVariable or
+dfdl:newVariableInstance annotation has a default value specified, or if a
+default value has been supplied externally. Otherwise it is false but is set to
+true if a dfdl:setVariable annotation is processed.
+** typeID. This string is a type identifier taken from the type specified in the
+dfdl:defineVariable annotation.
+** value. This is a typed value, or the distinguished value "unknown". The type
+of the value MUST correspond to the typeID. The value is optionally specified in
+dfdl:defineVariable or dfdl:newVariableInstance annotations in which case it is
+referred to as the _default value_ for the variable.  A default value may also
+be provided by the DFDL processor when the variable is defined with external
+"true".
+
+The variable memory is initialized when a dfdl:defineVariable annotation is
+encountered.
+
+Each time a dfdl:newVariableInstance annotation is encountered, the parser
+captures the current value of the counter from the variable memory.
+It then creates a new variable memory where the location counter's value is one
+greater, and where the list of locations has been augmented with a new tuple at
+the location given by the prior value of the location counter.
+The tuple is initialized based on the specifics of the dfdl:defineVariable
+annotation.
+
+==== Rewinding of Variable Memory State
+
+Upon exit of the scope where the new variable instance was created, the newly
+created variable memory is discarded, and the prior variable memory is restored.
+
+Note that the above algorithm ensures that each time a dfdl:newVariableInstance
+is encountered, a fresh location is initialized for it, and once the scope
+containing that variable goes out of scope, the instance tuple for the variable
+can no longer be reached.
+A different variable instance tuple is then visible.
+
+==== Variable Memory State Transitions
+
+The flags in the variable memory tuples are interpreted and modified as follows:
+
+.Memory States for Expression Language Variables
+[cols="3,1,2,1,1,2,2",keep-lines-together=true]
+|===
+
+.2+| *DFDL annotation*
+3+| *before annotation processed*
+3+| *after annotation processed*
+
+| *has-been-set*
+| *has-been-referenced*
+| *has-value*
+| *has-been-set*
+| *has-been-referenced*
+| *has-value*
+
+| defineVariable (without default or external value)
+3+| tuple doesn't exist
+| false
+| false
+| false
+
+| defineVariable (with default value)
+3+| tuple doesn't exist
+| false
+| false
+| true
+
+| defineVariable (with external value)
+3+| tuple doesn't exist
+| false
+| false
+| true
+
+| newVariableInstance (without default value)
+3+| tuple doesn't exist
+| false
+| false
+| false
+
+| newVariableInstance (with default value)
+3+| tuple doesn't exist
+| false
+| false
+| true
+
+.5+| setVariable
+3+| tuple doesn't exist
+3+| Schema Definition Error
+
+| false
+| false
+| false
+| true
+| false
+| true
+
+| false
+| false
+| true
+| true
+| false
+| true (also value changed to new value)
+
+| false
+| true
+| true
+3+| Schema Definition Error – set after reference not allowed.
+
+| true
+| any
+| true
+3+| Schema Definition Error - double set not allowed.
+
+.3+| reference variable (from DFDL expression)
+3+| tuple doesn't exist
+3+| Schema Definition Error
+
+| false
+| false
+| false
+3+| Schema Definition Error – undefined variable
+
+| any
+| any
+| true
+| false
+| true (value is returned)
+| true
+|===
+
+The above table describes a set of rules which might be abbreviated as:
+
+* write once, read many
+* no write after the value has been read
+
+An exception to this behavior occurs whenever the DFDL processor backtracks
+because it is processing multiple arms of a choice or as a result of speculative
+parsing.
+In this case the variable state is also rewound.
+
+It is a Schema Definition Error if a dfdl:setVariable or a variable reference
+occurs and there is no corresponding variable name defined by a
+dfdl:defineVariable annotation.
+
+It is a Schema Definition Error if a dfdl:setVariable provides a value of
+incorrect type which does not correspond to the type specified by the
+dfdl:defineVariable.
+
+It is a Schema Definition Error if a variable reference in an expression is able
+to return a value of incorrect type for the evaluation of that expression.
+That is, DFDL - including the expressions contained in it - is a statically
+type-checkable language.
+DFDL implementations SHOULD issue these Schema Definition Errors prior to
+processing time if possible.
+
+Even if the errors are detected at processing time, the errors associated with
+write-after-read, and double-write are Schema Definition Errors because they
+indicate the schema is not properly designed to use variables consistent with
+their single-assignment behavior.
+
+=== General Syntax
+
+DFDL expressions follow the XPath 2.0 syntax rules but are always enclosed in
+curly braces "{" and "}".
+
+When a property accepts either a DFDL string literal or a DFDL expression, and
+the value is a string literal starting with a "{" character, then "{{"must be
+used to escape the "{" character.
+Note that no escaping is required on the "}" character.
+
+The syntax "{}" is a Schema Definition Error as it results in an empty XPath 2.0
+expression which is not legal.
+It is not the equivalent of setting the property to empty string.
+
+Examples
+
+[source%unnumbered,xml]
+----
+{ /book/title }
+{ $x+2 }
+{ if (fn:exists(../field1))  then 1 else 0  }
+----
+
+The result of evaluating the expression must be a single atomic value of the
+type expected by the context, and it is a Schema Definition Error otherwise.
+Some XPath expressions naturally return a sequence of values, and in this case,
+it is also Schema Definition Error if an expression returns a sequence
+containing more than one item.
+
+Additionally:
+
+* Every property that accepts an expression states exactly what the expression
+is expected to return. To ensure the returned value is of the correct type, an
+expression must use XPath constructors or the correct literal values.
+* What appears lexically as the syntax of an expression follows XPath 2.0 rules.
+Note specifically that this is not the same as XSD default and XSD fixed
+property lexical syntax. Specifically, XSD default and XSD fixed properties do
+not accept expressions. They are always interpreted as XML Schema string
+literals. See [<<a-xsdl,XSD>>] for details.
+* No extra auto-casting is performed over and above that provided by XPath 2.0.
+XPath 2.0 has rules for when it promotes types and when it allows types to be
+substituted. These are in Appendix B.1 of the XPath 2.0 spec.
+* If the property is not expecting an expression to return a DFDL string
+literal, the returned value is never treated as a DFDL string literal.
+* If expecting an expression to return a DFDL string literal, the returned value
+is always treated as a DFDL string literal.
+* [.underline]#Within# an expression, a string is never interpreted as a DFDL
+string literal.
+
+=== DFDL Expression Syntax
+
+Refer to XML Path Language (XPath) 2.0 [<<a-xpath,XPath>>] for a description of
+XPath expressions
+
+[[dfdl-expression-language-2]]
+.DFDL Expression Language
+[cols="3,1,8",class="bnf"]
+|===
+
+| DFDL Expression
+| ::=
+| "{" Expr "}"
+
+| Expr
+| ::=
+| ExprSingle
+
+| ExprSingle
+| ::=
+| IfExpr \| OrExpr
+
+| IfExpr
+| ::=
+| "if" "(" Expr ")" "then" ExprSingle "else" ExprSingle
+
+| OrExpr
+| ::=
+| AndExpr ( "or" AndExpr )*
+
+| AndExpr
+| ::=
+| ComparisonExpr ( "and" ComparisonExpr )*
+
+| ComparisonExpr
+| ::=
+| AdditiveExpr ( (ValueComp) AdditiveExpr)?
+
+| AdditiveExpr
+| ::=
+| MultiplicativeExpr ( ("{plus}" \| "-") MultiplicativeExpr )*
+
+| MultiplicativeExpr
+| ::=
+| IntersectExceptExpr( (pass-format:straightquotes[“*”] \| "div" \| "idiv" \| "mod") IntersectExceptExpr)pass-format:straightquotes[*]
+
+| IntersectExceptExpr
+| ::=
+| UnaryExpr ( ("intersect" \| "except") UnaryExpr )*
+
+| UnaryExpr
+| ::=
+| ("-" \| "{plus}")* ValueExpr
+
+| ValueExpr
+| ::=
+| PathExpr
+
+| ValueComp
+| ::=
+| "eq" \| "ne" \| "lt" \| "le" \| "gt" \| "ge"
+
+| PathExpr
+| ::=
+| ("/" RelativePathExpr?) \| RelativePathExpr \| FilterExpr
+
+| RelativePathExpr
+| ::=
+| StepExpr (("/") StepExpr)*
+
+| StepExpr
+| ::=
+| AxisStep
+
+| AxisStep
+| ::=
+| (ReverseStep \| ForwardStep) Predicate?
+
+| ForwardStep
+| ::=
+| (ForwardAxis NodeTest) \| AbbrevForwardStep
+
+| ForwardAxis
+| ::=
+| ("child" "::") \| ("self" "::")
+
+| AbbrevForwardStep
+| ::=
+| NodeTest \| ContextItemExpr
+
+| ReverseStep
+| ::=
+| (ReverseAxis NodeTest) \| AbbrevReverseStep
+
+| ReverseAxis
+| ::=
+| ("parent" "::")
+
+| AbbrevReverseStep
+| ::=
+| ".."
+
+| NodeTest
+| ::=
+| NameTest
+
+| NameTest
+| ::=
+| QName
+
+| FilterExpr
+| ::=
+| PrimaryExpr Predicate?
+
+| Predicate
+| ::=
+| "[" Expr "]"
+
+| PrimaryExpr
+| ::=
+| Literal \| VarRef \| ParenthesizedExpr \| ContextItemExpr \| FunctionCall
+
+| Literal
+| ::=
+| NumericLiteral \| StringLiteral
+
+| NumericLiteral
+| ::=
+| IntegerLiteral \| DecimalLiteral \| DoubleLiteral
+
+| VarRef
+| ::=
+| "$" VarName
+
+| VarName
+| ::=
+| QName
+
+| ParenthesizedExpr
+| ::=
+| "(" Expr ")"
+
+| ContextItemExpr
+| ::=
+| "."
+
+| FunctionCall
+| ::=
+| QName "(" (ExprSingle ("," ExprSingle)*)? ")"
+|===
+
+Notes:
+
+[arabic]
+. Only _If_ and _path_ expression types are supported
+. Only the _child_, _parent_, and _self_ axes are supported
+. Predicates are only used to index arrays and so must be integer expressions
+otherwise a Schema Definition Error occurs
+. A subset of the XPath 2.0 operators is supported
+. NameTest - These QNames are path steps that refer to elements in the DFDL
+Infoset. If such an element is in a namespace, then the NameTest QName must have
+a prefix which is bound to the namespace. Specifically, any default namespace is
+not used to implicitly qualify these NameTest QNames. This behavior is
+consistent with XPath expression usage in XML Schema <<walmsely,[Walmsley]>>
+such as in the path property of the xs:selector and xs:field elements within
+xs:key and xs:unique constraints, and in related XML standards such as XSLT.
+Note however, that this behavior is different from the way QNames are used in
+other places in XML and DFDL Schemas such as the ref property of an element
+reference, or the dfdl:ref property of a DFDL format annotation. There a QName
+with no prefix must always be referring to a global declaration or definition,
+and so is augmented with the default namespace when needed.
+. The _FilterExpr_ ".[1]" is the same as ".". The _FilterExpr_ ".[n]" where n is
+not equal to 1 returns an empty node sequence.
+
+=== Constructors, Functions and Operators
+
+In the function signatures below a '?' following an argument name, argument type
+or result type indicates that the argument/result can be a node or value of the
+expected type or it can have no value.
+
+==== Constructor Functions for XML Schema Built-in Types
+
+The arguments to the constructors are all of type xs:anyAtomicType.
+Since the expression language can be statically type checked, it is a Schema
+Definition Error if the type of the argument is not one of the DFDL-supported
+subtypes of xs:anyAtomicType,
+
+However, many statically type-correct values are still not convertible to the
+result type.
+It is a Processing Error if the supplied argument value is not convertible to
+the constructed type.
+
+The following constructor functions for the built-in types are supported:
+
+.Basic Constructors
+[cols="1",options="header"]
+|===
+
+| Function
+
+| xs:string($arg as xs:anyAtomicType) as xs:string
+
+| xs:boolean($arg as xs:anyAtomicType) as xs:boolean
+
+| xs:decimal($arg as xs:anyAtomicType) as xs:decimal
+
+| xs:float($arg as xs:anyAtomicType) as xs:float
+
+| xs:double($arg as xs:anyAtomicType) as xs:double
+
+| xs:dateTime($arg as xs:anyAtomicType) as xs:dateTime
+
+| xs:time($arg as xs:anyAtomicType) as xs:time
+
+| xs:date($arg as xs:anyAtomicType) as xs:date
+
+| xs:hexBinary($arg as xs:anyAtomicType) as xs:hexBinary
+
+| xs:integer($arg as xs:anyAtomicType) as xs:integer
+
+| xs:long($arg as xs:anyAtomicType) as xs:long
+
+| xs:int($arg as xs:anyAtomicType) as xs:int
+
+| xs:short($arg as xs:anyAtomicType) as xs:short
+
+| xs:byte($arg as xs:anyAtomicType) as xs:byte
+
+| xs:nonNegativeInteger($arg as xs:anyAtomicType) as xs:nonNegativeInteger
+
+| xs:unsignedLong($arg as xs:anyAtomicType) as xs:unsignedLong
+
+| xs:unsignedInt($arg as xs:anyAtomicType) as xs:unsignedInt
+
+| xs:unsignedShort($arg as xs:anyAtomicType) as xs:unsignedShort
+
+| xs:unsignedByte($arg as xs:anyAtomicType) as xs:unsignedByte
+|===
+
+A special constructor function is provided for constructing a
+``++xs:dateTime++`` value from an ``++xs:date++`` value and an ``++xs:time++``
+value.
+
+.Special Constructor for xs:dateTime
+[cols="1",options="header"]
+|===
+
+| Function
+
+| fn:dateTime($arg1 as xs:date, $arg2 as xs:time) as xs:dateTime
+|===
+
+==== Standard XPath Functions
+
+===== Boolean functions
+
+The following additional constructor functions are defined on the boolean type.
+
+.Boolean functions
+[cols="1,3",options="header"]
+|===
+
+| Function
+| Meaning
+
+| fn:true()
+| Constructs the xs:boolean value 'true'.
+
+| fn:false()
+| Constructs the xs:boolean value 'false'.
+|===
+
+The following functions are defined on boolean values.
+The return type of these functions is xs:boolean.:
+
+.Boolean functions
+[cols="1,6",options="header"]
+|===
+
+| Function
+| Meaning
+
+| fn:not($arg?)
+a| If ``++$arg++`` is the empty sequence or a node with *[nilled]* true, ``++fn:not++`` returns ``++true++``.
+
+If ``++$arg++`` is a sequence containing a node with *[nilled]* false or
+*[nilled]* having no value (that is, a node corresponding to a non-nillable
+element), ``++fn:not++`` returns ``++false++``.
+
+If ``++$arg++`` is a value of type ``++xs:boolean++`` or a derived from
+``++xs:boolean++``, ``++fn:not++`` returns the boolean inverse of ``++$arg++``.
+
+If ``++$arg++`` is a value of type ``++xs:string++`` or a type derived from
+``++xs:string++``, ``++fn:not++`` returns ``++true++`` if the operand value has
+zero length; otherwise it returns ``++false++``.
+
+If ``++$arg++`` is a value of any numeric type or a type derived from a numeric
+type, ``++fn:not++`` returns ``++true++`` if the operand value is ``++NaN++`` or
+is numerically equal to zero; otherwise it returns ``++false++``.
+
+In all other cases, ``++fn:not++`` raises a Processing Error.
+
+Inverts the xs:boolean value of the argument.
+|===
+
+===== Numeric Functions
+
+The following functions are defined on numeric types.
+Each function returns a value of the same type as the type of its argument.
+The argument must be convertible to a number type.
+
+.Numeric Functions
+[cols="1,2",options="header"]
+|===
+
+| Function
+| Meaning
+
+| fn:abs($arg as numeric)
+| Returns the absolute value of the argument.
+
+| fn:ceiling($arg as numeric)
+| Returns the smallest number with no fractional part that is greater than or equal to the argument.
+
+| fn:floor($arg as numeric)
+| Returns the largest number with no fractional part that is less than or equal to the argument.
+
+| fn:round($arg as numeric)
+| Rounds to the nearest number with no fractional part. When the value is x.5, it rounds toward positive infinity.
+
+a| fn:round-half-to-even($arg as numeric)
+
+fn:round-half-to-even($arg as numeric, $precision as xs:integer)
+| Takes a number and a precision and returns a number rounded to the given precision. If the fractional part is exactly half, the result is the number whose least significant digit is even.
+|===
+
+===== String Functions
+
+The following functions are defined on values of type ``++xs:string++`` and
+types derived from it.
+In the functions below which compare strings, DFDL always uses the default
+Unicode collation algorithm (which is a comparison of codepoint values).
+
+.String Functions
+[cols="1,1",options="header"]
+|===
+
+| Function
+| Meaning
+
+| fn:concat( $arg1 as xs:anyAtomicType, $arg2 as xs:anyAtomicType, pass-format:straightquotes[...] )
+| Concatenates two or more xs:anyAtomicType arguments cast to xs:string.
+
+a| fn:substring($sourceString as xs:string, $startingLoc as xs:double)
+
+fn:substring($sourceString as xs:string, $startingLoc as xs:double, $length as
+xs:double)
+| Returns the xs:string located at a specified place within an argument xs:string.
+
+| fn:string-length($arg as xs:string)
+| Returns the length of the argument as an xs:integer
+
+| fn:upper-case($arg as xs:string)
+| Returns the upper-cased value of the argument.
+
+| fn:lower-case($arg as xs:string)
+| Returns the lower-cased value of the argument.
+
+| fn:contains($arg1 as xs:string, $arg2 as xs:string)
+| Returns xs:boolean indicating whether one xs:string contains another xs:string.
+
+| fn:starts-with($arg1 as xs:string, $arg2 as xs:string)
+| Returns xs:boolean indicating whether the value of one xs:string begins with the characters of another xs:string.
+
+| fn:ends-with($arg1 as xs:string, $arg2 as xs:string)
+| Returns xs:boolean indicating whether the value of one xs:string ends with the characters of another xs:string.
+
+| fn:substring-before($arg1 as xs:string, $arg2 as xs:string)
+| Returns the characters of one xs:string that precede in that xs:string the characters of another xs:string.
+
+| fn:substring-after($arg1 as xs:string, $arg2 as xs:string)
+| Returns the characters of xs:string that follow in that xs:string the characters of another xs:string.
+|===
+
+===== Date and Time Functions
+
+[[date-and-time-functions]]
+.Date and Time Functions
+[cols="1,1",options="header"]
+|===
+
+| Function
+| Meaning
+
+| fn:year-from-dateTime($arg as xs:dateTime)
+| Returns the year from an xs:dateTime value as an xs:integer.
+
+| fn:month-from-dateTime($arg as xs:dateTime)
+| Returns the month from an xs:dateTime value as an xs:integer.
+
+| fn:day-from-dateTime($arg as xs:dateTime)
+| Returns the day from an xs:dateTime value as an xs:integer.
+
+| fn:hours-from-dateTime($arg as xs:dateTime)
+| Returns the hours from an xs:dateTime value as an xs:integer.
+
+| fn:minutes-from-dateTime($arg as xs:dateTime)
+| Returns the minutes from an xs:dateTime value as an xs:integer.
+
+| fn:seconds-from-dateTime($arg as xs:dateTime)
+| Returns the seconds from an xs:dateTime value as an xs:decimal.
+
+| fn:year-from-date($arg as xs:date)
+| Returns the year from an xs:date value as an xs:integer.
+
+| fn:month-from-date($arg as xs:date)
+| Returns the month from an xs:date value as an xs:integer.
+
+| fn:day-from-date($arg as xs:date)
+| Returns the day from an xs:date value as an xs:integer.
+
+| ``++fn:hours-from-time++``($arg as xs:time)
+| Returns the hours from an xs:time value as an xs:integer.
+
+| ``++fn:minutes-from-time++``($arg as xs:time)
+| Returns the minutes from an xs:time value as an xs:integer.
+
+| ``++fn:seconds-from-time++``($arg as xs:time)
+| Returns the seconds from an xs:time value as an xs:decimal.
+|===
+
+===== Node Sequence Test Functions
+
+The following functions are defined on sequences.
+(Note that DFDL v1.0 does not support sequences of length > 1 as the final
+results of expressions.)
+
+In the functions below, if the argument evaluates to the current node, or any
+enclosing parent node, then it is a Schema Definition Error.
+
+.Node Sequence Test Functions
+[cols="1,4",options="header"]
+|===
+
+| Function
+| Meaning
+
+| fn:empty($arg?)
+| Indicates whether the provided sequence is empty.
+
+| fn:exists($arg?)
+| Indicates whether the provided sequence is not empty.
+
+| fn:exactly-one($arg?)
+| Returns the input sequence if it contains exactly one item. Raises an error otherwise
+
+| fn:count($arg)
+a| Returns the number of nodes in the node sequence ``++$arg++`` as an xs:integer.
+
+If the $arg node sequence is known to always be of length 1, then a warning may
+be issued.
+
+Returns 0 if ``++$arg++`` is the empty sequence.
+|===
+
+===== Node functions
+
+This section discusses functions and operators on nodes.
+
+.Node functions
+[cols="1,3",options="header"]
+|===
+
+| Function
+| Meaning
+
+a| fn:local-name()
+
+fn:local-name($arg)
+| Returns the local name of the context node or the specified node as an xs:string.
+
+a| fn:namespace-uri()
+
+fn:namespace-uri($arg)
+| Returns the namespace URI as an xs:string for the argument node or the context node if the argument is omitted. Returns empty string if the argument/context node is in no namespace.
+|===
+
+===== Nillable Element Functions
+
+This section discusses functions related to nillable elements.
+
+.Nillable Element Functions
+[cols="1,5",options="header"]
+|===
+
+| Function
+| Meaning
+
+| fn:nilled($arg?)
+| Returns an xs:boolean true when the argument node Infoset member *[nilled] is* true and false when *[nilled]* is false. If the argument is not an element node, returns the empty sequence. If the argument is the empty sequence, returns the empty sequence. If the argument is an element node and *[nilled]* has no value returns the empty sequence.
+|===
+
+[[dfdl-functions]]
+==== DFDL Functions
+
+.DFDL Functions
+[cols="1,1",options="header"]
+|===
+
+| Function
+| Meaning
+
+| dfdl:contentLength($node, $lengthUnits)
+a| Returns the length of the supplied node's SimpleContent region for elements of simple type, or ComplexContent region for elements of complex type. These regions are defined in Section <<dfdl-data-syntax-grammar>> DFDL Data Syntax Grammar. The value is returned as an xs:unsignedLong.
+
+The second argument is of type xs:string and must be 'bytes', 'characters', or
+'bits' (Schema Definition Error otherwise) and determines the units of length.
+
+| dfdl:valueLength($node, $lengthUnits)
+a| Returns the length of the supplied node's SimpleLogicalValue region for elements of simple type, or ComplexValue region for elements of complex type. These regions are defined in Section <<dfdl-data-syntax-grammar>> DFDL Data Syntax Grammar. The value is returned as an xs:unsignedLong.
+
+For simple types, the dfdl:valueLength() function returns a length which
+excludes any padding or filling.
+
+The second argument is of type xs:string and must be 'bytes', 'characters', or
+'bits' (Schema Definition Error otherwise) and determines the units of length.
+
+| dfdl:testBit($data, $bitPos)
+| Returns Boolean true if the bit number given by the xs:nonNegativeInteger $bitPos is set on in the xs:unsignedByte given by $data, otherwise returns Boolean false.
+
+| dfdl:setBits($bit1, $bit2, pass-format:straightquotes[...] $bit8)
+| Returns an unsigned byte being the value of the bit positions provided by the Boolean arguments, where true is1, false is 0. The number of arguments must be 8.
+
+| dfdl:occursIndex()
+a| Returns the position of the current item of an array as an xs:nonNegativeInteger.
+
+The first element is at position 1.
+
+The function may be used on non-array elements so long as it appears within the
+dynamic scope of some array element.
+
+In this case it returns the index of the current item of the innermost enclosing
+array element.
+
+It is a Schema Definition Error if this function is called when there is no
+enclosing array element.
+
+| dfdl:checkConstraints($node)
+a| Returns boolean true if the specified node value satisfies the XML schema facet constraints that are associated with it. Returns false if the specified node does not meet the constraints or does not exist.
+
+The facets that are checked are
+
+* minLength, maxLength
+* pattern
+* enumeration
+* maxInclusive, maxExclusive, minExclusive, minInclusive
+* totalDigits
+* fractionDigits
+
+See Section <<xsd-facets-min-maxoccurs-default-and-fixed>> for which facets are
+checked for each simple type.
+
+Additionally, the XSD fixed property is checked.
+
+It is a Schema Definition Error if the argument is a complex element.
+
+| dfdl:encodeDFDLEntities($arg)
+| Returns a string containing a DFDL string literal constructed from the $arg string argument. If $arg contains any '%' and/or space characters, then the return value replaces each '%' with '%%' and each space with '%SP;', otherwise $arg is returned unchanged.
+
+| dfdl:decodeDFDLEntities ($arg)
+a| Returns a string constructed from the $arg string argument. If $arg contains syntax matching DFDL Character Entities syntax, then the corresponding characters are used in the result.  Any characters in $arg not matching the DFDL Character Entities syntax remain unchanged in the result.
+
+It is a Schema Definition Error if $arg contains syntax matching DFDL Byte Value
+Entities syntax.
+
+| dfdl:containsDFDLEntities($arg)
+| Returns a Boolean indicating whether the $arg string argument contains one or more DFDL entities.
+
+a| dfdl:timeZoneFromDateTime($arg)
+
+dfdl:timeZoneFromDate($arg)
+
+dfdl:timeZoneFromTime ($arg)
+a| Returns the timezone component, if any, of $arg as an xs:string. The $arg is of type xs:dateTime, xs:date and xs:time respectively.
+
+If $arg has a timezone component, then the result is a string in the format of
+an ISO Time zone designator.
+Interpreted as an offset from UTC, its value may range from +14:00 to -14:00
+hours, both inclusive.
+The UTC time zone is represented as "+00:00".
+If the $arg has no timezone component, then "" (empty string) is returned.
+
+a| dfdl:checkRangeInclusive($node, $val1, $val2)
+
+dfdl:checkRangeExclusive($node, $val1, $val2)
+| Returns boolean true if the specified node value is in the range given by $val1 and $val2.  The type of $val1 and $val2 must be compatible with the type of $node, and must be a derivative of xs:decimal, xs:float or xs:double. It is a Schema Definition Error if the $node argument is a complex element.
+|===
+
+Notes:
+
+dfdl:valueLength(path, lengthUnits) - returns the value length which excludes
+any padding or filling which might be added for a _specified length._
+
+If the element declaration in the DFDL schema corresponding to the Infoset item
+has the dfdl:inputValueCalc property, then the unpadded length is defined to be
+0.
+
+The value length includes the length contributions from introduced escape
+characters needed to escape contained delimiters (if such are defined and would
+appear in the output representation).
+
+The value length is also a function of the dfdl:encoding property.
+Multi-byte and variable-width character set encodings commonly contribute more
+bytes to the value length than a single-byte character set would.
+
+The value length is computed from the DFDL Infoset value, ignoring the
+dfdl:length or dfdl:textOutputMinLength property.
+Other DFDL properties which affect the length of a text or binary representation
+are respected, it is only an explicit length which is ignored.
+
+For a complex type, this means a bottom up totaling of the dfdl:contentLength()
+of all the contents and framing of the complex type.
+
+dfdl:contentLength(path, lengthUnits) – returns the length of the content of the
+Infoset data item as identified by the path argument.
+This includes padding or filling or truncation which might be carried out for a
+_specified length_ item.
+
+If the element declaration in the DFDL schema corresponding to the Infoset item
+has a dfdl:inputValueCalc property, then the length is defined to be 0.
+
+When unparsing with dfdl:lengthKind "explicit", the calculation of
+dfdl:contentLength() returns the value of the dfdl:length property.
+
+For both dfdl:contentLength() and dfdl:valueLength(), the content length
+excludes any alignment filling as well as excluding any leading or trailing skip
+bytes.
+That is, the returned length is about the length of the content, and not about
+the position of that content in the output data stream.
+
+Use dfdl:encodeDFDLEntities() when the value of a DFDL property is obtained from
+the data stream using an expression, and the type of the property is DFDL String
+Literal or List of DFDL String Literals, and the values extracted from the data
+stream can contain '%' or space characters.
+If the data already contains DFDL entities, this function should not be used.
+
+The dfdl:decodeDFDLEntities() function is used to create a value which contains
+characters for which DFDL Character Entities are needed.
+An example is to create data containing the NUL (character code 0) codepoint.
+This character code is not allowed in XML documents, including DFDL Schemas;
+hence, it must be specified using a DFDL Character Entity.
+Within a DFDL Expression, use this function to obtain a string containing this
+character.
+
+==== DFDL Constructor Functions
+
+There is sometimes a need to create a number type from hex binary, and a hex
+binary type from a number.
+Accordingly, the following new DFDL specific functions are provided.
+
+.DFDL Constructor Functions
+[cols="1,3",options="header"]
+|===
+
+| Function
+| Meaning
+
+a| dfdl:byte ($arg)
+
+dfdl:unsignedByte ($arg)
+
+dfdl:short ($arg)
+
+dfdl:unsignedShort($arg)
+
+dfdl:int ($arg)
+
+dfdl:unsignedInt ($arg)
+
+dfdl:long ($arg)
+
+dfdl:unsignedLong ($arg)
+a| These constructor functions behave identically to the XPath 2.0 constructor functions of the same names, with one exception. The argument can be a quoted string beginning with the letter 'x', in which case the remainder of the string is hexadecimal digits that represent a big-endian twos complement representation of a binary number.
+
+If the string begins with 'x', it is a Schema Definition Error if a character
+appears other 0-9, a-f, A-F.
+
+Each constructor function has a limit on the number of hex digits, with no more
+digits than 2, 4, 8, or 16 for the byte, short, int and long versions
+respectively.
+It is a Schema Definition Error if more digits are encountered than are suitable
+for the type being created
+
+| dfdl:hexBinary ($arg)
+a| This constructor function behaves identically to the XPath 2.0 constructor function of the same name, with one exception. The argument can also be a long, unsignedLong, or any subtype thereof, and in that case a xs:hexBinary value containing a number of hex digits is produced. The ordering and number of the digits correspond to a binary big-endian twos-complement implementation of the type of the argument. Digits 0-9, A-F are used.
+
+The number of digits produced depends on the type of $arg, being 2, 4, 8 or 16.
+If $arg is a literal number then the type is the smallest signed type (long,
+int, short, byte) that can contain the value.
+
+If a literal number is not able to be represented by a long, it is a Schema
+Definition Error.
+|===
+
+Examples:
+
+* dfdl:unsignedInt("xa1b2c3d4") is the unsigned int value 2712847316.
+* dfdl:int("xFFFFFFFF") is the signed int value -1.
+* dfdl:unsignedByte("xFF") is the unsigned byte value 255.
+* dfdl:byte("xff") is the signed byte value -1.
+* dfdl:byte("x7F") is the signed byte value 127.
+* dfdl:byte("x80") is the signed byte value -128.
+* dfdl:unsignedByte("x80") is the unsigned byte value 128.
+* dfdl:byte("x0A3") is a Schema Definition Error (too many digits for type).
+* dfdl:byte("xG3") is a Schema Definition Error (invalid digit).
+* dfdl:hexBinary(xs:unsignedByte(208))  is the hexBinary value "D0".
+* dfdl:hexBinary(208)  is the hexBinary value "00D0".
+* dfdl:hexBinary(-2084) is the hexBinary value "F7DC".
+
+==== Miscellaneous Functions
+
+// (MANUALLY SET TABLE NUMBER TO PRESERVE TABLE NUMBERING)
+.Miscellaneous Functions
+[cols="1,2",options="header"]
+|===
+
+| Function
+| Meaning
+
+a| fn:error()
+
+fn:error($id as xs:string)
+
+fn:error($id as xs:string, $desc as xs:string, $obj?)
+a| Causes a Processing Error.
+
+This function does not return a value.
+A Processing Error ends the evaluation of the expression.
+
+The $id argument is an error code identifier string that distinguishes this
+error from others.
+The string should have the structure of an XSD QName; the namespace URI
+conventionally identifies the component, subsystem, or authority responsible for
+defining the meaning of the error code, while the local part identifies the
+specific error condition.
+This information is incorporated into any diagnostic messages created by the
+DFDL implementation in response to the Processing Error in an
+implementation-dependent manner.
+If the $id argument string does not have the form of an XSD QName, or the QName
+cannot be interpreted as a meaningful namespace prefix and local identifier,
+then the Processing Error still occurs but the diagnostic message is created in
+an implementation-dependent manner.
+
+The $desc is a natural-language description of the error condition.
+This string appears in any diagnostic messages created by the DFDL
+implementation in response to the Processing Error.
+
+The $obj? argument is an arbitrary value used to convey additional information
+about the error and it is used to construct the diagnostic message in an
+implementation-dependent manner.
+
+If any argument is not supplied the Processing Error occurs but the diagnostic
+message created is implementation-dependent.
+|===
+
+=== Unparsing and Circular Expression Deadlock Errors
+
+It is possible for expressions and lengths of elements in a DFDL schema to
+interact badly, resulting in circular deadlocks.
+In these cases,  an expression is unable to evaluate because it depends in some
+way on the length of something that depends on the expression itself.
+
+Expression deadlocks are always Schema Definition Errors.
+
+One scenario where such a deadlock can arise is due to what is called the
+i__nterior-alignment problem__.
+In this scenario a dfdl:outputValueCalc expression depends on the
+dfdl:valueLength function being evaluated for a following complex element which
+due to interior alignments, has a length that depends on its starting position.
+In this case,  a circular deadlock occurs, which is a unparse-time Processing
+Error.

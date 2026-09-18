@@ -1,0 +1,162 @@
+[[optional-dfdl-features]]
+== Optional DFDL Features
+
+The following table lists the features of the DFDL language that are considered
+optional for DFDL processor implementations.
+This list admits very small subsets of the full DFDL specification.
+For example, a binary-only subset without any expressions or variables is
+specifically allowed.
+
+.Optional DFDL features
+[cols="1,2",options="header"]
+|===
+
+| Feature
+| Detection
+
+| Validation
+| External switch
+
+| Named Formats
+| dfdl:defineFormat or dfdl:ref
+
+| Choices
+| xs:choice in the schema
+
+| Arrays where size not known in advance
+| dfdl:occursCountKind 'implicit', 'parsed', 'stopValue'
+
+| Expressions
+| Use of a DFDL expression in any property value
+
+| End of parent
+| dfdl:lengthKind "endOfParent"
+
+| Simple type restrictions
+| xs:simpleType in the schema
+
+| Text representation for types other than String
+| dfdl:representation "text" for Number, Calendar or Boolean types
+
+| Delimiters
+| dfdl:separator <> "" or dfdl:initiator <> "" or dfdl:terminator <> "" or dfdl:lengthKind "delimited"
+
+| Nils
+| XSD nillable 'true' in the schema
+
+| Defaults
+| XSD default or XSD fixed in the schema
+
+| Defaulting to Empty String/HexBinary values in the Infoset
+| dfdl:emptyElementParsePolicy="treatAsEmpty"
+
+| Lengths in Bits
+| dfdl:alignmentUnits 'bits' or dfdl:lengthUnits 'bits'
+
+| Delimited lengths and representation binary element
+| dfdl:representation 'binary' (or implied binary) and dfdl:lengthKind 'delimited'
+
+| Regular expressions
+a| dfdl:lengthKind 'pattern',
+
+dfdl:assert with dfdl:testkind 'pattern' ,
+
+dfdl:discriminator with dfdl:testkind 'pattern'
+
+| Zoned numbers
+| dfdl:textNumberRep 'zoned'
+
+| IBM 390 packed numbers
+| dfdl:binaryNumberRep 'packed'
+
+| IBM 390 packed calendars
+| dfdl:binaryCalendarRep 'packed'
+
+| IBM 390 floats
+| dfdl:binaryFloatRep 'ibm390Hex'
+
+| Unordered sequences
+| dfdl:sequenceKind 'unordered'
+
+| Floating elements
+| dfdl:floating 'yes'
+
+| dfdl functions in expression language
+| DFDL functions in expression
+
+| Hidden groups
+| dfdl:hiddenGroupRef <> ''
+
+| Calculated values
+| dfdl:inputValueCalc <> '' or dfdl:outputValueCalc <> ''
+
+| Escape schemes
+| dfd:defineEscapeScheme in the schema
+
+| Extended encodings
+| Any dfdl:encoding value beyond the core list
+
+| UTF-16 Variable Width Characters
+| dfdl:utf16Width="variable"
+
+| Asserts
+| dfdl:assert in the schema
+
+| Discriminators
+| dfdl:discriminator in the schema
+
+| Prefixed lengths
+| dfdl:lengthKind 'prefixed'
+
+| Variables
+a| dfdl:defineVariable,
+
+dfdl:newVariableInstances,
+
+dfdl:setVariable
+
+Variables in DFDL expression language
+
+Note that variables as a feature is dependent on the Expressions feature.
+
+| BCD calendars
+| dfdl:binaryCalendarRep "bcd"
+
+| BCD numbers
+| dfdl:binaryNumberRep "bcd"
+
+| Multiple schemas
+| xs:include or xs:import in the schema
+
+| IBM 4690 packed numbers
+| dfdl:binaryNumberRep "ibm4690Packed"
+
+| IBM 4690 packed calendars
+| dfdl:binaryCalendarRep "ibm4690Packed"
+
+| DFDL Byte Value Entities
+| Use of pass-format:straightquotes[%#r] syntax in a DFDL String Literal other than the dfdl:fillByte property
+
+| DFDL Standard Character Set Encodings
+| dfdl:encoding name begins with "X-DFDL-".
+
+| Bit Order - Least Significant Bit First
+| dfdl:bitOrder with value 'leastSignificantBitFirst'
+|===
+
+In order to provide portability of a DFDL schema, a minimal or extended
+conforming processor MUST issue warnings about any DFDL properties it does not
+implement.
+This warning can simply state that the property is not recognized.
+
+(This allows the implementation to simply have no knowledge of properties it
+does not need for the subset of features it implements.)
+
+For example, if the hidden groups feature were not implemented, then the
+implementation most likely would not recognize the dfdl:hiddenGroupRef property
+at all.
+Such an implementation MUST issue a warning that the dfdl:hiddenGroupRef
+property is not recognized.
+
+It is a Schema Definition Error if a DFDL schema uses an optional feature that
+is not supported by a minimal or extended conforming processor.

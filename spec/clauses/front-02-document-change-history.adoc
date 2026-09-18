@@ -1,0 +1,72 @@
+[[document-change-history]]
+== Document Change History
+
+// This section will become part of the Forward in an ISO PAS submission.
+
+[%unnumbered,cols="1,5"]
+|===
+
+a| 2026-01-15
+
+(internal v1.2.2 still)
+a| Fixed errata language and minor formatting per
+
+https://github.com/OpenGridForum/DFDL/issues/77#issuecomment-3760018110
+
+a| 2026-01-15
+
+(internal v1.2.2 still)
+| More minor and typographical format fixes per https://github.com/OpenGridForum/DFDL/issues/77#issuecomment-3750887512
+
+.5+a| 2026-01-02
+
+(internal v1.2.2)
+| Section 7.5.1 clarification of language about assert statement evaluation order.
+
+| Section 13.6 use uniform terminology of 'signed number' and 'unsigned number'. Section 13.6.2 Clarified error cases. Section 13.7.1 Clarified illegal combinations of BCD with decimalSigned 'yes' and packed with decimalSigned 'no'.
+
+| Section 12.3.4 Clarifications about facet checks and processing errors on dfdl:prefixLengthType simple types for cases where dfdl:prefixIncludesPrefixLength is 'yes' or 'no'.
+
+| Section 18.5.1 Correct xs:dateTime constructor to a single argument only.
+
+| Section 18.5.2.5 and Section 35 Clarifications around the argument to the fn:count function. It is not required to only be an array or optional element, but can be any node sequence.
+
+a| 2026-01-02
+
+(internal v1.2.1)
+a| Edits based on review of ISO-formatted version. See github.com/OpenGridForum/DFDL/issues/77
+
+Also minor and typographical issues fixed.
+See
+
+github.com/OpenGridForum/DFDL/issues/51
+
+a| 2025-10-01
+
+(internal v1.2.0)
+a| Format changed to use ISO template.
+
+OGF back matter sections (25 to 28) moved to front matter to make ISO PAS
+submission simpler – just the front matter pages change.
+Sections 25-28 still exist to preserve section numbering, but are marked
+"Removed".
+
+.7+| 2023-06-13
+| Section 13.2.1 Property escapeKind. Clarify it is a Schema Definition Error if the dfdl:escapeCharacter or dfdl:escapeEscapeCharacter is the same as the first character of an in-scope dfdl:separator or dfdl:terminator
+
+a| Section 18.4 Notes. Add item 6 saying: The expression ".[1]" is the same as "." and that ".[n]" where n is not equal to 1 returns an empty node sequence.
+
+Section 18.5.2.5 the sentence "In the functions below, if the argument includes
+the current node, or any enclosing parent node, then it is a Schema Definition
+Error." should be using "evaluates to" not "includes".
+
+| Section 18.5.1 the xs:dateTime function takes 2 arguments, an xs:date and xs:time.
+
+| Section 13.6.1.1 Clarify with simpler grammar for textNumberPattern for V and P symbols. Clarify exponent E is required.
+
+| Section 13.6.1.1 Clarify quoting of special characters in textNumberPattern
+
+| Section 13.11.1 Correct number of digits in calendarPattern
+
+| Section 12.3.4 Update prefixLengthType facet checking, prohibit statement annotations on the type, clarify that prohibitions also apply to any base type, and clarify language in 12.3.4.1.
+|===
