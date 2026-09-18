@@ -24,6 +24,8 @@ This working group maintains this standard and proposed extensions/additions to 
 * [DFDL Workgroup News](https://github.com/OpenGridForum/DFDL/wiki/DFDL-Workgroup-News)
 * [DFDL Workgroup Calls/Meeting Minutes](https://github.com/OpenGridForum/DFDL/tree/master/calls)
 * [DFDL Workgroup Current Documents](https://github.com/OpenGridForum/DFDL/tree/master/docs/current)
+* [Building the specification](spec/BUILD.md)
+* [Editing the specification](spec/EDITING.md)
 * [OGF DFDL Homepage](http://www.ogf.org/dfdl)
 * [Wikipedia DFDL](https://en.wikipedia.org/wiki/Data_Format_Description_Language)
 

@@ -1,0 +1,14 @@
+// The Obsoletes text, carried in one place.
+//
+// It appears on the OGF cover page and again in the ISO front matter, in
+// different positions, so each edition includes it where it belongs rather
+// than keeping its own copy.
+//
+// Only the part that is genuinely common lives here. The sentence that
+// follows points at the Document Change History and differs between the
+// editions, so each one keeps its own.
+
+This document incorporates all errata and clarifications to earlier DFDL v1.0 specification documents and therefore obsoletes both:
+
+* GFD-P-R.207 dated September 2014 <<ref-obsolete-dfdl-207,[OBSOLETE_DFDL_207]>>
+* GFD-P-R.174 dated January 2011 <<ref-obsolete-dfdl-174,[OBSOLETE_DFDL_174]>>.

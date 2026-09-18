@@ -1,0 +1,11 @@
+// The abstract, carried in one place.
+//
+// GFD.240 prints this text twice: on the OGF cover page and again under
+// Scope. Both editions also declare it as the document abstract, which
+// Metanorma renders on its own cover. That is four copies of one paragraph,
+// and nothing keeps them in step, so they are all included from here.
+//
+// Included by frontmatter/iso.adoc, frontmatter/ogf.adoc,
+// clauses/front-01-preamble.adoc and clauses/front-09-scope-of-the-specification.adoc.
+
+This document provides a definition of a standard Data Format Description Language (DFDL).  This language allows description of text, dense binary, and legacy data formats in a vendor-neutral declarative manner. DFDL is an extension to the XML Schema Description Language (XSD).
