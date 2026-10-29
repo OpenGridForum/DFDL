@@ -135,7 +135,7 @@ Note that variables as a feature is dependent on the Expressions feature.
 | dfdl:binaryCalendarRep "ibm4690Packed"
 
 | DFDL Byte Value Entities
-| Use of pass-format:straightquotes[%#r] syntax in a DFDL String Literal other than the dfdl:fillByte property
+| Use of +%#r+ syntax in a DFDL String Literal other than the dfdl:fillByte property
 
 | DFDL Standard Character Set Encodings
 | dfdl:encoding name begins with "X-DFDL-".

@@ -66,8 +66,8 @@ the least-significant bit of byte N+1.
 *_Bit Position_* - The data stream is assumed to be a collection of
 consecutively numbered unsigned bytes. Each byte is a numeric value from 0
 to 255. The bits of a byte are referred to by their numerical significance as
-the 2^n^ bit, for _n_ from 0 to 7. Hence, the byte value 255 = 2^7^ {plus} 2^6^
-{plus} 2^5^ {plus} 2^4^ {plus} 2^3^ {plus} 2^2^ {plus} 2^1^ {plus} 2^0^. The
+the 2^n^ bit, for _n_ from 0 to 7. Hence, the byte value 255 = 2^7^ + 2^6^
++ 2^5^ + 2^4^ + 2^3^ + 2^2^ + 2^1^ + 2^0^. The
 2^7^-bit is the most-significant bit, and the 2^0^-bit is the least significant
 bit. The bits within each byte are assigned numbered bit positions 1 to 8
 according to the _bit order._  Given a bit-order, every bit in the data stream
@@ -93,9 +93,9 @@ _character set encodings_ of the character. For example: The '{' character known
 in Unicode [<<a-unicode,Unicode>>] as LEFT CURLY BRACKET has character code
 U+007B. In both ASCII and UTF-8 character set encodings the representation of
 this character is as a single byte _code point_
-pass-format:straightquotes[0x7B]. However, in EBCDIC-based character set
+0x7B. However, in EBCDIC-based character set
 encodings the representation of this same character code is the single byte code
-point pass-format:straightquotes[0xC0].
+point 0xC0.
 
 *_Character Set_* - An abstract set of characters that are assigned (or mapped
 to) a representation by a particular character set encoding. For most character
@@ -130,15 +130,15 @@ and a code point. For Unicode character set encodings, there is no distinction
 between a character code and a code point. Examples:
 
 * € - character code U+20AC
-** IBM01148 encoding - the code point is pass-format:straightquotes[0x9F], and
+** IBM01148 encoding - the code point is 0x9F, and
 this encoding is fixed width so there is no distinction between the code point
-pass-format:straightquotes[0x9F] and the code unit
-pass-format:straightquotes[0x9F] that represents the encoded character.
+0x9F and the code unit
+0x9F that represents the encoded character.
 ** UTF-8 encoding - there is no distinction between the character code
-pass-format:straightquotes[0x20AC] and the code point
-pass-format:straightquotes[0x20AC]. However, it is represented by 3 code units
-pass-format:straightquotes[0xE2] pass-format:straightquotes[0x82]
-pass-format:straightquotes[0xAC]
+0x20AC and the code point
+0x20AC. However, it is represented by 3 code units
+0xE2 0x82
+0xAC
 
 *_Code Unit_* - When a character set encoding uses differing variable width
 representations for characters, the units making up these variable width
@@ -348,7 +348,7 @@ unsigned byte, the bit with place value 2^7^ is the most significant bit.
 a nibble as it can be represented in exactly 4 bits.
 
 *_Node_* - The term Node is a shorter equivalent to Element Information Item of
-the DFDL Infoset described in Section <<element-information-items>> Element
+the DFDL Infoset described in <<element-information-items>> Element
 Information Items.
 
 *_Non-Representation Property_* – A format property that is not a representation
@@ -457,7 +457,7 @@ compilation of the schema, or determining the presence of the error
 _statically_.
 
 *_Surrogate Pair_* - A Unicode character whose character code value is greater
-than pass-format:straightquotes[0xFFFF] can be encoded into variable-width
+than 0xFFFF can be encoded into variable-width
 UTF-16BE or UTF-16LE (which are variable-width encodings when the DFDL property
 dfdl:utf16Width is 'variable'). In this case the representation uses two
 adjacent code units each of which is called a surrogate, and the pair of which
@@ -513,7 +513,7 @@ dfdl:decimalSigned="yes".
 *_Validity_* - A DFDL Infoset is said to be valid with respect to a DFDL schema
 if each Infoset item is valid with respect to its corresponding DFDL schema
 component. Validity is about the Infoset and the values it holds. It is
-independent of the data representation when parsing or unparsing. See Section
+independent of the data representation when parsing or unparsing. See
 <<validation>> Validation, for a list of the specific value checks that are
 performed when validating a DFDL Infoset against a DFDL schema.
 

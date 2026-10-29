@@ -11,7 +11,7 @@ opaque data.
 Alignment properties control the leading alignment and trailing alignment
 regions.
 That is, the LeadingAlignment and TrailingAlignment regions of the data syntax
-grammar (in Section <<dfdl-data-syntax-grammar>>).
+grammar (in <<dfdl-data-syntax-grammar>>).
 
 When the alignment properties are applied to an array element, the properties
 are applied to each occurrence of the element; that is, not only to the first
@@ -20,14 +20,14 @@ occurrence.
 The following properties are used to define alignment rules.
 
 .Aligned Data Properties
-[cols="1,5",options="header"]
+[cols="1,5a",options="header"]
 |===
 
 | Property Name
 | Description
 
 | alignment
-a| Non-negative Integer or 'implicit'
+| Non-negative Integer or 'implicit'
 
 A non-negative number that gives the alignment required for the beginning of the
 item.
@@ -46,13 +46,13 @@ The 'implicit' alignment of a model group is always 1. If alignment is
 For textual data, minimum alignment is mandated by the character-set encoding,
 and this property must be 'implicit' or set to a multiple of the character-set's
 mandatory alignment.
-See Section <<mandatory-alignment-for-textual-data>>.
+See <<mandatory-alignment-for-textual-data>>.
 
 Annotation: dfdl:element, dfdl:simpleType, dfdl:sequence, dfdl:choice,
 dfdl:group
 
 | alignmentUnits
-a| Enum
+| Enum
 
 Valid values are 'bits' or 'bytes'
 
@@ -65,7 +65,7 @@ Annotation: dfdl:element, dfdl:simpleType, dfdl:sequence, dfdl:choice,
 dfdl:group
 
 | fillByte
-a| DFDL String Literal
+| DFDL String Literal
 
 A single byte specified as a DFDL byte value entity or a single character.
 If a character is specified, it must be a single-byte character in the
@@ -81,7 +81,7 @@ Annotation: dfdl:element, dfdl:simpleType, dfdl:sequence, dfdl:choice,
 dfdl:group
 
 | leadingSkip
-a| Non-negative Integer
+| Non-negative Integer
 
 A non-negative number of bytes or bits, depending on dfdl:alignmentUnits, to
 skip before alignment is applied.
@@ -91,7 +91,7 @@ Annotation: dfdl:element, dfdl:simpleType, dfdl:sequence, dfdl:choice,
 dfdl:group
 
 | trailingSkip
-a| Non-negative Integer
+| Non-negative Integer
 
 A non-negative number of bytes or bits, depending on dfdl:alignmentUnits, to
 skip after the element, but before considering the alignment of the next
@@ -124,8 +124,8 @@ If alignmentUnits is 'bytes' then the processor multiplies the alignment value
 by 8 to get the bit alignment,  If the position in the data stream of the start
 of the *_AlignmentFill_* region is bit position N, then the length of the
 *_AlignmentFill_* region is the smallest non-negative integer L such that (L
-{plus} N) mod B = 1.  The position of the first bit of the aligned component is
-P = L {plus} N.
++ N) mod B = 1.  The position of the first bit of the aligned component is
+P = L + N.
 
 The *_LeadingSkip_* and *_TrailingSkip_* regions length are controlled by two
 properties of corresponding names and the dfdl:alignmentUnits property.
@@ -140,14 +140,14 @@ each logical type.
 [cols="2,2,1,2"]
 |===
 
-.2+| Type
-3+| Alignment
+.2+| *Type*
+3+| *Alignment*
 
 | *text*
 2+| *binary*
 
 | String
-.12+| Encoding Specific (usually 8 bits, with exceptions: See Section <<mandatory-alignment-for-textual-data>>)
+.12+| Encoding Specific (usually 8 bits, with exceptions: See <<mandatory-alignment-for-textual-data>>)
 2+| Not applicable
 
 | Float
@@ -200,7 +200,7 @@ own rules for when they are applicable.
 *_Textual Data_* – This term is used to describe data of type xs:string, data
 with dfdl:representation "text", as well as data being matched to delimiters
 (parsing) or output as delimiters (unparsing), and data being matched to regular
-expressions (parsing only pass-format:straightquotes[-] as in a dfdl:assert with
+expressions (parsing only - as in a dfdl:assert with
 testKind 'pattern', or an element with dfdl:lengthKind 'pattern').
 
 Textual data has mandatory alignment that is character-set-encoding dependent.
@@ -229,7 +229,7 @@ UTF-16LE, UTF-32, UTF-32BE, UTF-32LE, all have 8-bit/1-byte alignment.
 ==== Mandatory Alignment for Packed Decimal Data
 
 Packed decimal data is data with
-dfdl:binaryNumberRepfootnote:[For dfdl:binaryNumberRep, see Section <<properties-specific-to-number-with-binary-representation>> Properties Specific to Number with Binary Representation.] values of 'packed', 'ibm4690Packed' or 'bcd'.
+dfdl:binaryNumberRepfootnote:[For dfdl:binaryNumberRep, see <<properties-specific-to-number-with-binary-representation>> Properties Specific to Number with Binary Representation.] values of 'packed', 'ibm4690Packed' or 'bcd'.
 This representation stores a decimal digit in a 4 bit nibble.
 These nibbles must have a multiple of 4-bit alignment.
 It is a Schema Definition Error otherwise.
@@ -258,27 +258,30 @@ dfdl:alignmentUnits='bits'), and that the data is binary with twos-complement
 binary integers (dfdl:representation='binary', dfdl:binaryNumberRep='binary'),
 and assume the data is at the beginning of the data stream.
 
-[source%unnumbered,subs="+macros"]
+[source,subs="+quotes"]
 ----
-pass:[<span style="color:#0070C0">&lt;element name="A" type="xs:int" dfdl:length="2" dfdl:alignment='8'/&gt;</span>]
-pass:[<span style="color:#0070C0">&lt;!-- having value 1 --&gt;</span>]
-pass:[<span style="color:#FF0000">&lt;element name="B" type="xs:int" dfdl:length="4" dfdl:alignment='4'/&gt;</span>]
-pass:[<span style="color:#FF0000">&lt;!-- having value 5 --&gt;</span>]
+[css color:#0070C0]##<element name="A" type="xs:int" dfdl:length="2" dfdl:alignment='8'/>##
+[css color:#0070C0]##<!-- having value 1 -->##
+[css color:#FF0000]##<element name="B" type="xs:int" dfdl:length="4" dfdl:alignment='4'/>##
+[css color:#FF0000]##<!-- having value 5 -->##
 ----
 
-The above are colorized to highlight the corresponding bits in the data below.
+The above is colorized to highlight the corresponding bits in the data below.
 The total length due to the alignment region appearing before element 'B' is 8
 bits.
 
 In a format where dfdl:bitOrder is 'mostSignificantBitFirst' the data can be
 visualized as:
 
-[source%unnumbered,subs="+macros"]
+[bits,B=blue,G=green,R=red,C=cyan]
 ----
-              pass:[<span style="color:#0070C0">01</span>]pass:[<span style="color:#00B050">00</span>]pass:[<span style="color:#FF0000">0101</span>]
-              pass:[<span style="color:#0070C0">AA</span>]pass:[<span style="color:#00B050">xx</span>]pass:[<span style="color:#FF0000">BBBB</span>]
+              01000101
+~             BBGGRRRR
+              AAxxBBBB
+~             BBGGRRRR
 Significance  M      L
-Bit Position  pass:[<span style="color:#00B0F0">12</span>]pass:[<span style="color:#00B050">34</span>]pass:[<span style="color:#FF0000">5678</span>]
+Bit Position  12345678
+~             CCGGRRRR
 ----
 
 In the above, the *_AlignmentFill_* region is marked with 'x' characters and
@@ -287,12 +290,15 @@ contains all 0 bit values.
 In a format where dfdl:bitOrder is 'leastSignificantBitFirst' the presentation
 is different:
 
-[source%unnumbered,subs="+macros"]
+[bits,R=red,G=green,B=blue,C=cyan]
 ----
-              pass:[<span style="color:#FF0000">0101</span>]pass:[<span style="color:#00B050">00</span>]pass:[<span style="color:#0070C0">01</span>]
-              pass:[<span style="color:#FF0000">BBBB</span>]pass:[<span style="color:#00B050">xx</span>]pass:[<span style="color:#0070C0">AA</span>]
+              01010001
+~             RRRRGGBB
+              BBBBxxAA
+~             RRRRGGBB
 Significance  M      L
-Bit Position  pass:[<span style="color:#FF0000">8765</span>]pass:[<span style="color:#00B050">43</span>]pass:[<span style="color:#00B0F0">21</span>]
+Bit Position  87654321
+~             RRRRGGCC
 ----
 
 In the above the *_AlignmentFill_* region still appears before element 'B', and
@@ -322,14 +328,14 @@ the matching of DFDL String Literals are given in
 <<appendix-c-processing-of-dfdl-string-literals,Appendix C: Processing of DFDL String literals>>.
 
 .Properties for Specifying Delimiters
-[cols="2,3",options="header"]
+[cols="2,3a",options="header"]
 |===
 
 | Property Name
 | Description
 
 | initiator
-a| List of DFDL String Literals or DFDL Expression
+| List of DFDL String Literals or DFDL Expression
 
 Specifies an ordered whitespace separated list of alternative DFDL String
 Literals one of which marks the beginning of the element or group of elements.
@@ -347,7 +353,7 @@ the value of an expression, is restricted to allow only certain kinds of DFDL
 String Literal syntax:
 
 * DFDL character entities are allowed.
-* DFDL Byte Value entities ( pass-format:straightquotes[%#rXX;] ) are allowed.
+* DFDL Byte Value entities ( +%#rXX;+ ) are allowed.
 * DFDL Character Classes NL, WSP, WSP+, WSP*, and ES are allowed.
 * If the ES entity or the WSP* entity appear alone as one of the string literals
 in the list, then dfdl:initiatedContent must be "no". This restriction ensures
@@ -379,7 +385,7 @@ Annotation: dfdl:element, dfdl:simpleType, dfdl:sequence, dfdl:choice,
 dfdl:group
 
 | terminator
-a| List of DFDL String Literals or DFDL Expression
+| List of DFDL String Literals or DFDL Expression
 
 Specifies an ordered whitespace separated list of alternative text strings that
 one of which marks the end of an element or group of elements.
@@ -391,14 +397,14 @@ The expression must not contain forward references to elements which have not
 yet been processed.
 
 This property can be used to determine the length of an element as described in
-Section <<dfdl-lengthkind-delimited>> dfdl:lengthKind 'delimited'.
+<<dfdl-lengthkind-delimited>> dfdl:lengthKind 'delimited'.
 
 Each string literal in the list, whether apparent in the schema, or returned as
 the value of an expression, is restricted to allow only certain kinds of DFDL
 String Literal syntax:
 
 * DFDL character entities are allowed.
-* DFDL Byte Value entities ( pass-format:straightquotes[%#rXX;] ) are allowed.
+* DFDL Byte Value entities ( +%#rXX;+ ) are allowed.
 * DFDL Character Classes NL, WSP, WSP+, WSP*, and ES are allowed.
 * Neither the ES entity nor the WSP* entity may appear on their own as one of
 the string literals in the list when the parser is determining the length of a
@@ -433,7 +439,7 @@ Annotation: dfdl:element, dfdl:simpleType, dfdl:sequence, dfdl:choice,
 dfdl:group
 
 | emptyValueDelimiterPolicy
-a| Enum
+| Enum
 
 Valid values are 'none', 'initiator', 'terminator' or 'both'
 
@@ -443,7 +449,7 @@ terminator, both, or neither must be present.
 Ignored if both dfdl:initiator and dfdl:terminator are "" (empty string).
 
 'initiator' indicates that, on parsing, if the content region (which can be
-either the SimpleContent region or the ComplexContent region defined in Section
+either the SimpleContent region or the ComplexContent region defined in
 <<dfdl-data-syntax-grammar>>)  is empty then the dfdl:initiator must be present.
 It also indicates that on unparsing when the content region is empty that the
 dfdl:initiator is output.
@@ -494,14 +500,14 @@ dfdl:initiatedContent 'yes'.
 Annotation: dfdl:element, dfdl:simpleType
 
 | documentFinalTerminatorCanBeMissing
-a| Enum
+| Enum
 
 Valid values are 'yes', 'no'
 
 When the dfdl:documentFinalTerminatorCanBeMissing property is true, then when an
 element is the last element in the data stream, then on parsing, it is not an
 error if the terminator is not found, and the terminator is considered to be
-logically present for the purposes of establishing representation, per Section
+logically present for the purposes of establishing representation, per
 <<establishing-representation>>.
 
 For example, if the data are in a file, and the format specifies lines
@@ -516,12 +522,12 @@ this property.
 Annotation: dfdl:format (but applies to elements only)
 
 | outputNewLine
-a| DFDL String Literal or DFDL Expression
+| DFDL String Literal or DFDL Expression
 
 Specifies the character or characters that are used to replace the %NL;
 character class entity during unparse.
 
-(The %NL; entity is defined in Section
+(The %NL; entity is defined in
 <<dfdl-character-class-entities-in-dfdl-string-literals>> DFDL Character Class
 Entities in DFDL String Literals.)
 
@@ -540,7 +546,7 @@ Annotation: dfdl:element, dfdl:simpleType, dfdl:sequence, dfdl:choice,
 dfdl:group
 
 | emptyElementParsePolicy
-a| Enum
+| Enum
 
 Valid values are "treatAsAbsent" or "treatAsEmpty".
 
@@ -566,14 +572,14 @@ These properties are used to determine the content length of an element and
 apply to elements of all types (simple and complex).
 
 .Properties for Specifying Length
-[cols="1,6",options="header"]
+[cols="1,6a",options="header"]
 |===
 
 | Property Name
 | Description
 
 | lengthKind
-a| Enum
+| Enum
 
 Controls how the content length of the component is determined.
 
@@ -581,7 +587,7 @@ Valid values are: 'explicit', 'delimited', 'prefixed', 'implicit', 'pattern',
 'endOfParent'
 
 A full description of each enumeration is given in the subsections of this
-section beginning with Section <<dfdl-lengthkind-explicit>>.
+section beginning with <<dfdl-lengthkind-explicit>>.
 
 'explicit' means the length of the element is given by the dfdl:length property.
 
@@ -604,7 +610,7 @@ expression specified using the dfdl:lengthPattern property.
 Annotation: dfdl:element, dfdl:simpleType
 
 | lengthUnits
-a| Enum
+| Enum
 
 Valid values 'bytes', 'characters', and 'bits'.
 
@@ -645,14 +651,14 @@ When parsing and dfdl:lengthKind is 'explicit', delimiter scanning is turned off
 and in-scope delimiters are not looked for within or between elements.
 
 .The dfdl:length Property
-[cols="1,6",options="header"]
+[cols="1,6a",options="header"]
 |===
 
 | Property Name
 | Description
 
 | length
-a| Non-negative Integer or DFDL Expression.
+| Non-negative Integer or DFDL Expression.
 
 Only used when lengthKind is 'explicit'.
 
@@ -668,7 +674,7 @@ Annotation: dfdl:element, dfdl:simpleType
 |===
 
 When dfdl:lengthKind 'explicit', the method of extracting data is described in
-Section: <<elements-of-specified-length>> Elements of Specified Length
+<<elements-of-specified-length>> Elements of Specified Length
 
 [[dfdl-lengthkind-delimited]]
 ==== dfdl:lengthKind 'delimited'
@@ -846,7 +852,7 @@ dfdl:lengthKind  'implicit' is specified.
 * binaryMilliseconds means dfdl:binaryCalendarRep is 'binaryMilliseconds'.
 
 When dfdl:lengthKind is 'implicit', the method of extracting data is described
-in Section <<elements-of-specified-length>> Elements of Specified Length.
+in <<elements-of-specified-length>> Elements of Specified Length.
 
 It is a Schema Definition Error if type is xs:string and dfdl:lengthKind is
 'implicit' and dfdl:lengthUnits is 'bytes' and encoding is not an SBCS (exactly
@@ -862,26 +868,26 @@ The property dfdl:prefixIncludesPrefixLength also can be used to adjust the
 length appropriately.
 
 When dfdl:lengthKind is 'prefixed' the method of extracting data is described in
-Section <<elements-of-specified-length>> Elements of Specified Length
+<<elements-of-specified-length>> Elements of Specified Length
 
 When dfdl:lengthKind is 'prefixed', delimiter scanning is turned off and
 in-scope delimiters are not looked for within or between elements.
 
 .Properties for dfdl:lengthKind 'prefixed'
-[cols="1,3",options="header"]
+[cols="1,3a",options="header"]
 |===
 
 | Property Name
 | Description
 
 | prefixIncludesPrefixLength
-a| Enum
+| Enum
 
 Valid values are 'yes', 'no'
 
 Specifies whether the length given by a prefix includes the length of the prefix
 as well as the length of the content region which can be either the
-SimpleContent region or the ComplexContent region defined in Section
+SimpleContent region or the ComplexContent region defined in
 <<dfdl-data-syntax-grammar>> DFDL Data Syntax Grammar.
 
 Used only when dfdl:lengthKind 'prefixed'.
@@ -889,7 +895,7 @@ Used only when dfdl:lengthKind 'prefixed'.
 Annotation: dfdl:element, dfdl:simpleType
 
 | prefixLengthType
-a| QName
+| QName
 
 Name of a simple type derived from xs:integer or any subtype of it.
 
@@ -966,7 +972,7 @@ the data stream.
 
 Consider this example:
 
-[source%unnumbered,xml]
+[source,xml]
 ----
 <xs:element name="myString" type="xs:string"
                     dfdl:lengthKind="prefixed"
@@ -1068,7 +1074,7 @@ Multiply by 8 for the number of bits.
 It is possible for a prefix length, as specified by dfdl:prefixLengthType, to
 itself have a prefix length .
 That is, an element can have a prefix length, which defines a PrefixLength
-region (see Section <<dfdl-data-syntax-grammar>> DFDL Data Syntax Grammar), and
+region (see <<dfdl-data-syntax-grammar>> DFDL Data Syntax Grammar), and
 the PrefixLength region can itself have a type which specifies a prefix length,
 thereby defining a PrefixPrefixLength
 region.footnote:[This feature allows DFDL to describe the needed "one more level" of prefix that is needed for modeling an ASN.1 format, but without the complexities of general recursion.]
@@ -1092,14 +1098,14 @@ When dfdl:lengthKind is 'pattern', delimiter scanning is turned off and in-scope
 delimiters are not looked for within or between elements.
 
 .The dfdl:lengthPattern Property
-[cols="1,6",options="header"]
+[cols="1,6a",options="header"]
 |===
 
 | Property Name
 | Description
 
 | lengthPattern
-a| DFDL Regular Expression.
+| DFDL Regular Expression.
 
 Only used when lengthKind is 'pattern'.
 
@@ -1108,7 +1114,7 @@ stream to determine the length of the element.
 
 The data stream beginning at the starting offset of the content region (which
 can be either the SimpleContent region or the ComplexContent region defined in
-Section <<dfdl-data-syntax-grammar>> DFDL Data Syntax Grammar) of the element is
+<<dfdl-data-syntax-grammar>> DFDL Data Syntax Grammar) of the element is
 interpreted as a stream of characters in the encoding of the element, and the
 regular expression contained in the dfdl:lengthPattern property is executed
 against that stream of characters.
@@ -1235,9 +1241,9 @@ When unparsing an element with dfdl:lengthKind 'endOfParent', if the parent is a
 complex element with dfdl:lengthKind 'explicit' where dfdl:length is not an
 expression, or a choice with dfdl:choiceLengthKind 'explicit', then the element
 with dfdl:lengthKind 'endOfParent' is padded or filled in the usual manner to
-the required length, by completing the *_LeftPadding_*, *_RightPad_*,
+the required length, by completing the *_LeftPadding_*, *_RightPadding_*,
 *_RightFill_*, *_ElementUnused_*, or *_ChoiceUnused_* regions of the data syntax
-grammar (Section <<dfdl-data-syntax-grammar>>) as appropriate.
+grammar (<<dfdl-data-syntax-grammar>>) as appropriate.
 
 [[elements-of-specified-length]]
 ==== Elements of Specified Length
@@ -1245,7 +1251,7 @@ grammar (Section <<dfdl-data-syntax-grammar>>) as appropriate.
 An element has a specified length when dfdl:lengthKind is 'explicit', 'implicit'
 (simple type only)  or 'prefixed'.
 The units that the length represents are specified by the dfdl:lengthUnits
-property except where noted in Section <<dfdl-lengthkind-implicit>>.
+property except where noted in <<dfdl-lengthkind-implicit>>.
 
 Using specified length, it is possible for an element to have content length
 longer than needed to represent just the data value.
@@ -1281,7 +1287,7 @@ that is, N bits are needed based on the dfdl:length, but only M < N bits are
 available, then it is a Processing Error.
 
 If dfdl:lengthUnits is 'characters' then the length (in bits) of the content
-region  (i.e., SimpleContent or ComplexContent defined in Section
+region  (i.e., SimpleContent or ComplexContent defined in
 <<dfdl-data-syntax-grammar>> DFDL Data Syntax Grammar) depends on the encoding
 of the characters.
 
@@ -1334,7 +1340,7 @@ characters, but padding would be performed in bytes.
 
 This section discusses the dfdl:lengthKind 'explicit' and 'prefixed' specified
 lengths for the different binary representations.
-When dfdl:lengthKind is 'implicit', see Section <<dfdl-lengthkind-implicit>>
+When dfdl:lengthKind is 'implicit', see <<dfdl-lengthkind-implicit>>
 dfdl:lengthKind 'implicit'.
 
 The dfdl:lengthUnits can be 'bytes' or 'bits' unless otherwise stated.
@@ -1411,7 +1417,7 @@ The lengths are expressed in bits and are inclusive.
 | Implementation-dependent (but not less than 64)
 |===
 
-See Section <<converting-base-2-binary-numbers>> Converting Base-2 Binary
+See <<converting-base-2-binary-numbers>> Converting Base-2 Binary
 Numbers for details of the conversion to/from numeric values.
 
 ====== Length of Floating Point Binary Number Elements
@@ -1422,7 +1428,7 @@ either exactly 4 bytes or exactly 8 bytes respectively.
 The dfdl:lengthUnits property must be 'bytes'.
 It is a Schema Definition Error otherwise.
 
-See Section <<properties-specific-to-float-double-with-binary-representati>>
+See <<properties-specific-to-float-double-with-binary-representati>>
 Properties Specific to Float/Double with Binary Representation.
 
 ====== Length of Packed Decimal Number Elements
@@ -1438,17 +1444,17 @@ bits.
 The maximum specified length of a packed decimal number is
 implementation-defined.
 
-See Section <<properties-specific-to-number-with-binary-representation>>
+See <<properties-specific-to-number-with-binary-representation>>
 Properties Specific to Number with Binary Representation for details of the
 conversion of the packed decimal bit string to/from a numeric value.
 
 ====== Length of Binary Boolean Elements
 
 The specified length of a binary element of type xs:boolean is as for type
-xs:unsignedInt described in Section <<length-of-base-2-binary-number-elements>>
+xs:unsignedInt described in <<length-of-base-2-binary-number-elements>>
 Length of Base-2 Binary Number Elements.
 
-See also Section <<properties-specific-to-boolean-with-binary-representation>>
+See also <<properties-specific-to-boolean-with-binary-representation>>
 Properties Specific to Boolean with Binary Representation for details of how the
 data is converted to/from a Boolean value.
 
@@ -1463,7 +1469,7 @@ respectively.
 The dfdl:lengthUnits property must be 'bytes'.
 It is a Schema Definition Error otherwise.
 
-See Section <<properties-specific-to-calendar-with-binary-representation>>
+See <<properties-specific-to-calendar-with-binary-representation>>
 Properties Specific to Calendar with Binary Representation for details of how
 the data is converted to/from the calendar type.
 
@@ -1482,7 +1488,7 @@ implementation-defined (but not less than 9 bytes, which corresponds to calendar
 pattern
 'yyyyMMddhhmmssSSS')footnote:[This is the smallest pattern that contains all the digit-only symbols. SSS is the minimum precision that must be supported for fractional seconds, but in can be more, hence why 'not less than 9 bytes'.].
 
-See Section <<properties-specific-to-calendar-with-binary-representation>>
+See <<properties-specific-to-calendar-with-binary-representation>>
 Properties Specific to Calendar with Binary Representation for details of how
 the data is converted to/from the calendar type.
 
@@ -1513,13 +1519,13 @@ An example is a complex element with a specified length of 100 characters, which
 contains a sequence of child elements that use up less than 100 characters of
 data, perhaps because an optional element is not present.
 In this case the remaining unused data is called the ElementUnused region in the
-data syntax grammar of Section <<dfdl-data-syntax-grammar>>.
+data syntax grammar of <<dfdl-data-syntax-grammar>>.
 Another example is a complex element with a specified length of 100 bytes, which
 contains a sequence of child elements the last of which has dfdl:lengthKind
 'endOfParent', dfdl:representation 'text' and a multi-byte dfdl:encoding such
 that the element does not use up all the bytes of data.
 In this case the remaining unused bytes comprise the child element's
-*_RightFill_* region in the data syntax grammar of Section
+*_RightFill_* region in the data syntax grammar of
 <<dfdl-data-syntax-grammar>>.
 In both examples, the unused area is skipped when parsing, and is filled with
 the dfdl:fillByte on unparsing.

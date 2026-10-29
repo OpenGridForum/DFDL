@@ -25,14 +25,14 @@ unparsing.
 These properties apply to elements of simple type.
 
 .Calculated Value Properties
-[cols="1,5",options="header"]
+[cols="1,5a",options="header"]
 |===
 
 | Property Name
 | Description
 
 | inputValueCalc
-a| DFDL Expression
+| DFDL Expression
 
 An expression that calculates the value of the element when parsing.
 
@@ -79,7 +79,7 @@ expressed on its type are ignored.
 Annotation: dfdl:element
 
 | outputValueCalc
-a| DFDL Expression
+| DFDL Expression
 
 An expression that calculates the value of the current element when unparsing.
 
@@ -116,7 +116,7 @@ The data stream contains two elements giving the number of rows and number of
 columns of an array of numbers.
 The representation of the array is stored after these two elements.
 
-[source%unnumbered,xml]
+[source,xml]
 ----
 <xs:complexType name="array">
   <xs:sequence dfdl:initiator="" >
@@ -167,7 +167,7 @@ parsing from the hidden elements 'nrows' and 'ncols'.
 
 Logically, the data is a date.
 
-[source%unnumbered,xml]
+[source,xml]
 ----
 <xs:element name="d" type="date"/>
 ----
@@ -176,7 +176,7 @@ Physically, it is stored as 3 single byte integers.
 
 The format of this data is expressed as this schema:
 
-[source%unnumbered,xml]
+[source,xml]
 ----
 <xs:sequence dfdl:representation="binary">
               <xs:element name="mm" type="byte" />
@@ -188,7 +188,7 @@ The format of this data is expressed as this schema:
 This physical representation can be hidden so that it does not become part of
 the Infoset:
 
-[source%unnumbered,xml]
+[source,xml]
 ----
 <xs:sequence>
   <xs:sequence dfdl:hiddenGroupRef="tns:hiddenpDate"/>
@@ -216,7 +216,7 @@ the Infoset:
 A calculation can be used to compute the logical date element 'd' from the
 physical 'pdate' when parsing:
 
-[source%unnumbered,xml]
+[source,xml]
 ----
 <xs:sequence>
   ... hidden pdate here ...
@@ -254,7 +254,7 @@ and the ``++xs:string++`` constructor function turns it into an integer.
 Finally,one must handle the unparse case where the physical layer is computed
 from the logical layer:
 
-[source%unnumbered,xml]
+[source,xml]
 ----
 <xs:sequence dfdl:representation="binary"
   <xs:element name="mm" type="byte"
@@ -268,7 +268,7 @@ from the logical layer:
 
 The entire example in one place:
 
-[source%unnumbered,xml]
+[source,xml]
 ----
 <xs:sequence>
   <xs:sequence dfdl:hiddenGroupRef="tns:hiddenpDate"/>

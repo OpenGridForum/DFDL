@@ -9,6 +9,7 @@
 #   make all       pdf + html
 #   make editions  `all` for every edition, from one source state
 #   make lint      ruff + black over tools/ (host tools, not the container)
+#   make tables    rewrite the generated tables from spec/tables/
 #   make check     lint, then the validators in tools/ against the semantic XML
 #   make clean     remove build output
 #
@@ -45,9 +46,13 @@ SRCSTEM  := $(basename $(notdir $(SPEC)))
 DOCKER   := docker run --rm -v "$(CURDIR):/metanorma" $(IMAGE)
 MN_FLAGS := --no-install-fonts --continue-without-fonts
 
+# Asciidoctor extensions the source uses: tools/bits.rb adds the [bits]
+# diagram block.
+MN_REQUIRE := -r /metanorma/tools/bits.rb
+
 RELEASE  := docs/releases/$(VERSION)
 
-.PHONY: all editions release xml html pdf lint check check-conversion clean
+.PHONY: all editions release xml html pdf lint tables check check-conversion clean
 
 # One pdf pass also emits the HTML and the XML, so `all` is just `pdf`.
 all: pdf
@@ -67,7 +72,7 @@ pdf:  FORMATS := xml,html,pdf
 # into $(BUILD)/ afterwards.
 xml html pdf:
 	@mkdir -p $(BUILD)
-	$(DOCKER) metanorma compile -t iso -x $(FORMATS) $(MN_FLAGS) $(SPEC)
+	$(DOCKER) metanorma compile -t iso -x $(FORMATS) $(MN_REQUIRE) $(MN_FLAGS) $(SPEC)
 	@for f in $(dir $(SPEC))$(SRCSTEM).*; do \
 		case "$$f" in *.adoc) continue ;; esac; \
 		mv -f "$$f" "$(BUILD)/$(STEM)$${f#$(dir $(SPEC))$(SRCSTEM)}"; \
@@ -97,9 +102,15 @@ lint:
 		echo "No Python in tools/ yet; nothing to lint."; \
 	fi
 
+# The shaded matrix tables in clause 14 are written from data files in
+# spec/tables/; see tools/tables.py.
+tables:
+	python3 tools/tables.py
+
 # Runs every executable in tools/, plus any tools/check*.py, over the
 # build. Tolerant of tools/ being empty or absent.
 check: lint html
+	@python3 tools/tables.py --check
 	@checkers=$$({ find tools -maxdepth 1 -type f -perm -u+x; \
 		ls tools/check*.py; } 2>/dev/null | sort -u); \
 	if [ -z "$$checkers" ]; then \

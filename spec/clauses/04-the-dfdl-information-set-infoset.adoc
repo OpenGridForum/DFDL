@@ -45,7 +45,7 @@ document information item and one element information item.
 An information item is an abstract description of a part of some DFDL-described
 data: each information item has a set of associated named *_members_*.
 In this specification, the member names are shown in square brackets, *[thus]*.
-The types of information item are listed in Section <<information-items>>
+The types of information item are listed in <<information-items>>
 Information Items.
 
 The DFDL Information Set does not require or favor a specific implementation
@@ -144,7 +144,7 @@ one element information item. If the *[nilled]* member is true, then this member
 has no value.
 * *[dataType]* String. The name of the XML Schema 1.0 built-in simple type to
 which the value corresponds. DFDL supports a subset of these types listed in
-Section <<dfdl-simple-types>> DFDL Simple Types.
+<<dfdl-simple-types>> DFDL Simple Types.
 * *[dataValue]* member has no value, and for a complex element the [children]
 member has no value. If this member is true, then the Infoset item is said to be
 nil or nilled.
@@ -190,6 +190,6 @@ elements.
 As unparsing progresses and fills in these defaultable and calculated elements,
 these new item values augment the Infoset, that is, make it bigger.
 The resulting Infoset is called the _augmented Infoset_.
-The details of this augmentation process are described in Section
+The details of this augmentation process are described in
 <<unparser-infoset-augmentation-algorithm>> Unparser Infoset Augmentation
 Algorithm.

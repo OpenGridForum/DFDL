@@ -3,7 +3,7 @@
 == Appendix C: Processing of DFDL String literals
 
 A DFDL String Literal describes characters or bytes that can appear in the data.
-The syntax of a DFDL String Literal is described in Section <<dfdl-properties>>.
+The syntax of a DFDL String Literal is described in <<dfdl-properties>>.
 This appendix describes how a DFDL String Literal MUST be processed by a DFDL
 processor.
 
@@ -14,7 +14,7 @@ Each string literal part describes zero or more characters or exactly one byte.
 To process a DFDL string literal correctly it is necessary to parse it into its
 string literal parts using the grammar in
 <<dfdl-character-entity-character-class-entity-and-byte-value>> DFDL Character
-Entity, Character Class Entity, and Byte Value Entity Syntax of Section
+Entity, Character Class Entity, and Byte Value Entity Syntax of
 <<dfdl-string-literals>> DFDL String Literals.
 
 === Recognizing a DFDL String Literal
@@ -26,7 +26,7 @@ property of type 'DFDL String Literal'.
 
 The recognition algorithm is as follows:
 
-[source%unnumbered,xml]
+[source,xml]
 ----
 for each DfdlStringLiteralPart
     if this DfdlStringLiteralPart is found in the data at the current offset
@@ -43,14 +43,14 @@ Each type of string literal part and/or the DfdlESEntity is recognised as
 described in the table below:
 
 .Recognizing DFDL String Literal Part
-[cols="1,4",options="header"]
+[cols="1,4a",options="header"]
 |===
 
 | String Literal Part
 | Recognition algorithm
 
 | LiteralString
-a| The literal string is specifying a sequence of Unicode characters. The string part is recognized if the same Unicode characters are found in the data at the current offset.
+| The literal string is specifying a sequence of Unicode characters. The string part is recognized if the same Unicode characters are found in the data at the current offset.
 
 Implementation note: It is not necessary for either the LiteralString or the
 data to be encoded using a Unicode encoding.
@@ -58,12 +58,12 @@ The matching algorithm MUST operate as if the LiteralString and the data were
 both converted to Unicode before comparison.
 
 | DfdlCharEntity
-a| The entity is specifying a single Unicode character.
+| The entity is specifying a single Unicode character.
 
 The recognition algorithm is the same as for a single-character LiteralString.
 
 | ByteValue
-a| The entity is specifying a single raw byte value.
+| The entity is specifying a single raw byte value.
 
 The string part is recognized if the literal byte in the data at the current
 byte offset matches the raw byte value.
@@ -73,13 +73,13 @@ Itis not always safe to interpret the byte value as a character in the
 component's encoding.
 
 | DfdlNLEntity
-a| The entity is specifying a newline character or character sequence.
+| The entity is specifying a newline character or character sequence.
 
 The string part is recognized if a newline character sequence is found in the
 data at the current byte offset:
 
 The newline character sequences are defined in <<dfdl-character-class-entities>>
-DFDL Character Class Entities, in Section
+DFDL Character Class Entities, in
 <<dfdl-character-entities-character-class-entities-and-byte-va>> DFDL Character
 Entities, Character Class Entities, and Byte Values in String Literals.
 
@@ -88,17 +88,17 @@ If the CR character is matched then the DFDL processor MUST check to see whether
 it is followed by an LF character and if so, consume that character also.
 
 | DfdlWSPEntity
-a| The entity is specifying a single whitespace character.
+| The entity is specifying a single whitespace character.
 
 The string part if recognized if one of the whitespace characters is found in
 the data at the current byte offset.
 The whitespace characters are defined in <<dfdl-character-class-entities>> DFDL
-Character Class Entities, in Section
+Character Class Entities, in
 <<dfdl-character-entities-character-class-entities-and-byte-va>> DFDL Character
 Entities, Character Class Entities, and Byte Values in String Literals.
 
 | DfdlWSPStarEntity
-a| The entity is specifying zero or more whitespace characters.
+| The entity is specifying zero or more whitespace characters.
 
 The string part is recognized when the entire sequence of whitespace characters
 starting at the current offset has been consumed.
@@ -110,7 +110,7 @@ The recognition algorithm MUST be greedy.
 All possible whitespace characters must be consumed.
 
 | DfdlWSPPlusEntity
-a| The entity is specifying one or more whitespace characters.
+| The entity is specifying one or more whitespace characters.
 
 The string part is recognized when the entire non-empty sequence of whitespace
 characters starting at the current offset has been consumed.
@@ -119,7 +119,7 @@ The recognition algorithm MUST be greedy.
 All possible whitespace characters MUST be consumed.
 
 | DfdlESEntity
-a| The entity is specifying an empty string.
+| The entity is specifying an empty string.
 
 The string part is recognized if the data available for matching is zero-length.
 

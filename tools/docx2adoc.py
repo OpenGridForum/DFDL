@@ -169,30 +169,30 @@ PRIVATE_USE_RE = re.compile(r"[\ue000-\uf8ff]")
 # --------------------------------------------------------------------------
 # Protecting technical text
 #
-# Prose reaches the reader through two rewriting passes, and normative text
-# has to survive both.  AsciiDoc reads `#` as highlight markup, `(((` as an
-# index term and `*`/`_` as formatting; Metanorma then "smart formats" the
-# resulting XML, turning `0x55` into 0\u00d755, ` - ` into an em dash, `<=` into
-# \u21d0, `...` into \u2026 and decoding `&apos;` to a bare quote.
+# The document sets `:smartquotes: false`, which turns off Metanorma's smart
+# formatter: quotes stay straight, `0x55` stays `0x55` and ` - ` stays a
+# hyphen.  AsciiDoc still reads `#` as highlight markup, `(((` as an index
+# term and `*`/`_` as formatting, and still replaces `<=` with \u21d0, `...`
+# with \u2026, `--` with an em dash and `(C)` with \u00a9.  Metanorma also
+# decodes `&apos;` to a bare quote.
 #
-# Only two contexts escape both passes: Metanorma's straightquotes
-# passthrough, which leaves the text plain, and a monospace span whose body
-# is an AsciiDoc passthrough, since `tt` is exempt from the smart formatter.
-# Neither can be applied wholesale without disabling legitimate formatting,
-# so the individual hazardous sequences are found and wrapped one by one.
+# An AsciiDoc passthrough, `+...+`, leaves its body plain and keeps its
+# ordinary prose appearance.  It cannot be applied wholesale without
+# disabling legitimate formatting, so the individual hazardous sequences are
+# found and wrapped one by one.  Entity notation needs a monospace span
+# instead, the one context in which Metanorma leaves it alone.
 # --------------------------------------------------------------------------
 
-#: Sequences that one of the two passes would rewrite if left unprotected.
+#: Sequences that AsciiDoc or Metanorma would rewrite if left unprotected.
 HAZARD_RE = re.compile(
     r"""
       (?P<entity> &(?:[A-Za-z][A-Za-z0-9]{1,9}|\#[0-9]{1,6}|\#[xX][0-9A-Fa-f]{1,5}); )
     | (?P<hash> [^\s"'()\[\]]*\#[^\s"'()\[\]]* )   # AsciiDoc highlight markup
-    | (?P<hex> \b0[xX][0-9A-Fa-f]+ )               # 0x55 -> 0\u00d755
     | (?P<arrow> <-{1,2}|<={1,2}|-{1,2}>|={1,2}> )  # -> => <- <= and doubles
     | (?P<ellipsis> \.{3,} )                       # ... -> \u2026
     | (?P<emdash> -{2,} )                          # -- -> \u2014, ---- -> \u2014\u2014
     | (?P<index> \({3}|\){3} )                     # (((term))) index macro
-    | (?P<symbol> \w*\((?:[CcRr]|TM|tm)\) )        # (C) -> \u00a9, ICU(R) -> ICU\u00ae
+    | (?P<symbol> \w*\((?:C|R|TM)\) )              # (C) -> \u00a9, ICU(R) -> ICU\u00ae
     """,
     re.VERBOSE,
 )
@@ -204,13 +204,13 @@ URL_RE = re.compile(r"\b(?:https?|ftp|mailto):[^\s\[\]]+")
 #: bracket the next span would run into.
 MACRO_END_RE = re.compile(r"\b(?:link|mailto|image):\S*\[[^\]]*\]$")
 
-#: A spaced hyphen, plus the brackets needed to tell an operator from prose.
-ARITH_DASH_RE = re.compile(r"""[()\[\]]|(?<=[\w)\]'"]) (-{1,2}) (?=[\w(\['"])""")
-
 #: The wrappers emitted below, so that later passes can leave them alone.
 PROTECTED_RE = re.compile(
-    r"pass-format:straightquotes\[(?:\\.|[^\]])*\]" r"|`{1,2}\+{2,3}.*?\+{2,3}`{1,2}"
+    r"`{1,2}\+{2,3}.*?\+{2,3}`{1,2}|\+\+\S(?:.*?\S)?\+\+|\+\S(?:[^+]*?\S)?\+"
 )
+
+#: Characters after which AsciiDoc will not open a single-plus passthrough.
+NO_CONSTRAINED_OPEN_RE = re.compile(r"[\w;:\\\"'`}]")
 
 
 def xml_escape(text: str) -> str:
@@ -218,31 +218,53 @@ def xml_escape(text: str) -> str:
     return text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
 
 
-#: The curly pair Metanorma would have made of each straight quote.
-QUOTE_PAIRS = {"'": ("\u2018", "\u2019"), '"': ("\u201c", "\u201d")}
+#: Character entity notation, which Metanorma decodes outside monospace.
+ENTITY_RE = re.compile(
+    r"&(?:[A-Za-z][A-Za-z0-9]{1,9}|#[0-9]{1,6}|#[xX][0-9A-Fa-f]{1,5});"
+)
 
 
 def needs_monospace(token: str) -> bool:
-    """True for text a straightquotes passthrough cannot carry intact."""
-    return "&" in token or "|" in token
+    """True for text a plain passthrough cannot carry intact."""
+    return bool(ENTITY_RE.search(token)) or "|" in token
 
 
-def protect(token: str) -> str:
-    """Wrap one hazardous sequence so that neither pass can rewrite it.
+def protect(token: str, before: str = "", after: str = "") -> str:
+    """Wrap one hazardous sequence so that nothing can rewrite it.
 
-    Entity notation has to survive Metanorma decoding ``&apos;`` back to a
-    quote, which only a monospace span does; the same span is the safest
-    home for anything holding a cell separator.  Everything else keeps its
-    ordinary prose appearance inside a straightquotes passthrough.
+    ``before`` and ``after`` are the characters either side of the token,
+    which decide whether the single-plus form of the passthrough can open
+    and close there.  Entity notation has to survive Metanorma decoding
+    ``&apos;`` back to a quote, which only a monospace span does; the same
+    span is the safest home for anything holding a cell separator.
     """
     if needs_monospace(token):
         return code_passthrough(token)
-    escaped = token.replace("]", "\\]")
-    return f"pass-format:straightquotes[{escaped}]"
+    return passthrough(token, before, after)
+
+
+def passthrough(text: str, before: str = "", after: str = "") -> str:
+    """Pass text through AsciiDoc untouched, keeping its prose appearance.
+
+    The single-plus form reads best but only opens after a space or
+    punctuation other than a quote, and only closes before a non-word
+    character; anywhere else the plus signs are doubled.
+    """
+    constrained = (
+        not NO_CONSTRAINED_OPEN_RE.match(before[-1:])
+        and not re.match(r"\w", after[:1])
+        and "+" not in text
+    )
+    if constrained:
+        return f"+{text}+"
+    if "++" not in text and not text.endswith("+"):
+        return f"++{text}++"
+    escaped = text.replace("]", "\\]")
+    return f"pass:c[{escaped}]"
 
 
 def code_passthrough(text: str, tight: bool = True) -> str:
-    """Render text verbatim as monospace, immune to both rewriting passes."""
+    """Render text verbatim as monospace, immune to AsciiDoc and Metanorma."""
     mark = "``" if tight else "`"
     # An entity has to be escaped by hand and passed through untouched:
     # AsciiDoc's own escaping rewrites `&apos;` as a numeric character
@@ -259,7 +281,6 @@ def code_passthrough(text: str, tight: bool = True) -> str:
 def hazard_spans(text: str) -> list:
     """Locate every sequence in ``text`` that has to be protected."""
     spans = [match.span() for match in HAZARD_RE.finditer(text) if match.group()]
-    spans.extend(arith_dash_spans(text))
     for pattern in CONSTRAINED_PAIRS:
         for match in pattern.finditer(text):
             spans.append(match.span(1))
@@ -275,37 +296,32 @@ def hazard_spans(text: str) -> list:
         if any(low < end and start < high for low, high in urls):
             continue
         out.append((start, end))
+    return join_quoted(text, out)
+
+
+def join_quoted(text: str, spans: list) -> list:
+    """Widen spans to take in a literal's quotation marks, and join any that
+    no whitespace separates, so that `'#'#` or `#,##0;(#,##0)` is one
+    passthrough rather than several broken up by the characters between."""
+    out = []
+    for start, end in spans:
+        floor = out[-1][1] if out else 0
+        quote = text[start - 1 : start]
+        if (
+            start > floor
+            and quote
+            and quote in "'\""
+            and text[end : end + 1] == quote
+            and not needs_monospace(text[start - 1 : end + 1])
+        ):
+            start, end = start - 1, end + 1
+        if out and re.fullmatch(r"\S*", text[out[-1][1] : start]):
+            joined = (out[-1][0], end)
+            if not needs_monospace(text[joined[0] : joined[1]]):
+                out.pop()
+                start = joined[0]
+        out.append((start, end))
     return out
-
-
-def arith_dash_spans(text: str) -> list:
-    """Spaced hyphens that are subtraction rather than an em dash.
-
-    Metanorma rewrites every ``a - b`` to an em dash, which is right for the
-    glossary's "term - definition" lines and wrong inside a formula.  A
-    bracketed context, two numeric operands, or an operand that no English
-    sentence could hold mark out the arithmetic ones.
-    """
-    spans = []
-    depth = 0
-    for match in ARITH_DASH_RE.finditer(text):
-        token = match.group()
-        if token in "([":
-            depth += 1
-        elif token in ")]":
-            depth = max(0, depth - 1)
-        elif depth or is_operator_context(text, match.start(), match.end()):
-            spans.append(match.span(1))
-    return spans
-
-
-def is_operator_context(text: str, start: int, end: int) -> bool:
-    """True if the operands either side of a spaced hyphen are not prose."""
-    before = text[:start].rsplit(" ", 1)[-1]
-    after = text[end:].split(" ", 1)[0]
-    if before[-1:].isdigit() and after[:1].isdigit():
-        return True
-    return any(mark in before + after for mark in ("\\", ".."))
 
 
 #: Heading 1 titles that open an appendix, e.g. "Appendix C: ...".
@@ -340,23 +356,8 @@ def escape_inline(text: str) -> str:
     out = []
     position = 0
     for start, end in hazard_spans(text):
-        quote = text[start - 1 : start]
-        # A literal in quotation marks loses the pairing of those marks to
-        # the passthrough that now sits between them, so the pair is taken
-        # inside it and curled here instead.
-        if (
-            start > position
-            and quote in QUOTE_PAIRS
-            and text[end : end + 1] == quote
-            and not needs_monospace(text[start:end])
-        ):
-            opening, closing = QUOTE_PAIRS[quote]
-            out.append(escape_plain(text[position : start - 1]))
-            out.append(protect(opening + text[start:end] + closing))
-            position = end + 1
-            continue
         out.append(escape_plain(text[position:start]))
-        out.append(protect(text[start:end]))
+        out.append(protect(text[start:end], text[:start], text[end:]))
         position = end
     out.append(escape_plain(text[position:]))
     return "".join(out)
@@ -373,9 +374,9 @@ def code_span(text: str) -> str:
     """Render text as an inline monospace span.
 
     Monospace is not verbatim in AsciiDoc: the body is still substituted, so
-    a regular expression inside one loses to the index-term macro and a hex
-    literal to Metanorma's multiplication sign.  The body therefore always
-    goes through a passthrough.
+    a regular expression inside one loses to the index-term macro and an
+    arrow to its replacement character.  The body therefore always goes
+    through a passthrough.
     """
     if not text:
         return ""

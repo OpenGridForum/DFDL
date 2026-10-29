@@ -9,19 +9,19 @@ DFDL regular expressions do not interpret DFDL entities.
 A DFDL regular expression is defined by a set of valid pattern characters.
 For portability, a DFDL regular expression pattern is restricted to the
 inclusive subset of the ICU regular expression [<<a-icuregex,ICURegex>>] and the
-pass-format:straightquotes[Java(R)] 7 regular expression
++Java(R)+ 7 regular expression
 [<<a-javaregex,JavaRegex>>] with the Unicode flags UNICODE_CASE and
 UNICODE_CHARACTER_CLASS turned on.
 DFDL regular expressions thereby conform to Unicode Technical Standard
-pass-format:straightquotes[#18] , Unicode Regular Expressions, level 1
++#18+ , Unicode Regular Expressions, level 1
 [<<a-unicoderegex,UnicodeRegex>>].
 
 The following regular expression constructs are not common to both ICU and
-pass-format:straightquotes[Java(R)] 7 and it is a Schema Definition Error if any
++Java(R)+ 7 and it is a Schema Definition Error if any
 are used in a DFDL regular expression:
 
 .Disallowed Regular Expression Constructs
-[cols="2,6,1",options="header"]
+[number="68",cols="2,6,1",options="header"]
 |===
 
 | Construct
@@ -40,7 +40,7 @@ are used in a DFDL regular expression:
 | Match the character with the hex value hhhhhhhh
 | ICU only
 
-| (pass-format:straightquotes[?#] pass-format:straightquotes[...] )
+| (+?#+ +...+ )
 | Free-format comment
 | ICU only
 

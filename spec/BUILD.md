@@ -32,7 +32,8 @@ together.
 | `make all` | the same as `make pdf` — one pass emits all three |
 | `make editions` | `make all` for every edition |
 | `make lint` | `ruff` and `black` over `tools/` |
-| `make check` | `lint`, then every validator in `tools/` against the semantic XML |
+| `make tables` | rewrite the generated tables in clause 14 from `spec/tables/` |
+| `make check` | `lint`, a check that generated tables are current, then every validator in `tools/` against the semantic XML |
 | `make release VERSION=x.y.z` | versioned deliverables for both editions |
 | `make clean` | remove the build output |
 
@@ -45,11 +46,12 @@ defaults to `iso`.
 
 | | |
 |---|---|
+| `check-rewrites.py` | no prose that AsciiDoc would silently rewrite (arrows, ellipses, em dashes, symbols, highlights) |
 | `link-check.py` | every cross-reference and citation resolves to exactly one target |
 | `structure-check.py` | the rendered page says what it means: no sentence naming the wrong figure, no caption stranded, no markup leaking, nothing published that the Word source hides |
 | `fidelity-check.py` | the converted text matches the Word source, character for character |
 
-The first two answer questions that stay live for as long as the document is
+The first three answer questions that stay live for as long as the document is
 edited: an erratum can strand a caption or break a reference, and neither shows
 up in a diff a reviewer would notice.
 
@@ -65,6 +67,13 @@ worse than none, because it still reports PASS.
 
 It keeps a second use. "What has changed since GFD.240?" is a question an ISO
 submission has to answer, and this answers it clause by clause.
+
+## The [bits] extension
+
+`tools/bits.rb` adds the `[bits]` block used for the colour-coded bit diagrams
+(see `EDITING.md`). The Makefile loads it with `metanorma compile -r`; a build
+run any other way must pass `-r /metanorma/tools/bits.rb` too, or those
+diagrams show their mask lines instead of colour.
 
 ## The two editions
 
