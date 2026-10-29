@@ -251,8 +251,8 @@ dfdl:extraEscapedCharacters '?'
 
 === Escape Block with Same Start and End Characters
 
-dfdl:escapeKind 'escapeBlock', dfdl:escapeBlockStart ' ``+++&amp;apos;+++``',
-dfdl:escapeBlockEnd '``+++&amp;apos;+++``', dfdl:escapeEscapeCharacter '%',
+dfdl:escapeKind 'escapeBlock', dfdl:escapeBlockStart 'pass:[&amp;apos;]',
+dfdl:escapeBlockEnd 'pass:[&amp;apos;]', dfdl:escapeEscapeCharacter '%',
 dfdl:separator ';',  dfdl:extraEscapedCharacters '?'
 
 .Examples of Escape Block with Same Start and End Characters

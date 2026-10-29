@@ -1,6 +1,6 @@
 == Full Copyright Notice
 
-Copyright pass-format:straightquotes[(C)] Open Grid Forum (2005-2026).
+Copyright +(C)+ Open Grid Forum (2005-2026).
 Some Rights Reserved.
 
 This document and translations of it may be copied and furnished to others, and
@@ -22,7 +22,7 @@ with other international standards bodies.
 The limited permissions granted above are perpetual and will not be revoked by
 the OGF or its successors or assignees.
 
-ICU - Copyright pass-format:straightquotes[(c)] 1995-2021 International Business
+ICU - Copyright (c) 1995-2021 International Business
 Machines Corporation and others
 
 XPATH - link:http://www.w3.org/Consortium/Legal/ipr-notice[Copyright] © 2007

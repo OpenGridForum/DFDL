@@ -299,7 +299,7 @@ It is not the equivalent of setting the property to empty string.
 
 Examples
 
-[source%unnumbered,xml]
+[source,xml]
 ----
 { /book/title }
 { $x+2 }
@@ -339,148 +339,148 @@ XPath expressions
 
 [[dfdl-expression-language-2]]
 .DFDL Expression Language
-[cols="3,1,8",class="bnf"]
+[cols="3,1,8",class="bnf",separator=!]
 |===
 
-| DFDL Expression
-| ::=
-| "{" Expr "}"
+! DFDL Expression
+! ::=
+! "{" Expr "}"
 
-| Expr
-| ::=
-| ExprSingle
+! Expr
+! ::=
+! ExprSingle
 
-| ExprSingle
-| ::=
-| IfExpr \| OrExpr
+! ExprSingle
+! ::=
+! IfExpr | OrExpr
 
-| IfExpr
-| ::=
-| "if" "(" Expr ")" "then" ExprSingle "else" ExprSingle
+! IfExpr
+! ::=
+! "if" "(" Expr ")" "then" ExprSingle "else" ExprSingle
 
-| OrExpr
-| ::=
-| AndExpr ( "or" AndExpr )*
+! OrExpr
+! ::=
+! AndExpr ( "or" AndExpr )*
 
-| AndExpr
-| ::=
-| ComparisonExpr ( "and" ComparisonExpr )*
+! AndExpr
+! ::=
+! ComparisonExpr ( "and" ComparisonExpr )*
 
-| ComparisonExpr
-| ::=
-| AdditiveExpr ( (ValueComp) AdditiveExpr)?
+! ComparisonExpr
+! ::=
+! AdditiveExpr ( (ValueComp) AdditiveExpr)?
 
-| AdditiveExpr
-| ::=
-| MultiplicativeExpr ( ("{plus}" \| "-") MultiplicativeExpr )*
+! AdditiveExpr
+! ::=
+! MultiplicativeExpr ( ("+" | "-") MultiplicativeExpr )*
 
-| MultiplicativeExpr
-| ::=
-| IntersectExceptExpr( (pass-format:straightquotes[“*”] \| "div" \| "idiv" \| "mod") IntersectExceptExpr)pass-format:straightquotes[*]
+! MultiplicativeExpr
+! ::=
+! IntersectExceptExpr( (+"*"+ | "div" | "idiv" | "mod") IntersectExceptExpr)+*+
 
-| IntersectExceptExpr
-| ::=
-| UnaryExpr ( ("intersect" \| "except") UnaryExpr )*
+! IntersectExceptExpr
+! ::=
+! UnaryExpr ( ("intersect" | "except") UnaryExpr )*
 
-| UnaryExpr
-| ::=
-| ("-" \| "{plus}")* ValueExpr
+! UnaryExpr
+! ::=
+! ("-" | "+")* ValueExpr
 
-| ValueExpr
-| ::=
-| PathExpr
+! ValueExpr
+! ::=
+! PathExpr
 
-| ValueComp
-| ::=
-| "eq" \| "ne" \| "lt" \| "le" \| "gt" \| "ge"
+! ValueComp
+! ::=
+! "eq" | "ne" | "lt" | "le" | "gt" | "ge"
 
-| PathExpr
-| ::=
-| ("/" RelativePathExpr?) \| RelativePathExpr \| FilterExpr
+! PathExpr
+! ::=
+! ("/" RelativePathExpr?) | RelativePathExpr | FilterExpr
 
-| RelativePathExpr
-| ::=
-| StepExpr (("/") StepExpr)*
+! RelativePathExpr
+! ::=
+! StepExpr (("/") StepExpr)*
 
-| StepExpr
-| ::=
-| AxisStep
+! StepExpr
+! ::=
+! AxisStep
 
-| AxisStep
-| ::=
-| (ReverseStep \| ForwardStep) Predicate?
+! AxisStep
+! ::=
+! (ReverseStep | ForwardStep) Predicate?
 
-| ForwardStep
-| ::=
-| (ForwardAxis NodeTest) \| AbbrevForwardStep
+! ForwardStep
+! ::=
+! (ForwardAxis NodeTest) | AbbrevForwardStep
 
-| ForwardAxis
-| ::=
-| ("child" "::") \| ("self" "::")
+! ForwardAxis
+! ::=
+! ("child" "::") | ("self" "::")
 
-| AbbrevForwardStep
-| ::=
-| NodeTest \| ContextItemExpr
+! AbbrevForwardStep
+! ::=
+! NodeTest | ContextItemExpr
 
-| ReverseStep
-| ::=
-| (ReverseAxis NodeTest) \| AbbrevReverseStep
+! ReverseStep
+! ::=
+! (ReverseAxis NodeTest) | AbbrevReverseStep
 
-| ReverseAxis
-| ::=
-| ("parent" "::")
+! ReverseAxis
+! ::=
+! ("parent" "::")
 
-| AbbrevReverseStep
-| ::=
-| ".."
+! AbbrevReverseStep
+! ::=
+! ".."
 
-| NodeTest
-| ::=
-| NameTest
+! NodeTest
+! ::=
+! NameTest
 
-| NameTest
-| ::=
-| QName
+! NameTest
+! ::=
+! QName
 
-| FilterExpr
-| ::=
-| PrimaryExpr Predicate?
+! FilterExpr
+! ::=
+! PrimaryExpr Predicate?
 
-| Predicate
-| ::=
-| "[" Expr "]"
+! Predicate
+! ::=
+! "[" Expr "]"
 
-| PrimaryExpr
-| ::=
-| Literal \| VarRef \| ParenthesizedExpr \| ContextItemExpr \| FunctionCall
+! PrimaryExpr
+! ::=
+! Literal | VarRef | ParenthesizedExpr | ContextItemExpr | FunctionCall
 
-| Literal
-| ::=
-| NumericLiteral \| StringLiteral
+! Literal
+! ::=
+! NumericLiteral | StringLiteral
 
-| NumericLiteral
-| ::=
-| IntegerLiteral \| DecimalLiteral \| DoubleLiteral
+! NumericLiteral
+! ::=
+! IntegerLiteral | DecimalLiteral | DoubleLiteral
 
-| VarRef
-| ::=
-| "$" VarName
+! VarRef
+! ::=
+! "$" VarName
 
-| VarName
-| ::=
-| QName
+! VarName
+! ::=
+! QName
 
-| ParenthesizedExpr
-| ::=
-| "(" Expr ")"
+! ParenthesizedExpr
+! ::=
+! "(" Expr ")"
 
-| ContextItemExpr
-| ::=
-| "."
+! ContextItemExpr
+! ::=
+! "."
 
-| FunctionCall
-| ::=
-| QName "(" (ExprSingle ("," ExprSingle)*)? ")"
+! FunctionCall
+! ::=
+! QName "(" (ExprSingle ("," ExprSingle)*)? ")"
 |===
 
 Notes:
@@ -608,14 +608,14 @@ The following functions are defined on boolean values.
 The return type of these functions is xs:boolean.:
 
 .Boolean functions
-[cols="1,6",options="header"]
+[cols="1,6a",options="header"]
 |===
 
 | Function
 | Meaning
 
 | fn:not($arg?)
-a| If ``++$arg++`` is the empty sequence or a node with *[nilled]* true, ``++fn:not++`` returns ``++true++``.
+| If ``++$arg++`` is the empty sequence or a node with *[nilled]* true, ``++fn:not++`` returns ``++true++``.
 
 If ``++$arg++`` is a sequence containing a node with *[nilled]* false or
 *[nilled]* having no value (that is, a node corresponding to a non-nillable
@@ -682,7 +682,7 @@ Unicode collation algorithm (which is a comparison of codepoint values).
 | Function
 | Meaning
 
-| fn:concat( $arg1 as xs:anyAtomicType, $arg2 as xs:anyAtomicType, pass-format:straightquotes[...] )
+| fn:concat( $arg1 as xs:anyAtomicType, $arg2 as xs:anyAtomicType, +...+ )
 | Concatenates two or more xs:anyAtomicType arguments cast to xs:string.
 
 a| fn:substring($sourceString as xs:string, $startingLoc as xs:double)
@@ -753,13 +753,13 @@ xs:double)
 | fn:day-from-date($arg as xs:date)
 | Returns the day from an xs:date value as an xs:integer.
 
-| ``++fn:hours-from-time++``($arg as xs:time)
+| fn:hours-from-time($arg as xs:time)
 | Returns the hours from an xs:time value as an xs:integer.
 
-| ``++fn:minutes-from-time++``($arg as xs:time)
+| fn:minutes-from-time($arg as xs:time)
 | Returns the minutes from an xs:time value as an xs:integer.
 
-| ``++fn:seconds-from-time++``($arg as xs:time)
+| fn:seconds-from-time($arg as xs:time)
 | Returns the seconds from an xs:time value as an xs:decimal.
 |===
 
@@ -802,18 +802,18 @@ Returns 0 if ``++$arg++`` is the empty sequence.
 This section discusses functions and operators on nodes.
 
 .Node functions
-[cols="1,3",options="header"]
+[cols="1a,3",options="header"]
 |===
 
 | Function
 | Meaning
 
-a| fn:local-name()
+| fn:local-name()
 
 fn:local-name($arg)
 | Returns the local name of the context node or the specified node as an xs:string.
 
-a| fn:namespace-uri()
+| fn:namespace-uri()
 
 fn:namespace-uri($arg)
 | Returns the namespace URI as an xs:string for the argument node or the context node if the argument is omitted. Returns empty string if the argument/context node is in no namespace.
@@ -845,13 +845,13 @@ This section discusses functions related to nillable elements.
 | Meaning
 
 | dfdl:contentLength($node, $lengthUnits)
-a| Returns the length of the supplied node's SimpleContent region for elements of simple type, or ComplexContent region for elements of complex type. These regions are defined in Section <<dfdl-data-syntax-grammar>> DFDL Data Syntax Grammar. The value is returned as an xs:unsignedLong.
+a| Returns the length of the supplied node's SimpleContent region for elements of simple type, or ComplexContent region for elements of complex type. These regions are defined in <<dfdl-data-syntax-grammar>> DFDL Data Syntax Grammar. The value is returned as an xs:unsignedLong.
 
 The second argument is of type xs:string and must be 'bytes', 'characters', or
 'bits' (Schema Definition Error otherwise) and determines the units of length.
 
 | dfdl:valueLength($node, $lengthUnits)
-a| Returns the length of the supplied node's SimpleLogicalValue region for elements of simple type, or ComplexValue region for elements of complex type. These regions are defined in Section <<dfdl-data-syntax-grammar>> DFDL Data Syntax Grammar. The value is returned as an xs:unsignedLong.
+a| Returns the length of the supplied node's SimpleLogicalValue region for elements of simple type, or ComplexValue region for elements of complex type. These regions are defined in <<dfdl-data-syntax-grammar>> DFDL Data Syntax Grammar. The value is returned as an xs:unsignedLong.
 
 For simple types, the dfdl:valueLength() function returns a length which
 excludes any padding or filling.
@@ -862,7 +862,7 @@ The second argument is of type xs:string and must be 'bytes', 'characters', or
 | dfdl:testBit($data, $bitPos)
 | Returns Boolean true if the bit number given by the xs:nonNegativeInteger $bitPos is set on in the xs:unsignedByte given by $data, otherwise returns Boolean false.
 
-| dfdl:setBits($bit1, $bit2, pass-format:straightquotes[...] $bit8)
+| dfdl:setBits($bit1, $bit2, +...+ $bit8)
 | Returns an unsigned byte being the value of the bit positions provided by the Boolean arguments, where true is1, false is 0. The number of arguments must be 8.
 
 | dfdl:occursIndex()
@@ -891,7 +891,7 @@ The facets that are checked are
 * totalDigits
 * fractionDigits
 
-See Section <<xsd-facets-min-maxoccurs-default-and-fixed>> for which facets are
+See <<xsd-facets-min-maxoccurs-default-and-fixed>> for which facets are
 checked for each simple type.
 
 Additionally, the XSD fixed property is checked.
@@ -993,7 +993,7 @@ binary type from a number.
 Accordingly, the following new DFDL specific functions are provided.
 
 .DFDL Constructor Functions
-[cols="1,3",options="header"]
+[cols="1,3a",options="header"]
 |===
 
 | Function
@@ -1014,7 +1014,7 @@ dfdl:unsignedInt ($arg)
 dfdl:long ($arg)
 
 dfdl:unsignedLong ($arg)
-a| These constructor functions behave identically to the XPath 2.0 constructor functions of the same names, with one exception. The argument can be a quoted string beginning with the letter 'x', in which case the remainder of the string is hexadecimal digits that represent a big-endian twos complement representation of a binary number.
+| These constructor functions behave identically to the XPath 2.0 constructor functions of the same names, with one exception. The argument can be a quoted string beginning with the letter 'x', in which case the remainder of the string is hexadecimal digits that represent a big-endian twos complement representation of a binary number.
 
 If the string begins with 'x', it is a Schema Definition Error if a character
 appears other 0-9, a-f, A-F.
@@ -1026,7 +1026,7 @@ It is a Schema Definition Error if more digits are encountered than are suitable
 for the type being created
 
 | dfdl:hexBinary ($arg)
-a| This constructor function behaves identically to the XPath 2.0 constructor function of the same name, with one exception. The argument can also be a long, unsignedLong, or any subtype thereof, and in that case a xs:hexBinary value containing a number of hex digits is produced. The ordering and number of the digits correspond to a binary big-endian twos-complement implementation of the type of the argument. Digits 0-9, A-F are used.
+| This constructor function behaves identically to the XPath 2.0 constructor function of the same name, with one exception. The argument can also be a long, unsignedLong, or any subtype thereof, and in that case a xs:hexBinary value containing a number of hex digits is produced. The ordering and number of the digits correspond to a binary big-endian twos-complement implementation of the type of the argument. Digits 0-9, A-F are used.
 
 The number of digits produced depends on the type of $arg, being 2, 4, 8 or 16.
 If $arg is a literal number then the type is the smallest signed type (long,
@@ -1053,20 +1053,21 @@ Examples:
 
 ==== Miscellaneous Functions
 
-// (MANUALLY SET TABLE NUMBER TO PRESERVE TABLE NUMBERING)
+// Numbered 67-A, as in earlier editions, so later tables keep their numbers.
+// The next table, in clause 19, is set to 68 by hand; see EDITING.md.
 .Miscellaneous Functions
-[cols="1,2",options="header"]
+[number="67-A",cols="1a,2a",options="header"]
 |===
 
 | Function
 | Meaning
 
-a| fn:error()
+| fn:error()
 
 fn:error($id as xs:string)
 
 fn:error($id as xs:string, $desc as xs:string, $obj?)
-a| Causes a Processing Error.
+| Causes a Processing Error.
 
 This function does not return a value.
 A Processing Error ends the evaluation of the expression.

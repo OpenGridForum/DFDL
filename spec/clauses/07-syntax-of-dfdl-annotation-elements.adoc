@@ -51,7 +51,7 @@ annotation element in detail.
 Here is an example of DFDL component format annotation, specifically use of
 dfdl:element on an xs:element declaration:
 
-[source%unnumbered,xml]
+[source,xml]
 ----
 <xs:schema ...>
   ...
@@ -80,7 +80,7 @@ Belowa dfdl:format annotation is used inside a dfdl:defineFormat annotation to
 define a named reusable set of format properties that can be referenced from
 another format annotation.
 
-[source%unnumbered,xml]
+[source,xml]
 ----
 <xs:schema ...>
   ...
@@ -103,7 +103,7 @@ lexically enclosed schema document.
 (See <<providing-defaults-for-dfdl-properties>> Providing Defaults for DFDL
 properties.)
 
-[source%unnumbered,xml]
+[source,xml]
 ----
 <xs:schema ...>
   ...
@@ -152,14 +152,14 @@ another.
 
 Within the format annotation elements are bindings for properties of the form:
 
-[source%unnumbered,xml]
+[source,xml]
 ----
  PropertyName="Value"
 ----
 
 For example:
 
-[source%unnumbered,xml]
+[source,xml]
 ----
   <xs:annotation>
     <xs:appinfo source="http://www.ogf.org/dfdl/">
@@ -181,7 +181,7 @@ provides the name of the property.
 
 For example:
 
-[source%unnumbered,xml]
+[source,xml]
 ----
   <xs:annotation>
     <xs:appinfo source="http://www.ogf.org/dfdl/">
@@ -205,7 +205,7 @@ comments look like.
 Use of XML's CDATA bracketing makes this less clumsy to express than using XML
 escape characters:
 
-[source%unnumbered,xml]
+[source,xml]
 ----
 <dfdl:property name='initiator'><[CDATA[<!-- ]]></dfdl:property>
 ----
@@ -226,7 +226,7 @@ For example, the two forms below are equivalent in that they describe the same
 data format.
 The first is the short form of the second:
 
-[source%unnumbered,xml]
+[source,xml]
 ----
 <xs:element name="elem1">
   <xs:complexType>
@@ -250,7 +250,7 @@ The first is the short form of the second:
 
 Another example:
 
-[source%unnumbered,xml]
+[source,xml]
 ----
 <xs:sequence dfdl:separator=",">
   <xs:element name="elem1" type="xs:int" maxOccurs="unbounded"
@@ -310,7 +310,7 @@ namespace, then it is a Schema Definition Error.
 
 Here is an example of a format definition:
 
-[source%unnumbered,xml]
+[source,xml]
 ----
 <xs:schema ...>
   <xs:annotation>
@@ -336,7 +336,7 @@ A named, reusable, dfdl:defineFormat definition is used by referring to its name
 from a format annotation using the dfdl:ref property.
 For example, here this annotation reuses the format named 'baseFormat':
 
-[source%unnumbered,xml]
+[source,xml]
 ----
 <dfdl:element ref="baseFormat" encoding="ebcdic-cp-us" />
 ----
@@ -357,7 +357,7 @@ contained in its direct elements override those in any inherited definition.
 
 An example format that inherits from a named format definition is:
 
-[source%unnumbered,xml]
+[source,xml]
 ----
 <xs:schema ...>
   <xs:annotation>
@@ -409,7 +409,7 @@ annotation element as detailed below.
 
 Here is an example of an escapeScheme definition:
 
-[source%unnumbered,xml]
+[source,xml]
 ----
 <xs:schema ...>
   <xs:annotation>
@@ -436,7 +436,7 @@ A named, reusable, escape scheme is used by referring to its name from a
 dfdl:escapeSchemeRef property on an element.
 For example:
 
-[source%unnumbered,xml]
+[source,xml]
 ----
 <xs:element name="foo" type="xs:string" >
   <xs:annotation><xs:appinfo source="http://www.ogf.org/dfdl/">
@@ -470,7 +470,7 @@ unparsing before pad characters are added.
 DFDL does not perform any substitutions for ampersand notations like
 ``+++&amp;lt;+++``.
 
-The properties of dfdl:escapeScheme are defined in Section
+The properties of dfdl:escapeScheme are defined in
 <<the-dfdl-escapescheme-properties>> The dfdl:escapeScheme Properties.
 
 [[the-dfdl-assert-statement-annotation-element]]
@@ -493,7 +493,7 @@ The dfdl:assert checks are performed even when validation is off.
 
 Examples of dfdl:assert elements are below:
 
-[source%unnumbered,xml]
+[source,xml]
 ----
 <dfdl:assert message="Value is not zero." test="{ ../x eq 0}" />
 
@@ -520,7 +520,7 @@ The testKind property specifies whether an expression or pattern is used by the
 dfdl:assert.
 The expression or pattern can be expressed as an attribute or as a value.
 
-[source%unnumbered,xml]
+[source,xml]
 ----
 <dfdl:assert  test="{test expression}" />
 
@@ -555,14 +555,14 @@ and the failureType of the assert is 'processingError', then no further asserts
 in the set are executed.
 
 .dfdl:assert properties
-[cols="1,6",options="header"]
+[cols="1,6a",options="header"]
 |===
 
 | Property Name
 | Description
 
 | testKind
-a| Enum (optional)
+| Enum (optional)
 
 Valid values are 'expression',  'pattern'
 
@@ -574,7 +574,7 @@ in the dfdl:assert.
 Annotation: dfdl:assert
 
 | test
-a| DFDL Expression
+| DFDL Expression
 
 Applies when testKind is 'expression'
 
@@ -595,7 +595,7 @@ or the value of the test attribute.
 Annotation: dfdl:assert
 
 | testPattern
-a| DFDL Regular Expression
+| DFDL Regular Expression
 
 Applies when testKind is 'pattern'
 
@@ -607,7 +607,7 @@ the start of the component on which the dfdl:assert is positioned.
 If the pattern matching of the regular expression reads data that cannot be
 decoded into characters of the current encoding, then the behavior is controlled
 by the dfdl:encodingErrorPolicy property.
-See Section <<property-dfdl-encodingerrorpolicy>>   Property
+See <<property-dfdl-encodingerrorpolicy>>   Property
 dfdl:encodingErrorPolicy for details.
 
 If the length of the match is zero then the dfdl:assert evaluates to false and a
@@ -632,7 +632,7 @@ It is a Schema Definition Error if the dfdl:alignment is not 1 or 'implicit'
 Annotation: dfdl:assert
 
 | message
-a| String or DFDL Expression
+| String or DFDL Expression
 
 Defines text to be used as a diagnostic code or for use in an error message,
 when the assert is unsuccessful.
@@ -647,7 +647,7 @@ See below for details.
 Annotation: dfdl:assert
 
 | failureType
-a| Enum (optional)
+| Enum (optional)
 
 Valid values are 'processingError', 'recoverableError'.
 
@@ -669,7 +669,7 @@ Annotation: dfdl:assert
 
 Example of a dfdl:assert with a message expression:
 
-[source%unnumbered,xml]
+[source,xml]
 ----
 <dfdl:assert message="{ fn:concat('unknown case ', ../data1) }">
 {  if (...pred1...) then ...expr1...
@@ -698,7 +698,7 @@ DFDL discriminator statement annotations are used during parsing to:
 
 [arabic]
 . resolve _points of uncertainty_ (choices, optional elements, array repetition)
-that cannot be resolved by speculative parsing. See Section <<parser-overview>>
+that cannot be resolved by speculative parsing. See <<parser-overview>>
 Parser Overview.
 . remove ambiguity during speculative parsing
 . improve diagnostic behavior when a DFDL parser encounters malformed data.
@@ -719,7 +719,7 @@ If the discriminator is successful, then the component is said to be _known to
 exist_, and any subsequent errors do not cause backtracking at the nearest point
 of uncertainty.
 Details of the behavior of a DFDL parser and the role of discriminators are
-given in Section <<parsing-algorithm>> Parsing Algorithm.
+given in <<parsing-algorithm>> Parsing Algorithm.
 
 Discriminators can also be used to force a resolution earlier during the parsing
 of a model group so that subsequent parsing errors are treated as Processing
@@ -731,7 +731,7 @@ given malformed data.
 
 Examples of dfdl:discriminator annotation are below :
 
-[source%unnumbered,xml]
+[source,xml]
 ----
 <dfdl:discriminator>
   { ../recType eq 0 }
@@ -749,7 +749,7 @@ Within a dfdl:discriminator, the testKind property specifies whether an
 expression or pattern is used by the dfdl:discriminator.
 The expression or pattern can be expressed as an attribute or as a value.
 
-[source%unnumbered,xml]
+[source,xml]
 ----
 <dfdl:discriminator test="{test expression}" />
 
@@ -781,14 +781,14 @@ exclusive of each other.
 It is a Schema Definition Error otherwise.
 
 .dfdl:discriminator properties
-[cols="1,6",options="header"]
+[cols="1,6a",options="header"]
 |===
 
 | Property Name
 | Description
 
 | testKind
-a| Enum
+| Enum
 
 Valid values are 'expression', 'pattern'
 
@@ -800,7 +800,7 @@ dfdl:discriminator .
 Annotation: dfdl:discriminator
 
 | test
-a| DFDL Expression
+| DFDL Expression
 
 Applies when testKind is 'expression'
 
@@ -826,7 +826,7 @@ element or the value of the test attribute.
 Annotation: dfdl:discriminator
 
 | testPattern
-a| DFDL Regular Expression
+| DFDL Regular Expression
 
 Applies when testKind is 'pattern'
 
@@ -838,7 +838,7 @@ the start of the component on which the dfdl:discriminator is positioned.
 If the pattern matching of the regular expression reads data that cannot be
 decoded into characters of the current encoding, then the behavior is controlled
 by the dfdl:encodingErrorPolicy property.
-See Section <<property-dfdl-encodingerrorpolicy>>   Property
+See <<property-dfdl-encodingerrorpolicy>>   Property
 dfdl:encodingErrorPolicy for details.
 
 If the length of the match is zero then the dfdl:discriminator evaluates to
@@ -861,7 +861,7 @@ It is a Schema Definition Error if the dfdl:alignment is not 1 or 'implicit'
 Annotation: dfdl:discriminator
 
 | message
-a| String or DFDL Expression
+| String or DFDL Expression
 
 Defines text to be used as a diagnostic code or for use in an error message,
 when the discriminator is unsuccessful.
@@ -890,7 +890,7 @@ using an implementation-dependent substitute message.
 
 Examples of dfdl:discriminator annotations:
 
-[source%unnumbered,xml]
+[source,xml]
 ----
 <xs:sequence>
   <xs:choice>
@@ -983,7 +983,7 @@ variable instance can be assigned _once_ using dfdl:setVariable.
 Variables are used by referencing them in DFDL expressions by prefixing their
 QNames with '$'.
 
-More information about variables and how they work operationally is in Section
+More information about variables and how they work operationally is in
 <<variables>> Variables.
 The remaining sub-sections of this section focus only on the variable-related
 DFDL annotations and their syntax.
@@ -992,7 +992,7 @@ DFDL annotations and their syntax.
 
 A global variable is introduced using dfdl:defineVariable:
 
-[source%unnumbered,xml]
+[source,xml]
 ----
 <dfdl:defineVariable
     name = NCName
@@ -1025,8 +1025,8 @@ Error).
 To set the default value to "" (empty string), the defaultValue attribute syntax
 must be used, or the expression { "" } must be used as the element value.
 
-Note also that the value of the name attribute is an NCName (non-colon name
-pass-format:straightquotes[-] that is, may not have a prefix).
+Note also that the value of the name attribute is an NCName, that is,
+may not have a namespace prefix.
 The name of a variable is defined in the target namespace of the schema
 containing the definition.
 If multiple dfdl:defineVariable definitions have the same 'name' attribute in
@@ -1036,7 +1036,7 @@ A default _instance_ of the variable is automatically created (with global
 scope) at the start of a DFDL parse or unparse.
 Additional instances of a variable can be created with the scope of other schema
 components.
-See Section <<the-dfdl-newvariableinstance-statement-annotation-element>> The
+See <<the-dfdl-newvariableinstance-statement-annotation-element>> The
 dfdl:newVariableInstance Statement Annotation Element.
 
 The external property is optional.
@@ -1050,9 +1050,9 @@ _implementation-defined_.
 A variable instance gets its value either from the default value provided in the
 dfdl:defineVariable definition, from an external binding of the variable if the
 definition has the external attribute, from a dfdl:setVariable statement (See
-Section <<the-dfdl-setvariable-statement-annotation-element>>, The
+<<the-dfdl-setvariable-statement-annotation-element>>, The
 dfdl:setVariable Statement Annotation Element), or from the default value of a
-dfdl:newVariableInstance statement (See Section
+dfdl:newVariableInstance statement (See
 <<the-dfdl-newvariableinstance-statement-annotation-element>> The
 dfdl:newVariableInstance Statement Annotation Element.)
 
@@ -1081,7 +1081,7 @@ simple type restriction.
 
 ===== Examples
 
-[source%unnumbered,xml]
+[source,xml]
 ----
  <dfdl:defineVariable name="EDIFACT_DS" type="xs:string"
                      defaultValue="," />
@@ -1132,7 +1132,7 @@ Below the DFDL encoding property is being set to the value of a DFDL expression
 (between "{" and "}"), and that expression just returns the value of the
 dfdl:encoding variable which is being referenced as $dfdl:encoding below.
 
-[source%unnumbered,xml]
+[source,xml]
 ----
       <xs:element name="title" type="xs:string">
         <xs:annotation>
@@ -1149,7 +1149,7 @@ dfdl:encoding variable which is being referenced as $dfdl:encoding below.
 Scoped instances of defined variables are created using
 dfdl:newVariableInstance:
 
-[source%unnumbered,xml]
+[source,xml]
 ----
 <dfdl:newVariableInstance
     ref = QName
@@ -1214,7 +1214,7 @@ The resolved set of annotations for a component may contain multiple
 dfdl:newVariableInstance statements.
 They must all be for unique variables; it is a Schema Definition Error
 otherwise.
-The order of execution is specified in Section
+The order of execution is specified in
 <<evaluation-order-for-statement-annotations>> Evaluation Order for Statement
 Annotations.
 
@@ -1222,7 +1222,7 @@ There is no short form syntax for creating variable instances.
 
 ===== Examples
 
-[source%unnumbered,xml]
+[source,xml]
 ----
 <dfdl:newVariableInstance ref="EDIFACT_DS" defaultValue=","/>
 
@@ -1237,7 +1237,7 @@ There is no short form syntax for creating variable instances.
 Variable instances get their values either by default, by external definition,
 or by subsequent assignment using the dfdl:setVariable statement annotation.
 
-[source%unnumbered,xml]
+[source,xml]
 ----
 <dfdl:setVariable
     ref = QName
@@ -1296,7 +1296,7 @@ The resolved set of annotations for an annotation point may contain multiple
 dfdl:setVariable statements.
 They must all be for unique variables (different name and/or namespace) and it
 is a Schema Definition Error otherwise.
-The order of execution is specified in Section
+The order of execution is specified in
 <<evaluation-order-for-statement-annotations>> Evaluation Order for Statement
 Annotations.
 
@@ -1304,7 +1304,7 @@ There is no short form syntax for variable assignment.
 
 ===== Examples
 
-[source%unnumbered,xml]
+[source,xml]
 ----
 <xs:element name="ds" type="xs:string">
    <xs:annotation>< xs:appinfo source="http://www.ogf.org/dfdl/">

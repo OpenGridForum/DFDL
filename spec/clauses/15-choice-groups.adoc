@@ -11,14 +11,14 @@ concept.
 The following properties are specific to xs:choice.
 
 .Properties for Choice Groups
-[cols="1,4",options="header"]
+[cols="1,4a",options="header"]
 |===
 
 | Property Name
 | Description
 
 | choiceLengthKind
-a| Enum
+| Enum
 
 Valid values are 'implicit', 'explicit'
 
@@ -32,7 +32,7 @@ fixed-length regardless of which branch appears.
 Annotation: dfdl:choice, dfdl:group (choice)
 
 | choiceLength
-a| Integer
+| Integer
 
 Only used when dfdl:choiceLengthKind is 'explicit'.
 
@@ -44,7 +44,7 @@ with dfdl:fillByte.
 Annotation: dfdl:choice, dfdl:group (choice)
 
 | initiatedContent
-a| Enum
+| Enum
 
 Valid values are 'yes', 'no'
 
@@ -60,7 +60,7 @@ to the empty string.
 Annotation: dfdl:sequence, dfdl:choice, dfdl:group
 
 | choiceDispatchKey
-a| DFDL Expression
+| DFDL Expression
 
 The expression must evaluate to an xs:string.
 It is a Schema Definition Error if the expression returns an empty string.
@@ -90,7 +90,7 @@ It is not possible to place this property in scope on a dfdl:format annotation.
 Annotation: dfdl:choice
 
 | choiceBranchKey
-a| List of DFDL String Literals
+| List of DFDL String Literals
 
 This literal provides an alternate way to discriminate a choice to a branch.
 When the dfdl:choiceDispatchKey expression evaluates to a string matching one of

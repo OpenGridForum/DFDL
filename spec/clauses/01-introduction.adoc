@@ -158,7 +158,7 @@ application logic to compute.
 
 Consider the following XML data:
 
-[source%unnumbered,xml]
+[source,xml]
 ----
 <w>5</w>
 <x>7839372</x>
@@ -170,7 +170,7 @@ The logical model for this data can be described by the following fragment of an
 XML schema document that simply provides a description of the name and type of
 each element:
 
-[source%unnumbered,xml]
+[source,xml]
 ----
   <xs:complexType name="example1">
     <xs:sequence>
@@ -196,7 +196,7 @@ ce29 46f6
 To describe the same information in DFDL, the original XML schema document that
 described the data model is annotated (on the type definition) as follows:
 
-[source%unnumbered,xml]
+[source,xml]
 ----
   <xs:complexType>
     <xs:sequence>
@@ -250,7 +250,7 @@ This is all that a DFDL parser needs to read the data.
 
 In the above, there is a standard XML schema annotation structure:
 
-[source%unnumbered,xml]
+[source,xml]
 ----
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
@@ -266,7 +266,7 @@ specifically a DFDL annotation.
 
 Inside the xs:appinfo there is a single DFDL _format annotation_:
 
-[source%unnumbered,xml]
+[source,xml]
 ----
             <dfdl:element representation="binary"
                     byteOrder="bigEndian"
@@ -291,7 +291,7 @@ Once again, the same data model can be annotated, this time with properties that
 provide the character encoding, the field separator (comma) and the decimal
 separator (period):
 
-[source%unnumbered,xml]
+[source,xml]
 ----
   <xs:complexType>
     <xs:sequence>

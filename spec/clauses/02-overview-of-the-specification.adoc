@@ -14,7 +14,7 @@ expression language operates on.
 * <<dfdl-schema-component-model>>, DFDL Schema Component Model describes the
 components that makes up a DFDL schema, and the subset of XML Schema that is
 used to express them.
-* Sections <<dfdl-syntax-basics>>, DFDL Syntax Basics and
+* <<dfdl-syntax-basics>>, DFDL Syntax Basics and
 <<syntax-of-dfdl-annotation-elements>>, Syntax of DFDL Annotation
 Elements - describes the syntactic structure of DFDL annotations and introduces
 the purposes of the various annotations.
@@ -30,7 +30,7 @@ structure of data that can be described with DFDL, and which is referenced
 throughout the rest of the specification.
 * <<overview-representation-properties-and-their-format-semantic>>, Overview:
 Representation Properties and their Format Semantics provides an overview of,
-and Sections <<properties-common-to-both-content-and-framing>> to
+and <<properties-common-to-both-content-and-framing>> to
 <<calculated-value-properties>> describe in detail, all the DFDL properties. The
 properties are organized as follows:
 ** <<properties-common-to-both-content-and-framing,Common to both Content and Framing>> (see <<properties-common-to-both-content-and-framing>>)

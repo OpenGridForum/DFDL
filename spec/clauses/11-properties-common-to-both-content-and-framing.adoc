@@ -2,14 +2,14 @@
 == Properties Common to both Content and Framing
 
 .Properties Common to both Content and Framing
-[cols="1,4",options="header"]
+[cols="1,4a",options="header"]
 |===
 
 | Property Name
 | Description
 
 | [[p-byteorder]]byteOrder
-a| Enum or DFDL Expression
+| Enum or DFDL Expression
 
 Valid values 'bigEndian', 'littleEndian'.
 
@@ -19,7 +19,7 @@ The expression must not contain forward references to elements which have not
 yet been processed.
 
 Note that there is, intentionally, no such thing as 'native'
-endianfootnote:[The concept of native-endian is avoided in DFDL since a DFDL schema containing such a property binding would not contain a complete description of data, but rather an incomplete one which would behave differently based on characteristics of the machine and implementation where the DFDL processor is executed. In DFDL this same behavior is achieved through the use of explicit parameterization using DFDL variables to set dfdl:byteOrder. See Section <<predefined-variables>> Predefined Variables.].
+endianfootnote:[The concept of native-endian is avoided in DFDL since a DFDL schema containing such a property binding would not contain a complete description of data, but rather an incomplete one which would behave differently based on characteristics of the machine and implementation where the DFDL processor is executed. In DFDL this same behavior is achieved through the use of explicit parameterization using DFDL variables to set dfdl:byteOrder. See <<predefined-variables>> Predefined Variables.].
 
 This property applies to all Number, Calendar (date and time), and Boolean types
 with representation binary.
@@ -33,13 +33,13 @@ specifies its byte order.
 Annotation: dfdl:element, dfdl:simpleType
 
 | [[p-bitorder]]bitOrder
-a| Enum
+| Enum
 
 Valid values 'mostSignificantBitFirst', 'leastSignificantBitFirst'.
 
 The bits of a byte each have a place value or significance of 2^n^, for _n_ from
-0 to 7. Hence, the byte value 255 = 2^7^ {plus} 2^6^ {plus} 2^5^ {plus} 2^4^
-{plus} 2^3^ {plus} 2^2^ {plus} 2^1^ {plus} 2^0^.
+0 to 7. Hence, the byte value 255 = 2^7^ + 2^6^ + 2^5^ + 2^4^
++ 2^3^ + 2^2^ + 2^1^ + 2^0^.
 A bit can always be unambiguously identified as the 2^n^-bit.
 
 The bit order is the correspondence of a bit's numeric significance to the bit
@@ -55,7 +55,7 @@ significant bits of byte N+1.
 Value 'leastSignificantBitFirst' means:
 
 * The 2^0^ bit is first, i.e., has bit position 1.
-* In general, the 2^n^ bit has position _n_ {plus} 1__.__
+* In general, the 2^n^ bit has position _n_ + 1__.__
 * The most significant bits of byte N are considered to be adjacent to the least
 significant bits of byte N+1.
 
@@ -64,7 +64,7 @@ of a byte occupy what bit positions.
 Content and framing are defined in terms of regions of the data stream, and
 these regions are defined in terms of the starting bit position and ending bit
 position; hence, dfdl:bitOrder is relevant to determining the specific bits of
-any grammar region (see Section <<dfdl-data-syntax-grammar>> DFDL Data Syntax
+any grammar region (see <<dfdl-data-syntax-grammar>> DFDL Data Syntax
 Grammar) when the region's starting bit position or ending bit position are not
 on a byte boundary.
 
@@ -76,7 +76,7 @@ Annotation: dfdl:element, dfdl:simpleType, dfdl:sequence, dfdl:choice,
 dfdl:group
 
 | [[p-encoding]]encoding
-a| Enum or DFDL Expression
+| Enum or DFDL Expression
 
 Values are one of:
 
@@ -92,7 +92,7 @@ The expression must not contain forward references to elements which have not
 yet been processed.
 
 Note that there is, deliberately, no concept of 'native'
-encodingfootnote:[The concept of native character encoding is avoided in DFDL since a DFDL schema containing such a property binding would not contain a complete description of data, but rather an incomplete one which would behave differently based on characteristics of the operating environment where the DFDL processor executes. In DFDL this same behavior is achieved through the use of explicit parameterization using DFDL variables to set dfdl:encoding. See Section <<predefined-variables>> Predefined Variables.].
+encodingfootnote:[The concept of native character encoding is avoided in DFDL since a DFDL schema containing such a property binding would not contain a complete description of data, but rather an incomplete one which would behave differently based on characteristics of the operating environment where the DFDL processor executes. In DFDL this same behavior is achieved through the use of explicit parameterization using DFDL variables to set dfdl:encoding. See <<predefined-variables>> Predefined Variables.].
 
 Conforming DFDL v1.0 processors MUST accept at least 'UTF-8', 'UTF-16',
 'UTF-16BE', 'UTF-16LE', 'ASCII', and 'ISO-8859-1' as encoding names.
@@ -122,7 +122,7 @@ Annotation: dfdl:element, dfdl:simpleType, dfdl:sequence, dfdl:choice,
 dfdl:group
 
 | [[p-utf16width]]utf16Width
-a| Enum
+| Enum
 
 Valid values are 'fixed', 'variable'.
 
@@ -146,7 +146,7 @@ Annotation: dfdl:element, dfdl:simpleType, dfdl:sequence, dfdl:choice,
 dfdl:group
 
 | [[p-ignorecase]]ignoreCase
-a| Enum
+| Enum
 
 Valid values are 'yes', 'no'.
 
@@ -170,7 +170,7 @@ Annotation: dfdl:element, dfdl:simpleType, dfdl:sequence, dfdl:choice,
 dfdl:group
 
 | [[p-encodingerrorpolicy]]encodingErrorPolicy
-a| Enum
+| Enum
 
 Valid values are 'error' or 'replace'.
 
@@ -211,7 +211,7 @@ character).
 
 If 'error' then a Processing Error occurs.
 
-See Section <<character-encoding-and-decoding-errors>> Character Encoding and
+See <<character-encoding-and-decoding-errors>> Character Encoding and
 Decoding Errors for further details.
 
 Annotation: dfdl:element, dfdl:simpleType, dfdl:sequence, dfdl:choice,
@@ -315,7 +315,7 @@ The data making up the fragment character is skipped over.
 (It is filled with the dfdl:fillByte when unparsing.)
 
 Note that the "." wildcard in regular expressions matches the Unicode
-Replacement Character, so ".*" and ".{plus}" regular expressions can potentially
+Replacement Character, so ".*" and ".+" regular expressions can potentially
 cause very large matches (up to the entire data stream) to occur when data
 contains errors and dfdl:encodingErrorPolicy 'replace'.
 DFDL Schema authors are advised that bounded length negated regular expressions
@@ -328,7 +328,7 @@ data as an ordinary character, and this cannot be distinguished from the
 insertion of the Unicode Replacement Character due to a decoding error.
 This is likely to happen for data that is (a) initially parsed by a DFDL parser
 with dfdl:encodingErrorPolicy 'replace', and (b) which contains some decoding
-errors, but pass-format:straightquotes[(c)] is nevertheless successfully parsed,
+errors, but (c) is nevertheless successfully parsed,
 (d) is written back out to a file or other data repository, and (e) is parsed
 again.
 The written data has replaced data errors with the Unicode Replacement
@@ -414,26 +414,29 @@ Consider a structure of 4 logical elements.
 The total length is 16 bits.
 
 Assume the lengths here are measured in bits
-(dfdl:lengthUnitsfootnote:[For dfdl:lengthUnits, see Section <<properties-for-specifying-lengths>> Properties for Specifying Lengths.] is 'bits'), and that these are binary integers (dfdl:representation is 'binary', dfdl:binaryNumberRepfootnote:[For dfdl:binaryNumberRep, see Section <<properties-specific-to-number-with-binary-representation>> Properties Specific to Number with Binary Representation.] is 'binary'):
+(dfdl:lengthUnitsfootnote:[For dfdl:lengthUnits, see <<properties-for-specifying-lengths>> Properties for Specifying Lengths.] is 'bits'), and that these are binary integers (dfdl:representation is 'binary', dfdl:binaryNumberRepfootnote:[For dfdl:binaryNumberRep, see <<properties-specific-to-number-with-binary-representation>> Properties Specific to Number with Binary Representation.] is 'binary'):
 
-[source%unnumbered,subs="+macros"]
+[source,subs="+quotes"]
 ----
-pass:[<span style="color:#0070C0">&lt;element name="A" type="xs:int" dfdl:length="3"/&gt; &lt;!-- having value 3 --&gt;</span>]
-pass:[<span style="color:#FF0000">&lt;element name="B" type="xs:int" dfdl:length="7"/&gt; &lt;!-- having value 9 --&gt;</span>]
-pass:[<span style="color:#00B050">&lt;element name="C" type="xs:int" dfdl:length="4"/&gt; &lt;!-- having value 5 --&gt;</span>]
-pass:[<span style="color:#BF8F00">&lt;element name="D" type="xs:int" dfdl:length="2"/&gt; &lt;!-- having value 1 --&gt;</span>]
+[css color:#0070C0]##<element name="A" type="xs:int" dfdl:length="3"/> <!-- having value 3 -->##
+[css color:#FF0000]##<element name="B" type="xs:int" dfdl:length="7"/> <!-- having value 9 -->##
+[css color:#00B050]##<element name="C" type="xs:int" dfdl:length="4"/> <!-- having value 5 -->##
+[css color:#7030A0]##<element name="D" type="xs:int" dfdl:length="2"/> <!-- having value 1 -->##
 ----
 
-The above are colorized to highlight the corresponding bits in the data below.
+The above is colorized to highlight the corresponding bits in the data below.
 
 In a format where dfdl:bitOrder is 'mostSignificantBitFirst':
 
-[source%unnumbered,subs="+macros"]
+[bits,B=blue,R=red,G=green,P=purple,C=cyan]
 ----
-              pass:[<span style="color:#0070C0">011</span>]pass:[<span style="color:#FF0000">00010 01</span>]pass:[<span style="color:#00B050">0101</span>]pass:[<span style="color:#7030A0">01</span>]
-              pass:[<span style="color:#0070C0">AAA</span>]pass:[<span style="color:#FF0000">BBBBB BB</span>]pass:[<span style="color:#00B050">CCCC</span>]pass:[<span style="color:#7030A0">DD</span>]
+              01100010 01010101
+~             BBBRRRRR RRGGGGPP
+              AAABBBBB BBCCCCDD
+~             BBBRRRRR RRGGGGPP
 Significance  M      L M      L
-Bit Position  pass:[<span style="color:#00B0F0">123</span>]pass:[<span style="color:#FF0000">45678 12</span>]pass:[<span style="color:#00B050">3456</span>]pass:[<span style="color:#7030A0">78</span>]
+Bit Position  12345678 12345678
+~             CCCRRRRR RRGGGGPP
 Byte Position ----1--- ----2---
 ----
 
@@ -445,12 +448,15 @@ themselves are presented.
 
 In contrast, in a format where dfdl:bitOrder is 'leastSignificantBitFirst':
 
-[source%unnumbered,subs="+macros"]
+[bits,R=red,B=blue,P=purple,G=green]
 ----
-              pass:[<span style="color:#FF0000">01001</span>]pass:[<span style="color:#0070C0">011</span>] pass:[<span style="color:#7030A0">01</span>]pass:[<span style="color:#00B050">0101</span>]pass:[<span style="color:#FF0000">00</span>]
-              pass:[<span style="color:#FF0000">BBBBB</span>]pass:[<span style="color:#0070C0">AAA</span>] pass:[<span style="color:#7030A0">DD</span>]pass:[<span style="color:#00B050">CCCC</span>]pass:[<span style="color:#FF0000">BB</span>]
+              01001011 01010100
+~             RRRRRBBB PPGGGGRR
+              BBBBBAAA DDCCCCBB
+~             RRRRRBBB PPGGGGRR
 Significance  M      L M      L
-Bit Position  pass:[<span style="color:#FF0000">87654</span>]pass:[<span style="color:#0070C0">321</span>] pass:[<span style="color:#7030A0">87</span>]pass:[<span style="color:#00B050">6543</span>]pass:[<span style="color:#FF0000">21</span>]
+Bit Position  87654321 87654321
+~             RRRRRBBB PPGGGGRR
 Byte Position ----1--- ----2---
 ----
 
@@ -467,12 +473,15 @@ Left.
 That is, with the bytes starting at byte 1 on the right and increasing to the
 left.
 
-[source%unnumbered,subs="+macros"]
+[bits,P=purple,G=green,R=red,B=blue]
 ----
-              pass:[<span style="color:#7030A0">01</span>]pass:[<span style="color:#00B050">0101</span>]pass:[<span style="color:#FF0000">00 01001</span>]pass:[<span style="color:#0070C0">011</span>]
-              pass:[<span style="color:#7030A0">DD</span>]pass:[<span style="color:#00B050">CCCC</span>]pass:[<span style="color:#FF0000">BB BBBBB</span>]pass:[<span style="color:#0070C0">AAA</span>]
+              01010100 01001011
+~             PPGGGGRR RRRRRBBB
+              DDCCCCBB BBBBBAAA
+~             PPGGGGRR RRRRRBBB
 Significance  M      L M      L
-Bit Position  pass:[<span style="color:#7030A0">87</span>]pass:[<span style="color:#00B050">6543</span>]pass:[<span style="color:#FF0000">21 87654</span>]pass:[<span style="color:#0070C0">321</span>]
+Bit Position  87654321 87654321
+~             PPGGGGRR RRRRRBBB
 Byte Position ----2--- ----1---
 ----
 
@@ -489,7 +498,7 @@ presentation style.
 ==== dfdl:bitOrder and Grammar Regions
 
 When any grammar region appears before (to the left of) or after (to the right
-of) another grammar region in the grammar rules of Section
+of) another grammar region in the grammar rules of
 <<dfdl-data-syntax-grammar>>, and the boundary between the two falls within a
 byte rather than on a byte boundary, then the dfdl:bitOrder determines which
 bits are occupied by the regions.

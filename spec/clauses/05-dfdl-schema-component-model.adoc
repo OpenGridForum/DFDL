@@ -178,9 +178,9 @@ The facets and the types they are applicable to are:
 * pattern
 * enumeration (all types except xs:boolean)
 * maxInclusive, maxExclusive, minExclusive, minInclusive (for Number and
-Calendar types in Section <<dfdl-simple-types>>)
+Calendar types in <<dfdl-simple-types>>)
 * totalDigits (for type xs:decimal and all supported integer types descending
-from xs:decimal in Section <<dfdl-simple-types>>)
+from xs:decimal in <<dfdl-simple-types>>)
 * fractionDigits (for type xs:decimal)
 
 The facets (but not XSD maxOccurs nor XSD minOccurs) are also checked by the
@@ -227,7 +227,7 @@ Rather DFDL properties are used to specify the format.
 
 ==== Pattern
 
-* Allowed only on elements of type xs:string or types derived from it in Section
+* Allowed only on elements of type xs:string or types derived from it in
 <<dfdl-simple-types>>.
 * Used for validation only
 
@@ -275,7 +275,7 @@ element declaration.
 
 A DFDL Schema only applies DFDL annotations on a subset of the XML Schema
 constructs.
-Hence,one normally thinks that a DFDL schema cannot contain any of the
+Hence, one normally thinks that a DFDL schema cannot contain any of the
 constructs outside of the DFDL subset.
 For example, the DFDL subset of XML Schema does not use attributes, hence, a
 DFDL schema normally would not contain attribute declarations.

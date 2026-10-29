@@ -119,7 +119,7 @@ a| Bit placement
 a| **0**XXXXXXX
 
 XX**100111**
-| pass-format:straightquotes[0x55]
+| 0x55
 | 1
 
 | I
@@ -127,7 +127,7 @@ XX**100111**
 a| **01**XXXXXX
 
 XXX**10010**
-| pass-format:straightquotes[0x67]
+| 0x67
 | 2
 
 | T
@@ -135,7 +135,7 @@ XXX**10010**
 a| **100**XXXXX
 
 XXXX**1010**
-| pass-format:straightquotes[0x92]
+| 0x92
 | 3
 
 | 1
@@ -143,7 +143,7 @@ XXXX**1010**
 a| **0001**XXXX
 
 XXXXX**011**
-| pass-format:straightquotes[0x1A]
+| 0x1A
 | 4
 
 | 2
@@ -151,7 +151,7 @@ XXXXX**011**
 a| **10010**XXX
 
 XXXXXX**01**
-| pass-format:straightquotes[0x93]
+| 0x93
 | 5
 
 | 3
@@ -159,13 +159,13 @@ XXXXXX**01**
 a| **110011**XX
 
 XXXXXXX**0**
-| pass-format:straightquotes[0xCD]
+| 0xCD
 | 6
 
 | 4
 | 0110100
 | **0110100**X
-| pass-format:straightquotes[0x68]
+| 0x68
 | 7
 |===
 
@@ -173,21 +173,25 @@ The bits corresponding to the characters are shown in distinct colors below.
 The characters that each bit contributes to are written below each of the bits
 and in the corresponding color.
 
-[source%unnumbered,subs="+macros"]
+[bits,R=red,L=lime,P=purple,Y=yellow,C=cyan,D=darkred]
 ----
-pass:[<span style="color:#FF0000">     0</span>]1010101 pass:[<span style="color:#92D050">01</span>]pass:[<span style="color:#FF0000">100111</span>] pass:[<span style="color:#7030A0">100</span>]pass:[<span style="color:#92D050">10010</span>] pass:[<span style="color:#FFC000">0001</span>]pass:[<span style="color:#7030A0">1010</span>] pass:[<span style="color:#00B0F0">10010</span>]pass:[<span style="color:#FFC000">011</span>] pass:[<span style="color:#C00000">110011</span>]pass:[<span style="color:#00B0F0">01</span>] 0110100pass:[<span style="color:#C00000">0</span>]
+     01010101 01100111 10010010 00011010 10010011 11001101 01101000
+~    R        LLRRRRRR PPPLLLLL YYYYPPPP CCCCCYYY DDDDDDCC        D
 Byte -----1-- -----2-- -----3-- -----4-- -----5-- -----6-- -----7--
-Char pass:[<span style="color:#FF0000">N</span>]UUUUUUU pass:[<span style="color:#92D050">II</span>]pass:[<span style="color:#FF0000">NNNNNN </span>]pass:[<span style="color:#7030A0">TTT</span>]pass:[<span style="color:#92D050">IIIII</span>] pass:[<span style="color:#FFC000">1111</span>]pass:[<span style="color:#7030A0">TTTT</span>] pass:[<span style="color:#00B0F0">22222</span>]pass:[<span style="color:#FFC000">111</span>] pass:[<span style="color:#C00000">333333</span>]pass:[<span style="color:#00B0F0">22 </span>]4444444pass:[<span style="color:#C00000">3</span>]
+Char NUUUUUUU IINNNNNN TTTIIIII 1111TTTT 22222111 33333322 44444443
+~    R        LLRRRRRR PPPLLLLL YYYYPPPP CCCCCYYY DDDDDDCC        D
 ----
 
 This kind of data is often better visualized by numbering the bytes in the
 opposite direction that is _right to left_, which leads to this presentation:
 
-[source%unnumbered,subs="+macros"]
+[bits,R=red,C=cyan,Y=yellow,P=purple,L=lime]
 ----
-     0110100pass:[<span style="color:#FF0000">0 110011</span>]pass:[<span style="color:#00B0F0">01 10010</span>]pass:[<span style="color:#FFC000">011 0001</span>]pass:[<span style="color:#7030A0">1010 100</span>]pass:[<span style="color:#92D050">10010 01</span>]pass:[<span style="color:#FF0000">100111 0</span>]1010101
+     01101000 11001101 10010011 00011010 10010010 01100111 01010101
+~           R RRRRRRCC CCCCCYYY YYYYPPPP PPPLLLLL LLRRRRRR R
 Byte -----7-- -----6-- -----5-- -----4-- -----3-- -----2-- -----1--
-Char 4444444pass:[<span style="color:#FF0000">3 333333</span>]pass:[<span style="color:#00B0F0">22 22222</span>]pass:[<span style="color:#FFC000">111 1111</span>]pass:[<span style="color:#7030A0">TTTT TTT</span>]pass:[<span style="color:#92D050">IIIII II</span>]pass:[<span style="color:#FF0000">NNNNNN N</span>]UUUUUUU
+Char 44444443 33333322 22222111 1111TTTT TTTIIIII IINNNNNN NUUUUUUU
+~           R RRRRRRCC CCCCCYYY YYYYPPPP PPPLLLLL LLRRRRRR R
 ----
 
 In the above, the bits corresponding to each character code unit are more easily
@@ -198,14 +202,14 @@ English).
 
 The bits below represent a 3-bit unsigned integer containing value 7, followed
 by the ASCII string 'ABC' followed by the ASCII DEL character (character code
-pass-format:straightquotes[0x7F]).
+0x7F).
 This illustrates a string not beginning on a byte boundary.
 Again, the bit ordering is least-significant-bit first.
 
 The bits are written in increasing position and place value from
 _right-to-left_:
 
-[source%unnumbered]
+[source]
 ----
 1111111 1000011 1000010 1000001 111
 DEL     C       B       A       7
@@ -215,7 +219,7 @@ In the above example, if one numbers the bits from the right, starting with
 position 1, the character code for 'A' occupies bits 4 to 10. Ifone divides the
 data above into bytes with vertical bars one must start on the right to get:
 
-[source%unnumbered]
+[source]
 ----
 char:      DEL       C       B         A
 bits:     01111111 | 1000011 1 |000010 10 | 00001 111
@@ -282,7 +286,7 @@ the table below.
 | "
 | 34
 
-| pass-format:straightquotes[#]
+| +#+
 | 35
 
 | $
@@ -306,7 +310,7 @@ the table below.
 | *
 | 42
 
-| {plus}
+| +
 | 43
 
 | ,  COMMA
@@ -390,7 +394,7 @@ a| Bit placement
 a| **10**XXXXXX
 
 XXXX**1100**
-| pass-format:straightquotes[0xB1]
+| 0xB1
 | 1
 
 | 3
@@ -398,13 +402,13 @@ XXXX**1100**
 a| **0011**XXXX
 
 XXXXXX**11**
-| pass-format:straightquotes[0x3C]
+| 0x3C
 | 2
 
 | 4
 | 110100
 | **110100**XX
-| pass-format:straightquotes[0xD3]
+| 0xD3
 | 3
 |===
 

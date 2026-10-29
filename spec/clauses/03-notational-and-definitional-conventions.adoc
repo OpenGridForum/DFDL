@@ -36,7 +36,7 @@ that the consequence of the data not having that terminating delimiter is a
 Processing Error because the data does not comply with its format specification.
 
 When describing data, the uncapitalized terms _required_ and _optional_ in this
-document have specific formal meanings (introduced in Section
+document have specific formal meanings (introduced in
 <<minoccurs-maxoccurs>>,MinOccurs, MaxOccurs) having to do with the way element
 declarations are annotated in the DFDL language.
 The data corresponding to such an element declaration is also said to be either

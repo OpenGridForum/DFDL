@@ -104,8 +104,8 @@ dfdl:textBooleanJustification or dfdl:textCalendarJustification
 ******** dfdl:textStandardNaNRep
 ******** dfdl:textNumberRounding
 ********* _"explicit"_
-* dfdl:textNumberRoundingMode
-* dfdl:textNumberRoundingIncrement
+********** dfdl:textNumberRoundingMode
+********** dfdl:textNumberRoundingIncrement
 ******** dfdl:textStandardZeroRep
 ******** dfdl:textStandardBase
 ******* _"zoned"_
@@ -113,8 +113,8 @@ dfdl:textBooleanJustification or dfdl:textCalendarJustification
 ******** dfdl:textNumberCheckPolicy
 ******** dfdl:textNumberRounding
 ********* _"explicit"_
-* dfdl:textNumberRoundingMode
-* dfdl:textNumberRoundingIncrement
+********** dfdl:textNumberRoundingMode
+********** dfdl:textNumberRoundingIncrement
 ******** dfdl:textZonedSignStyle
 ***** _"binary"_
 ****** dfdl:byteOrder
@@ -153,7 +153,7 @@ dfdl:textBooleanJustification or dfdl:textCalendarJustification
 ******** dfdl:binaryNumberCheckPolicy
 ******** dfdl:calendarPatternKind
 ********* "_explicit_"
-* dfdl:calendarPattern
+********** dfdl:calendarPattern
 ******** dfdl:calendarCheckPolicy
 ******** dfdl:calendarTimeZone
 ******** dfdl:calendarObserveDST
@@ -164,7 +164,7 @@ dfdl:textBooleanJustification or dfdl:textCalendarJustification
 ******** dfdl:binaryNumberCheckPolicy
 ******** dfdl:calendarPatternKind
 ********* "_explicit_"
-* dfdl:calendarPattern
+********** dfdl:calendarPattern
 ******** dfdl:calendarCheckPolicy
 ******** dfdl:calendarTimeZone
 ******** dfdl:calendarObserveDST
@@ -355,16 +355,16 @@ elements)
 ******** dfdl:textStandardNaNRep
 ******** dfdl:textNumberRounding
 ********* _"explicit"_
-* dfdl:textNumberRoundingMode
-* dfdl:textNumberRoundingIncrement
+********** dfdl:textNumberRoundingMode
+********** dfdl:textNumberRoundingIncrement
 ******** dfdl:textStandardZeroRep
 ******* _"zoned"_
 ******** __d__fdl:textNumberPattern
 ******** dfdl:textNumberCheckPolicy
 ******** dfdl:textNumberRounding
 ********* _"explicit"_
-* dfdl:textNumberRoundingMode
-* dfdl:textNumberRoundingIncrement
+********** dfdl:textNumberRoundingMode
+********** dfdl:textNumberRoundingIncrement
 ******** dfdl:textZonedSignStyle
 ***** _"binary"_
 ****** dfdl:byteOrder
@@ -400,7 +400,7 @@ elements)
 ******** dfdl:decimalVirtualPoint
 ******** dfdl:calendarPatternKind
 ********* "_explicit_"
-* dfdl:calendarPattern
+********** dfdl:calendarPattern
 ******** dfdl:calendarCheckPolicy
 ******** dfdl:calendarTimeZone
 ******** dfdl:calendarObserveDST
@@ -411,9 +411,7 @@ elements)
 ******** dfdl:decimalVirtualPoint
 ******** dfdl:calendarPatternKind
 ********* "_explicit_"
-
-dfdl:calendarPattern
-
+********** dfdl:calendarPattern
 ******** dfdl:calendarCheckPolicy
 ******** dfdl:calendarTimeZone
 ******** dfdl:calendarObserveDST
