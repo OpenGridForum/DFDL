@@ -1,0 +1,76 @@
+# Clause 14.2.3: separator suppression for dfdl:occursCountKind 'implicit'
+# when unparsing. See tools/tables.py for the format; `make tables` writes the
+# table into the clause.
+
+title: Separator Suppressions for dfdl:occursCountKind 'implicit'
+widths: 27 10 10 14 13 11 15
+header-rows: 4
+
+colour grey      #DBDBDB
+colour blue      #8EAADB
+colour green     #E2EFD9
+colour lightblue #D9E2F3
+
+dfdl:separatorSuppressionPolicy
+dfdl:occursCountKind 'implicit'
+<
+<
+<
+<
+<
+
+^
+Potentially Trailing
+<
+<
+<
+Not Potentially Trailing
+<
+
+^
+maxOccurs unbounded
+<
+maxOccurs bounded
+<
+maxOccurs unbounded
+maxOccurs bounded
+
+^
+Element not declared last
+Element declared last
+Element declared last or occurrence followed by end-of-group
+Element not declared last and occurrence not followed by end-of-group
+^
+^
+
+never
+grey: Schema definition error
+<
+blue: Unparse N occurrences ~ unparse (maxOccurs -- N) trailing zero-length occurrences
+<
+grey: Schema definition error
+blue: Unparse N occurrences ~ unparse (maxOccurs -- N) trailing zero-length occurrences
+
+trailingEmptyStrict
+grey:
+green: Unparse N occurrences (suppressing trailing zero-length occurrences)
+<
+blue:
+^
+^
+
+trailingEmpty
+^
+^
+^
+^
+^
+^
+
+anyEmpty
+lightblue: Unparse N occurrences (suppressing any optional zero-length occurrences)
+<
+<
+<
+<
+<

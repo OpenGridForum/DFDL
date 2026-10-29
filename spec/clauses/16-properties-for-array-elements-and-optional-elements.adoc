@@ -7,14 +7,14 @@ The properties handle a logical one-dimensional array of any simple or complex
 type.
 
 .Properties for Array Elements and Optional Elements
-[cols="1,5",options="header"]
+[cols="1,5a",options="header"]
 |===
 
 | Property Name
 | Description
 
 | occursCountKind
-a| Enum
+| Enum
 
 Specifies how the actual number of occurrences is to be established.
 
@@ -33,13 +33,13 @@ parsing in conjunction with the XSD minOccurs and XSD maxOccurs properties.
 'stopValue' means look for a mandatory logical stop value which signifies the
 end of the occurrences.
 
-These values are described in detail in Section
+These values are described in detail in
 <<the-dfdl-occurscountkind-property>>.
 
 Annotation: dfdl:element
 
 | occursCount
-a| DFDL Expression
+| DFDL Expression
 
 Specifies the number of occurrences of the element.
 
@@ -53,7 +53,7 @@ yet been processed.
 Annotation: dfdl:element,
 
 | occursStopValue
-a| List of DFDL Logical Values
+| List of DFDL Logical Values
 
 A whitespace separated list of logical values that specify  the alternative
 logical stop values for the element.
@@ -73,7 +73,7 @@ Annotation: dfdl:element
 |===
 
 When XSD minOccurs 1 and XSD maxOccurs 1, the above properties are not used, and
-the behavior is as if dfdl:occursCountKind is 'fixed' as described in Section
+the behavior is as if dfdl:occursCountKind is 'fixed' as described in
 <<dfdl-occurscountkind-fixed>>.
 
 [[the-dfdl-occurscountkind-property]]
@@ -202,18 +202,18 @@ dfdl:occursStopValue do not conform to the simple type of the element.
 === Default Values for Arrays
 
 When parsing, required occurrences that have empty representation may trigger
-the application of a default value, as described in Section
+the application of a default value, as described in
 <<element-defaults-when-parsing>> Element Defaults When Parsing.
 
 When unparsing, required occurrences that are missing from the Infoset may
-trigger the application of a default value, as described in Section
+trigger the application of a default value, as described in
 <<element-defaults-when-unparsing>> Element Defaults When Unparsing.
 
 The application of default values is *not* dependent on dfdl:occursCountKind,
 only on whether the occurrence is required or optional, whether there is a
 default value specified, and whether the data contains the empty representation
 (parsing) or is missing (unparsing).
-Section <<element-defaults>> Element Defaults contains the details.
+<<element-defaults>> Element Defaults contains the details.
 
 === Arrays with DFDL Expressions
 
@@ -225,7 +225,7 @@ re-evaluated for each occurrence of the element in case the value changes.
 
 Arrays can have points of uncertainty depending on the value of
 dfdl:occursCountKind.
-See Section <<resolving-points-of-uncertainty>> Resolving Points of Uncertainty
+See <<resolving-points-of-uncertainty>> Resolving Points of Uncertainty
 for details.
 
 === Arrays and Sequences
@@ -302,14 +302,14 @@ Occurrences with nil representation are added to the Infoset with *[nilled]*
 member true.
 
 Occurrences with empty representation may or may not be added to the Infoset, as
-described in Section <<element-defaults>>.
+described in <<element-defaults>>.
 If a required occurrence is not added to the Infoset, it may be a Processing
-Error, dependent on dfdl:occursCountKind as described in Section
+Error, dependent on dfdl:occursCountKind as described in
 <<the-dfdl-occurscountkind-property>>.
 
 Occurrences with absent representation are not added to the Infoset.
 For a required occurrence it may be a Processing Error, dependent on
-dfdl:occursCountKind as described in Section
+dfdl:occursCountKind as described in
 <<the-dfdl-occurscountkind-property>>.
 
 === Sparse Arrays

@@ -8,19 +8,19 @@ properties that specify a further refinement of the representation.
 
 These properties are described in relation to the logical type groupings of the
 simple types into Number, String, Calendar, Boolean, and Opaque groups, per
-Section <<dfdl-simple-types>> DFDL Simple Types.
+<<dfdl-simple-types>> DFDL Simple Types.
 
 === Properties Common to All Simple Types
 
 .Properties Common to All Simple Types
-[cols="1,5",options="header"]
+[cols="1,5a",options="header"]
 |===
 
 | Property Name
 | Description
 
 | [[p-representation]]representation
-a| Enum
+| Enum
 
 Valid values are dependent on logical type.
 
@@ -100,20 +100,20 @@ properties.
 === Properties Common to All Simple Types with Text representation
 
 .Properties Common to All Simple Types with Text Representation
-[cols="2,7",options="header"]
+[cols="2,7a",options="header"]
 |===
 
 | Property Name
 | Description
 
 | textPadKind
-a| Enum
+| Enum
 
 Valid values 'none', 'padChar'.
 
 Indicates whether to pad the data value on unparsing.
 This controls the contents of the *_LeftPadding_* and *_RightPadding_* regions
-of the data syntax grammar in Section <<dfdl-data-syntax-grammar>>
+of the data syntax grammar in <<dfdl-data-syntax-grammar>>
 
 'none': No padding occurs.
 When dfdl:lengthKind is 'implicit' or  'explicit' (and dfdl:length is not an
@@ -124,12 +124,12 @@ is a Processing Error.
 dfdl:textNumberPadCharacter, dfdl:textBooleanPadCharacter or
 dfdl:textCalendarPadCharacter  depending on the type of the element.
 The padding characters populate the *_LeftPadding_* and/or *_RightPadding_*
-regions depending on dfdl:textStringJustification(see Section
-<<properties-specific-to-string>>), dfdl:textNumberJustification (see Section
+regions depending on dfdl:textStringJustification(see
+<<properties-specific-to-string>>), dfdl:textNumberJustification (see
 <<properties-specific-to-number-with-text-representation>>),
-dfdl:textBooleanJustification (see Section
+dfdl:textBooleanJustification (see
 <<properties-specific-to-boolean-with-text-representation>>), or
-dfdl:textCalendarJustification (see Section
+dfdl:textCalendarJustification (see
 <<properties-specific-to-calendar-with-text-representation>>), depending on the
 type of the element.
 
@@ -150,13 +150,13 @@ length.
 Annotation: dfdl:element, dfdl:simpleType
 
 | textTrimKind
-a| Enum
+| Enum
 
 Valid values 'none', 'padChar'
 
 Indicates whether to trim data on parsing.
 This controls the expected contents of the *_LeftPadding_* and *_RightPadding_*
-regions of the data syntax grammar in Section <<dfdl-data-syntax-grammar>>.
+regions of the data syntax grammar in <<dfdl-data-syntax-grammar>>.
 
 When 'none' no trimming takes place.
 
@@ -170,7 +170,7 @@ or dfdl:textCalendarJustification, depending on the type of the element.
 Annotation: dfdl:element , dfdl:simpleType
 
 | textOutputMinLength
-a| Non-negative Integer.
+| Non-negative Integer.
 
 Only used when dfdl:textPadKind is 'padChar' and dfdl:lengthKind is 'delimited',
 'prefixed', 'pattern', 'explicit' (when dfdl:length is an expression) or
@@ -189,14 +189,14 @@ representation text then no padding occurs.
 Annotation: dfdl:element, dfdl:simpleType
 
 | escapeSchemeRef
-a| QName or empty String
+| QName or empty String
 
 The name of the dfdl:defineEscapeScheme annotation that provides the additional
 properties used to describe the escape scheme.
 If the value is the empty string then escaping is explicitly turned off.
 
-See: Section <<the-dfdl-escapescheme-annotation-element>> The dfdl:escapeScheme
-Annotation Element, and Section
+See: <<the-dfdl-escapescheme-annotation-element>> The dfdl:escapeScheme
+Annotation Element, and
 <<the-dfdl-defineescapescheme-defining-annotation-element>> The
 dfdl:defineEscapeScheme Defining Annotation Element.
 
@@ -235,14 +235,14 @@ On unparsing, the application of escape scheme processing takes place before the
 application of the dfdl:emptyValueDelimiterPolicy property.
 
 .Escape Scheme Properties
-[cols="1,3",options="header"]
+[cols="1,3a",options="header"]
 |===
 
 | Property Name
 | Description
 
 | escapeKind
-a| Enum
+| Enum
 
 Valid values 'escapeCharacter', 'escapeBlock'
 
@@ -292,7 +292,7 @@ characters has no significance.
 Annotation: dfdl:escapeScheme
 
 | escapeCharacter
-a| DFDL String Literal or DFDL Expression
+| DFDL String Literal or DFDL Expression
 
 Specifies one character that escapes the subsequent character.
 
@@ -310,7 +310,7 @@ _Escape and Quoting Character Restrictions:_ The string literal is restricted to
 allow only certain kinds of DFDL String Literal syntax:
 
 * DFDL character entities are allowed
-* The DFDL byte value entity ( pass-format:straightquotes[%#rXX;] ) is not
+* The DFDL byte value entity ( +%#rXX;+ ) is not
 allowed
 * DFDL Character classes  NL, WSP, WSP+, WSP*, and ES are not allowed
 
@@ -323,7 +323,7 @@ NilLiteralValue) of the field
 Annotation: dfdl:escapeScheme
 
 | escapeBlockStart
-a| DFDL String Literal
+| DFDL String Literal
 
 The string of characters that denotes the beginning of a sequence of characters
 escaped by a pair of escape strings.
@@ -343,7 +343,7 @@ A dfdl:escapeBlockStart string contributes to the simple value region
 Annotation: dfdl:escapeScheme
 
 | escapeBlockEnd
-a| DFDL String Literal
+| DFDL String Literal
 
 The string of characters that denotes the end of a sequence of characters
 escaped by a pair of escape strings.
@@ -366,7 +366,7 @@ A dfdl:escapeBlockEnd string contributes to the simple value region
 Annotation: dfdl:escapeScheme
 
 | escapeEscapeCharacter
-a| DFDL String Literal or DFDL Expression
+| DFDL String Literal or DFDL Expression
 
 Specifies one character that escapes an immediately following
 dfdl:escapeCharacter or first character of dfdl:escapeBlockEnd.
@@ -394,7 +394,7 @@ Escape-escape characters contribute to the simple value region
 Annotation: dfdl:escapeScheme
 
 | extraEscapedCharacters
-a| List of DFDL String Literals
+| List of DFDL String Literals
 
 A whitespace separated list of single characters that must be escaped in
 addition to the in-scope delimiters.
@@ -412,7 +412,7 @@ Extra escaped characters contribute to the simple value region
 Annotation: dfdl:escapeScheme
 
 | generateEscapeBlock
-a| Enum
+| Enum
 
 Valid values 'always',  'whenNeeded'
 
@@ -431,7 +431,7 @@ data contains any of the following:
 Annotation: dfdl:escapeScheme
 
 | escapeCharacterPolicy
-a| Enum
+| Enum
 
 Valid values are 'all', 'delimiters'.
 
@@ -473,13 +473,13 @@ Consider a dfdl:escapeScheme annotation with the following properties:
 
 * dfdl:escapeBlockStart="start"
 * dfdl:escapeBlockEnd="end"
-* dfdl:escapeEscapeCharacter=pass-format:straightquotes[“#”]
+* dfdl:escapeEscapeCharacter=+"#"+
 
 If this is used to serialize a DFDL Infoset element of type xs:string with value
-"A hash is a pass-format:straightquotes[#]", then the value is wrapped with the
+"A hash is a +#+", then the value is wrapped with the
 dfdl:escapeBlockStart and dfdl:escapeBlockEnd, giving simple content "startA
-hash is a pass-format:straightquotes[#end]".
-If this data is parsed, the pass-format:straightquotes[“#end”] is treated as an
+hash is a +#end+".
+If this data is parsed, the +"#end"+ is treated as an
 escaped escape block end and the parse fails with a Processing Error, reporting
 that there is no escape block end in the data.
 
@@ -495,14 +495,14 @@ Bidirectional text is a feature expected in a future revision of the DFDL
 standard.
 
 .Properties for Bidirectional support for All Simple Types with Text representation
-[cols="1,3",options="header"]
+[cols="1,3a",options="header"]
 |===
 
 | Property name
 | Description
 
 | textBidi
-a| Enum
+| Enum
 
 Valid value is, 'no'
 
@@ -516,14 +516,14 @@ Annotation: dfdl:element, dfdl:simpleType (representation text)
 === Properties Specific to String
 
 .Properties Specific to String
-[cols="1,2",options="header"]
+[cols="1,2a",options="header"]
 |===
 
 | Property Name
 | Description
 
 | textStringJustification
-a| Enum
+| Enum
 
 Valid values 'left', 'right',  'center'
 
@@ -555,7 +555,7 @@ according to dfdl:textTrimKind property.
 Annotation: dfdl:element, dfdl:simpleType
 
 | textStringPadCharacter
-a| DFDL String Literal
+| DFDL String Literal
 
 The value that is used when padding or trimming string elements.
 
@@ -580,7 +580,7 @@ _Padding Character Restrictions:_ The string literal is restricted to allow only
 certain kinds of DFDL String Literal syntax:
 
 * DFDL character entities are allowed
-* The DFDL byte value entity ( pass-format:straightquotes[%#rXX;] ) is allowed.
+* The DFDL byte value entity ( +%#rXX;+ ) is allowed.
 * DFDL Character classes NL, WSP, WSP+, WSP*, and ES are not allowed
 
 It is a Schema Definition Error if the string literal contains any of the
@@ -589,7 +589,7 @@ disallowed syntax.
 Annotation: dfdl:element, dfdl:simpleType
 
 | truncateSpecifiedLengthString
-a| Enum
+| Enum
 
 Valid values are 'yes', 'no'
 
@@ -597,7 +597,7 @@ Used on unparsing only.
 
 'yes' means if the logical type is xs:string and the value is longer than the
 specified length, the string is truncated to this length.
-(See Section <<elements-of-specified-length>> Elements of Specified Length.) No
+(See <<elements-of-specified-length>> Elements of Specified Length.) No
 Processing Error is raised.
 
 This property is needed when a DFDL schema has specified lengths for strings.
@@ -625,14 +625,14 @@ Annotation: dfdl:element, dfdl:simpleType
 === Properties Specific to Number with Text or Binary Representation
 
 .Properties Specific to Number with Text or Binary Representation
-[cols="1,3",options="header"]
+[cols="1,3a",options="header"]
 |===
 
 | Property Name
 | Description
 
 | decimalSigned
-a| Enum
+| Enum
 
 Valid values are 'yes', 'no'
 
@@ -660,14 +660,14 @@ currency symbols, percent signs, or coordinate axis indicators, are not
 considered part of the value representation.
 
 .Properties Specific to Number with Text Representation
-[cols="1,2",options="header"]
+[cols="1,2a",options="header"]
 |===
 
 | Property Name
 | Description
 
 | textNumberRep
-a| Enum
+| Enum
 
 Valid values are 'standard', 'zoned'
 
@@ -691,19 +691,19 @@ Which characters are used to represent modified ('overpunched') positive and
 negative signs varies by encoding, COBOL compiler, and system.
 The code points are fixed for EBCDIC systems but not for ASCII.
 
-In EBCDIC-based encodings, code points pass-format:straightquotes[0xC0] to
-pass-format:straightquotes[0xC9] or pass-format:straightquotes[0xF0] to
-pass-format:straightquotes[0xF9] represent a positive sign and digits 0 to 9
+In EBCDIC-based encodings, code points 0xC0 to
+0xC9 or 0xF0 to
+0xF9 represent a positive sign and digits 0 to 9
 (these byte ranges correspond typically to characters '{ABCDEFGHI' or
-'0123456789'), and code points pass-format:straightquotes[0xD0] to
-pass-format:straightquotes[0xD9] or pass-format:straightquotes[0xB0] to
-pass-format:straightquotes[0xB9] represent a negative sign and digits 0 to 9
+'0123456789'), and code points 0xD0 to
+0xD9 or 0xB0 to
+0xB9 represent a negative sign and digits 0 to 9
 (these byte ranges correspond typically to characters '}JKLMNOPQR' or
 '^£¥·©§¶¼½¾' ).
 On parsing both ranges are accepted.
-On unparsing the range pass-format:straightquotes[0xC0] to
-pass-format:straightquotes[0xC9] are produced for positive signs and the range
-pass-format:straightquotes[0xD0] to pass-format:straightquotes[0xD9] are
+On unparsing the range 0xC0 to
+0xC9 are produced for positive signs and the range
+0xD0 to 0xD9 are
 produced for negative signs.
 
 For ASCII-based encodings see the property dfdl:textZonedSignStyle.
@@ -716,7 +716,7 @@ It is a Schema Definition Error if any of these requirements are not met.
 Annotation: dfdl:element, dfdl:simpleType
 
 | textNumberJustification
-a| Enum
+| Enum
 
 Valid values 'left', 'right', 'center'
 
@@ -727,7 +727,7 @@ Behavior as for dfdl:textStringJustification.
 Annotation: dfdl:element, dfdl:simpleType
 
 | textNumberPadCharacter
-a| DFDL String Literal
+| DFDL String Literal
 
 The value that is used when padding or trimming number elements.
 
@@ -766,7 +766,7 @@ property.
 Annotation: dfdl:element, dfdl:simpleType
 
 | textNumberPattern
-a| String
+| String
 
 Defines the ICU-like pattern that describes the format of the text number.
 The pattern defines where grouping separators, decimal separators, implied
@@ -780,13 +780,13 @@ dfdl:textStandardBase is not 10 the number is represented as the minimum number
 of characters to represent the digits.
 There is no sign or virtual decimal point.
 
-The syntax of dfdl:textNumberPattern is described in Section
+The syntax of dfdl:textNumberPattern is described in
 <<the-dfdl-textnumberpattern-property>> The dfdl:textNumberPattern Property
 
 Annotation: dfdl:element, dfdl:simpleType
 
 | textNumberRounding
-a| Enum
+| Enum
 
 Specifies how rounding is controlled during unparsing.
 
@@ -813,7 +813,7 @@ Error.
 Annotation: dfdl:element, dfdl:simpleType
 
 | textNumberRoundingMode
-a| Enum
+| Enum
 
 Specifies how rounding occurs during unparsing, when dfdl:textNumberRounding is
 'explicit'.
@@ -844,7 +844,7 @@ Error.
 Annotation: dfdl:element, dfdl:simpleType
 
 | textNumberRoundingIncrement
-a| Double
+| Double
 
 Specifies the rounding increment to use during unparsing, when
 dfdl:textNumberRounding is 'explicit'.
@@ -857,7 +857,7 @@ A negative value is a Schema Definition Error.
 Annotation: dfdl:element, dfdl:simpleType
 
 | textNumberCheckPolicy
-a| Enum
+| Enum
 
 Values are 'strict' and 'lax'.
 
@@ -889,7 +889,7 @@ numbers to/from text representation.
 Annotation: dfdl:element, dfdl:simpleType
 
 | textStandardDecimalSeparator
-a| List of DFDL String Literals  or DFDL Expression
+| List of DFDL String Literals  or DFDL Expression
 
 The decimal separator is the punctuation mark which separates the integer part
 of a decimal or floating point number from the fractional part.
@@ -912,7 +912,7 @@ _Text Number Character Restrictions:_ The string literal is restricted to allow
 only certain kinds of DFDL String Literal syntax:
 
 * DFDL character entities are allowed
-* The DFDL byte value entity ( pass-format:straightquotes[%#rXX;] ) is not
+* The DFDL byte value entity ( +%#rXX;+ ) is not
 allowed.
 * DFDL Character classes NL, WSP, WSP+, WSP*, and ES are not allowed
 
@@ -925,7 +925,7 @@ for this property are digits 0-9.
 Annotation: dfdl:element, dfdl:simpleType
 
 | textStandardGroupingSeparator
-a| DFDL String Literal or DFDL Expression
+| DFDL String Literal or DFDL Expression
 
 The grouping separator is the punctuation mark which separates the clusters of
 integer digits to improve readability.
@@ -947,14 +947,14 @@ The string literal value is restricted in the same way as described in "Text
 Number Character Restrictions" in the description of the
 dfdl:textStandardDecimalSeparator property.
 
-See also Section <<dfdl-textnumberpattern-for-dfdl-textnumberrep-standard>>
+See also <<dfdl-textnumberpattern-for-dfdl-textnumberrep-standard>>
 dfdl:textNumberPattern for dfdl:textNumberRep 'standard' for additional details
 about grouping separators.
 
 Annotation: dfdl:element, dfdl:simpleType
 
 | textStandardExponentRep
-a| DFDL String Literal or DFDL Expression
+| DFDL String Literal or DFDL Expression
 
 Defines the actual character(s) that appear in the data as the exponent
 indicator.
@@ -984,7 +984,7 @@ parser.
 Annotation: dfdl:element, dfdl:simpleType
 
 | textStandardInfinityRep
-a| DFDL String Literal
+| DFDL String Literal
 
 The value used to represent infinity.
 
@@ -1006,7 +1006,7 @@ It is a Schema Definition Error if empty string found as the property value.
 Annotation: dfdl:element, dfdl:simpleType
 
 | textStandardNaNRep
-a| DFDL String Literal
+| DFDL String Literal
 
 The value used to represent NaN.
 
@@ -1028,7 +1028,7 @@ It is a Schema Definition Error if empty string found as the property value.
 Annotation: dfdl:element, dfdl:simpleType
 
 | textStandardZeroRep
-a| List of DFDL String Literals
+| List of DFDL String Literals
 
 Valid values: empty string, any character string
 
@@ -1052,7 +1052,7 @@ Each string literal in the list is restricted to allow only certain kinds of
 DFDL String Literal syntax:
 
 * DFDL character entities are allowed.
-* DFDL Byte Value entities ( pass-format:straightquotes[%#rXX;] ) are not
+* DFDL Byte Value entities ( +%#rXX;+ ) are not
 allowed.
 * DFDL Character class entities NL and ES are not allowed.
 * DFDL Character class entities WSP, WSP+, and WSP* are allowed.
@@ -1068,7 +1068,7 @@ disallowed syntax constructs.
 Annotation: dfdl:element, dfdl:simpleType
 
 | textStandardBase
-a| Non-negative Integer
+| Non-negative Integer
 
 Valid Values 2, 8, 10, 16
 
@@ -1084,7 +1084,7 @@ is assumed.
 Annotation: dfdl:element, dfdl:simpleType
 
 | textZonedSignStyle
-a| Enum
+| Enum
 
 Specifies the code points that are used to modify the sign nibble of the byte
 containing the sign, when the dfdl:encoding is an ASCII-derived character set
@@ -1108,24 +1108,24 @@ In ASCII-based encodings, this property is used to determine how signs are
 expressed for zoned numbers.
 
 * asciiStandard: ASCII characters '0123456789' represent a positive sign and the
-corresponding digit. (Sign nibble for '{plus}' is
-pass-format:straightquotes[0x3], which is the high nibble of these code points
+corresponding digit. (Sign nibble for '+' is
+0x3, which is the high nibble of these code points
 unmodified.) ASCII characters 'pqrstuvwxy' represent negative sign and digits 0
-to 9. (Code points pass-format:straightquotes[0x70] to
-pass-format:straightquotes[0x79])
+to 9. (Code points 0x70 to
+0x79)
 * asciiTranslatedEBCDIC:  The overpunched character is the ASCII equivalent of
 the typical EBCDIC above. So, the characters '{ABCDEFGHI'  still represent a
 positive sign and digits 0 to 9. (These are code points
-pass-format:straightquotes[0x7B], pass-format:straightquotes[0x41] through
-pass-format:straightquotes[0x49]). The characters '}JKLMNOPQR' still represent
+0x7B, 0x41 through
+0x49). The characters '}JKLMNOPQR' still represent
 negative sign and digits 0 to 9. (These are code points
-pass-format:straightquotes[0x7D], pass-format:straightquotes[0x4A] through
-pass-format:straightquotes[0x52]). This case comes up if EBCDIC zoned decimal
+0x7D, 0x4A through
+0x52). This case comes up if EBCDIC zoned decimal
 data is translated to ASCII as if it were textual data.)
-* asciiCARealiaModifiedfootnote:[Reference for this CA Realia pass-format:straightquotes[0x20] overpunch for negative sign is the article: "EBCDIC to ASCII Conversion of Signed Fields" [CARealia\] where it says: COBOL compilers that run on ASCII platforms have a "signed" data type that operates in a similar manner to the EBCDIC Signed field pass-format:straightquotes[--] that is, they over punch the sign on the LSD (Least Significant Digit).  However, this is not standardized in ASCII, and different compilers use different overpunch codes.  For example, Computer Associates' Realia compiler uses a 30 hex for positive values and a 20 hex for negative values, but Micro Focus® and Microsoft® use 30 hex for positive values and 70 hex for negative values.]:  In this style, the ASCII characters '0123456789' represent positive sign and digits 0 to 9 as in asciiStandard. However, ASCII characters from code points pass-format:straightquotes[0x20] to pass-format:straightquotes[0x29] are used for negative sign and the corresponding decimal digit. This doesn't translate well into printing characters. These characters include the space (' ') for zero, characters '!"``+++#$%&amp;+++``' for 1 through 6, the single quote character "'" for 7, and the parenthesis '()' for 8 and 9.
+* asciiCARealiaModifiedfootnote:[Reference for this CA Realia 0x20 overpunch for negative sign is the article: "EBCDIC to ASCII Conversion of Signed Fields" [CARealia\] where it says: COBOL compilers that run on ASCII platforms have a "signed" data type that operates in a similar manner to the EBCDIC Signed field +--+ that is, they over punch the sign on the LSD (Least Significant Digit).  However, this is not standardized in ASCII, and different compilers use different overpunch codes.  For example, Computer Associates' Realia compiler uses a 30 hex for positive values and a 20 hex for negative values, but Micro Focus® and Microsoft® use 30 hex for positive values and 70 hex for negative values.]:  In this style, the ASCII characters '0123456789' represent positive sign and digits 0 to 9 as in asciiStandard. However, ASCII characters from code points 0x20 to 0x29 are used for negative sign and the corresponding decimal digit. This doesn't translate well into printing characters. These characters include the space (' ') for zero, characters +'!"#$%&'+ for 1 through 6, the single quote character "'" for 7, and the parenthesis '()' for 8 and 9.
 * asciiTandemModified: In this style the ASCII characters '0123456789' represent
 positive sign and digits 0 to 9, but code points
-pass-format:straightquotes[0x80] to pass-format:straightquotes[0x89] are used to
+0x80 to 0x89 are used to
 represent negative sign and a digit. There are no corresponding code points in
 the standard ASCII encoding since these values are all above 128 (decimal). This
 means the resultant bytes are not code points in standard ASCII, so the schema
@@ -1181,7 +1181,7 @@ Examples: The first shows digits/fractions and positive/negative signs, the
 second shows exponent, the third shows virtual decimal point, the fourth shows
 scaling position.
 
-[source%unnumbered,xml]
+[source,xml]
 ----
 +###,##0.00;(###,##0.00)
 
@@ -1210,7 +1210,7 @@ Many characters in a pattern are taken literally; they are matched during
 parsing and output unchanged during unparsing.
 Special characters, on the other hand, stand for other characters, strings, or
 classes of characters.
-For example, the pass-format:straightquotes[‘#’] character is replaced by a
+For example, the +'#'+ character is replaced by a
 digit.
 
 To insert a special character in a pattern as a literal, that is, without any
@@ -1234,7 +1234,7 @@ There are some exceptions to this which are noted below.
 | Number
 | '1' through '9' indicates rounding.
 
-| pass-format:straightquotes[#]
+| +#+
 | Number
 | Digit, zero shows as absent
 
@@ -1254,7 +1254,7 @@ There are some exceptions to this which are noted below.
 | Number
 | Separates mantissa and exponent in scientific notation. Need not be quoted in prefix or suffix if use is unambiguous.
 
-| {plus}
+| +
 | Exponent
 | Prefix positive exponents with plus sign. Need not be quoted in prefix or suffix if use is unambiguous.
 
@@ -1264,11 +1264,11 @@ There are some exceptions to this which are noted below.
 
 | '
 | Prefix or suffix
-a| Used to escape special characters in a prefix or suffix, for example, pass-format:straightquotes[‘#’]pass-format:straightquotes[#] formats 123 to pass-format:straightquotes[#123.] To create a single quote itself, use two in a row: pass-format:straightquotes[#] o''clock.
+a| Used to escape special characters in a prefix or suffix, for example, `+'#'#+` formats 123 to `+#123+`. To create a single quote itself, use two in a row: `+# o''clock+`.
 
 Multiple special characters may be escaped either by quoting individually or by
-quoting a containing string, for example *'VALUE' pass-format:straightquotes[#]*
-and *'V'ALU'E' pass-format:straightquotes[#]* both format 123 to *VALUE 123.*
+quoting a containing string, for example `+'VALUE' #+`
+and `+'V'ALU'E' #+` both format 123 to `+VALUE 123+`.
 
 | *
 | Prefix or suffix boundary
@@ -1284,11 +1284,11 @@ and *'V'ALU'E' pass-format:straightquotes[#]* both format 123 to *VALUE 123.*
 
 | @
 | Number
-| Significant digits specifier. Only used with decimal simple type. Controls number of significant digits when used alone or in conjunction with the pass-format:straightquotes[#] character.
+| Significant digits specifier. Only used with decimal simple type. Controls number of significant digits when used alone or in conjunction with the +#+ character.
 |===
 
 A pattern contains a positive and negative subpattern, for example,
-"pass-format:straightquotes[#,##0.00;](pass-format:straightquotes[#,##0.00])".
+"++#,##0.00;(#,##0.00++)".
 Each subpattern has a prefix, a numeric part, and a suffix.
 If there is no explicit negative subpattern, the negative subpattern is the
 minus sign prefixed to the positive subpattern.
@@ -1297,9 +1297,9 @@ If there is an explicit negative subpattern, it serves only to specify the
 negative prefix and suffix; the number of digits, minimal digits, and other
 characteristics are ignored in the negative subpattern.
 That means that
-"pass-format:straightquotes[#,##0.0#;](pass-format:straightquotes[#])" has
+"++#,##0.0#;(#++)" has
 precisely the same result as
-"pass-format:straightquotes[#,##0.0#;](pass-format:straightquotes[#,##0.0#])".
+"++#,##0.0#;(#,##0.0#++)".
 
 The prefixes, suffixes, and various symbols used for infinity, digits, grouping
 separators, decimal separators, etc. may be set to arbitrary values, and they
@@ -1319,14 +1319,14 @@ integer digits, the _primary grouping size_, and one used for all others, the
 _secondary grouping size_.
 In most locales these are the same, but sometimes they are different.
 For example, if the primary grouping interval is 3, and the secondary is 2, then
-this corresponds to the pattern pass-format:straightquotes[“#,##,##0”], and the
+this corresponds to the pattern +"#,##,##0"+, and the
 number 123456789 is formatted as "12,34,56,789".
 If a pattern contains multiple grouping separators, the interval between the
 last one and the end of the integer defines the primary grouping size, and the
 interval between the last two defines the secondary grouping size.
-All others are ignored, so pass-format:straightquotes[“#,##,###,####”] ==
-pass-format:straightquotes[“###,###,####”] ==
-pass-format:straightquotes[“##,#,###,####”].
+All others are ignored, so +"#,##,###,####"+ ==
++"###,###,####"+ ==
++"##,#,###,####"+.
 
 The P symbol is used to derive the location of an assumed decimal point when the
 point is not within the number that appears in the data.
@@ -1336,7 +1336,7 @@ The symbol P can be specified only as a continuous string of Ps in the leftmost
 or rightmost digit positions in the vpinteger region of the pattern.
 
 It is a Schema Definition Error if any symbols other than "0", "1" through "9"
-or pass-format:straightquotes[#] are used in the vpinteger region of the
+or +#+ are used in the vpinteger region of the
 pattern.
 
 *Examples*
@@ -1358,67 +1358,69 @@ pattern.
 | 12300
 |===
 
-.dfdl:textNumberPattern BNF syntax (MANUALLY SET TABLE NUMBER TO PRESERVE TABLE NUMBERING)
-[cols="3,1,18",options="header",class="bnf"]
+// Numbered 33-A, as in earlier editions, so later tables keep their numbers.
+// The next table is set to 34 by hand; see EDITING.md.
+.dfdl:textNumberPattern BNF syntax
+[number="33-A",cols="3,1,18",class="bnf",separator=!]
 |===
 
-| pattern
-| ::=
-| subpattern (';' subpattern)?
+! pattern
+! ::=
+! subpattern (';' subpattern)?
 
-| subpattern
-| ::=
-| prefix? ((number exponent?)\| vpinteger) suffix?
+! subpattern
+! ::=
+! prefix? ((number exponent?)| vpinteger) suffix?
 
-| number
-| ::=
-| (integer ('.' fraction)?) \| sigdigits
+! number
+! ::=
+! (integer ('.' fraction)?) | sigdigits
 
-| vpinteger
-| ::=
-| pinteger \| (vinteger exponent?)
+! vpinteger
+! ::=
+! pinteger | (vinteger exponent?)
 
-| pinteger
-| ::=
-| ('P' 'P'* '0'* '0') \| (integer 'P'* 'P' )
+! pinteger
+! ::=
+! ('P' 'P'* '0'* '0') | (integer 'P'* 'P' )
 
-| vinteger
-| ::=
-| (pass-format:straightquotes[‘#’]* '0'* 'V' '0'* '0') \| (integer 'V')
+! vinteger
+! ::=
+! (+'#'+* '0'* 'V' '0'* '0') | (integer 'V')
 
-| prefix
-| ::=
-| '\u0000'..'\uFFFD' pass-format:straightquotes[-] specialCharacters
+! prefix
+! ::=
+! '\u0000'..'\uFFFD' - specialCharacters
 
-| suffix
-| ::=
-| '\u0000'..'\uFFFD' pass-format:straightquotes[-] specialCharacters
+! suffix
+! ::=
+! '\u0000'..'\uFFFD' - specialCharacters
 
-| integer
-| ::=
-| pass-format:straightquotes[‘#’]* '0'* '0'
+! integer
+! ::=
+! +'#'+* '0'* '0'
 
-| fraction
-| ::=
-| '0'* pass-format:straightquotes[‘#’]*
+! fraction
+! ::=
+! '0'* +'#'+*
 
-| sigDigits
-| ::=
-| pass-format:straightquotes[‘#’]* '@' '@'* pass-format:straightquotes[‘#’]*
+! sigDigits
+! ::=
+! +'#'+* '@' '@'* +'#'+*
 
-| exponent
-| ::=
-| 'E' '{plus}'? '0'* '0'
+! exponent
+! ::=
+! 'E' '+'? '0'* '0'
 
-| padSpec
-| ::=
-| '*' padChar
+! padSpec
+! ::=
+! '*' padChar
 
-| padChar
-| ::=
-| '\u0000'..'\uFFFD' pass-format:straightquotes[-] quote
+! padChar
+! ::=
+! '\u0000'..'\uFFFD' - quote
 
-3+a| Notation:
+3+a! Notation:
 
 [align=indent]
 X*  0 or more instances of X
@@ -1427,7 +1429,7 @@ X*  0 or more instances of X
 X? 0 or 1 instances of X
 
 [align=indent]
-X\|Y either X or Y
+X|Y either X or Y
 
 [align=indent]
 C..D any character from C up to D, inclusive
@@ -1447,7 +1449,7 @@ followed by an exponent region.
 * Two grouping intervals are recognized: That between the decimal point and the
 first grouping symbol, and that between the first and second grouping symbols.
 These intervals are identical in most locales, but in some locales they differ.
-For example, the pattern pass-format:straightquotes[“#,##,###”] formats the
+For example, the pattern +"#,##,###"+ formats the
 number 123456789 as "12,34,56,789".
 * The pad specifier padSpec may appear before the prefix, after the prefix,
 before the suffix, after the suffix, or not at all.
@@ -1455,7 +1457,7 @@ before the suffix, after the suffix, or not at all.
 may be used to indicate a rounding increment.
 
 The term _maximum fraction digits_ is the total number of '0' and
-pass-format:straightquotes[‘#’] characters in the ``++fraction++`` sub-pattern
++'#'+ characters in the ``++fraction++`` sub-pattern
 above.
 
 The term _minimum fraction digits_ is the total number of '0' characters (only)
@@ -1521,7 +1523,7 @@ The mantissa is typically in the half-open interval [1.0, 10.0) or sometimes
 [0.0, 1.0), but it need not be.
 In a pattern, the exponent character immediately followed by one or more digit
 characters indicates scientific notation.
-Example: pass-format:straightquotes[“0.###E0”] formats the number 1234 as
+Example: +"0.###E0"+ formats the number 1234 as
 "1.234E3".
 
 The number of digit characters after the exponent character gives the minimum
@@ -1529,13 +1531,13 @@ exponent digit count.
 There is no maximum.
 Negative exponents are formatted using the  minus sign, _not_ the prefix and
 suffix from the pattern.
-This allows patterns such as "pass-format:straightquotes[0.###E0] m/s".
-To prefix positive exponents with a  plus sign, specify '{plus}' between the
-exponent and the digits: pass-format:straightquotes[“0.###E+0”] produces data
+This allows patterns such as "++0.###E0++ m/s".
+To prefix positive exponents with a  plus sign, specify '+' between the
+exponent and the digits: ++"0.###E+0"++ produces data
 like "1E+1", "1E+0", "1E-1", etc.
 
 The minimum number of integer digits is achieved by adjusting the exponent.
-Example: 0.00123 formatted with pass-format:straightquotes[“00.###E0”] yields
+Example: 0.00123 formatted with +"00.###E0"+ yields
 "12.3E-4".
 This only happens if there is no maximum number of integer digits.
 If there is a maximum, then the minimum number of integer digits is fixed at
@@ -1544,29 +1546,29 @@ one.
 The maximum number of integer digits, if present, specifies the exponent
 grouping.
 The most common use of this is to generate _engineering notation_, in which the
-exponent is a multiple of three, e.g., pass-format:straightquotes[“##0.###E0”].
-The number 12345 is formatted using pass-format:straightquotes[“##0.####E0”] as
+exponent is a multiple of three, e.g., +"##0.###E0"+.
+The number 12345 is formatted using +"##0.####E0"+ as
 "12.345E3".
 
 When using scientific notation, the formatter controls the digit counts using
 significant digits logic.
 The maximum number of significant digits limits the total number of integer and
 fraction digits that are shown in the mantissa; it does not affect parsing.
-For example, 12345 formatted with pass-format:straightquotes[“##0.##E0”] is
+For example, 12345 formatted with +"##0.##E0"+ is
 "12.3E3". .
 
 Exponential patterns must not contain grouping separators.
 
 *Significant Digits*
 
-The '@' pattern character can be used with the pass-format:straightquotes[‘#’]
+The '@' pattern character can be used with the +'#'+
 to control how many integer and fraction digits are needed to display the
 specified number of significant digits.
 The '@' only affects unparsing behavior.
 Examples:
 
 .Significant Digits '@' Symbol in the dfdl:textNumberPattern Property
-[cols="1,3,3,1,2",options="header"]
+[number="34",cols="1,3,3,1,2",options="header"]
 |===
 
 | Pattern
@@ -1587,13 +1589,13 @@ Examples:
 | 0.12345
 | 0.123
 
-| pass-format:straightquotes[@@##]
+| +@@##+
 | 2
 | 4
 | 3.14159
 | 3.142
 
-| pass-format:straightquotes[@@##]
+| +@@##+
 | 2
 | 4
 | 1.23004
@@ -1602,35 +1604,35 @@ Examples:
 
 Significant digit counts may be expressed using patterns that specify a minimum
 and maximum number of significant digits.
-These are indicated by the '@' and pass-format:straightquotes[‘#’] characters.
+These are indicated by the '@' and +'#'+ characters.
 The minimum number of significant digits is the number of '@' characters.
 The maximum number of significant digits is the number of '@' characters plus
-the number of pass-format:straightquotes[‘#’] characters following on the right.
+the number of +'#'+ characters following on the right.
 For example, the pattern "@@@" indicates exactly 3 significant digits.
-The pattern pass-format:straightquotes[“@##”] indicates from 1 to 3 significant
+The pattern +"@##"+ indicates from 1 to 3 significant
 digits.
 Trailing zero digits to the right of the decimal separator are suppressed after
 the minimum number of significant digits have been shown.
-For example, the pattern pass-format:straightquotes[“@##”] formats the number
+For example, the pattern +"@##"+ formats the number
 0.1203 as "0.12".
 
 If a pattern uses significant digits, it must not contain a decimal separator,
 nor the '0' pattern character.
-Patterns such as "@00" or pass-format:straightquotes[“@.###”] are disallowed.
+Patterns such as "@00" or +"@.###"+ are disallowed.
 
-Any number of pass-format:straightquotes[‘#’] characters may be prepended to the
+Any number of +'#'+ characters may be prepended to the
 left of the leftmost '@' character.
 These have no effect on the minimum and maximum significant digits counts but
 may be used to position grouping separators.
-For example, pass-format:straightquotes[“#,#@#”] indicates a minimum of one
+For example, +"#,#@#"+ indicates a minimum of one
 significant digit, a maximum of two significant digits, and a grouping size of
 three.
 
 The number of significant digits has no effect on parsing.
 
 Significant digits may be used together with exponential notation.
-For example, the pattern pass-format:straightquotes[“@@###E0”] is equivalent to
-pass-format:straightquotes[“0.0###E0”].
+For example, the pattern +"@@###E0"+ is equivalent to
++"0.0###E0"+.
 
 The '@' pattern character can be used only in 'standard' textNumberRep (not
 'zoned') and excludes the 'P' and 'V' pattern characters.
@@ -1643,20 +1645,20 @@ Padding may be specified through the pattern syntax.
 In a pattern the pad escape character, followed by a single pad character,
 causes padding to be parsed and formatted.
 The pad escape character is '*'.
-For example, pass-format:straightquotes[“*x#,##0.00”] formats 123 to "xx123.00",
+For example, +"*x#,##0.00"+ formats 123 to "xx123.00",
 and 1234 to "1,234.00".
 
 When padding is in effect, the width of the positive subpattern, including
 prefix and suffix, determines the format width.
-For example, in the pattern "* pass-format:straightquotes[#0] o''clock", the
+For example, in the pattern "* +#0+ o''clock", the
 format width is 10.
 
 The width is counted in 16-bit code units.
 
 Some parameters which usually do not matter have meaning when padding is used,
 because the pattern width is significant with padding.
-In the pattern "* pass-format:straightquotes[##,##,#,##0.##]", the format width
-is 14. The initial characters pass-format:straightquotes[“##,##,”] do not affect
+In the pattern "* +##,##,#,##0.##+", the format width
+is 14. The initial characters +"##,##,"+ do not affect
 the grouping size or maximum integer digits, but they do affect the format
 width.
 
@@ -1686,7 +1688,7 @@ nearest 0.65 is 1.3.
 * Rounding only affects the string produced by unparsing. It does not affect
 parsing or change any numerical values.
 * In a pattern, digits '1' through '9' specify rounding, but otherwise behave
-identically to digit '0'. For example, pass-format:straightquotes[“#,#50”]
+identically to digit '0'. For example, +"#,#50"+
 specifies a rounding increment of 50.
 * Using digits in a pattern, rounding is always 'half even', meaning rounds
 towards the nearest integer, or towards the nearest even integer if equidistant.
@@ -1697,7 +1699,7 @@ values are rounded.
 ===== dfdl:textNumberPattern for dfdl:textNumberRep 'zoned'
 
 When dfdl:textNumberRep is 'zoned' a subset of the number pattern language
-described in Section <<dfdl-textnumberpattern-for-dfdl-textnumberrep-standard>>
+described in <<dfdl-textnumberpattern-for-dfdl-textnumberrep-standard>>
 dfdl:textNumberPattern for dfdl:textNumberRep 'standard' is used.
 
 Only the pattern for positive numbers is used.
@@ -1705,7 +1707,7 @@ It is a Schema Definition Error if the negative pattern is specified.
 
 In addition, only the following pattern characters may be used:
 
-* '{plus}' must be present at the beginning or end of the pattern to indicate
+* '+' must be present at the beginning or end of the pattern to indicate
 whether the leading or trailing digit carries the overpunched sign, if the
 logical type is signed
 * '{plus}' may be present at the beginning or end of the pattern to indicate
@@ -1715,7 +1717,7 @@ logical type is unsigned. If logical type is unsigned and dfdl:textNumberPolicy
 * 'V' may be used  to indicate the location of an implied decimal point
 * 'P' may be used  to indicate the decimal  scaling
 * '0-9' indicates the number of needed digits (including overpunched).
-* pass-format:straightquotes[‘#’] indicates the number of optional digits.
+* +'#'+ indicates the number of optional digits.
 
 Rounding occurs as described under Rounding in
 <<dfdl-textnumberpattern-for-dfdl-textnumberrep-standard>>
@@ -1751,26 +1753,26 @@ unparsing the data are not overpunched with a sign.
 These properties are applicable to simple type xs:decimal and its derived types
 which include all the signed and unsigned integer types.
 These properties are not applicable to types xs:float and xs:double.
-See Section <<properties-specific-to-float-double-with-binary-representati>>.
+See <<properties-specific-to-float-double-with-binary-representati>>.
 Note that simple types derived from xs:decimal do not imply base-10
 representations in the data stream.
 
 .Properties Specific to Number with Binary Representation
-[cols="1,3",options="header"]
+[cols="1,3a",options="header"]
 |===
 
 | Property Name
 | Description
 
 | binaryNumberRep
-a|
+|
 Enum
 
 Valid values are  'packed', 'bcd', 'binary', 'ibm4690Packed'
 
 Allowable values for each number type are:
 
-[cols="1,1",options="header"]
+[%unnumbered,cols="1,1",options="header"]
 !===
 
 ! Logical Type
@@ -1799,7 +1801,7 @@ xs:long type, which is the equivalent of an 8 byte/64-bit signed integer.
 
 * 'ibm4690Packed' is a variant of a packed decimal having the following
 characteristics:
-** Nibbles represent digits 0 pass-format:straightquotes[-] 9 in the usual BCD
+** Nibbles represent digits 0 - 9 in the usual BCD
 manner.
 ** A positive value is simply indicated by digits.
 ** A negative number is indicated by digits with the most significant nibble
@@ -1815,7 +1817,7 @@ byte.
 Annotation: dfdl:element, dfdl:simpleType
 
 | binaryDecimalVirtualPoint
-a| Integer.
+| Integer.
 
 Used when the base simpleType is xs:decimal exactly.
 That is, not any of the built-in integer simple types.
@@ -1846,7 +1848,7 @@ excess precision where no rounding is possible.
 Annotation: dfdl:element, dfdl:simpleType
 
 | binaryPackedSignCodes
-a| List of Characters
+| List of Characters
 
 Used only when dfdl:binaryNumberRep or dfdl:binaryCalendarRep is 'packed'
 
@@ -1873,7 +1875,7 @@ On unparsing, the specified values are always used.
 Annotation: dfdl:element, dfdl:simpleType
 
 | binaryNumberCheckPolicy
-a| Enum
+| Enum
 
 Values are 'strict' and 'lax'.
 
@@ -1962,7 +1964,7 @@ If the dfdl:length for the bit-string evaluates to M, then the bit-string
 conceptually occupies bits 1 to M of a data stream for purposes of computing its
 value.
 
-===== Bits within Bit Strings of Length pass-format:straightquotes[<=] 8
+===== Bits within Bit Strings of Length +<=+ 8
 
 Any time the length in bits, _M_,  is _< 8_, then when set, the bit at position
 _Z_, starting from the most-significant bit, (typically written on the left)
@@ -1978,7 +1980,7 @@ numeric value of a bit string is given by a formula specific to the
 dfdl:byteOrder.
 
 For dfdl:byteOrder of 'bigEndian' the value of bit _i_ is given by _2^(M
-pass-format:straightquotes[-] i)_, where _i = 1_ is the index of the
+- i)_, where _i = 1_ is the index of the
 most-significant bit.
 
 For dfdl:byteOrder of 'littleEndian' the value of bit i is given by a more
@@ -1997,6 +1999,7 @@ In the pseudo code below:
 * the expression 'a ? b : c' means 'if a is true, then the value is b, otherwise
 the value is c'
 
+[[little-endian-bit-position-and-value]]
 .Little Endian bit position and value
 [source,xml]
 ----
@@ -2022,10 +2025,10 @@ the value is c'
 ====== Examples of Unsigned Integer Conversion
 
 Consider the first three bytes of the data stream.
-Imagine their numeric values as pass-format:straightquotes[0x5A]
-pass-format:straightquotes[0x92] pass-format:straightquotes[0x00].
+Imagine their numeric values as 0x5A
+0x92 0x00.
 
-[source%unnumbered,xml]
+[source,xml]
 ----
 Positions:
 00000000 01111111 11122222
@@ -2037,9 +2040,9 @@ Hex values
 ----
 
 Beginning at bit position 1, (the very first bit) considering the first two
-bytes as a bigEndian short, the value is pass-format:straightquotes[0x5A92].
+bytes as a bigEndian short, the value is 0x5A92.
 
-[source%unnumbered,xml]
+[source,xml]
 ----
   <xs:element name="num" type="unsignedShort"
         dfdl:alignment="1"
@@ -2050,9 +2053,9 @@ bytes as a bigEndian short, the value is pass-format:straightquotes[0x5A92].
         dfdl:binaryNumberRep="binary"/>
 ----
 
-As a littleEndian short, the value is pass-format:straightquotes[0x925A].
+As a littleEndian short, the value is 0x925A.
 
-[source%unnumbered,xml]
+[source,xml]
 ----
   <xs:element name="num" type="unsignedShort"
         dfdl:alignment="1"
@@ -2065,7 +2068,7 @@ As a littleEndian short, the value is pass-format:straightquotes[0x925A].
 
 Examining a bit string of length 13, beginning at position 2:
 
-[source%unnumbered,xml]
+[source,xml]
 ----
 <xs:sequence>
   <xs:element name="ignored" type="unsignedByte"
@@ -2091,7 +2094,7 @@ Examining a bit string of length 13, beginning at position 2:
 One can examine the same data stream and consider the bit positions that make up
 element 'x', which are the bits at positions 2 through 14 inclusive.
 
-[source%unnumbered,xml]
+[source,xml]
 ----
 Positions:
 00000000 01111111 11122222
@@ -2105,7 +2108,7 @@ value as if the bits were realigned.
 That is, the value is the same as if the bits of the element's representation
 began with bit position 1.
 
-[source%unnumbered,xml]
+[source,xml]
 ----
 Realigned Positions:
 00000000 01111111 11122222
@@ -2120,7 +2123,7 @@ In this case the place value of each position is given by
 _2_^(M{nbsp}–{nbsp}i)^.
 Below the bit values are lined up underneath their place-values.
 
-[source%unnumbered,xml]
+[source,xml]
 ----
 Place value of bits
 ...11110 00000000
@@ -2131,22 +2134,22 @@ Hex values
    1   6    A   4
 ----
 
-The value of element 'x' is pass-format:straightquotes[0x16A4].
-Notice how it is the most-significant byte pass-format:straightquotes[--] which
-is the first byte when big endian pass-format:straightquotes[--] that becomes
+The value of element 'x' is 0x16A4.
+Notice how it is the most-significant byte +--+ which
+is the first byte when big endian +--+ that becomes
 the partial byte (having fewer than 8 bits) in the case where the length of the
 bit string is not a multiple of 8 bits.
 
 For dfdl:byteOrder of 'littleEndian'.
 The place values of the individual bits are not as easily visualized.
-However there is still a basic formula (given in the pseudo code in Section
+However there is still a basic formula (given in the pseudo code in
 <<bits-within-bit-strings-of-length-8>>
 <<bits-within-bit-strings-of-length-8,Bits within Bit Strings of Length > 8>>)
 and value.
 
 Looking again at our realigned positions:
 
-[source%unnumbered,xml]
+[source,xml]
 ----
 Realigned Positions:
 00000000 01111111 11122222
@@ -2158,7 +2161,7 @@ Bits:
 The place values of each of these bits, for little endian byte order can be seen
 to be:
 
-[source%unnumbered,xml]
+[source,xml]
 ----
 PlaceValue positions
 00000000 ...11100
@@ -2170,7 +2173,7 @@ Hex values
 ----
 
 One must reorder the bytes for little endian byte order.
-The value of element 'x' is pass-format:straightquotes[0x04B5].
+The value of element 'x' is 0x04B5.
 In little endian form, the first 8 bits make up the first byte, and that
 contains the least-significant byte of the logical numeric unsignedShort value.
 The additional bits of the partial byte are once again the most significant
@@ -2188,7 +2191,7 @@ and dfdl:binaryNumberRep is 'binary'.
 In this case, the bit positions are assigned differently.
 Below the bytes are shown left-to-right:
 
-[source%unnumbered,subs="+quotes"]
+[source,subs="+quotes"]
 ----
 Positions:
 00000000 11111110 22222111
@@ -2203,7 +2206,7 @@ The bits of interest are highlighted above.
 Redisplaying this same data, but reversing the order of the bytes to
 right-to-left, then one gets:
 
-[source%unnumbered,subs="+quotes"]
+[source,subs="+quotes"]
 ----
 Positions:
 22222111 11111110 00000000
@@ -2216,12 +2219,12 @@ Hex values
 
 The above shows more clearly the contiguous region of bits containing:
 
-[source%unnumbered,xml]
+[source,xml]
 ----
 0 1001 0010 1101
 ----
 
-or the value pass-format:straightquotes[0x092D].
+or the value 0x092D.
 
 ===== Converting Packed Decimal Numbers
 
@@ -2237,7 +2240,7 @@ On unparsing it is a Processing Error if the Infoset data is negative.
 Signed numbers with dfdl:binaryNumberRep 'ibm4690Packed' are parsed using the
 sign nibble to identify negative values.
 There is no sign nibble for positive values.
-On unparsing the nibble pass-format:straightquotes[0xD] is written for negative
+On unparsing the nibble 0xD is written for negative
 values.
 
 Unsigned numbers with dfdl:binaryNumberRep 'packed' are parsed if the nibble is
@@ -2249,7 +2252,7 @@ Unsigned numbers with dfdl:binaryNumberRep 'bcd' are readily parsed as BCD data
 is always positive.
 
 Unsigned numbers with dfdl:binaryNumberRep 'ibm4690Packed' are parsed if there
-is no sign nibble of pass-format:straightquotes[0xD] to identify a negative
+is no sign nibble of 0xD to identify a negative
 value.
 It is a Processing Error if the data is negative.
 On unparsing no sign nibble is written.
@@ -2258,14 +2261,14 @@ On unparsing no sign nibble is written.
 === Properties Specific to Float/Double with Binary Representation
 
 .Properties Specific to Float/Double with Binary Representation
-[cols="1,5",options="header"]
+[cols="1,5a",options="header"]
 |===
 
 | Property Name
 | Description
 
 | binaryFloatRep
-a| Enum or DFDL Expression
+| Enum or DFDL Expression
 
 This specifies the encoding method for the float and double.
 
@@ -2304,14 +2307,14 @@ Annotation: dfdl:element, dfdl:simpleType
 === Properties Specific to Boolean with Text Representation
 
 .Properties Specific to Boolean with Text Representation
-[cols="1,3",options="header"]
+[cols="1,3a",options="header"]
 |===
 
 | Property Name
 | Description
 
 | textBooleanTrueRep
-a| List of DFDL String Literals or DFDL Expression
+| List of DFDL String Literals or DFDL Expression
 
 A whitespace separated list of representations to be used for 'true'.
 These are compared after trimming when parsing, and before padding when
@@ -2336,7 +2339,7 @@ _Text Boolean Character Restrictions:_ The string literal is restricted to allow
 only certain kinds of DFDL String Literal syntax:
 
 * DFDL character entities are allowed
-* The DFDL byte value entity ( pass-format:straightquotes[%#rXX;] ) is not
+* The DFDL byte value entity ( +%#rXX;+ ) is not
 allowed.
 * DFDL Character classes  NL, WSP, WSP+, WSP*, and ES are not allowed
 
@@ -2346,7 +2349,7 @@ contains any of the disallowed constructs.
 Annotation: dfdl:element, dfdl:simpleType
 
 | textBooleanFalseRep
-a| List of DFDL String Literals or DFDL Expression
+| List of DFDL String Literals or DFDL Expression
 
 A whitespace separated list of representations to be used for 'false' These are
 compared after trimming when parsing, and before padding when unparsing.
@@ -2373,7 +2376,7 @@ dfdl:textBooleanTrueRep property.
 Annotation: dfdl:element, dfdl:simpleType
 
 | textBooleanJustification
-a| Enum
+| Enum
 
 Valid values 'left', 'right',  'center'
 
@@ -2384,7 +2387,7 @@ Behavior as for dfdl:textStringJustification.
 Annotation: dfdl:element, dfdl:simpleType
 
 | textBooleanPadCharacter
-a| DFDL String Literal
+| DFDL String Literal
 
 The value that is used when padding or trimming boolean elements.
 The value can be a single character or a single byte.
@@ -2413,16 +2416,16 @@ Annotation: dfdl:element, dfdl:simpleType
 === Properties Specific to Boolean with Binary Representation
 
 .Properties Specific to Boolean with Binary Representation
-[cols="1,3",options="header"]
+[cols="1,3a",options="header"]
 |===
 
 | Property Name
 | Description
 
 | binaryBooleanTrueRep
-a| Non-negative Integer
+| Non-negative Integer
 
-This value, treated as a binary xs:unsignedInt (See Section
+This value, treated as a binary xs:unsignedInt (See
 <<converting-logical-numbers-to-from-binary-representation>> Converting Logical
 Numbers to/from Binary Representation ), gives the representation to be used for
 'true'
@@ -2432,7 +2435,7 @@ dfdl:binaryBooleanTrueRep is any value other than dfdl:binaryBooleanFalseRep;
 when unparsing, the one's complement of the dfdl:binaryBooleanFalseRep is used.
 
 The length of the data value of the element must be between 1 bit and 32 bits (4
-bytes) as described in Section
+bytes) as described in
 <<length-of-simple-elements-with-binary-representation>>.
 It is a Schema Definition Error if the value (when provided) of
 dfdl:binaryBooleanTrueRep cannot fit as an unsigned binary integer in the
@@ -2441,15 +2444,15 @@ specified length.
 Annotation: dfdl:element, dfdl:simpleType
 
 | binaryBooleanFalseRep
-a| Non-negative Integer
+| Non-negative Integer
 
-This value, treated as a binary xs:unsignedInt (See Section
+This value, treated as a binary xs:unsignedInt (See
 <<converting-logical-numbers-to-from-binary-representation>> Converting Logical
 Numbers to/from Binary Representation ),  gives the representation to be used
 for 'false'
 
 The length of the data value of the element must be between 1 bit and 32 bits (4
-bytes) as described in Section
+bytes) as described in
 <<length-of-simple-elements-with-binary-representation>>.
 It is a Schema Definition Error if the value of dfdl:binaryBooleanFalseRep
 cannot fit as an unsigned binary integer in the specified length.
@@ -2467,14 +2470,14 @@ These properties can be used when a calendar has dfdl:representation 'text' or
 dfdl:representation 'binary' and a packed decimal representation.
 
 .Properties specific to Calendar with Text or Binary Representation
-[cols="1,3",options="header"]
+[cols="1,3a",options="header"]
 |===
 
 | Property Name
 | Description
 
 | calendarPattern
-a| String
+| String
 
 Defines the ICU pattern that describes the format of the calendar.
 The pattern defines where the year, month, day, hour, minute, second, fractional
@@ -2488,7 +2491,7 @@ always result in the presentation of digits.
 Annotation: dfdl:element, dfdl:simpleType
 
 | calendarPatternKind
-a|
+|
 Enum
 
 Valid values 'explicit', 'implicit'
@@ -2497,7 +2500,7 @@ Valid values 'explicit', 'implicit'
 
 'implicit' means the pattern is derived from the XML schema date/time type.
 
-[cols="1,1",options="header"]
+[%unnumbered,cols="1,1",options="header"]
 !===
 
 ! Logical Type
@@ -2516,20 +2519,20 @@ Valid values 'explicit', 'implicit'
 Annotation: dfdl:element, dfdl:simpleType
 
 | calendarCheckPolicy
-a| Enum
+| Enum
 
 Valid values are 'strict', 'lax'
 
 Indicates how lenient to be when parsing against the pattern.
 
-See Section <<the-dfdl-calendarcheckpolicy-property>> The
+See <<the-dfdl-calendarcheckpolicy-property>> The
 dfdl:calendarCheckPolicy Property below for details of the specific behaviors
 for 'strict' and 'lax'.
 
 Annotation: dfdl:element, dfdl:simpleType
 
 | calendarTimeZone
-a| String
+| String
 
 This property provides the time zone that is assumed if no time zone explicitly
 occurs in the data.
@@ -2551,7 +2554,7 @@ Note that this property is used when parsing only.
 Annotation: dfdl:element, dfdl:simpleType
 
 | calendarObserveDST
-a| Enum
+| Enum
 
 Valid values are 'yes', 'no'
 
@@ -2568,7 +2571,7 @@ This property applies to parsing only.
 Annotation: dfdl:element, dfdl:simpleType
 
 | calendarFirstDayOfWeek
-a| Enum
+| Enum
 
 Valid values 'Monday' … 'Sunday'
 
@@ -2577,7 +2580,7 @@ The day of the week upon which a new week is considered to start.
 Annotation: dfdl:element, dfdl:simpleType
 
 | calendarDaysInFirstWeek
-a| Non-negative Integer
+| Non-negative Integer
 
 Valid values 1 to 7
 
@@ -2593,7 +2596,7 @@ starts some days before the new year.
 Annotation: dfdl:element, dfdl:simpleType
 
 | calendarCenturyStart
-a| Non-negative Integer
+| Non-negative Integer
 
 Valid values 0 to 99.
 
@@ -2608,7 +2611,7 @@ treated as 19nn.
 Annotation: dfdl:element, dfdl:simpleType
 
 | calendarLanguage
-a| String or DFDL Expression
+| String or DFDL Expression
 
 The language that is used when the pattern produces a presentation in text such
 as for names of the months, and names of days of the week.
@@ -2983,7 +2986,7 @@ The count of pattern letters determines the format as indicated in the table.
 
 If dfdl:representation is text, any characters in the pattern that are not in
 the ranges of ['a'..'z'] and ['A'..'Z'] are treated as quoted text.
-For instance, characters like ':', '.', ' ', pass-format:straightquotes[‘#’] and
+For instance, characters like ':', '.', ' ', +'#'+ and
 '@' appear in the formatted output even if they are not embraced within single
 quotes.
 The single quote is used to 'escape' letters.
@@ -3063,14 +3066,14 @@ implementation-defined, but typically includes:
 === Properties Specific to Calendar with Text Representation
 
 .Properties Specific to Calendar with Text Representation
-[cols="1,3",options="header"]
+[cols="1,3a",options="header"]
 |===
 
 | Property Name
 | Description
 
 | textCalendarJustification
-a| Enum
+| Enum
 
 Valid values 'left', 'right',  'center'
 
@@ -3081,7 +3084,7 @@ Behavior as for dfdl:textStringJustification.
 Annotation: dfdl:element, dfdl:simpleType
 
 | textCalendarPadCharacter
-a| DFDL String Literal
+| DFDL String Literal
 
 The value that is used when padding or trimming calendar elements.
 The value can be a single character or a single byte.
@@ -3110,14 +3113,14 @@ Annotation: dfdl:element, dfdl:simpleType
 === Properties Specific to Calendar with Binary Representation
 
 .Properties Specific to Calendar with Binary Representation
-[cols="2,7",options="header"]
+[cols="2,7a",options="header"]
 |===
 
 | Property Name
 | Description
 
 | binaryCalendarRep
-a| Enum
+| Enum
 
 Valid values are 'packed', 'bcd', 'ibm4690Packed', 'binarySeconds',
 'binaryMilliseconds'
@@ -3145,7 +3148,7 @@ This implies that property dfdl:calendarPatternKind must be 'explicit' because
 the default patterns for 'implicit' contain non-numeric characters.
 It is a Schema Definition Error otherwise.
 
-See Section <<properties-specific-to-number-with-binary-representation>>
+See <<properties-specific-to-number-with-binary-representation>>
 Properties Specific to Number with Binary Representation.
 
 Note also that a virtual decimal point for the boundary between seconds and
@@ -3168,7 +3171,7 @@ xs:dateTime.
 Annotation: dfdl:element, dfdl:simpleType
 
 | binaryCalendarEpoch
-a| DateTime
+| DateTime
 
 Used when dfdl:binaryCalendarRep is 'binarySeconds' or 'binaryMilliseconds'
 
@@ -3220,7 +3223,7 @@ not exist in DFDL, the only permissible nil value is the empty string,
 represented by the DFDL %ES; entity and using dfdl:nilKind 'literalValue'.
 
 On parsing, an element occurrence is nil if the element has XSD nillable 'true'
-and the data is a nil representation as defined in Section
+and the data is a nil representation as defined in
 <<nil-representation>>.
 Specifically:
 
@@ -3269,14 +3272,14 @@ These properties are used when the XSD 'nillable' property of an element is
 having the logical meaning 'nil'.
 
 .Properties for Nillable Elements
-[cols="1,3",options="header"]
+[cols="1,3a",options="header"]
 |===
 
 | Property Name
 | Description
 
 | nilKind
-a| Enum
+| Enum
 
 Valid values 'literalValue', 'logicalValue', 'literalCharacter'.
 
@@ -3303,7 +3306,7 @@ It is a Schema Definition Error otherwise.
 Annotation: dfdl:element
 
 | nilValue
-a| List of DFDL String Literals, List of Logical Values, DFDL String Literal
+| List of DFDL String Literals, List of Logical Values, DFDL String Literal
 
 Specifies the text strings that are the possible literal or logical nil values
 of the element.
@@ -3331,7 +3334,7 @@ entities.
 If a character is specified when dfdl:lengthUnits is 'bytes' then the
 dfdl:nilValue must be a single-byte character.
 To specify a byte, it must be specified using a single
-pass-format:straightquotes[“%#r;”] entity.
++"%#r;"+ entity.
 If a byte is specified when dfdl:lengthUnits is 'characters' then the
 dfdl:encoding must be a fixed-width encoding.
 
@@ -3345,26 +3348,26 @@ There are restrictions on the string literal syntax of dfdl:nilValue.
 When dfdl:nilKind is literalValue and text representation:
 
 * DFDL character entities are allowed
-* The DFDL byte value entity ( pass-format:straightquotes[%#rXX;] ) is allowed
+* The DFDL byte value entity ( +%#rXX;+ ) is allowed
 * DFDL Character classes NL, WSP, WSP+, WSP*, and ES are allowed.
 
 When dfdl:nilKind is literal value and binary representation:
 
 * DFDL character entities are allowed
-* The DFDL byte value entity ( pass-format:straightquotes[%#rXX;] ) is allowed
+* The DFDL byte value entity ( +%#rXX;+ ) is allowed
 * DFDL Character class ES is allowed.
 * Other DFDL Character classes NL, WSP, WSP+, and WSP*, are not allowed.
 
 When dfdl:nilKind is literalCharacter and text representation:
 
 * DFDL character entities are allowed
-* The DFDL byte value entity ( pass-format:straightquotes[%#rXX;] ) is allowed.
+* The DFDL byte value entity ( +%#rXX;+ ) is allowed.
 * DFDL Character classes  NL, WSP, WSP+, WSP*, and ES are not allowed.
 
 When dfdl:nilKind is literalCharacter and binary representation:
 
 * DFDL character entities are allowed
-* The DFDL byte value entity ( pass-format:straightquotes[%#rXX;] ) is allowed
+* The DFDL byte value entity ( +%#rXX;+ ) is allowed
 * DFDL Character classes NL, WSP, WSP+, WSP*, and ES are not allowed.
 
 dfdl:nilValue is sensitive to dfdl:ignoreCase when dfdl:nilKind is
@@ -3378,7 +3381,7 @@ It is a Schema Definition Error otherwise.
 Annotation: dfdl:element
 
 | nilValueDelimiterPolicy
-a| Enum
+| Enum
 
 Valid values are 'none', 'initiator', 'terminator' or 'both'.
 
@@ -3436,7 +3439,7 @@ or 'terminator' when the parent xs:sequence has dfdl:initiatedContent 'yes'.
 Annotation: dfdl:element
 
 | useNilForDefault
-a| Enum
+| Enum
 
 Valid values are 'yes', 'no'
 
@@ -3458,4 +3461,4 @@ Annotation: dfdl:element (simpleType)
 
 The DFDL element defaults processing uses XSD default, XSD fixed or
 dfdl:useNilForDefault to provide a default value.
-See Section <<element-defaults>> Element Defaults for a full description.
+See <<element-defaults>> Element Defaults for a full description.

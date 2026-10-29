@@ -80,12 +80,12 @@ DFDL representation properties defined explicitly on a component apply only to
 that component and override the default value of that property provided by a
 default format specified by an xs:schema dfdl:format annotation.
 
-The example below demonstrates the overriding of the encoding property.
+The example below demonstrates the overriding of the dfdl:encoding property.
 The  value ``++'ASCII'++`` is the default value for the ``++title++`` element,
 but then it is overridden by the locally defined ``++utf-8++`` value for the
-encoding property, which takes precedence.
+dfdl:encoding property, which takes precedence.
 
-[source%unnumbered,xml]
+[source,xml]
 ----
 <xs:schema>
   <xs:annotation>
@@ -121,7 +121,7 @@ dfdl:defineFormat then the local property takes precedence.
 The combined set of explicit DFDL properties has precedence over any defaults
 set by a dfdl:format on the xs:schema.
 
-[source%unnumbered,xml]
+[source,xml]
 ----
 <xs:schema>
   <xs:annotation>
@@ -149,9 +149,9 @@ set by a dfdl:format on the xs:schema.
 </xs:schema>
 ----
 
-The example above demonstrates the overriding of an encoding property.
-The 'ASCII' format encoding from the 'myFormat' is overridden by the UTF-8
-format encoding, which as a locally defined property takes precedence.
+The example above demonstrates the overriding of a dfdl:encoding property.
+The 'ASCII' dfdl:encoding value from 'myFormat' is overridden by the locally
+defined UTF-8 value, which takes precedence.
 
 ==== Combining DFDL Properties from References
 
@@ -194,7 +194,7 @@ schema component.
 For example, all the DFDL properties that apply to a particular xs:simpleType
 (as defined by Section 13).
 
-[source%unnumbered,xml]
+[source,xml]
 ----
 <xs:simpleType name="newType">
   <xs:annotation>
@@ -220,7 +220,7 @@ The locally defined dfdl:alignment property with value '16' from the
 xs:simpleType 'newType' is combined with the locally defined dfdl:representation
 property with value 'binary' and applied to element 'testElement1',
 
-[source%unnumbered,xml]
+[source,xml]
 ----
 <xs:simpleType name="otherNewType">
   <xs:annotation>
@@ -249,7 +249,7 @@ The locally defined dfdl:representation property with value 'binary' is combined
 with the locally defined dfdl:alignment property with value '64' from the
 xs:simpleType restriction 'otherNewType'.
 
-[source%unnumbered,xml]
+[source,xml]
 ----
 <xs:sequence>
   <xs:element ref="testElement1">
@@ -286,7 +286,7 @@ xs:simpleType 'newType' is combined with the locally defined dfdl:representation
 property with value 'binary' and locally defined dfdl:binaryNumberRep with a
 value of 'binary'
 
-[source%unnumbered,xml]
+[source,xml]
 ----
 <!-- SCHEMA1 -->
 <xs:schema targetNamespace="" xmlns:tns1="http://tns1">
@@ -310,7 +310,7 @@ value of 'binary'
 </xs:schema>
 ----
 
-[source%unnumbered,xml]
+[source,xml]
 ----
 <!-- SCHEMA2 -->
 <xs:schema targetNamespace="" xmlns:tns2="http://tns2">

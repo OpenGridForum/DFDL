@@ -1,0 +1,77 @@
+# Clause 14.2.2: separator suppression for dfdl:occursCountKind 'implicit'
+# when parsing. See tools/tables.py for the format; `make tables` writes the
+# table into the clause.
+
+title: Separator Suppression for dfdl:occursCountKind 'implicit' when Parsing
+widths: 27 10 14 14 12 11 11
+header-rows: 4
+
+colour grey   #DBDBDB
+colour blue   #8EAADB
+colour orange #F7CAAC
+colour yellow #FFE599
+colour green  #C5E0B3
+
+dfdl:separatorSuppressionPolicy
+dfdl:occursCountKind 'implicit'
+<
+<
+<
+<
+<
+
+^
+Potentially Trailing
+<
+<
+<
+Not Potentially Trailing
+<
+
+^
+maxOccurs unbounded
+<
+maxOccurs bounded
+<
+maxOccurs unbounded
+maxOccurs bounded
+
+^
+Element not declared last
+Element declared last
+Element declared last or occurrence followed by end-of-group
+Element not declared last and occurrence not followed by end-of-group
+^
+^
+
+never
+grey: Schema definition error
+<
+blue:
+<
+grey: Schema definition error
+blue: RepDef(min) ~ Rep(max - min)
+
+trailingEmptyStrict
+grey:
+RepDef(min) [ ~ Rep(M < INF) ~ RepNonZero(1) ]
+orange: RepDef(min) [ ~ Rep(M < max - min) ~ RepNonZero(1) ]
+blue: RepDef(min) ~ Rep(max - min)
+^
+^
+
+trailingEmpty
+^
+yellow: RepDef(min) ~ Rep(M < INF)
+green: RepDef(min) ~ Rep(M <= max - min)
+^
+^
+^
+
+anyEmpty
+yellow:
+^
+^
+green:
+yellow: RepDef(min) ~ Rep(M < INF)
+green: RepDef(min) ~ Rep(M <= max - min)

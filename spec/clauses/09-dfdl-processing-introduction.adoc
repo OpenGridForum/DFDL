@@ -88,7 +88,7 @@ Any one of the following constructs is a point of uncertainty:
 * All xs:elements in an unordered xs:sequence
 (dfdl:sequenceKindfootnote:[For dfdl:sequenceKind, see Section 14 Sequence Groups.] is 'unordered')
 * All xs:elements in an xs:sequence containing one or more
-dfdl:floatingfootnote:[For dfdl:floating elements, see Section <<floating-elements>> Floating Elements.] xs:elements
+dfdl:floatingfootnote:[For dfdl:floating elements, see <<floating-elements>> Floating Elements.] xs:elements
 
 Any one of the following constructs is a _potential_ point of uncertainty:
 
@@ -96,7 +96,7 @@ Any one of the following constructs is a _potential_ point of uncertainty:
 optionalfootnote:[For optional and array elements, see Section 16 Properties for Array Elements and Optional Elements.] xs:element
 * An array xs:element.
 
-Examples of potential points of uncertainty are in Section
+Examples of potential points of uncertainty are in
 <<resolving-points-of-uncertainty>> Resolving Points of Uncertainty.
 
 ==== Processing Error
@@ -114,11 +114,11 @@ Processing Errors interact with the schema's points of uncertainty.
 When a DFDL parser encounters a Processing Error, then that error is said to be
 _suppressed_ by a point of uncertainty if there is another schema component that
 can be selected by the parsing algorithm.
-The details of the DFDL parsing algorithm are described in Section
+The details of the DFDL parsing algorithm are described in
 <<parsing-algorithm>>.
 
 Processing Errors MUST be able to be suppressed by a point of uncertainty.
-See Section <<resolving-points-of-uncertainty>>.
+See <<resolving-points-of-uncertainty>>.
 
 Note that unlike Processing Errors, Schema Definition Errors cannot be
 suppressed by points of uncertainty when parsing data.
@@ -164,156 +164,180 @@ detected, and sometimes the framing adds human readability to the data format.
 In the grammar tables below, the terminal symbols are shown in bold italic font.
 
 .DFDL Grammar Productions
-[cols="6,1,15",options="header",class="bnf"]
+[cols="6,1,15",options="header",class="bnf",separator=!]
 |===
 
-| Productions
-|
-|
+! Productions
+!
+!
 
-| Document
-| ::=
-| SimpleElement \| ComplexElement
+! Document
+! ::=
+! SimpleElement | ComplexElement
 
-| SimpleElement
-| ::=
-| SimpleLiteralNilElementRep \| SimpleEmptyElementRep \| SimpleNormalRep
+! SimpleElement
+! ::=
+! SimpleLiteralNilElementRep | SimpleEmptyElementRep | SimpleNormalRep
 
-| SimpleEnclosedElement
-| ::=
-| SimpleElement \| AbsentElementRep
+! SimpleEnclosedElement
+! ::=
+! SimpleElement | AbsentElementRep
 
-| ComplexElement
-| ::=
-| ComplexLiteralNilElementRep \| ComplexNormalRep \| ComplexEmptyElementRep
+! ComplexElement
+! ::=
+! ComplexLiteralNilElementRep | ComplexNormalRep | ComplexEmptyElementRep
 
-| ComplexEnclosedElement
-| ::=
-| ComplexElement \| AbsentElementRep
+! ComplexEnclosedElement
+! ::=
+! ComplexElement | AbsentElementRep
 
-| tr-style:[border-bottom:0.5pt solid black] EnclosedElement
-| ::=
-| SimpleEnclosedElement \| ComplexEnclosedElement
+! EnclosedElement
+! ::=
+! SimpleEnclosedElement | ComplexEnclosedElement
+|===
 
-| AbsentElementRep
-| ::=
-| *_Absent_*
+[%unnumbered,cols="6,1,15",class="bnf",separator=!]
+|===
+! AbsentElementRep
+! ::=
+! *_Absent_*
 
-| SimpleEmptyElementRep
-| ::=
-| EmptyElementLeftFraming EmptyElementRightFraming
+! SimpleEmptyElementRep
+! ::=
+! EmptyElementLeftFraming EmptyElementRightFraming
 
-| ComplexEmptyElementRep
-| ::=
-| EmptyElementLeftFraming EmptyElementRightFraming
+! ComplexEmptyElementRep
+! ::=
+! EmptyElementLeftFraming EmptyElementRightFraming
 
-| EmptyElementLeftFraming
-| ::=
-| LeadingAlignment *_EmptyElementInitiator_* PrefixLength
+! EmptyElementLeftFraming
+! ::=
+! LeadingAlignment *_EmptyElementInitiator_* PrefixLength
 
-| tr-style:[border-bottom:0.5pt solid black] EmptyElementRightFraming
-| ::=
-| *_EmptyElementTerminator_* TrailingAlignment
+! EmptyElementRightFraming
+! ::=
+! *_EmptyElementTerminator_* TrailingAlignment
+|===
 
-| SimpleLiteralNilElementRep
-| ::=
-| NilElementLeftFraming [*_NilLiteralCharacters_* \| NilElementLiteralContent] NilElementRightFraming
+[%unnumbered,cols="6,1,15",class="bnf",separator=!]
+|===
+! SimpleLiteralNilElementRep
+! ::=
+! NilElementLeftFraming [*_NilLiteralCharacters_* | NilElementLiteralContent] NilElementRightFraming
 
-| ComplexLiteralNilElementRep
-| ::=
-| NilElementLeftFraming *_NilLiteralValue_* NilElementRightFraming
+! ComplexLiteralNilElementRep
+! ::=
+! NilElementLeftFraming *_NilLiteralValue_* NilElementRightFraming
 
-| NilElementLeftFraming
-| ::=
-| LeadingAlignment *_NilElementInitiator_* PrefixLength
+! NilElementLeftFraming
+! ::=
+! LeadingAlignment *_NilElementInitiator_* PrefixLength
 
-| NilElementRightFraming
-| ::=
-| *_NilElementTerminator_* TrailingAlignment
+! NilElementRightFraming
+! ::=
+! *_NilElementTerminator_* TrailingAlignment
 
-| tr-style:[border-bottom:0.5pt solid black] NilElementLiteralContent
-| ::=
-| *_LeftPadding_* *_NilLiteralValue_* RightPadOrFill
+! NilElementLiteralContent
+! ::=
+! *_LeftPadding_* *_NilLiteralValue_* RightPadOrFill
+|===
 
-| SimpleNormalRep
-| ::=
-| LeftFraming PrefixLength SimpleContent RightFraming
+[%unnumbered,cols="6,1,15",class="bnf",separator=!]
+|===
+! SimpleNormalRep
+! ::=
+! LeftFraming PrefixLength SimpleContent RightFraming
 
-| ComplexNormalRep
-| ::=
-| LeftFraming PrefixLength ComplexContent RightFraming
+! ComplexNormalRep
+! ::=
+! LeftFraming PrefixLength ComplexContent RightFraming
 
-| LeftFraming
-| ::=
-| LeadingAlignment *_Initiator_*
+! LeftFraming
+! ::=
+! LeadingAlignment *_Initiator_*
 
-| RightFraming
-| ::=
-| *_Terminator_* TrailingAlignment
+! RightFraming
+! ::=
+! *_Terminator_* TrailingAlignment
 
-| PrefixLength
-| ::=
-| SimpleContent \| PrefixPrefixLength SimpleContent
+! PrefixLength
+! ::=
+! SimpleContent | PrefixPrefixLength SimpleContent
 
-| tr-style:[border-bottom:0.5pt solid black] PrefixPrefixLength
-| ::=
-| SimpleContent
+! PrefixPrefixLength
+! ::=
+! SimpleContent
+|===
 
-| SimpleContent
-| ::=
-| *_LeftPadding_* [ SimpleLogicalValue ]  RightPadOrFill
+[%unnumbered,cols="6,1,15",class="bnf",separator=!]
+|===
+! SimpleContent
+! ::=
+! *_LeftPadding_* [ SimpleLogicalValue ]  RightPadOrFill
 
-| SimpleLogicalValue
-| ::=
-| *_SimpleNormalValue_* \| *_NilLogicalValue_*
+! SimpleLogicalValue
+! ::=
+! *_SimpleNormalValue_* | *_NilLogicalValue_*
 
-| ComplexContent
-| ::=
-| ComplexValue *_ElementUnused_*
+! ComplexContent
+! ::=
+! ComplexValue *_ElementUnused_*
 
-| tr-style:[border-bottom:0.5pt solid black] ComplexValue
-| ::=
-| Sequence \| Choice
+! ComplexValue
+! ::=
+! Sequence | Choice
+|===
 
-| Sequence
-| ::=
-| LeftFraming SequenceContent RightFraming
+[%unnumbered,cols="6,1,15",class="bnf",separator=!]
+|===
+! Sequence
+! ::=
+! LeftFraming SequenceContent RightFraming
 
-| tr-style:[border-bottom:0.5pt solid black] SequenceContent
-| ::=
-| {empty}[ *_PrefixSeparator_*  EnclosedContent [ *_Separator_* EnclosedContent ]* *_PostfixSeparator_* ]
+! SequenceContent
+! ::=
+! {empty}[ *_PrefixSeparator_*  EnclosedContent [ *_Separator_* EnclosedContent ]* *_PostfixSeparator_* ]
+|===
 
-| Choice
-| ::=
-| LeftFraming ChoiceContent RightFraming
+[%unnumbered,cols="6,1,15",class="bnf",separator=!]
+|===
+! Choice
+! ::=
+! LeftFraming ChoiceContent RightFraming
 
-| tr-style:[border-bottom:0.5pt solid black] ChoiceContent
-| ::=
-| {empty}[ EnclosedContent ] *_ChoiceUnused_*
+! ChoiceContent
+! ::=
+! {empty}[ EnclosedContent ] *_ChoiceUnused_*
+|===
 
-| EnclosedContent
-| ::=
-| {empty}[ EnclosedElement \| Array \| Sequence \| Choice ]
+[%unnumbered,cols="6,1,15",class="bnf",separator=!]
+|===
+! EnclosedContent
+! ::=
+! {empty}[ EnclosedElement | Array | Sequence | Choice ]
 
-| Array
-| ::=
-| {empty}[ EnclosedElement [ *_Separator_* EnclosedElement ]*  [ *_Separator_* StopValue] ]
+! Array
+! ::=
+! {empty}[ EnclosedElement [ *_Separator_* EnclosedElement ]*  [ *_Separator_* StopValue] ]
 
-| tr-style:[border-bottom:0.5pt solid black] StopValue
-| ::=
-| SimpleElement
+! StopValue
+! ::=
+! SimpleElement
+|===
 
-| LeadingAlignment
-| ::=
-| *_LeadingSkip_* *_AlignmentFill_*
+[%unnumbered,cols="6,1,15",class="bnf",separator=!]
+|===
+! LeadingAlignment
+! ::=
+! *_LeadingSkip_* *_AlignmentFill_*
 
-| TrailingAlignment
-| ::=
-| *_TrailingSkip_*
+! TrailingAlignment
+! ::=
+! *_TrailingSkip_*
 
-| RightPadOrFill
-| ::=
-| *_RightPadding_* \| *_RightFill_* \| *_RightPadding RightFill_*
+! RightPadOrFill
+! ::=
+! *_RightPadding_* | *_RightFill_* | *_RightPadding RightFill_*
 |===
 
 XML Schema and DFDL properties are used to control constraints on the terminals
@@ -339,8 +363,8 @@ These additional concepts are also defined:
 
 These definitions are with respect to the grammar above, and they do reference
 some DFDL properties necessary for their definitions.
-These properties are defined in Sections
-<<properties-common-to-both-content-and-framing>> and beyond.
+These properties are defined in
+<<properties-common-to-both-content-and-framing>> onwards.
 
 Some examples follow the definitions.
 
@@ -353,7 +377,7 @@ XSD nillable property 'true' and the occurrence either:
 * conforms to the grammar for SimpleNilLiteralElementRep or
 ComplexNilLiteralElementRep. Specifically, the *_NilElementInitiator_* and
 *_NilElementTerminator_* regions must be conformant with property
-dfdl:nilValueDelimiterPolicyfootnote:[For dfdl:nilValueDelimiterPolicy, see Section <<properties-for-nillable-elements>> Properties for Nillable Elements.]. (If non-conformant it is not a Processing Error and the representation is not nil).
+dfdl:nilValueDelimiterPolicyfootnote:[For dfdl:nilValueDelimiterPolicy, see <<properties-for-nillable-elements>> Properties for Nillable Elements.]. (If non-conformant it is not a Processing Error and the representation is not nil).
 * conforms to the grammar for SimpleNormalRep and its SimpleLogicalValue is
 *_NilLogicalValue_*.
 
@@ -367,7 +391,7 @@ have a nil representation and it conforms to the grammar for
 SimpleEmptyElementRep or ComplexEmptyElementRep.
 Specifically, the *_EmptyElementInitiator_* and *_EmptyElementTerminator_*
 regions must be conformant with
-dfdl:emptyValueDelimiterPolicyfootnote:[For dfdl:emptyValueDelimiterPolicy, see Section <<properties-for-specifying-delimiters>> Properties for Specifying Delimiters.] and the occurrence's SimpleContent or ComplexContent region in the data must be of length zero.
+dfdl:emptyValueDelimiterPolicyfootnote:[For dfdl:emptyValueDelimiterPolicy, see <<properties-for-specifying-delimiters>> Properties for Specifying Delimiters.] and the occurrence's SimpleContent or ComplexContent region in the data must be of length zero.
 (If non-conformant it is not a Processing Error and the representation is not
 empty).
 
@@ -378,7 +402,7 @@ determine when default values are created in the Infoset.
 The empty representation can require initiators or terminators be present to
 enable data formats which explicitly distinguish occurrences with empty
 string/hexBinary values from occurrences that are _missing_ or are _absent_.
-See Section <<element-defaults>> Element Defaults below about default values.
+See <<element-defaults>> Element Defaults below about default values.
 Hence, the empty representation might not be zero-length. it may require
 specific non-zero-length syntax in the data stream.
 
@@ -398,7 +422,7 @@ For all other simple types, the normal representation cannot be zero length.
 
 ==== Absent Representation
 
-Often,it is possible to know the location where an element or group's
+Often, it is possible to know the location where an element or group's
 representation would be in the data based on the delimiters of an enclosing
 group.
 (An example: if there are adjacent delimiters of an enclosing sequence.) When
@@ -475,7 +499,7 @@ When unparsing, an element occurrence is missing if there is no item in the
 Infoset.
 For a required element occurrence, it is this condition that can trigger the
 creation of a default value in the augmented Infoset.
-See Section <<element-defaults>> Element Defaults below about default values.
+See <<element-defaults>> Element Defaults below about default values.
 For an optional element occurrence, no item is ever added to the augmented
 Infoset nor any representation ever output in the data stream.
 
@@ -483,7 +507,7 @@ Infoset nor any representation ever output in the data stream.
 
 The following examples illustrate missing and empty representation.
 
-[source%unnumbered,xml]
+[source,xml]
 ----
 <xs:sequence dfdl:separator="," dfdl:terminator="@"
              dfdl:separatorSuppressionPolicy="trailingEmpty" ...>
@@ -496,10 +520,10 @@ The following examples illustrate missing and empty representation.
 </xs:sequence>
 ----
 
-In data stream '``++aaa,@++``' element B has the empty representation, and
+In data stream `+aaa,@+` element B has the empty representation, and
 element C does not have a representation so is missing.
 
-[source%unnumbered,xml]
+[source,xml]
 ----
 <xs:sequence dfdl:separator=","
              dfdl:separatorSuppressionPolicy="trailingEmpty"...>
@@ -515,15 +539,15 @@ element C does not have a representation so is missing.
 </xs:sequence>
 ----
 
-In data stream '``++A:aaaa,C:cccc++``' element B does not have a representation
+In data stream `+A:aaaa,C:cccc+` element B does not have a representation
 at all, so is missing.
 
-In data stream '``++A:aaaa,B:,C:cccc++``' element B has the empty
+In data stream `+A:aaaa,B:,C:cccc+` element B has the empty
 representation.
 The format definition requires element B to have its initiator in order to
 indicate the empty representation.
 
-In the data stream '``++A:aaaa,,C:cccc++``' element B has the absent
+In the data stream `+A:aaaa,,C:cccc+` element B has the absent
 representation, because the processor is able to tell where element B would
 appear, but the syntax there does not contain the needed initiator delimiter;
 hence, it does not satisfy any of nil, empty, or normal representation.
@@ -579,8 +603,8 @@ nest of schema components.
 
 The parsing algorithm described here has many aspects which depend on the
 definitions of numerous DFDL properties.
-The properties are defined in sections
-<<overview-representation-properties-and-their-format-semantic>> and beyond.
+The properties are defined in
+<<overview-representation-properties-and-their-format-semantic>> onwards.
 
 Establishing the representation of an occurrence of a schema component and
 resolving points of uncertainty involve the concepts of _known-to-exist_ and
@@ -597,9 +621,9 @@ these positive determinations hold:
 . There is a
 dfdl:discriminatorfootnote:[DFDL discriminators are described in Section: 7.6 The dfdl:discriminator Statement Annotation Element.] applying to the component and its expression evaluates to true or regular expression pattern matches.
 . The component is a direct child of an xs:sequence or xs:choice with
-dfdl:initiatedContentfootnote:[For dfdl:initiator and dfdl:initiatedContent, see Section <<properties-for-specifying-delimiters>> Properties for Specifying Delimiters.] 'yes' and a dfdl:initiator defined for the component is found.
+dfdl:initiatedContentfootnote:[For dfdl:initiator and dfdl:initiatedContent, see <<properties-for-specifying-delimiters>> Properties for Specifying Delimiters.] 'yes' and a dfdl:initiator defined for the component is found.
 . The component is a direct child of an xs:choice with
-dfdl:choiceDispatchKeyfootnote:[For dfdl:choiceDispatchKey and dfdl:choiceBranchKey, see Section <<resolving-choices-via-direct-dispatch>> Resolving Choices via Direct Dispatch.] and the result of the dfdl:choiceDispatchKey expression matches one of the dfdl:choiceBranchKey property values of the child.
+dfdl:choiceDispatchKeyfootnote:[For dfdl:choiceDispatchKey and dfdl:choiceBranchKey, see <<resolving-choices-via-direct-dispatch>> Resolving Choices via Direct Dispatch.] and the result of the dfdl:choiceDispatchKey expression matches one of the dfdl:choiceBranchKey property values of the child.
 
 If none of those hold because they are not applicable then the occurrence is
 still known-to-exist if ALL of the following hold, and no Processing Error
@@ -607,7 +631,7 @@ occurs during their determination:
 
 [arabic]
 . When there are
-dfdl:assertfootnote:[DFDL asserts are described in Section <<the-dfdl-assert-statement-annotation-element>> The dfdl:assert Statement Annotation Element.] statements with failureType 'processingError' on the component, all their expressions evaluate to true or their regular expression patterns match.
+dfdl:assertfootnote:[DFDL asserts are described in <<the-dfdl-assert-statement-annotation-element>> The dfdl:assert Statement Annotation Element.] statements with failureType 'processingError' on the component, all their expressions evaluate to true or their regular expression patterns match.
 . It has nil, empty, or normal representation.
 . When it has normal representation the content of the representation is
 convertible to the element type without error.
@@ -625,7 +649,7 @@ the representation, or in the case of normal representation and simple type,
 when converting that representation's content into a value of the type.
 This Processing Error does not change the fact that the schema component was
 determined to be known-to-exist.
-This is important in the discussion in Section
+This is important in the discussion in
 <<resolving-points-of-uncertainty>>, Resolving Points of Uncertainty below.
 
 ===== Known-not-to-exist
@@ -665,7 +689,7 @@ known-not-to-exist.
 Note: based on the above, when processing a sequence for which a separator is
 defined, the presence of a match in the data for the separator is not sufficient
 to cause the parser to determine that an associated component is known-to-exist.
-See Section <<sequence-groups-with-separators>> Sequence Groups with Separators 
+See <<sequence-groups-with-separators>> Sequence Groups with Separators
 for details.
 
 [[establishing-representation]]
@@ -678,17 +702,33 @@ The first step is to see if the SimpleContent or ComplexContent region is of
 length zero as a first approximation.
 This is dfdl:lengthKind dependent.
 
-* explicit pass-format:straightquotes[=>] length is zero (either fixed or from
-expression evaluation)
-* prefixed pass-format:straightquotes[=>] length given by the prefix is zero
-* implicit (simple) pass-format:straightquotes[=>] length is
-zerofootnote:[This is a corner case that only happens when type is xs:string or xs:hexBinary and the maxLength facet is 0. Such an element can only be of length 0.]
-* implicit (complex) pass-format:straightquotes[=>] not possible.
-* delimited pass-format:straightquotes[=>] length is zero (in scope delimiter is
-immediately encountered)
-* pattern pass-format:straightquotes[=>] pattern returns zero length match
-* endOfParent pass-format:straightquotes[=>] already positioned at parent's end
-so length is zero
+[%unnumbered,cols="1,3",options="header"]
+|===
+
+| dfdl:lengthKind
+| Condition
+
+| explicit
+| length is zero (either fixed or from expression evaluation)
+
+| prefixed
+| length given by the prefix is zero
+
+| implicit (simple)
+| length is zerofootnote:[This is a corner case that only happens when type is xs:string or xs:hexBinary and the maxLength facet is 0. Such an element can only be of length 0.]
+
+| implicit (complex)
+| not possible
+
+| delimited
+| length is zero (in scope delimiter is immediately encountered)
+
+| pattern
+| pattern returns zero length match
+
+| endOfParent
+| already positioned at parent's end so length is zero
+|===
 
 ===== Simple element
 
@@ -772,7 +812,7 @@ floating element is parsed in schema definition order.
 
 When parsing an array or optional element, points of uncertainty only occur for
 certain values of
-dfdl:occursCountKindfootnote:[Property dfdl:occursCountKind is defined in Section <<the-dfdl-occurscountkind-property>>.], as follows:
+dfdl:occursCountKindfootnote:[Property dfdl:occursCountKind is defined in <<the-dfdl-occurscountkind-property>>.], as follows:
 
 .Points of Uncertainty and dfdl:occursCountKind
 [cols="1,3",options="header"]
@@ -855,10 +895,10 @@ A simple element has a default value if any of these are true:
 [arabic]
 . The XSD default property exists. The default value is the XSD default
 property's value.
-. The XSD fixedfootnote:[For the XSD fixed property see Section <<fixed>>.]
+. The XSD fixedfootnote:[For the XSD fixed property see <<fixed>>.]
 property exists. The default value is the XSD fixed property's value.
 . The element has XSD nillable is 'true' and
-dfdl:useNilForDefaultfootnote:[For dfdl:useNilForDefault see Section <<properties-for-nillable-elements>>.] is 'yes'. The corresponding Infoset item has the *[nilled]* member true, and the *[dataValue]* member has no value.
+dfdl:useNilForDefaultfootnote:[For dfdl:useNilForDefault see <<properties-for-nillable-elements>>.] is 'yes'. The corresponding Infoset item has the *[nilled]* member true, and the *[dataValue]* member has no value.
 
 ===== Required/Optional Occurrence
 
@@ -886,7 +926,7 @@ dfdl:occursCountKind.
 However, if a required occurrence does not produce an item in the Infoset after
 the rules have been applied, then whether it is a Processing Error or a
 Validation Error (if validation is enabled) _does_ depend on
-dfdl:occursCountKind (see Section <<the-dfdl-occurscountkind-property>>
+dfdl:occursCountKind (see <<the-dfdl-occurscountkind-property>>
 dfdl:occursCountKind property).
 
 The sections below indicate when an item is added to the Infoset, and whether it
@@ -923,7 +963,7 @@ Optional occurrence: if dfdl:emptyValueDelimiterPolicy is applicable and is not
 
 Note: To prevent unwanted empty strings or empty hexBinary values from being
 added to the Infoset, use XSD minLength > '0' and a dfdl:assert that uses the
-dfdl:checkConstraints()footnote:[For dfdl:checkConstraints function see Section <<dfdl-functions>>] function, to raise a Processing Error.
+dfdl:checkConstraints()footnote:[For dfdl:checkConstraints function see <<dfdl-functions>>] function, to raise a Processing Error.
 
 ===== Complex element
 
@@ -948,7 +988,7 @@ then an item is added to the Infoset (which may itself have a child via (1))
 Below is an example where an optional complex element with empty representation
 has nothing added to the infoset. consider the following:
 
-[source%unnumbered,xml]
+[source,xml]
 ----
 <xs:sequence dfdl:separator="|"> <!-- sequence S0 -->
   ...prior schema components ...
@@ -974,11 +1014,11 @@ first child is a required, non-initiated, non-terminated element E2 of type
 xs:string.
 The dfdl:lengthKind of both E1 and E2 is 'delimited'.
 
-Now consider a data stream '``++...||...++``' which has two adjacent S0
+Now consider a data stream `+...||...+` which has two adjacent S0
 separators, and where the parser has successfully parsed the schema components
-prior to E1 within S0, which is what the pass-format:straightquotes[“...”] prior
+prior to E1 within S0, which is what the `+...+` prior
 to the two separators represents.
-That prior parse is delimited by the first S0 "|" separator, and E1's
+That prior parse is delimited by the first S0 `+|+` separator, and E1's
 representation begins immediately after that first S0 separator.
 
 The representation of E1 has zero length because of these two adjacent S0
@@ -992,7 +1032,7 @@ value of empty string for E2. All other content of S1 is missing, so the parser
 returns from the descent into E1 with this temporary Infoset (illustrated as
 XML):
 
-[source%unnumbered,xml]
+[source,xml]
 ----
 <E1>
   <E2></E2>
@@ -1011,7 +1051,7 @@ and the temporary Infoset item for E1 containing E2 is discarded.
 This example is similar, but the E1 element has a few additional DFDL properties
 highlighted in bold below:
 
-[source%unnumbered,xml]
+[source,xml]
 ----
 <xs:sequence dfdl:separator="|"> <!-- sequence S0 -->
   ...prior schema components ...
@@ -1035,7 +1075,7 @@ highlighted in bold below:
 This changes the definition of element E1 to have an empty representation only
 if the initiator and terminator are present in the data stream.
 
-Consider has the same data stream '``++...||...++``' where there are two
+Consider the same data stream `+...||...+` where there are two
 adjacent S0 separators.
 In this case the representation of E1 does not match the empty representation,
 because the initiator and terminator are not present as the
@@ -1046,14 +1086,14 @@ E1's representation is absent.
 Hence, nothing is added to the infoset.
 
 However, if the data stream
-'pass-format:straightquotes[...]|()|pass-format:straightquotes[...]' is
+`+...|()|...+` is
 encountered, there are two S0 separators, but between them there are the
 initiator and terminator of element E1. This satisfies the requirements for the
 empty representation, but it is not zero length.
 The recursive parse of E1's complex type constructs these elements (illustrated
 as XML):
 
-[source%unnumbered,xml]
+[source,xml]
 ----
 <E1>
   <E2></E2>
@@ -1069,14 +1109,14 @@ If an element is _missing_ from the Infoset when unparsing, the possibility of
 applying an element default arises.
 Essentially if a required occurrence of an element is missing, then an element
 default is applied if present, and the resulting item is added to the _augmented
-Infoset (See Section_ <<unparser-infoset-augmentation-algorithm>>__)__
+Infoset_ (See <<unparser-infoset-augmentation-algorithm>>)
 
 The rules for applying element defaults are not dependent on
 dfdl:occursCountKind.
 However if a required occurrence does not produce an item in the augmented
 Infoset after the rules have been applied then whether it is a Processing Error
 or a Validation Error (if enabled) _is_  dependent on dfdl:occursCountKind (see
-Section <<the-dfdl-occurscountkind-property>> dfdl:occursCountKind property).
+<<the-dfdl-occurscountkind-property>> dfdl:occursCountKind property).
 
 There are two cases to consider.
 
@@ -1124,7 +1164,7 @@ For elements and element references:
 [arabic]
 . dfdl:discriminator or dfdl:assert(s) with testKind 'pattern' (parsing only)
 . dfdl:element following property scoping rules, which includes establishing
-representation as described in Section <<establishing-representation>> and
+representation as described in <<establishing-representation>> and
 conversion to the element type for simple types
 . dfdl:setVariable(s) - in lexical order, innermost schema component first
 . dfdl:discriminator or dfdl:assert(s) with testKind 'expression' (parsing only)
@@ -1207,7 +1247,7 @@ The resolved set of dfdl:setVariable statements for an element are executed
 This contrasts with the resolved set of dfdl:setVariable statements for a group
 which are executed *before* the parsing of the group.
 (Note that dfdl:setVariable for an element is only allowed on elements of simple
-type per Section <<the-dfdl-setvariable-statement-annotation-element>>.)
+type per <<the-dfdl-setvariable-statement-annotation-element>>.)
 
 For elements, this implies that these variables are set after the evaluation of
 expressions corresponding to any computed DFDL properties for that element, and
@@ -1228,7 +1268,7 @@ Schema authors can insert xs:sequence constructs to control the timing of
 evaluation of statements more precisely.
 For example:
 
-[source%unnumbered,xml]
+[source,xml]
 ----
 <xs:sequence dfdl:separator=",">
    ...
@@ -1296,7 +1336,7 @@ language.
 This can be used to explicitly include checking of the XSD constructs as part of
 parsing a specific element.
 Such checking is part of parsing and does not create Validation Errors.
-See Section <<dfdl-functions>> DFDL Functions for details.
+See <<dfdl-functions>> DFDL Functions for details.
 
 [[unparser-infoset-augmentation-algorithm]]
 === Unparser Infoset Augmentation Algorithm

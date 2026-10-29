@@ -14,6 +14,8 @@
 :presentation-metadata-ul-label-list: &#x2022;,&#x25CB;,&#x25AA;
 :data-uri-image:
 :source-highlighter: false
+:smartquotes: false
+:block-unnumbered: sourcecode
 :pdf-stylesheet-override: pdf-overrides.xsl
 :publisher: ISO
 :technical-committee-number: 1

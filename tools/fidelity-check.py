@@ -643,8 +643,9 @@ SUBSTITUTION = "SUBSTITUTION"
 STRUCTURAL = "STRUCTURAL"
 CODE = "CODE"
 
-# Only these fail the build.  Smart quotes in prose are correct ISO
-# typesetting, and a paragraph re-split across two units has lost nothing.
+# Only these fail the build.  A quote, dash or ellipsis in another form has
+# changed only its typography, and a paragraph re-split across two units has
+# lost nothing.
 FAILING = (SUBSTITUTION, STRUCTURAL, CODE)
 CLASSES = (TYPOGRAPHIC, REFLOW, SUBSTITUTION, STRUCTURAL, CODE)
 
@@ -1569,8 +1570,8 @@ def main(argv: list[str] | None = None) -> int:
         if warnings:
             print(
                 f"WARNING: {counts.get(TYPOGRAPHIC, 0)} typographic and "
-                f"{counts.get(REFLOW, 0)} reflow difference(s).  Smart quotes in "
-                "prose are\n         correct ISO typesetting; these do not fail "
+                f"{counts.get(REFLOW, 0)} reflow difference(s).  These change "
+                "typography or\n         paragraph breaks only, and do not fail "
                 "the check.",
                 file=out,
             )
