@@ -114,7 +114,7 @@ The checks, and the failure each one exists to catch:
 Usage::
 
     python3 tools/structure-check.py build/iso/dfdl.html
-    python3 tools/structure-check.py build/iso/dfdl.html docs/current/spec.docx
+    python3 tools/structure-check.py build/iso/dfdl.html docs/archive/Archive-2026/spec.docx
 """
 
 from __future__ import annotations
@@ -1237,7 +1237,9 @@ VISIBILITY = (
 )
 
 
-DEFAULT_SOURCE = "docs/current/draft-gwdrp-dfdl-v1.2.2-GFD-R-P.240-ISO-23415.docx"
+DEFAULT_SOURCE = (
+    "docs/archive/Archive-2026/draft-gwdrp-dfdl-v1.2.2-GFD-R-P.240-ISO-23415.docx"
+)
 
 
 def main(argv: list[str] | None = None) -> int:

@@ -145,7 +145,8 @@ MAX_LINE = 160
 DEFAULT_SOURCE = (
     Path(__file__).resolve().parent.parent
     / "docs"
-    / "current"
+    / "archive"
+    / "Archive-2026"
     / "draft-gwdrp-dfdl-v1.2.2-GFD-R-P.240-ISO-23415.docx"
 )
 
@@ -1379,7 +1380,7 @@ def main(argv: list[str] | None = None) -> int:
         nargs="+",
         metavar="[SOURCE] TARGET",
         help=(
-            "TARGET alone (source defaults to the .docx under docs/current/), "
+            "TARGET alone (source defaults to the .docx under docs/archive/Archive-2026/), "
             "or SOURCE TARGET. Either may be a .tsv inventory."
         ),
     )
