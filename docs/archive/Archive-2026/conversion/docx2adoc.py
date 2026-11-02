@@ -1,26 +1,32 @@
-"""Convert the DFDL specification MS-Word source into AsciiDoc for Metanorma.
+"""Convert the DFDL v1.2.2 draft .docx into AsciiDoc for Metanorma.
 
-The specification is authored in Word.  This script reads the .docx package
-directly (it is a zip of XML parts) and emits AsciiDoc suitable for Metanorma's
-ISO backend, one file per top-level clause.
+RETIRED.  This converted the draft into spec/ once, in #90.  The AsciiDoc has
+been edited since, starting with the review in #92, and is now the source of
+the specification.  Running the conversion into spec/ again would overwrite
+those edits, so the script refuses to write anywhere under spec/.  It is kept
+as the record of how the conversion was done, and to reproduce its output
+somewhere else for comparison.
+
+It reads the .docx package directly (it is a zip of XML parts) and emits
+AsciiDoc suitable for Metanorma's ISO backend, one file per top-level clause.
 
 Clauses are addressed by the specification's own numbering, which the tool
 reconstructs from Word's heading numbering: ``front`` for the ten unnumbered
 front-matter headings, ``1``..``29`` for the numbered clauses, and ``A``..``G``
 for the appendices.
 
-Usage:
+Usage, from the repository root:
 
-    python3 tools/docx2adoc.py --list
-    python3 tools/docx2adoc.py --clause 13 --out spec/clauses/13-simple-types.adoc
-    python3 tools/docx2adoc.py --clause C --out spec/clauses/C-string-literals.adoc
-    python3 tools/docx2adoc.py --all --outdir spec/clauses/
+    CONVERT=docs/archive/Archive-2026/conversion/docx2adoc.py
+    python3 $CONVERT --list
+    python3 $CONVERT --clause 13 --imagedir /tmp/dfdl/images
+    python3 $CONVERT --clause 13 --imagedir /tmp/dfdl/images --out /tmp/dfdl/13.adoc
+    python3 $CONVERT --all --outdir /tmp/dfdl/clauses --imagedir /tmp/dfdl/images
+
+Converting needs ``--imagedir``, because extracting a clause writes its images
+there, and ``--all`` needs ``--outdir``.  None of them may be inside spec/.
 
 Only the Python standard library is used.
-
-The script deliberately carries no shebang and is not executable: ``make
-check`` runs every executable in tools/ as a validator against the built
-semantic XML, and this is a conversion utility, not a validator.
 """
 
 from __future__ import annotations
@@ -1866,7 +1872,9 @@ def trim_blank_lines(lines) -> list:
 # Command line
 # --------------------------------------------------------------------------
 
-DEFAULT_DOCX = "docs/current/draft-gwdrp-dfdl-v1.2.2-GFD-R-P.240-ISO-23415.docx"
+DEFAULT_DOCX = (
+    "docs/archive/Archive-2026/draft-gwdrp-dfdl-v1.2.2-GFD-R-P.240-ISO-23415.docx"
+)
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -1890,8 +1898,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--outdir", help="output directory for --all")
     parser.add_argument(
         "--imagedir",
-        default="spec/images",
-        help="directory that extracted images are written to",
+        help="directory that extracted images are written to (required to convert)",
     )
     parser.add_argument(
         "--list", action="store_true", help="list the top-level clauses and exit"
@@ -1899,14 +1906,46 @@ def build_parser() -> argparse.ArgumentParser:
     return parser
 
 
+def inside_spec(path: Path) -> bool:
+    """True when path is the specification source or anything under it.
+
+    The source is recognised by its own shape, a directory named spec or one
+    holding body.adoc, rather than by where this script lives, so the guard
+    holds however the script is run and wherever it is copied.
+    """
+    resolved = path.resolve()
+    for directory in (resolved, *resolved.parents):
+        if directory.name == "spec" or (directory / "body.adoc").is_file():
+            return True
+    return False
+
+
 def main(argv=None) -> int:
     parser = build_parser()
     args = parser.parse_args(argv)
+    if args.all or args.clause:
+        if not args.imagedir:
+            parser.error("converting writes images, so it needs --imagedir")
+        if args.all and not args.outdir:
+            parser.error("--all needs --outdir")
+    for option, value in (
+        ("--out", args.out),
+        ("--outdir", args.outdir),
+        ("--imagedir", args.imagedir),
+    ):
+        if value and inside_spec(Path(value)):
+            print(
+                f"refusing {option} {value}: it is inside spec/, the edited source "
+                "of the specification, which this conversion would overwrite",
+                file=sys.stderr,
+            )
+            return 2
     docx = Path(args.docx)
     if not docx.exists():
         print(f"no such file: {docx}", file=sys.stderr)
         return 2
-    converter = Converter(Package(docx), Path(args.imagedir))
+    imagedir = Path(args.imagedir) if args.imagedir else None
+    converter = Converter(Package(docx), imagedir)
 
     if args.list:
         for clause in converter.clauses:
@@ -1914,7 +1953,7 @@ def main(argv=None) -> int:
         return 0
 
     if args.all:
-        outdir = Path(args.outdir or "spec/clauses")
+        outdir = Path(args.outdir)
         outdir.mkdir(parents=True, exist_ok=True)
         every = [clause.key for clause in converter.clauses]
         for clause in converter.clauses:
