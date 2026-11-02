@@ -11,13 +11,21 @@ as well as being [ISO/IEC 23415:2024](https://www.iso.org/standard/87444.html).
 Our plan is that future versions of the DFDL specification will also be submitted to become 
 [ISO/IEC Publicly Accessible Standards (PAS)](https://www.iso.org/deliverables-all.html?type=pas#PAS). 
 
-You can also view an [HTML page of the DFDL v1.0 Spec](https://htmlpreview.github.io/?https://github.com/OpenGridForum/DFDL/blob/master/docs/current/gwdrp-dfdl-v1.0.8-GFD-R-P.240.htm).
+You can also view an [HTML page of the DFDL v1.0 Spec](https://htmlpreview.github.io/?https://github.com/OpenGridForum/DFDL/blob/master/docs/current/gwdrp-dfdl-v1.0.9-GFD-R-P.240.htm).
 
 DFDL v1.0 is based on XML Schema but DFDL is not strongly tied to XML. 
 Implementations can convert data from native form into a variety of 
 representations including JSON, XML, EXI, SAX-style event callbacks, DOM-trees, etc. 
 
 This working group maintains this standard and proposed extensions/additions to it. 
+
+## Specification source
+
+The specification is written in AsciiDoc under [`spec/`](spec/) and built into
+its ISO and OGF editions with Metanorma. Changes to it are made there, by pull
+request, and reviewed by the working group; [building](spec/BUILD.md) and
+[editing](spec/EDITING.md) cover how. The MS-Word editions it replaced are kept
+in [`docs/archive/Archive-2026/`](docs/archive/Archive-2026/).
 
 ## Quick Links
 

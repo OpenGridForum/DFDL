@@ -56,16 +56,17 @@ edited: an erratum can strand a caption or break a reference, and neither shows
 up in a diff a reviewer would notice.
 
 `fidelity-check.py` is not one of them, and is not run by `make check`. It
-compares the build against the Word source character for character, which proves
+compares the build against the Word source, the draft kept in
+`docs/archive/Archive-2026/`, character for character, which proves
 the conversion but fails on any deliberate change to the specification: an
-erratum is *supposed* to differ from GFD.240. Run it on its own:
+erratum is *supposed* to differ from the draft. Run it on its own:
 
     make check-conversion
 
 Never teach it to ignore differences. A fidelity check that has been relaxed is
 worse than none, because it still reports PASS.
 
-It keeps a second use. "What has changed since GFD.240?" is a question an ISO
+It keeps a second use. "What has changed since the draft?" is a question an ISO
 submission has to answer, and this answers it clause by clause.
 
 ## The [bits] extension
@@ -97,8 +98,8 @@ style and structure warnings and is worth reading when output looks wrong.
 
 `build/` is gitignored, because a rendered PDF in every commit would bury the
 source changes. Versioned deliverables are committed instead, under
-`docs/releases/<VERSION>/`, the same way `docs/current/` holds the Word-era
-`.docx`, `.pdf` and `.htm`.
+`docs/releases/<VERSION>/`. The Word-era `.docx`, `.pdf` and `.htm` are kept in
+`docs/archive/Archive-2026/`.
 
     make release VERSION=1.2.3
 
