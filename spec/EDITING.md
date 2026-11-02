@@ -1,5 +1,11 @@
 # Editing the specification
 
+This AsciiDoc is the source of the specification. Every change to the text is
+made here, in a pull request the working group reviews. The MS-Word editions in
+`docs/archive/Archive-2026/` are a historical record: don't edit them, and don't
+try to regenerate the source from them. The converter kept beside them refuses
+to write into `spec/` for that reason.
+
 The source is one file per clause under `clauses/`, pulled together by
 `body.adoc`. `BUILD.md` covers rendering; this covers changing the text.
 
@@ -163,5 +169,6 @@ silently ignored and renders as plain text.
 
 ## The conversion check
 
-`make check-conversion` compares the build against the MS-Word source. It is
-not part of `make check` and not a check your edits have to satisfy.
+`make check-conversion` compares the build against the MS-Word source, the
+v1.2.2 draft in `docs/archive/Archive-2026/` that the AsciiDoc was converted
+from. It is not part of `make check` and not a check your edits have to satisfy.
