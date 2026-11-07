@@ -6,6 +6,12 @@
 [%unnumbered,cols="1,5"]
 |===
 
+a| 2026-11-07
+
+(internal v1.2.2 still)
+| Section 4.2.2 Restored the [dataValue] description, using the text from GFD.207.
+See https://github.com/OpenGridForum/DFDL/issues/82
+
 a| 2026-01-15
 
 (internal v1.2.2 still)
