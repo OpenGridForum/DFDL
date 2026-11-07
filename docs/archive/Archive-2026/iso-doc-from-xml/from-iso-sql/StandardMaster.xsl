@@ -2159,7 +2159,7 @@ to be included into the stylesheet.
 -->
 
 
-<xsl:include href="./StandardFormatting.xsl"/>
+<xsl:include href="StandardFormatting.xsl"/>
   
 </xsl:stylesheet>
 <!-- Stylus Studio meta-information - (c) 2004-2008. Progress Software Corporation. All rights reserved.
