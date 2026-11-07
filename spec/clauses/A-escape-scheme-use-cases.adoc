@@ -65,7 +65,7 @@ dfdl:escapeEscapeCharacter '/', dfdl:separator ';', dfdl:extraEscapedCharacters
 
 dfdl:escapeKind 'escapeCharacter', dfdl:escapeCharacter '/',
 dfdl:escapeEscapeCharacter
-'%%'footnote:[The '%' character needs escaping as part of DFDL syntax when used as a literal character in DFDL properties. It is escaped by doubling it, i.e., preceding it by another '%' character. In this examplethe dfdl:escapeEscapeCharacter is defined to be a single '%' character in the data stream.], dfdl:separator ';'', dfdl:extraEscapedCharacters '?'
+'%%'footnote:[The '%' character needs escaping as part of DFDL syntax when used as a literal character in DFDL properties. It is escaped by doubling it, i.e., preceding it by another '%' character. In this example the dfdl:escapeEscapeCharacter is defined to be a single '%' character in the data stream.], dfdl:separator ';'', dfdl:extraEscapedCharacters '?'
 
 .Examples (1) of Escape Character Different from dfdl:escapeEscapeCharacter
 [cols="1,1",options="header"]
