@@ -1025,7 +1025,7 @@ The representation of E1 has zero length because of these two adjacent S0
 separators.
 On processing E1, the parser establishes a point of uncertainty with the data
 stream positioned after the first S0 separator.
-The parserthen descends into E1's complex type to process E2. It scans for
+The parser then descends into E1's complex type to process E2. It scans for
 in-scope delimiters and immediately encounters the second S0 separator.
 E2 has the empty representation, so E1 is added to the Infoset along with a
 value of empty string for E2. All other content of S1 is missing, so the parser
