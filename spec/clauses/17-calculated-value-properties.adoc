@@ -249,7 +249,7 @@ The expression above assembles a string resembling, for example, "2005-12-17" or
 the ``++fn:date++`` constructor function.
 The hidden element ``++'pdate'++`` is referenced by relative paths.
 The expression ``++'../pdate/yy'++`` accesses an element of type ``++'int'++``,
-and the ``++xs:string++`` constructor function turns it into an integer.
+and the ``++xs:string++`` constructor function turns it into a string.
 
 Finally,one must handle the unparse case where the physical layer is computed
 from the logical layer:
