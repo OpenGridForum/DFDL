@@ -145,9 +145,29 @@ has no value.
 * *[dataType]* String. The name of the XML Schema 1.0 built-in simple type to
 which the value corresponds. DFDL supports a subset of these types listed in
 <<dfdl-simple-types>> DFDL Simple Types.
-* *[dataValue]* member has no value, and for a complex element the [children]
-member has no value. If this member is true, then the Infoset item is said to be
-nil or nilled.
+* *[dataValue]* The value in the value space (as defined by XML Schema Part 2:
+Datatypes [<<a-xsdl-part1,XSDLV1>>]) of the *[datatype]* member.
+In a complex element information item this member has no value.
+If the *[nilled]* member is true, then this member has no value.
++
+For information items of datatype xs:string, the value is an ordered collection
+of unsigned 16-bit integer codepoints each having any value from 0x0000 to
+0xFFFF.
+Where defined, these are interpreted as the ISO646 character codes.
+Codepoints disallowed by ISO 10646, such as 0xD800 to 0xDFFF are explicitly
+allowed by the DFDL infoset.
+The codepoints of the string are stored in 'implicit' (also known as logical),
+left-to-right bidirectional ordering and orientation.
+DFDL's infoset represents Unicode characters with character codes beyond 0xFFFF
+by way of surrogate pairs (2 adjacent codepoints) in a manner consistent with
+the UTF-16 encoding of ISO 10646.
+The value can have length 0, in which case the value may be referred to as an
+'empty string'
++
+For information items of datatype xs:hexBinary, the value is an ordered
+collection of unsigned 8-bit bytes each having value from 0 to 255.
+The length of this collection can be 0 in which case the value may be referred
+to as an 'empty hexBinary'.
 * *[document]* The document information item representing the DFDL information
 set that contains this element. This element is empty except in the root element
 of an information set.
