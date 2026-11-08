@@ -1,8 +1,16 @@
 [[document-change-history]]
 == Document Change History
 
-// This section will become part of the Forward in an ISO PAS submission.
+ifdef::edition-iso[]
+This edition incorporates corrections made since the original February 2021
+version.
+They are listed in the Document Change History of the Open Grid Forum edition,
+GFD.240, available at http://www.ogf.org/documents/GFD.240.pdf.
+endif::[]
 
+// The ISO edition carries only the note above; the table is the OGF
+// edition's, where the change history is officially published.
+ifdef::edition-ogf[]
 [%unnumbered,cols="1,5"]
 |===
 
@@ -76,3 +84,4 @@ Error." should be using "evaluates to" not "includes".
 
 | Section 12.3.4 Update prefixLengthType facet checking, prohibit statement annotations on the type, clarify that prohibitions also apply to any base type, and clarify language in 12.3.4.1.
 |===
+endif::[]
