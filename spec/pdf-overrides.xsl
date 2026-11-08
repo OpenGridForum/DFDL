@@ -218,6 +218,7 @@
 
 
   <!-- render a table footnote as a page footnote; the body is already in $footnotes -->
+  <!-- upstream: metanorma-iso fn sha256:cb64b552655189688645a09bdc43ad7fee2b712eeae818701f02c23657082004 -->
   <xsl:template match="mn:fn[ancestor::mn:table][not(ancestor::mn:fmt-name)]" priority="10">
     <xsl:call-template name="fn">
       <xsl:with-param name="footnote_body_from_table" select="'true'"/>
@@ -234,8 +235,9 @@
     p-style attribute set above has been applied, so the list rule there never
     takes effect.  This is the stylesheet's refine_p-style from metanorma-iso
     3.5.0 (the pinned image), changed only at that rule, from 9pt to 3pt.
-    Re-copy it if the image is upgraded.
+    make check fails if metanorma-iso's original changes.
   -->
+  <!-- upstream: metanorma-iso refine_p-style sha256:cf7b88bf4e16df921a40fcbfb63826edfc959434fa76c7ba3fefa21ace7bb554 -->
 	<xsl:template name="refine_p-style">
 		<xsl:param name="element-name"/>
 		<xsl:param name="margin"/>

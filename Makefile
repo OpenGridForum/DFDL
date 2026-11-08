@@ -123,7 +123,7 @@ index: xml
 # build. Tolerant of tools/ being empty or absent.
 check: lint html
 	@python3 tools/tables.py --check
-	@python3 tools/overrides.py --check
+	@python3 tools/overrides.py --check --image $(IMAGE)
 	@python3 tools/property-index.py $(BUILD)/$(STEM).xml --check
 	@test -f $(BUILD)/$(STEM).html || { \
 		echo "$(BUILD)/$(STEM).html wasn't built; see Metanorma's errors above" >&2; \

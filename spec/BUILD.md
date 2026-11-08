@@ -100,8 +100,10 @@ and rejects a template defined twice, so the two cannot be joined with an
 include; `make overrides` joins them into `spec/pdf-overrides-ogf.xsl`, which
 the OGF master names. That file is committed so it can be read, is never
 edited by hand, and `make check` fails if it is out of date. Several
-templates in these files are copies of metanorma-iso's, changed in one
-place; recheck them when the pinned image is upgraded.
+templates in these files replace metanorma-iso's own. Each carries a
+fingerprint of the original, and `make check` fails if the pinned image's
+original no longer matches, so an upgrade that changes one can't pass
+unnoticed. Review the change, update the override, then the fingerprint.
 
 Each build directory holds `dfdl.xml` (semantic XML), `dfdl.presentation.xml`,
 `dfdl.html`, `dfdl.pdf`, and the diagnostics: `dfdl.err.html` lists Metanorma's

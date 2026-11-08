@@ -75,6 +75,7 @@
     </fo:block-container>
   </xsl:template>
 
+  <!-- upstream: metanorma-iso insertHeader sha256:527b1285c5f558d7259d1adb361441a00773bba2b764d05ce7231a61ce70ed86 -->
   <xsl:template name="insertHeader">
     <xsl:param name="num"/>
     <xsl:param name="is_header">true</xsl:param>
@@ -87,6 +88,7 @@
     <fo:static-content flow-name="header-odd" role="artifact"><xsl:call-template name="ogf-header-block"/></fo:static-content>
   </xsl:template>
 
+  <!-- upstream: metanorma-iso insertFooter sha256:2af1637b430606f9c85a15a8d07ee51e404f227e96e266bf666dd1621d5d3b94 -->
   <xsl:template name="insertFooter">
     <xsl:param name="num"/>
     <xsl:param name="font-weight" select="'bold'"/>
@@ -113,6 +115,7 @@
     Foreword.  The two templates after this keep the preamble from printing a
     second time in the front matter or appearing in the contents.
   -->
+  <!-- upstream: metanorma-iso cover-page sha256:dd29702d8871fa49af8d0c250809b1591010360c437096c1fa27d698c5df319c -->
   <xsl:template name="cover-page">
     <xsl:param name="num"/>
     <fo:page-sequence master-reference="cover-page" force-page-count="no-force">
@@ -155,10 +158,12 @@
     produces only ISO's "COPYRIGHT PROTECTED DOCUMENT" page, and back-page
     only ISO's back cover with its price, ICS and iso.org.
   -->
+  <!-- upstream: metanorma-iso inner-cover-page sha256:4ba430aa1e9324f1b7219651cae655a6b21b91092977d73622281a21fc597491 -->
   <xsl:template name="inner-cover-page">
     <xsl:param name="num"/>
   </xsl:template>
 
+  <!-- upstream: metanorma-iso back-page sha256:0af1aa86169a92fe46dcf79a944b26cf1937685b52bb376dbb5dacbc96aaaf35 -->
   <xsl:template name="back-page">
     <xsl:param name="num"/>
   </xsl:template>
