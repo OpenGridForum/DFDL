@@ -53,14 +53,6 @@ include::clauses/23-optional-dfdl-features.adoc[]
 
 include::clauses/24-security-considerations.adoc[]
 
-include::clauses/25-removed.adoc[]
-
-include::clauses/26-removed.adoc[]
-
-include::clauses/27-removed.adoc[]
-
-include::clauses/28-removed.adoc[]
-
 include::clauses/29-references.adoc[]
 
 include::clauses/A-escape-scheme-use-cases.adoc[]
