@@ -27,6 +27,10 @@
 :edition-ogf:
 :boilerplate-authority: boilerplate-ogf.xml
 :htmlcoverpage: spec/html-cover-ogf.html
+:body-font: "Noto Sans",sans-serif
+:header-font: "Noto Sans",sans-serif
+:monospace-font: "Noto Sans Mono",monospace
+:htmlstylesheet-override: html-overrides-ogf.css
 :docstage: 60
 :docsubstage: 60
 

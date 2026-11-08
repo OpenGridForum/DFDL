@@ -199,6 +199,13 @@ the same attributes as the PDF cover. `dfdl-ogf.adoc` gives its path from
 the repository root, `spec/html-cover-ogf.html`, because Metanorma resolves
 it from where the build runs rather than from the master file.
 
+The OGF edition's HTML uses the fonts of the PDF, Noto Sans and Noto Sans
+Mono, named by `body-font`, `header-font` and `monospace-font` in
+`dfdl-ogf.adoc`. `html-overrides-ogf.css` loads them from Google Fonts. Its
+path is given from `spec/`, like the PDF override, not from the repository
+root. Metanorma escapes quotes and ampersands in that file, so keep its URLs
+unquoted.
+
 ## The conversion check
 
 `make check-conversion` compares the build against the MS-Word source, the

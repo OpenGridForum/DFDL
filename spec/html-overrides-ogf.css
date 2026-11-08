@@ -1,0 +1,8 @@
+/*
+  The OGF HTML edition uses the fonts of the PDF, which most readers do not
+  have installed. The font names are set in dfdl-ogf.adoc. The URLs are
+  unquoted and load one family each, because Metanorma escapes quotes and
+  ampersands in this file.
+*/
+@import url(https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400;1,700);
+@import url(https://fonts.googleapis.com/css2?family=Noto+Sans+Mono);
