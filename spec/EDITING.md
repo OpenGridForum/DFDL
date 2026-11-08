@@ -191,7 +191,8 @@ master, never typed into the text or the stylesheets. The OGF edition's
 header, footer and cover read `presentation-metadata-ogf-*` attributes in
 `dfdl-ogf.adoc`: the document number, the dates, the contact address and
 the cover's author lines. Metanorma splits these values at commas, and the
-stylesheet joins them again, so a value may contain commas.
+stylesheet joins them again, so a value may contain commas. Copyright years
+come from `copyright-year`, which the text reads as `{copyright-year}`.
 
 ## The conversion check
 

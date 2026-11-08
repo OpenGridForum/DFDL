@@ -31,7 +31,7 @@ Copyright © Global Grid Forum (2004-2006).
 Some Rights Reserved.
 Distribution is unlimited.
 
-Copyright © Open Grid Forum (2006-2026).
+Copyright © Open Grid Forum (2006-{copyright-year}).
 Some Rights Reserved.
 Distribution is unlimited.
 
