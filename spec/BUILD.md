@@ -33,7 +33,8 @@ together.
 | `make editions` | `make all` for every edition |
 | `make lint` | `ruff` and `black` over `tools/` |
 | `make tables` | rewrite the generated tables in clause 14 from `spec/tables/` |
-| `make check` | `lint`, a check that generated tables are current, then every validator in `tools/` against the semantic XML |
+| `make overrides` | rewrite the OGF edition's PDF override, `spec/pdf-overrides-ogf.xsl` |
+| `make check` | `lint`, a check that generated tables and the OGF override are current, then every validator in `tools/` against the semantic XML |
 | `make release VERSION=x.y.z` | versioned deliverables for both editions |
 | `make clean` | remove the build output |
 
@@ -89,6 +90,16 @@ artifacts to a common stem, so the two editions produce identically named files.
 They are written to `build/iso/` and `build/ogf/` so neither can silently
 overwrite the other. `make editions` renders both in one invocation, which also
 guarantees they came from the same source state.
+
+PDF styling is layered over Metanorma's ISO stylesheet. `spec/pdf-overrides.xsl`
+applies to both editions. The OGF edition also has templates of its own, in
+`spec/pdf-overrides-ogf-only.xsl`. mn2pdf takes one override file per document
+and rejects a template defined twice, so the two cannot be joined with an
+include; `make overrides` joins them into `spec/pdf-overrides-ogf.xsl`, which
+the OGF master names. That file is committed so it can be read, is never
+edited by hand, and `make check` fails if it is out of date. Several
+templates in these files are copies of metanorma-iso's, changed in one
+place; recheck them when the pinned image is upgraded.
 
 Each build directory holds `dfdl.xml` (semantic XML), `dfdl.presentation.xml`,
 `dfdl.html`, `dfdl.pdf`, and the diagnostics: `dfdl.err.html` lists Metanorma's

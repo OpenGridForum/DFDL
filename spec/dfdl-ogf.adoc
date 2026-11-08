@@ -15,7 +15,7 @@
 :source-highlighter: false
 :smartquotes: false
 :block-unnumbered: sourcecode
-:pdf-stylesheet-override: pdf-overrides.xsl
+:pdf-stylesheet-override: pdf-overrides-ogf.xsl
 :publisher: Open Grid Forum
 :docstage: 60
 :docsubstage: 60

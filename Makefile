@@ -52,7 +52,7 @@ MN_REQUIRE := -r /metanorma/tools/bits.rb
 
 RELEASE  := docs/releases/$(VERSION)
 
-.PHONY: all editions release xml html pdf lint tables check check-conversion clean
+.PHONY: all editions release xml html pdf lint tables overrides check check-conversion clean
 
 # One pdf pass also emits the HTML and the XML, so `all` is just `pdf`.
 all: pdf
@@ -107,10 +107,16 @@ lint:
 tables:
 	python3 tools/tables.py
 
+# The OGF edition's PDF override joins spec/pdf-overrides.xsl, which both
+# editions use, and spec/pdf-overrides-ogf-only.xsl; see tools/overrides.py.
+overrides:
+	python3 tools/overrides.py
+
 # Runs every executable in tools/, plus any tools/check*.py, over the
 # build. Tolerant of tools/ being empty or absent.
 check: lint html
 	@python3 tools/tables.py --check
+	@python3 tools/overrides.py --check
 	@checkers=$$({ find tools -maxdepth 1 -type f -perm -u+x; \
 		ls tools/check*.py; } 2>/dev/null | sort -u); \
 	if [ -z "$$checkers" ]; then \
