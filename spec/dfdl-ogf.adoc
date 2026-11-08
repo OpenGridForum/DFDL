@@ -17,9 +17,10 @@
 :block-unnumbered: sourcecode
 :pdf-stylesheet-override: pdf-overrides-ogf.xsl
 :publisher: Open Grid Forum
+:edition-ogf:
 :docstage: 60
 :docsubstage: 60
 
-include::frontmatter/ogf.adoc[]
+include::frontmatter/front.adoc[]
 
 include::body.adoc[]

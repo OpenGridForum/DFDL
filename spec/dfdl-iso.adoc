@@ -18,11 +18,12 @@
 :block-unnumbered: sourcecode
 :pdf-stylesheet-override: pdf-overrides.xsl
 :publisher: ISO
+:edition-iso:
 :technical-committee-number: 1
 :technical-committee: Information technology
 :docstage: 60
 :docsubstage: 60
 
-include::frontmatter/iso.adoc[]
+include::frontmatter/front.adoc[]
 
 include::body.adoc[]

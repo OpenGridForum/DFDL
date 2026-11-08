@@ -167,6 +167,21 @@ AsciiDoc would rewrite, with its file, line and the fix.
 `add:[text]` and `del:[text]` produce them. The role form `[.add]#text#` is
 silently ignored and renders as plain text.
 
+## Editions
+
+The same source builds both editions. `dfdl-ogf.adoc` and `dfdl-iso.adoc`
+hold only document metadata, and both include `frontmatter/front.adoc` and
+`body.adoc`. Each sets one attribute, `edition-ogf` or `edition-iso`.
+
+The body is the same in both editions: the same pages, page numbers and
+section numbers. Only headers, footers, covers and some front matter differ.
+Where a front matter section needs different wording in each edition, mark
+it with the attribute:
+
+    ifdef::edition-iso[]
+    Wording for the ISO edition only.
+    endif::[]
+
 ## The conversion check
 
 `make check-conversion` compares the build against the MS-Word source, the

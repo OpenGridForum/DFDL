@@ -82,8 +82,9 @@ diagrams show their mask lines instead of colour.
 The specification is published twice: as ISO/IEC 23415 and as OGF GFD.240. The
 normative text is identical, so `spec/body.adoc` holds all of it and is included
 by both masters — `spec/dfdl-iso.adoc` and `spec/dfdl-ogf.adoc` — which differ only
-in document metadata and the front matter they pull in. Editing the body edits
-both editions.
+in document metadata. Both include the same front matter,
+`spec/frontmatter/front.adoc`, which uses an edition attribute where the
+wording differs; see `EDITING.md`. Editing the body edits both editions.
 
 Metanorma names its output after its input, and the Makefile renames the
 artifacts to a common stem, so the two editions produce identically named files.
