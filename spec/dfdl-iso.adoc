@@ -2,7 +2,7 @@
 :doctype: international-standard
 :docnumber: 23415
 :edition: 1
-:copyright-year: 2026
+:copyright-year: 2024
 :language: en
 :script: Latn
 :title-intro-en: Information technology
@@ -17,7 +17,7 @@
 :smartquotes: false
 :block-unnumbered: sourcecode
 :pdf-stylesheet-override: pdf-overrides.xsl
-:publisher: ISO
+:publisher: ISO;IEC
 :edition-iso:
 :technical-committee-number: 1
 :technical-committee: Information technology
