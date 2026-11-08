@@ -52,14 +52,6 @@ pass:[<span style="font-size:16;font-family:Arial"><strong>Data Format Descripti
 
 Grid Final Draft (GFD)
 
-In preparation.
-Click the MS-Word Home menu Paragraph '¶' button to see instructions in hidden
-text.
-
-Note that this preparation draft has change tracking enabled.
-
-Highlighted text here and in the Document Change History is to be deleted.
-
 [.underline]#Obsoletes#
 
 include::../obsoletes.adoc[]
