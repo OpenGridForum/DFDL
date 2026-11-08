@@ -13,7 +13,7 @@ type.
 | Property Name
 | Description
 
-| occursCountKind
+| [[p-occurscountkind]]occursCountKind
 | Enum
 
 Specifies how the actual number of occurrences is to be established.
@@ -38,7 +38,7 @@ These values are described in detail in
 
 Annotation: dfdl:element
 
-| occursCount
+| [[p-occurscount]]occursCount
 | DFDL Expression
 
 Specifies the number of occurrences of the element.
@@ -52,7 +52,7 @@ yet been processed.
 
 Annotation: dfdl:element,
 
-| occursStopValue
+| [[p-occursstopvalue]]occursStopValue
 | List of DFDL Logical Values
 
 A whitespace separated list of logical values that specify  the alternative

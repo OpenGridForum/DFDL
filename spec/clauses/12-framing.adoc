@@ -26,7 +26,7 @@ The following properties are used to define alignment rules.
 | Property Name
 | Description
 
-| alignment
+| [[p-alignment]]alignment
 | Non-negative Integer or 'implicit'
 
 A non-negative number that gives the alignment required for the beginning of the
@@ -51,7 +51,7 @@ See <<mandatory-alignment-for-textual-data>>.
 Annotation: dfdl:element, dfdl:simpleType, dfdl:sequence, dfdl:choice,
 dfdl:group
 
-| alignmentUnits
+| [[p-alignmentunits]]alignmentUnits
 | Enum
 
 Valid values are 'bits' or 'bytes'
@@ -64,7 +64,7 @@ Only used when dfdl:alignment not 'implicit'
 Annotation: dfdl:element, dfdl:simpleType, dfdl:sequence, dfdl:choice,
 dfdl:group
 
-| fillByte
+| [[p-fillbyte]]fillByte
 | DFDL String Literal
 
 A single byte specified as a DFDL byte value entity or a single character.
@@ -80,7 +80,7 @@ Used to fill these regions specified in the grammar: *_RightFill_*,
 Annotation: dfdl:element, dfdl:simpleType, dfdl:sequence, dfdl:choice,
 dfdl:group
 
-| leadingSkip
+| [[p-leadingskip]]leadingSkip
 | Non-negative Integer
 
 A non-negative number of bytes or bits, depending on dfdl:alignmentUnits, to
@@ -90,7 +90,7 @@ Gives the size of the grammar region having the same name.
 Annotation: dfdl:element, dfdl:simpleType, dfdl:sequence, dfdl:choice,
 dfdl:group
 
-| trailingSkip
+| [[p-trailingskip]]trailingSkip
 | Non-negative Integer
 
 A non-negative number of bytes or bits, depending on dfdl:alignmentUnits, to
@@ -334,7 +334,7 @@ the matching of DFDL String Literals are given in
 | Property Name
 | Description
 
-| initiator
+| [[p-initiator]]initiator
 | List of DFDL String Literals or DFDL Expression
 
 Specifies an ordered whitespace separated list of alternative DFDL String
@@ -384,7 +384,7 @@ parser.
 Annotation: dfdl:element, dfdl:simpleType, dfdl:sequence, dfdl:choice,
 dfdl:group
 
-| terminator
+| [[p-terminator]]terminator
 | List of DFDL String Literals or DFDL Expression
 
 Specifies an ordered whitespace separated list of alternative text strings that
@@ -438,7 +438,7 @@ parser.
 Annotation: dfdl:element, dfdl:simpleType, dfdl:sequence, dfdl:choice,
 dfdl:group
 
-| emptyValueDelimiterPolicy
+| [[p-emptyvaluedelimiterpolicy]]emptyValueDelimiterPolicy
 | Enum
 
 Valid values are 'none', 'initiator', 'terminator' or 'both'
@@ -499,7 +499,7 @@ dfdl:initiatedContent 'yes'.
 
 Annotation: dfdl:element, dfdl:simpleType
 
-| documentFinalTerminatorCanBeMissing
+| [[p-documentfinalterminatorcanbemissing]]documentFinalTerminatorCanBeMissing
 | Enum
 
 Valid values are 'yes', 'no'
@@ -521,7 +521,7 @@ this property.
 
 Annotation: dfdl:format (but applies to elements only)
 
-| outputNewLine
+| [[p-outputnewline]]outputNewLine
 | DFDL String Literal or DFDL Expression
 
 Specifies the character or characters that are used to replace the %NL;
@@ -545,7 +545,7 @@ yet been processed.
 Annotation: dfdl:element, dfdl:simpleType, dfdl:sequence, dfdl:choice,
 dfdl:group
 
-| emptyElementParsePolicy
+| [[p-emptyelementparsepolicy]]emptyElementParsePolicy
 | Enum
 
 Valid values are "treatAsAbsent" or "treatAsEmpty".
@@ -578,7 +578,7 @@ apply to elements of all types (simple and complex).
 | Property Name
 | Description
 
-| lengthKind
+| [[p-lengthkind]]lengthKind
 | Enum
 
 Controls how the content length of the component is determined.
@@ -609,7 +609,7 @@ expression specified using the dfdl:lengthPattern property.
 
 Annotation: dfdl:element, dfdl:simpleType
 
-| lengthUnits
+| [[p-lengthunits]]lengthUnits
 | Enum
 
 Valid values 'bytes', 'characters', and 'bits'.
@@ -657,7 +657,7 @@ and in-scope delimiters are not looked for within or between elements.
 | Property Name
 | Description
 
-| length
+| [[p-length]]length
 | Non-negative Integer or DFDL Expression.
 
 Only used when lengthKind is 'explicit'.
@@ -880,7 +880,7 @@ in-scope delimiters are not looked for within or between elements.
 | Property Name
 | Description
 
-| prefixIncludesPrefixLength
+| [[p-prefixincludesprefixlength]]prefixIncludesPrefixLength
 | Enum
 
 Valid values are 'yes', 'no'
@@ -894,7 +894,7 @@ Used only when dfdl:lengthKind 'prefixed'.
 
 Annotation: dfdl:element, dfdl:simpleType
 
-| prefixLengthType
+| [[p-prefixlengthtype]]prefixLengthType
 | QName
 
 Name of a simple type derived from xs:integer or any subtype of it.
@@ -1104,7 +1104,7 @@ delimiters are not looked for within or between elements.
 | Property Name
 | Description
 
-| lengthPattern
+| [[p-lengthpattern]]lengthPattern
 | DFDL Regular Expression.
 
 Only used when lengthKind is 'pattern'.

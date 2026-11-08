@@ -561,7 +561,7 @@ in the set are executed.
 | Property Name
 | Description
 
-| testKind
+| [[p-testkind]]testKind
 | Enum (optional)
 
 Valid values are 'expression',  'pattern'
@@ -573,7 +573,7 @@ in the dfdl:assert.
 
 Annotation: dfdl:assert
 
-| test
+| [[p-test]]test
 | DFDL Expression
 
 Applies when testKind is 'expression'
@@ -594,7 +594,7 @@ or the value of the test attribute.
 
 Annotation: dfdl:assert
 
-| testPattern
+| [[p-testpattern]]testPattern
 | DFDL Regular Expression
 
 Applies when testKind is 'pattern'
@@ -631,7 +631,7 @@ It is a Schema Definition Error if the dfdl:alignment is not 1 or 'implicit'
 
 Annotation: dfdl:assert
 
-| message
+| [[p-message]]message
 | String or DFDL Expression
 
 Defines text to be used as a diagnostic code or for use in an error message,
@@ -646,7 +646,7 @@ See below for details.
 
 Annotation: dfdl:assert
 
-| failureType
+| [[p-failuretype]]failureType
 | Enum (optional)
 
 Valid values are 'processingError', 'recoverableError'.

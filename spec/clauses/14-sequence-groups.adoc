@@ -10,7 +10,7 @@ The following properties are specific to sequences.
 | Property Name
 | Description
 
-| sequenceKind
+| [[p-sequencekind]]sequenceKind
 | Enum
 
 Valid values are 'ordered', 'unordered'
@@ -27,7 +27,7 @@ Schema Definition Error.
 
 Annotation: dfdl:sequence, dfdl:group (sequence)
 
-| initiatedContent
+| [[p-initiatedcontent]]initiatedContent
 | Enum
 
 Valid values are 'yes', 'no'
@@ -126,7 +126,7 @@ dfdl:separatorSuppressionPolicy 'anyEmpty'.
 | Property Name
 | Description
 
-| separator
+| [[p-separator]]separator
 | List of DFDL String Literals or DFDL Expression
 
 Specifies a whitespace separated list of alternative DFDL String Literals that
@@ -183,7 +183,7 @@ parser.
 
 Annotation: dfdl:sequence, dfdl:group (sequence)
 
-| separatorPosition
+| [[p-separatorposition]]separatorPosition
 | Enum
 
 Valid values 'infix', 'prefix', 'postfix'
@@ -199,7 +199,7 @@ grammar region and the *_PostfixSeparator_* grammar region.
 
 Annotation: dfdl:sequence, dfdl:group (sequence).
 
-| separatorSuppressionPolicy
+| [[p-separatorsuppressionpolicy]]separatorSuppressionPolicy
 | Enum
 
 Valid values 'never', 'anyEmpty', 'trailingEmpty', 'trailingEmptyStrict'
@@ -885,7 +885,7 @@ element, not about any other elements in the sequence.)
 | Property Name
 | Description
 
-| floating
+| [[p-floating]]floating
 | Enum
 
 Valid values are 'yes', 'no'
@@ -1018,7 +1018,7 @@ A hidden group may appear within another hidden group.
 | Property Name
 | Description
 
-| hiddenGroupRef
+| [[p-hiddengroupref]]hiddenGroupRef
 | QName
 
 Reference to a global model group definition.

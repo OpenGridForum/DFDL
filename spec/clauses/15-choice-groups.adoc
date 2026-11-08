@@ -17,7 +17,7 @@ The following properties are specific to xs:choice.
 | Property Name
 | Description
 
-| choiceLengthKind
+| [[p-choicelengthkind]]choiceLengthKind
 | Enum
 
 Valid values are 'implicit', 'explicit'
@@ -31,7 +31,7 @@ fixed-length regardless of which branch appears.
 
 Annotation: dfdl:choice, dfdl:group (choice)
 
-| choiceLength
+| [[p-choicelength]]choiceLength
 | Integer
 
 Only used when dfdl:choiceLengthKind is 'explicit'.
@@ -59,7 +59,7 @@ to the empty string.
 
 Annotation: dfdl:sequence, dfdl:choice, dfdl:group
 
-| choiceDispatchKey
+| [[p-choicedispatchkey]]choiceDispatchKey
 | DFDL Expression
 
 The expression must evaluate to an xs:string.
@@ -89,7 +89,7 @@ It is not possible to place this property in scope on a dfdl:format annotation.
 
 Annotation: dfdl:choice
 
-| choiceBranchKey
+| [[p-choicebranchkey]]choiceBranchKey
 | List of DFDL String Literals
 
 This literal provides an alternate way to discriminate a choice to a branch.
