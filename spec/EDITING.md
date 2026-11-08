@@ -182,6 +182,13 @@ it with the attribute:
     Wording for the ISO edition only.
     endif::[]
 
+Values that change between releases are set once, as attributes in the
+master, never typed into the text or the stylesheets. The OGF edition's
+header, footer and cover read `presentation-metadata-ogf-*` attributes in
+`dfdl-ogf.adoc`: the document number, the dates, the contact address and
+the cover's author lines. Metanorma splits these values at commas, and the
+stylesheet joins them again, so a value may contain commas.
+
 ## The conversion check
 
 `make check-conversion` compares the build against the MS-Word source, the
