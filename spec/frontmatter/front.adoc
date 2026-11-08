@@ -29,8 +29,10 @@ include::../clauses/front-03-intellectual-property-statement.adoc[]
 [.preface]
 include::../clauses/front-04-disclaimer.adoc[]
 
+ifdef::edition-ogf[]
 [.preface]
 include::../clauses/front-05-full-copyright-notice.adoc[]
+endif::[]
 
 [.preface]
 include::../clauses/front-07-property-index.adoc[]
