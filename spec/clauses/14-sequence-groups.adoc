@@ -603,9 +603,9 @@ dfdl:separatorPosition.
 
 | never
 2+| td-style:[background-color:#DBDBDB;border-bottom:none;border-right:none] Schema definition error
-2+| td-style:[background-color:#8EAADB;border-bottom:none;border-left:none;border-right:none] Unparse N occurrences ~ unparse (maxOccurs +--+ N) trailing zero-length occurrences
+2+| td-style:[background-color:#8EAADB;border-bottom:none;border-left:none;border-right:none] Unparse N occurrences ~ unparse (maxOccurs - N) trailing zero-length occurrences
 .3+| td-style:[background-color:#DBDBDB;border-bottom:none;border-left:none;border-right:none] Schema definition error
-.3+| td-style:[background-color:#8EAADB;border-bottom:none;border-left:none] Unparse N occurrences ~ unparse (maxOccurs +--+ N) trailing zero-length occurrences
+.3+| td-style:[background-color:#8EAADB;border-bottom:none;border-left:none] Unparse N occurrences ~ unparse (maxOccurs - N) trailing zero-length occurrences
 
 | trailingEmptyStrict
 .2+| td-style:[background-color:#DBDBDB;border-top:none;border-bottom:none;border-right:none]
