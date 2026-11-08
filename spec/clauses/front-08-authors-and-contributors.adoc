@@ -67,19 +67,6 @@ Steve Marting, Progeny, USA
 
 Alejandro Rodriguez, Amazon, WA, USA
 
-Foreword
-
-// (ISO Template has this section with some ISO boilerplate and a section on deltas for this edition.)
-
-// (This repeats the OGF "Obsoletes" content from the OGF Cover page.)
-
-Obsoletes
-
-include::../obsoletes.adoc[]
-
-This document has several errata corrections since the original February 2021
-version that are detailed in the Document Change History on page ii.
-
 Data Format Description Language (DFDL) v1.0 Specification
 
 // (The above must be style 'Heading', not 'Title" to avoid a ToC entry.)
