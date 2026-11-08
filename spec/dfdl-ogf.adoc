@@ -25,6 +25,7 @@
 :presentation-metadata-ogf-author-2: Stephen M Hanson, IBM
 :publisher: Open Grid Forum
 :edition-ogf:
+:boilerplate-authority: boilerplate-ogf.xml
 :docstage: 60
 :docsubstage: 60
 
