@@ -18,19 +18,19 @@ a| 2026-11-07
 
 (internal v1.2.2 still)
 | Section 4.2.2 Restored the [dataValue] description, using the text from GFD.207.
-See https://github.com/OpenGridForum/DFDL/issues/82
+See link:https://github.com/OpenGridForum/DFDL/issues/82[(Issue 82)]
 
 a| 2026-01-15
 
 (internal v1.2.2 still)
 a| Fixed errata language and minor formatting per
 
-https://github.com/OpenGridForum/DFDL/issues/77#issuecomment-3760018110
+link:https://github.com/OpenGridForum/DFDL/issues/77#issuecomment-3760018110[(Issue 77)]
 
 a| 2026-01-15
 
 (internal v1.2.2 still)
-| More minor and typographical format fixes per https://github.com/OpenGridForum/DFDL/issues/77#issuecomment-3750887512
+| More minor and typographical format fixes per link:https://github.com/OpenGridForum/DFDL/issues/77#issuecomment-3750887512[(Issue 77)]
 
 .5+a| 2026-01-02
 
@@ -48,12 +48,12 @@ a| 2026-01-15
 a| 2026-01-02
 
 (internal v1.2.1)
-a| Edits based on review of ISO-formatted version. See github.com/OpenGridForum/DFDL/issues/77
+a| Edits based on review of ISO-formatted version. See link:https://github.com/OpenGridForum/DFDL/issues/77[(Issue 77)]
 
 Also minor and typographical issues fixed.
 See
 
-github.com/OpenGridForum/DFDL/issues/51
+link:https://github.com/OpenGridForum/DFDL/issues/51[(Issue 51)]
 
 a| 2025-10-01
 
