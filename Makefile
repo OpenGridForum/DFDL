@@ -69,9 +69,11 @@ html: FORMATS := xml,html
 pdf:  FORMATS := xml,html,pdf
 
 # Metanorma writes its output next to the input file, so move the artifacts
-# into $(BUILD)/ afterwards.
+# into $(BUILD)/ afterwards. A conversion that fails doesn't fail the build,
+# so remove the old output first; check then fails on what is missing.
 xml html pdf:
 	@mkdir -p $(BUILD)
+	@for f in $$(echo $(FORMATS) | tr , ' '); do rm -f $(BUILD)/$(STEM).$$f; done
 	$(DOCKER) metanorma compile -t iso -x $(FORMATS) $(MN_REQUIRE) $(MN_FLAGS) $(SPEC)
 	@for f in $(dir $(SPEC))$(SRCSTEM).*; do \
 		case "$$f" in *.adoc) continue ;; esac; \
@@ -117,6 +119,17 @@ overrides:
 check: lint html
 	@python3 tools/tables.py --check
 	@python3 tools/overrides.py --check
+	@test -f $(BUILD)/$(STEM).html || { \
+		echo "$(BUILD)/$(STEM).html wasn't built; see Metanorma's errors above" >&2; \
+		exit 1; }
+	@if [ "$(EDITION)" = ogf ] && ! grep -q 'class="ogf-cover"' $(BUILD)/$(STEM).html; then \
+		echo "$(BUILD)/$(STEM).html has no OGF cover; check :htmlcoverpage: in $(SPEC)" >&2; \
+		exit 1; \
+	fi
+	@if [ "$(EDITION)" = ogf ] && ! grep -qF 'family=Noto+Sans:' $(BUILD)/$(STEM).html; then \
+		echo "$(BUILD)/$(STEM).html doesn't load the OGF fonts; check :htmlstylesheet-override: in $(SPEC)" >&2; \
+		exit 1; \
+	fi
 	@checkers=$$({ find tools -maxdepth 1 -type f -perm -u+x; \
 		ls tools/check*.py; } 2>/dev/null | sort -u); \
 	if [ -z "$$checkers" ]; then \

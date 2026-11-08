@@ -197,14 +197,19 @@ come from `copyright-year`, which the text reads as `{copyright-year}`.
 The OGF edition's HTML cover is `html-cover-ogf.html`, a template that reads
 the same attributes as the PDF cover. `dfdl-ogf.adoc` gives its path from
 the repository root, `spec/html-cover-ogf.html`, because Metanorma resolves
-it from where the build runs rather than from the master file.
+it from where the build runs rather than from the master file. A wrong path
+doesn't stop Metanorma, which falls back to the ISO cover, so
+`make EDITION=ogf check` fails if the HTML has no OGF cover.
 
 The OGF edition's HTML uses the fonts of the PDF, Noto Sans and Noto Sans
 Mono, named by `body-font`, `header-font` and `monospace-font` in
 `dfdl-ogf.adoc`. `html-overrides-ogf.css` loads them from Google Fonts. Its
 path is given from `spec/`, like the PDF override, not from the repository
 root. Metanorma escapes quotes and ampersands in that file, so keep its URLs
-unquoted.
+unquoted. With a wrong path Metanorma builds no HTML, and without the
+attribute it builds the HTML without the fonts. Neither stops the build, so
+`make check` fails if there is no HTML, and `make EDITION=ogf check` fails if
+the HTML doesn't load the fonts.
 
 ## The conversion check
 
