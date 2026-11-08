@@ -138,6 +138,19 @@ shaded cells are kept as data files in `tables/`, one line per cell, and
 `make tables` writes them into the clause. Edit the data file, not the table;
 `make check` fails if the two disagree. `tools/tables.py` describes the format.
 
+## The Property Index
+
+The Property Index in the front matter is generated from the property
+tables, so don't edit `clauses/front-07-property-index.adoc`. Each property
+is the first cell of a row in a table headed "Property Name", and that cell
+carries an anchor named after it, which the index links to:
+
+    | [[p-byteorder]]byteOrder
+
+Give a new property its anchor and run `make index`; `make check` fails if
+the index is out of date. A property defined in more than one table is
+anchored only at the first.
+
 ## Technical text
 
 Quotes, hex values like `0x55` and spaced hyphens are left as typed, because

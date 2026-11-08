@@ -52,7 +52,7 @@ MN_REQUIRE := -r /metanorma/tools/bits.rb
 
 RELEASE  := docs/releases/$(VERSION)
 
-.PHONY: all editions release xml html pdf lint tables overrides check check-conversion clean
+.PHONY: all editions release xml html pdf lint tables overrides index check check-conversion clean
 
 # One pdf pass also emits the HTML and the XML, so `all` is just `pdf`.
 all: pdf
@@ -114,11 +114,17 @@ tables:
 overrides:
 	python3 tools/overrides.py
 
+# The Property Index in the front matter is generated from the property
+# tables in the build; see tools/property-index.py.
+index: xml
+	python3 tools/property-index.py $(BUILD)/$(STEM).xml --write
+
 # Runs every executable in tools/, plus any tools/check*.py, over the
 # build. Tolerant of tools/ being empty or absent.
 check: lint html
 	@python3 tools/tables.py --check
 	@python3 tools/overrides.py --check
+	@python3 tools/property-index.py $(BUILD)/$(STEM).xml --check
 	@test -f $(BUILD)/$(STEM).html || { \
 		echo "$(BUILD)/$(STEM).html wasn't built; see Metanorma's errors above" >&2; \
 		exit 1; }
