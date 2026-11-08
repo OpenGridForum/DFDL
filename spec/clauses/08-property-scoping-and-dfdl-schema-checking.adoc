@@ -406,6 +406,8 @@ annotation has been encountered.
 definitions as they may legitimately be incomplete due to properties intended to
 be supplied based on scoping rules and the context at the point of use. There
 are two exceptions to this, which MUST be checked:
++
+[arabic]
 .. Global simple type definitions that are referenced by the dfdl:prefixLengthType property
 .. Global element declarations that are the document root.
 
