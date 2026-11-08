@@ -120,7 +120,7 @@ the element's representation must begin at 1 or 1 plus a multiple of 4 bytes.
 That is, 1, 5, 9, 13, 17 and so on.
 
 The length of the *_AlignmentFill_* region is measured in bits.
-If alignmentUnits is 'bytes' then the processor multiplies the alignment value
+If dfdl:alignmentUnits is 'bytes' then the processor multiplies the alignment value
 by 8 to get the bit alignment,  If the position in the data stream of the start
 of the *_AlignmentFill_* region is bit position N, then the length of the
 *_AlignmentFill_* region is the smallest non-negative integer L such that (L
