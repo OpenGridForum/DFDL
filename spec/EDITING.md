@@ -194,6 +194,11 @@ the cover's author lines. Metanorma splits these values at commas, and the
 stylesheet joins them again, so a value may contain commas. Copyright years
 come from `copyright-year`, which the text reads as `{copyright-year}`.
 
+The OGF edition's HTML cover is `html-cover-ogf.html`, a template that reads
+the same attributes as the PDF cover. `dfdl-ogf.adoc` gives its path from
+the repository root, `spec/html-cover-ogf.html`, because Metanorma resolves
+it from where the build runs rather than from the master file.
+
 ## The conversion check
 
 `make check-conversion` compares the build against the MS-Word source, the

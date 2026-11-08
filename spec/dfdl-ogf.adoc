@@ -26,6 +26,7 @@
 :publisher: Open Grid Forum
 :edition-ogf:
 :boilerplate-authority: boilerplate-ogf.xml
+:htmlcoverpage: spec/html-cover-ogf.html
 :docstage: 60
 :docsubstage: 60
 
