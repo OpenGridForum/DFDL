@@ -105,4 +105,49 @@
     <fo:static-content flow-name="footer-odd" role="artifact"><xsl:call-template name="ogf-footer-block"><xsl:with-param name="preface" select="$preface"/></xsl:call-template></fo:static-content>
   </xsl:template>
 
+  <!--
+    A plain cover in the shape of the GFD.240 one: the document number, the
+    working group and the contact address on the left; the authors and the
+    dates on the right; then the title and the copyright, which comes from the
+    copyright-year attribute and the publisher.
+  -->
+  <xsl:template name="cover-page">
+    <xsl:param name="num"/>
+    <fo:page-sequence master-reference="cover-page" force-page-count="no-force">
+      <fo:flow flow-name="xsl-region-body">
+        <fo:block-container margin-top="10mm">
+          <fo:table table-layout="fixed" width="100%" font-size="10pt" font-weight="bold">
+            <fo:table-column column-width="40%"/>
+            <fo:table-column column-width="60%"/>
+            <fo:table-body>
+              <fo:table-row>
+                <fo:table-cell>
+                  <fo:block><xsl:call-template name="ogf-value"><xsl:with-param name="name">ogf-docid</xsl:with-param></xsl:call-template></fo:block>
+                  <fo:block><xsl:call-template name="ogf-value"><xsl:with-param name="name">ogf-group</xsl:with-param></xsl:call-template></fo:block>
+                  <fo:block><xsl:call-template name="ogf-value"><xsl:with-param name="name">ogf-contact</xsl:with-param></xsl:call-template></fo:block>
+                </fo:table-cell>
+                <fo:table-cell text-align="right">
+                  <xsl:for-each select="$ogf/*[starts-with(local-name(), 'ogf-author-')][not(local-name() = local-name(preceding-sibling::*[1]))]">
+                    <fo:block><xsl:call-template name="ogf-value"><xsl:with-param name="name" select="local-name()"/></xsl:call-template></fo:block>
+                  </xsl:for-each>
+                  <fo:block><xsl:call-template name="ogf-value"><xsl:with-param name="name">ogf-date</xsl:with-param></xsl:call-template></fo:block>
+                  <fo:block><xsl:call-template name="ogf-value"><xsl:with-param name="name">ogf-updated</xsl:with-param></xsl:call-template></fo:block>
+                </fo:table-cell>
+              </fo:table-row>
+            </fo:table-body>
+          </fo:table>
+        </fo:block-container>
+        <fo:block font-size="18pt" font-weight="bold" text-align="center" margin-top="40mm">
+          <xsl:value-of select="/mn:metanorma/mn:bibdata/mn:title[@language = 'en'][@type = 'main']"/>
+        </fo:block>
+        <fo:block font-size="10pt" text-align="center" margin-top="20mm">
+          <xsl:text>Copyright © </xsl:text>
+          <xsl:value-of select="/mn:metanorma/mn:bibdata/mn:copyright/mn:owner/mn:organization/mn:name"/>
+          <xsl:text> </xsl:text>
+          <xsl:value-of select="/mn:metanorma/mn:bibdata/mn:copyright/mn:from"/>
+        </fo:block>
+      </fo:flow>
+    </fo:page-sequence>
+  </xsl:template>
+
 </xsl:stylesheet>

@@ -1,8 +1,3 @@
-[align=center]
-pass:[<span style="font-size:16;font-family:Arial"><strong>Data Format Description Language (DFDL) v1.0 Specification</strong></span>]
-
-// (The above must be style 'Heading', not 'Title" to avoid a ToC entry.)
-
 // Instructions and Note to Editors
 
 // This document uses an adaptation of the ISO Standards format, adapted for use in creating an OGF DFDL specification which can subsequently be easily adapted to be an ISO PAS Submission.
