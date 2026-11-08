@@ -23,11 +23,15 @@ endif::[]
 [.preface]
 include::../clauses/front-02-document-change-history.adoc[]
 
+ifdef::edition-ogf[]
 [.preface]
 include::../clauses/front-03-intellectual-property-statement.adoc[]
+endif::[]
 
+ifdef::edition-ogf[]
 [.preface]
 include::../clauses/front-04-disclaimer.adoc[]
+endif::[]
 
 ifdef::edition-ogf[]
 [.preface]
