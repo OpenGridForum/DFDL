@@ -46,10 +46,10 @@ Element not declared last and occurrence not followed by end-of-group
 never
 grey: Schema definition error
 <
-blue: Unparse N occurrences ~ unparse (maxOccurs -- N) trailing zero-length occurrences
+blue: Unparse N occurrences ~ unparse (maxOccurs - N) trailing zero-length occurrences
 <
 grey: Schema definition error
-blue: Unparse N occurrences ~ unparse (maxOccurs -- N) trailing zero-length occurrences
+blue: Unparse N occurrences ~ unparse (maxOccurs - N) trailing zero-length occurrences
 
 trailingEmptyStrict
 grey:

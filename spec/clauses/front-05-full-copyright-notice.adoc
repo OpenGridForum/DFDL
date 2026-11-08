@@ -1,6 +1,6 @@
 == Full Copyright Notice
 
-Copyright +(C)+ Open Grid Forum (2005-2026).
+Copyright +(C)+ Open Grid Forum (2005-{copyright-year}).
 Some Rights Reserved.
 
 This document and translations of it may be copied and furnished to others, and

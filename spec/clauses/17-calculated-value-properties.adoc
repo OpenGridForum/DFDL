@@ -31,7 +31,7 @@ These properties apply to elements of simple type.
 | Property Name
 | Description
 
-| inputValueCalc
+| [[p-inputvaluecalc]]inputValueCalc
 | DFDL Expression
 
 An expression that calculates the value of the element when parsing.
@@ -78,7 +78,7 @@ expressed on its type are ignored.
 
 Annotation: dfdl:element
 
-| outputValueCalc
+| [[p-outputvaluecalc]]outputValueCalc
 | DFDL Expression
 
 An expression that calculates the value of the current element when unparsing.

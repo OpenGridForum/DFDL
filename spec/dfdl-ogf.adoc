@@ -10,16 +10,30 @@
 :i18nyaml: i18n-en.yaml
 :mn-output-extensions: xml,html,pdf,rxl
 :local-cache-only:
-:presentation-metadata-ul-label-list: &#x2022;,&#x25CB;,&#x25AA;
+:presentation-metadata-ul-label-list: &#x2022;,o,&#x25AA;
 :data-uri-image:
 :source-highlighter: false
 :smartquotes: false
 :block-unnumbered: sourcecode
-:pdf-stylesheet-override: pdf-overrides.xsl
+:pdf-stylesheet-override: pdf-overrides-ogf.xsl
+:presentation-metadata-ogf-docid: GFD-R-P.240
+:presentation-metadata-ogf-date: February 2021
+:presentation-metadata-ogf-updated: Updated January 2026
+:presentation-metadata-ogf-contact: ogf.org/dfdl
+:presentation-metadata-ogf-group: OGF DFDL WG
+:presentation-metadata-ogf-author-1: Michael J Beckerle, ASF/Owl Cyber Defense/Tresys
+:presentation-metadata-ogf-author-2: Stephen M Hanson, IBM
 :publisher: Open Grid Forum
+:edition-ogf:
+:boilerplate-authority: boilerplate-ogf.xml
+:htmlcoverpage: spec/html-cover-ogf.html
+:body-font: "Noto Sans",sans-serif
+:header-font: "Noto Sans",sans-serif
+:monospace-font: "Noto Sans Mono",monospace
+:htmlstylesheet-override: html-overrides-ogf.css
 :docstage: 60
 :docsubstage: 60
 
-include::frontmatter/ogf.adoc[]
+include::frontmatter/front.adoc[]
 
 include::body.adoc[]

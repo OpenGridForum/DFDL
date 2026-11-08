@@ -89,3 +89,8 @@ jobs:
       # non-zero and fails this job.
       - name: Lint and check fidelity
         run: make check
+
+      # make check takes the Makefile's default edition, ISO; this runs the
+      # same checks on the OGF edition, including the ones only it has.
+      - name: Check the OGF edition
+        run: make EDITION=ogf check

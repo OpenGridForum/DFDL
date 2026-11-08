@@ -138,6 +138,19 @@ shaded cells are kept as data files in `tables/`, one line per cell, and
 `make tables` writes them into the clause. Edit the data file, not the table;
 `make check` fails if the two disagree. `tools/tables.py` describes the format.
 
+## The Property Index
+
+The Property Index in the front matter is generated from the property
+tables, so don't edit `clauses/front-07-property-index.adoc`. Each property
+is the first cell of a row in a table headed "Property Name", and that cell
+carries an anchor named after it, which the index links to:
+
+    | [[p-byteorder]]byteOrder
+
+Give a new property its anchor and run `make index`; `make check` fails if
+the index is out of date. A property defined in more than one table is
+anchored only at the first.
+
 ## Technical text
 
 Quotes, hex values like `0x55` and spaced hyphens are left as typed, because
@@ -166,6 +179,50 @@ AsciiDoc would rewrite, with its file, line and the fix.
 
 `add:[text]` and `del:[text]` produce them. The role form `[.add]#text#` is
 silently ignored and renders as plain text.
+
+## Editions
+
+The same source builds both editions. `dfdl-ogf.adoc` and `dfdl-iso.adoc`
+hold only document metadata, and both include `frontmatter/front.adoc` and
+`body.adoc`. Each sets one attribute, `edition-ogf` or `edition-iso`.
+
+The body is the same in both editions: the same pages, page numbers and
+section numbers. Only headers, footers, covers and some front matter differ.
+Where a front matter section needs different wording in each edition, mark
+it with the attribute:
+
+    ifdef::edition-iso[]
+    Wording for the ISO edition only.
+    endif::[]
+
+The OGF edition prints its preamble, `clauses/front-01-preamble.adoc`, on its
+cover page. The preamble's `== Foreword` heading is how the stylesheet finds
+it, so keep that heading; it is never printed.
+
+Values that change between releases are set once, as attributes in the
+master, never typed into the text or the stylesheets. The OGF edition's
+header, footer and cover read `presentation-metadata-ogf-*` attributes in
+`dfdl-ogf.adoc`: the document number, the dates, the contact address and
+the cover's author lines. Metanorma splits these values at commas, and the
+stylesheet joins them again, so a value may contain commas. Copyright years
+come from `copyright-year`, which the text reads as `{copyright-year}`.
+
+The OGF edition's HTML cover is `html-cover-ogf.html`, a template that reads
+the same attributes as the PDF cover. `dfdl-ogf.adoc` gives its path from
+the repository root, `spec/html-cover-ogf.html`, because Metanorma resolves
+it from where the build runs rather than from the master file. A wrong path
+doesn't stop Metanorma, which falls back to the ISO cover, so
+`make EDITION=ogf check` fails if the HTML has no OGF cover.
+
+The OGF edition's HTML uses the fonts of the PDF, Noto Sans and Noto Sans
+Mono, named by `body-font`, `header-font` and `monospace-font` in
+`dfdl-ogf.adoc`. `html-overrides-ogf.css` loads them from Google Fonts. Its
+path is given from `spec/`, like the PDF override, not from the repository
+root. Metanorma escapes quotes and ampersands in that file, so keep its URLs
+unquoted. With a wrong path Metanorma builds no HTML, and without the
+attribute it builds the HTML without the fonts. Neither stops the build, so
+`make check` fails if there is no HTML, and `make EDITION=ogf check` fails if
+the HTML doesn't load the fonts.
 
 ## The conversion check
 

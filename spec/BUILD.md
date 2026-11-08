@@ -33,7 +33,9 @@ together.
 | `make editions` | `make all` for every edition |
 | `make lint` | `ruff` and `black` over `tools/` |
 | `make tables` | rewrite the generated tables in clause 14 from `spec/tables/` |
-| `make check` | `lint`, a check that generated tables are current, then every validator in `tools/` against the semantic XML |
+| `make overrides` | rewrite the OGF edition's PDF override, `spec/pdf-overrides-ogf.xsl` |
+| `make index` | XML, then rewrite the Property Index in the front matter from the property tables |
+| `make check` | `lint`, a check that generated tables, the OGF override and the Property Index are current, then every validator in `tools/` against the semantic XML |
 | `make release VERSION=x.y.z` | versioned deliverables for both editions |
 | `make clean` | remove the build output |
 
@@ -81,14 +83,27 @@ diagrams show their mask lines instead of colour.
 The specification is published twice: as ISO/IEC 23415 and as OGF GFD.240. The
 normative text is identical, so `spec/body.adoc` holds all of it and is included
 by both masters — `spec/dfdl-iso.adoc` and `spec/dfdl-ogf.adoc` — which differ only
-in document metadata and the front matter they pull in. Editing the body edits
-both editions.
+in document metadata. Both include the same front matter,
+`spec/frontmatter/front.adoc`, which uses an edition attribute where the
+wording differs; see `EDITING.md`. Editing the body edits both editions.
 
 Metanorma names its output after its input, and the Makefile renames the
 artifacts to a common stem, so the two editions produce identically named files.
 They are written to `build/iso/` and `build/ogf/` so neither can silently
 overwrite the other. `make editions` renders both in one invocation, which also
 guarantees they came from the same source state.
+
+PDF styling is layered over Metanorma's ISO stylesheet. `spec/pdf-overrides.xsl`
+applies to both editions. The OGF edition also has templates of its own, in
+`spec/pdf-overrides-ogf-only.xsl`. mn2pdf takes one override file per document
+and rejects a template defined twice, so the two cannot be joined with an
+include; `make overrides` joins them into `spec/pdf-overrides-ogf.xsl`, which
+the OGF master names. That file is committed so it can be read, is never
+edited by hand, and `make check` fails if it is out of date. Several
+templates in these files replace metanorma-iso's own. Each carries a
+fingerprint of the original, and `make check` fails if the pinned image's
+original no longer matches, so an upgrade that changes one can't pass
+unnoticed. Review the change, update the override, then the fingerprint.
 
 Each build directory holds `dfdl.xml` (semantic XML), `dfdl.presentation.xml`,
 `dfdl.html`, `dfdl.pdf`, and the diagnostics: `dfdl.err.html` lists Metanorma's

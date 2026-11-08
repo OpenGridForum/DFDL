@@ -106,7 +106,7 @@ properties.
 | Property Name
 | Description
 
-| textPadKind
+| [[p-textpadkind]]textPadKind
 | Enum
 
 Valid values 'none', 'padChar'.
@@ -149,7 +149,7 @@ length.
 
 Annotation: dfdl:element, dfdl:simpleType
 
-| textTrimKind
+| [[p-texttrimkind]]textTrimKind
 | Enum
 
 Valid values 'none', 'padChar'
@@ -169,7 +169,7 @@ or dfdl:textCalendarJustification, depending on the type of the element.
 
 Annotation: dfdl:element , dfdl:simpleType
 
-| textOutputMinLength
+| [[p-textoutputminlength]]textOutputMinLength
 | Non-negative Integer.
 
 Only used when dfdl:textPadKind is 'padChar' and dfdl:lengthKind is 'delimited',
@@ -188,7 +188,7 @@ representation text then no padding occurs.
 
 Annotation: dfdl:element, dfdl:simpleType
 
-| escapeSchemeRef
+| [[p-escapeschemeref]]escapeSchemeRef
 | QName or empty String
 
 The name of the dfdl:defineEscapeScheme annotation that provides the additional
@@ -241,7 +241,7 @@ application of the dfdl:emptyValueDelimiterPolicy property.
 | Property Name
 | Description
 
-| escapeKind
+| [[p-escapekind]]escapeKind
 | Enum
 
 Valid values 'escapeCharacter', 'escapeBlock'
@@ -291,7 +291,7 @@ characters has no significance.
 
 Annotation: dfdl:escapeScheme
 
-| escapeCharacter
+| [[p-escapecharacter]]escapeCharacter
 | DFDL String Literal or DFDL Expression
 
 Specifies one character that escapes the subsequent character.
@@ -322,7 +322,7 @@ NilLiteralValue) of the field
 
 Annotation: dfdl:escapeScheme
 
-| escapeBlockStart
+| [[p-escapeblockstart]]escapeBlockStart
 | DFDL String Literal
 
 The string of characters that denotes the beginning of a sequence of characters
@@ -342,7 +342,7 @@ A dfdl:escapeBlockStart string contributes to the simple value region
 
 Annotation: dfdl:escapeScheme
 
-| escapeBlockEnd
+| [[p-escapeblockend]]escapeBlockEnd
 | DFDL String Literal
 
 The string of characters that denotes the end of a sequence of characters
@@ -365,7 +365,7 @@ A dfdl:escapeBlockEnd string contributes to the simple value region
 
 Annotation: dfdl:escapeScheme
 
-| escapeEscapeCharacter
+| [[p-escapeescapecharacter]]escapeEscapeCharacter
 | DFDL String Literal or DFDL Expression
 
 Specifies one character that escapes an immediately following
@@ -393,7 +393,7 @@ Escape-escape characters contribute to the simple value region
 
 Annotation: dfdl:escapeScheme
 
-| extraEscapedCharacters
+| [[p-extraescapedcharacters]]extraEscapedCharacters
 | List of DFDL String Literals
 
 A whitespace separated list of single characters that must be escaped in
@@ -411,7 +411,7 @@ Extra escaped characters contribute to the simple value region
 
 Annotation: dfdl:escapeScheme
 
-| generateEscapeBlock
+| [[p-generateescapeblock]]generateEscapeBlock
 | Enum
 
 Valid values 'always',  'whenNeeded'
@@ -430,7 +430,7 @@ data contains any of the following:
 
 Annotation: dfdl:escapeScheme
 
-| escapeCharacterPolicy
+| [[p-escapecharacterpolicy]]escapeCharacterPolicy
 | Enum
 
 Valid values are 'all', 'delimiters'.
@@ -501,7 +501,7 @@ standard.
 | Property name
 | Description
 
-| textBidi
+| [[p-textbidi]]textBidi
 | Enum
 
 Valid value is, 'no'
@@ -522,7 +522,7 @@ Annotation: dfdl:element, dfdl:simpleType (representation text)
 | Property Name
 | Description
 
-| textStringJustification
+| [[p-textstringjustification]]textStringJustification
 | Enum
 
 Valid values 'left', 'right',  'center'
@@ -554,7 +554,7 @@ according to dfdl:textTrimKind property.
 
 Annotation: dfdl:element, dfdl:simpleType
 
-| textStringPadCharacter
+| [[p-textstringpadcharacter]]textStringPadCharacter
 | DFDL String Literal
 
 The value that is used when padding or trimming string elements.
@@ -588,7 +588,7 @@ disallowed syntax.
 
 Annotation: dfdl:element, dfdl:simpleType
 
-| truncateSpecifiedLengthString
+| [[p-truncatespecifiedlengthstring]]truncateSpecifiedLengthString
 | Enum
 
 Valid values are 'yes', 'no'
@@ -631,7 +631,7 @@ Annotation: dfdl:element, dfdl:simpleType
 | Property Name
 | Description
 
-| decimalSigned
+| [[p-decimalsigned]]decimalSigned
 | Enum
 
 Valid values are 'yes', 'no'
@@ -666,7 +666,7 @@ considered part of the value representation.
 | Property Name
 | Description
 
-| textNumberRep
+| [[p-textnumberrep]]textNumberRep
 | Enum
 
 Valid values are 'standard', 'zoned'
@@ -715,7 +715,7 @@ It is a Schema Definition Error if any of these requirements are not met.
 
 Annotation: dfdl:element, dfdl:simpleType
 
-| textNumberJustification
+| [[p-textnumberjustification]]textNumberJustification
 | Enum
 
 Valid values 'left', 'right', 'center'
@@ -726,7 +726,7 @@ Behavior as for dfdl:textStringJustification.
 
 Annotation: dfdl:element, dfdl:simpleType
 
-| textNumberPadCharacter
+| [[p-textnumberpadcharacter]]textNumberPadCharacter
 | DFDL String Literal
 
 The value that is used when padding or trimming number elements.
@@ -765,7 +765,7 @@ property.
 
 Annotation: dfdl:element, dfdl:simpleType
 
-| textNumberPattern
+| [[p-textnumberpattern]]textNumberPattern
 | String
 
 Defines the ICU-like pattern that describes the format of the text number.
@@ -785,7 +785,7 @@ The syntax of dfdl:textNumberPattern is described in
 
 Annotation: dfdl:element, dfdl:simpleType
 
-| textNumberRounding
+| [[p-textnumberrounding]]textNumberRounding
 | Enum
 
 Specifies how rounding is controlled during unparsing.
@@ -812,7 +812,7 @@ Error.
 
 Annotation: dfdl:element, dfdl:simpleType
 
-| textNumberRoundingMode
+| [[p-textnumberroundingmode]]textNumberRoundingMode
 | Enum
 
 Specifies how rounding occurs during unparsing, when dfdl:textNumberRounding is
@@ -843,7 +843,7 @@ Error.
 
 Annotation: dfdl:element, dfdl:simpleType
 
-| textNumberRoundingIncrement
+| [[p-textnumberroundingincrement]]textNumberRoundingIncrement
 | Double
 
 Specifies the rounding increment to use during unparsing, when
@@ -856,7 +856,7 @@ A negative value is a Schema Definition Error.
 
 Annotation: dfdl:element, dfdl:simpleType
 
-| textNumberCheckPolicy
+| [[p-textnumbercheckpolicy]]textNumberCheckPolicy
 | Enum
 
 Values are 'strict' and 'lax'.
@@ -888,7 +888,7 @@ numbers to/from text representation.
 
 Annotation: dfdl:element, dfdl:simpleType
 
-| textStandardDecimalSeparator
+| [[p-textstandarddecimalseparator]]textStandardDecimalSeparator
 | List of DFDL String Literals  or DFDL Expression
 
 The decimal separator is the punctuation mark which separates the integer part
@@ -924,7 +924,7 @@ for this property are digits 0-9.
 
 Annotation: dfdl:element, dfdl:simpleType
 
-| textStandardGroupingSeparator
+| [[p-textstandardgroupingseparator]]textStandardGroupingSeparator
 | DFDL String Literal or DFDL Expression
 
 The grouping separator is the punctuation mark which separates the clusters of
@@ -953,7 +953,7 @@ about grouping separators.
 
 Annotation: dfdl:element, dfdl:simpleType
 
-| textStandardExponentRep
+| [[p-textstandardexponentrep]]textStandardExponentRep
 | DFDL String Literal or DFDL Expression
 
 Defines the actual character(s) that appear in the data as the exponent
@@ -983,7 +983,7 @@ parser.
 
 Annotation: dfdl:element, dfdl:simpleType
 
-| textStandardInfinityRep
+| [[p-textstandardinfinityrep]]textStandardInfinityRep
 | DFDL String Literal
 
 The value used to represent infinity.
@@ -1005,7 +1005,7 @@ It is a Schema Definition Error if empty string found as the property value.
 
 Annotation: dfdl:element, dfdl:simpleType
 
-| textStandardNaNRep
+| [[p-textstandardnanrep]]textStandardNaNRep
 | DFDL String Literal
 
 The value used to represent NaN.
@@ -1027,7 +1027,7 @@ It is a Schema Definition Error if empty string found as the property value.
 
 Annotation: dfdl:element, dfdl:simpleType
 
-| textStandardZeroRep
+| [[p-textstandardzerorep]]textStandardZeroRep
 | List of DFDL String Literals
 
 Valid values: empty string, any character string
@@ -1067,7 +1067,7 @@ disallowed syntax constructs.
 
 Annotation: dfdl:element, dfdl:simpleType
 
-| textStandardBase
+| [[p-textstandardbase]]textStandardBase
 | Non-negative Integer
 
 Valid Values 2, 8, 10, 16
@@ -1083,7 +1083,7 @@ is assumed.
 
 Annotation: dfdl:element, dfdl:simpleType
 
-| textZonedSignStyle
+| [[p-textzonedsignstyle]]textZonedSignStyle
 | Enum
 
 Specifies the code points that are used to modify the sign nibble of the byte
@@ -1764,7 +1764,7 @@ representations in the data stream.
 | Property Name
 | Description
 
-| binaryNumberRep
+| [[p-binarynumberrep]]binaryNumberRep
 |
 Enum
 
@@ -1816,7 +1816,7 @@ byte.
 
 Annotation: dfdl:element, dfdl:simpleType
 
-| binaryDecimalVirtualPoint
+| [[p-binarydecimalvirtualpoint]]binaryDecimalVirtualPoint
 | Integer.
 
 Used when the base simpleType is xs:decimal exactly.
@@ -1847,7 +1847,7 @@ excess precision where no rounding is possible.
 
 Annotation: dfdl:element, dfdl:simpleType
 
-| binaryPackedSignCodes
+| [[p-binarypackedsigncodes]]binaryPackedSignCodes
 | List of Characters
 
 Used only when dfdl:binaryNumberRep or dfdl:binaryCalendarRep is 'packed'
@@ -1874,7 +1874,7 @@ On unparsing, the specified values are always used.
 
 Annotation: dfdl:element, dfdl:simpleType
 
-| binaryNumberCheckPolicy
+| [[p-binarynumbercheckpolicy]]binaryNumberCheckPolicy
 | Enum
 
 Values are 'strict' and 'lax'.
@@ -2267,7 +2267,7 @@ On unparsing no sign nibble is written.
 | Property Name
 | Description
 
-| binaryFloatRep
+| [[p-binaryfloatrep]]binaryFloatRep
 | Enum or DFDL Expression
 
 This specifies the encoding method for the float and double.
@@ -2313,7 +2313,7 @@ Annotation: dfdl:element, dfdl:simpleType
 | Property Name
 | Description
 
-| textBooleanTrueRep
+| [[p-textbooleantruerep]]textBooleanTrueRep
 | List of DFDL String Literals or DFDL Expression
 
 A whitespace separated list of representations to be used for 'true'.
@@ -2348,7 +2348,7 @@ contains any of the disallowed constructs.
 
 Annotation: dfdl:element, dfdl:simpleType
 
-| textBooleanFalseRep
+| [[p-textbooleanfalserep]]textBooleanFalseRep
 | List of DFDL String Literals or DFDL Expression
 
 A whitespace separated list of representations to be used for 'false' These are
@@ -2375,7 +2375,7 @@ dfdl:textBooleanTrueRep property.
 
 Annotation: dfdl:element, dfdl:simpleType
 
-| textBooleanJustification
+| [[p-textbooleanjustification]]textBooleanJustification
 | Enum
 
 Valid values 'left', 'right',  'center'
@@ -2386,7 +2386,7 @@ Behavior as for dfdl:textStringJustification.
 
 Annotation: dfdl:element, dfdl:simpleType
 
-| textBooleanPadCharacter
+| [[p-textbooleanpadcharacter]]textBooleanPadCharacter
 | DFDL String Literal
 
 The value that is used when padding or trimming boolean elements.
@@ -2422,7 +2422,7 @@ Annotation: dfdl:element, dfdl:simpleType
 | Property Name
 | Description
 
-| binaryBooleanTrueRep
+| [[p-binarybooleantruerep]]binaryBooleanTrueRep
 | Non-negative Integer
 
 This value, treated as a binary xs:unsignedInt (See
@@ -2443,7 +2443,7 @@ specified length.
 
 Annotation: dfdl:element, dfdl:simpleType
 
-| binaryBooleanFalseRep
+| [[p-binarybooleanfalserep]]binaryBooleanFalseRep
 | Non-negative Integer
 
 This value, treated as a binary xs:unsignedInt (See
@@ -2476,7 +2476,7 @@ dfdl:representation 'binary' and a packed decimal representation.
 | Property Name
 | Description
 
-| calendarPattern
+| [[p-calendarpattern]]calendarPattern
 | String
 
 Defines the ICU pattern that describes the format of the calendar.
@@ -2490,7 +2490,7 @@ always result in the presentation of digits.
 
 Annotation: dfdl:element, dfdl:simpleType
 
-| calendarPatternKind
+| [[p-calendarpatternkind]]calendarPatternKind
 |
 Enum
 
@@ -2518,7 +2518,7 @@ Valid values 'explicit', 'implicit'
 
 Annotation: dfdl:element, dfdl:simpleType
 
-| calendarCheckPolicy
+| [[p-calendarcheckpolicy]]calendarCheckPolicy
 | Enum
 
 Valid values are 'strict', 'lax'
@@ -2531,7 +2531,7 @@ for 'strict' and 'lax'.
 
 Annotation: dfdl:element, dfdl:simpleType
 
-| calendarTimeZone
+| [[p-calendartimezone]]calendarTimeZone
 | String
 
 This property provides the time zone that is assumed if no time zone explicitly
@@ -2553,7 +2553,7 @@ Note that this property is used when parsing only.
 
 Annotation: dfdl:element, dfdl:simpleType
 
-| calendarObserveDST
+| [[p-calendarobservedst]]calendarObserveDST
 | Enum
 
 Valid values are 'yes', 'no'
@@ -2570,7 +2570,7 @@ This property applies to parsing only.
 
 Annotation: dfdl:element, dfdl:simpleType
 
-| calendarFirstDayOfWeek
+| [[p-calendarfirstdayofweek]]calendarFirstDayOfWeek
 | Enum
 
 Valid values 'Monday' … 'Sunday'
@@ -2579,7 +2579,7 @@ The day of the week upon which a new week is considered to start.
 
 Annotation: dfdl:element, dfdl:simpleType
 
-| calendarDaysInFirstWeek
+| [[p-calendardaysinfirstweek]]calendarDaysInFirstWeek
 | Non-negative Integer
 
 Valid values 1 to 7
@@ -2595,7 +2595,7 @@ starts some days before the new year.
 
 Annotation: dfdl:element, dfdl:simpleType
 
-| calendarCenturyStart
+| [[p-calendarcenturystart]]calendarCenturyStart
 | Non-negative Integer
 
 Valid values 0 to 99.
@@ -2610,7 +2610,7 @@ treated as 19nn.
 
 Annotation: dfdl:element, dfdl:simpleType
 
-| calendarLanguage
+| [[p-calendarlanguage]]calendarLanguage
 | String or DFDL Expression
 
 The language that is used when the pattern produces a presentation in text such
@@ -3072,7 +3072,7 @@ implementation-defined, but typically includes:
 | Property Name
 | Description
 
-| textCalendarJustification
+| [[p-textcalendarjustification]]textCalendarJustification
 | Enum
 
 Valid values 'left', 'right',  'center'
@@ -3083,7 +3083,7 @@ Behavior as for dfdl:textStringJustification.
 
 Annotation: dfdl:element, dfdl:simpleType
 
-| textCalendarPadCharacter
+| [[p-textcalendarpadcharacter]]textCalendarPadCharacter
 | DFDL String Literal
 
 The value that is used when padding or trimming calendar elements.
@@ -3119,7 +3119,7 @@ Annotation: dfdl:element, dfdl:simpleType
 | Property Name
 | Description
 
-| binaryCalendarRep
+| [[p-binarycalendarrep]]binaryCalendarRep
 | Enum
 
 Valid values are 'packed', 'bcd', 'ibm4690Packed', 'binarySeconds',
@@ -3170,7 +3170,7 @@ xs:dateTime.
 
 Annotation: dfdl:element, dfdl:simpleType
 
-| binaryCalendarEpoch
+| [[p-binarycalendarepoch]]binaryCalendarEpoch
 | DateTime
 
 Used when dfdl:binaryCalendarRep is 'binarySeconds' or 'binaryMilliseconds'
@@ -3278,7 +3278,7 @@ having the logical meaning 'nil'.
 | Property Name
 | Description
 
-| nilKind
+| [[p-nilkind]]nilKind
 | Enum
 
 Valid values 'literalValue', 'logicalValue', 'literalCharacter'.
@@ -3305,7 +3305,7 @@ It is a Schema Definition Error otherwise.
 
 Annotation: dfdl:element
 
-| nilValue
+| [[p-nilvalue]]nilValue
 | List of DFDL String Literals, List of Logical Values, DFDL String Literal
 
 Specifies the text strings that are the possible literal or logical nil values
@@ -3380,7 +3380,7 @@ It is a Schema Definition Error otherwise.
 
 Annotation: dfdl:element
 
-| nilValueDelimiterPolicy
+| [[p-nilvaluedelimiterpolicy]]nilValueDelimiterPolicy
 | Enum
 
 Valid values are 'none', 'initiator', 'terminator' or 'both'.
@@ -3438,7 +3438,7 @@ or 'terminator' when the parent xs:sequence has dfdl:initiatedContent 'yes'.
 
 Annotation: dfdl:element
 
-| useNilForDefault
+| [[p-usenilfordefault]]useNilForDefault
 | Enum
 
 Valid values are 'yes', 'no'
