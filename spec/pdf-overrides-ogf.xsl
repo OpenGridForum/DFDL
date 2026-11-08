@@ -464,4 +464,17 @@
   <xsl:template match="mn:preface/mn:foreword" mode="update_xml_step_move_pagebreak" priority="10"/>
   <xsl:template match="mn:preface/mn:foreword" mode="contents" priority="10"/>
 
+  <!--
+    No ISO pages in the OGF edition.  In the 2024 layout inner-cover-page
+    produces only ISO's "COPYRIGHT PROTECTED DOCUMENT" page, and back-page
+    only ISO's back cover with its price, ICS and iso.org.
+  -->
+  <xsl:template name="inner-cover-page">
+    <xsl:param name="num"/>
+  </xsl:template>
+
+  <xsl:template name="back-page">
+    <xsl:param name="num"/>
+  </xsl:template>
+
 </xsl:stylesheet>
