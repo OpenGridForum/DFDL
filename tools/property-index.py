@@ -72,8 +72,16 @@ INDEX_FILE = (
     Path(__file__).resolve().parent.parent / "spec/clauses/front-07-property-index.adoc"
 )
 
-# The column bands the front-matter index uses.
-BANDS = (("A-K", "a", "k"), ("L-Q", "l", "q"), ("R-Z", "r", "z"))
+# The column bands the front-matter index uses, chosen in #102 so the index
+# fits on one page.
+BANDS = (("A-E", "a", "e"), ("F-Q", "f", "q"), ("R-Z", "r", "z"))
+
+# The most names a column can hold with the index still on one page: measured
+# in the ISO edition, whose footer leaves less room than the OGF one, where
+# each name takes 14.3pt and 41 names leave room for five more.  The
+# check fails beyond this, so a new property cannot quietly push the index on
+# to a second page; move the band boundaries to even the columns out.
+COLUMN_LIMIT = 46
 
 
 @dataclass(frozen=True)
@@ -294,6 +302,20 @@ def band_of(name: str) -> int:
     return len(BANDS) - 1
 
 
+def crowded_columns(properties: dict[str, Property]) -> list[str]:
+    """Index columns too long for the index to fit on one page."""
+    counts = [0 for _ in BANDS]
+    for name in properties:
+        counts[band_of(name)] += 1
+    return [
+        f"The Property Index's {label} column has {count} names, but only "
+        f"{COLUMN_LIMIT} fit on one page; change BANDS in tools/property-index.py "
+        f"so the columns are more even."
+        for (label, _, _), count in zip(BANDS, counts)
+        if count > COLUMN_LIMIT
+    ]
+
+
 def render(properties: dict[str, Property]) -> str:
     """The Property Index clause, in the shape the front matter already uses."""
     columns: list[list[str]] = [[] for _ in BANDS]
@@ -312,7 +334,7 @@ def render(properties: dict[str, Property]) -> str:
         "",
         f"== {INDEX_TITLE}",
         "",
-        f'[%unnumbered,cols="{columns_spec}",options="header"]',
+        f'[%unnumbered,cols="{columns_spec}",options="header",class="property-index"]',
         "|===",
         "",
     ]
@@ -434,7 +456,12 @@ def main(argv: list[str] | None = None) -> int:
     mentions = collect_references(document, properties)
 
     expected = render(properties)
+    crowded = crowded_columns(properties)
+    for problem in crowded:
+        print(problem, file=sys.stderr)
     if args.check:
+        if crowded:
+            return 1
         current = destination.read_text(encoding="utf-8")
         if current != expected:
             print(f"{name} is out of date; run `make index`.", file=sys.stderr)

@@ -16,7 +16,8 @@
   mn2pdf merges this file over the base stylesheet, so each attribute set has
   to repeat the attributes it is not changing or they would be dropped.
 -->
-<xsl:stylesheet xmlns:fo="http://www.w3.org/1999/XSL/Format" version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:fo="http://www.w3.org/1999/XSL/Format"
                 xmlns:mn="https://www.metanorma.org/ns/standoc">
 
   <xsl:attribute-set name="p-style">
@@ -31,6 +32,19 @@
       <xsl:choose>
         <xsl:when test="ancestor::*[local-name()='li']">3pt</xsl:when>
         <xsl:otherwise>8pt</xsl:otherwise>
+      </xsl:choose>
+    </xsl:attribute>
+    <!--
+      A table row may break across pages, but not straight after the first
+      paragraph of a cell: a row that showed only "Enum" before the break
+      read as if that were the whole entry.  The keep is a soft one, so a
+      cell whose first two paragraphs are taller than a page still breaks.
+    -->
+    <xsl:attribute name="keep-with-next.within-page">
+      <xsl:choose>
+        <xsl:when test="parent::*[local-name()='td' or local-name()='th']
+                    and not(preceding-sibling::*) and following-sibling::*">5</xsl:when>
+        <xsl:otherwise>auto</xsl:otherwise>
       </xsl:choose>
     </xsl:attribute>
   </xsl:attribute-set>
@@ -73,11 +87,22 @@
     carried by merged regions that span rows, and a page break cuts them in
     half.  This makes the attribute do what it says on a table, and leaves
     every table without it free to break as before.
+
+    The keep is a soft one (a number rather than "always").  FOP honours it
+    whenever the table fits on a page; a table that grows taller than a page
+    breaks instead of running off the bottom of it, which FOP does with an
+    "always" keep it cannot satisfy, dropping the text without failing.
+
+    The separator suppression matrices, which tools/tables.py writes with
+    class="never-break", take an "always" keep instead, as a broken matrix
+    cannot be read.  One that grows taller than a page runs off it, and make
+    pdf fails on that, so it is either whole or the build stops.
   -->
   <xsl:attribute-set name="table-style">
     <xsl:attribute name="keep-together.within-column">
       <xsl:choose>
-        <xsl:when test="@keep-lines-together = 'true'">always</xsl:when>
+        <xsl:when test="@class = 'never-break'">always</xsl:when>
+        <xsl:when test="@keep-lines-together = 'true'">5</xsl:when>
         <xsl:otherwise>auto</xsl:otherwise>
       </xsl:choose>
     </xsl:attribute>
@@ -96,17 +121,45 @@
     tied to the row above and the break falls between groups instead.  This is
     opt-in per table, with class="keep-row-groups", because the translation
     table in Appendix D has a 23-row span that would not fit on a page at all.
+    Like keep-lines-together, the keep is a soft one, so a group that outgrows
+    a page breaks rather than overflowing it.
+
+    Every table also keeps its header with its first row, so a table never
+    starts at the foot of a page with only its header.
+
+    Every row is kept whole when it fits on a page, so a table breaks between
+    rows, where the repeated header and caption read naturally.  A row taller
+    than a page still breaks; its cells have no rule at the break, which marks
+    the row as continuing on the next page.
   -->
   <xsl:attribute-set name="table-body-row-style" use-attribute-sets="table-row-style">
+    <xsl:attribute name="keep-together.within-page">5</xsl:attribute>
     <xsl:attribute name="keep-with-previous.within-page">
       <xsl:choose>
         <xsl:when test="ancestor::*[local-name()='table'][1]/@class = 'keep-row-groups'
                     and (count(*[local-name()='td'][not(@colspan)]) + sum(*[local-name()='td']/@colspan))
-                        &lt; count(ancestor::*[local-name()='table'][1]/*[local-name()='colgroup']/*[local-name()='col'])">always</xsl:when>
+                        &lt; count(ancestor::*[local-name()='table'][1]/*[local-name()='colgroup']/*[local-name()='col'])">5</xsl:when>
+        <xsl:when test="parent::*[local-name()='tbody'] and not(preceding-sibling::*[local-name()='tr'])">5</xsl:when>
         <xsl:otherwise>auto</xsl:otherwise>
       </xsl:choose>
     </xsl:attribute>
   </xsl:attribute-set>
+
+  <!--
+    Closing a table at a page break.  A table that breaks repeats its caption
+    row, "Table N (continued)", on the next page.  Metanorma gives that row no
+    bottom border, so a table without a header row, or with borderless cells
+    like the grammar in Table 3, started the continuation with no top line.
+    The caption row now ends with the table's border, which on the first page
+    falls on the table's own top line.
+  -->
+  <!-- upstream: metanorma-iso refine_table-header-title-style sha256:443a1e76c55e2d8cc828d57a9ab93c89e64681ac3297663fb58a72f6e7ccd3fa -->
+  <xsl:template name="refine_table-header-title-style">
+    <xsl:attribute name="border-left">1pt solid white</xsl:attribute>
+    <xsl:attribute name="border-right">1pt solid white</xsl:attribute>
+    <xsl:attribute name="border-top">1pt solid white</xsl:attribute>
+    <xsl:attribute name="border-bottom"><xsl:value-of select="$table-border"/></xsl:attribute>
+  </xsl:template>
 
   <!--
     Framing code examples.  GFD.240 draws a thin box round its code blocks and
@@ -114,8 +167,29 @@
     border on all four sides, and the published PDF renders the inside of the
     box as #F3F3F3 against a white page.  The ISO stylesheet sets neither, so
     the examples ran into the surrounding prose with nothing to mark them off.
+
+    An example that breaks across pages keeps its box: the border and padding
+    are retained at the break, so the box closes at the foot of one page and
+    reopens at the top of the next.  Each part is given with its length, as
+    naming only the conditionality resets the width to FOP's default of 1pt.
+    An example with markup inside, such as the coloured bit diagrams, is kept
+    whole when it fits on a page; plain examples break between lines (below).
   -->
   <xsl:attribute-set name="sourcecode-style">
+    <xsl:attribute name="keep-together.within-column">
+      <xsl:choose>
+        <xsl:when test="*[not(self::*[local-name()='fmt-name'])]">5</xsl:when>
+        <xsl:otherwise>auto</xsl:otherwise>
+      </xsl:choose>
+    </xsl:attribute>
+    <xsl:attribute name="border-before-width.length">0.5pt</xsl:attribute>
+    <xsl:attribute name="border-before-width.conditionality">retain</xsl:attribute>
+    <xsl:attribute name="border-after-width.length">0.5pt</xsl:attribute>
+    <xsl:attribute name="border-after-width.conditionality">retain</xsl:attribute>
+    <xsl:attribute name="padding-before.length">4pt</xsl:attribute>
+    <xsl:attribute name="padding-before.conditionality">retain</xsl:attribute>
+    <xsl:attribute name="padding-after.length">4pt</xsl:attribute>
+    <xsl:attribute name="padding-after.conditionality">retain</xsl:attribute>
     <xsl:attribute name="background-color">#F3F3F3</xsl:attribute>
     <xsl:attribute name="border">0.5pt solid black</xsl:attribute>
     <xsl:attribute name="padding">4pt</xsl:attribute>
@@ -125,6 +199,72 @@
     <xsl:attribute name="font-family">Courier New, <xsl:value-of select="$font_noto_sans_mono"/></xsl:attribute>
     <xsl:attribute name="margin-bottom">12pt</xsl:attribute>
   </xsl:attribute-set>
+
+  <!--
+    Breaking a code example between lines, never leaving a stub.  FOP treats
+    each line of a preformatted block as its own paragraph, so widow and
+    orphan control does nothing there, and a break could leave one line of an
+    example alone at the foot or head of a page.  A plain-text example is
+    written one block per line instead, with its first three lines kept
+    together and its last three, so an example of up to six lines never
+    breaks and a longer one breaks anywhere else.  A blank line becomes a
+    no-break space, as an empty block would take no height.
+
+    This replaces metanorma-iso's template for code text and calls its
+    add_spaces_to_sourcecode, which inserts the break points for long lines;
+    both are fingerprinted.
+  -->
+  <xsl:variable name="code-min-lines" select="3"/>
+
+  <!-- upstream: metanorma-iso match="mn:sourcecode/text() | mn:sourcecode//mn:span/text()" sha256:be93273d1053d014135f96e0af43f9e9003f7ab2321c7817486ae6d9715c70a3 -->
+  <!-- upstream: metanorma-iso add_spaces_to_sourcecode sha256:1b1c03208171f8c52655b5f61c10652921148613b2774e25dd3c756b41743abe -->
+  <xsl:template match="mn:sourcecode[not(*[not(self::mn:fmt-name)])]/text()[normalize-space()]" priority="5">
+    <xsl:variable name="spaced"><xsl:call-template name="add_spaces_to_sourcecode"/></xsl:variable>
+    <xsl:variable name="text">
+      <xsl:choose>
+        <xsl:when test="substring(string($spaced), string-length(string($spaced))) = '&#10;'">
+          <xsl:value-of select="substring(string($spaced), 1, string-length(string($spaced)) - 1)"/>
+        </xsl:when>
+        <xsl:otherwise><xsl:value-of select="string($spaced)"/></xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:call-template name="code-lines">
+      <xsl:with-param name="rest" select="string($text)"/>
+      <xsl:with-param name="n" select="1"/>
+      <xsl:with-param name="total" select="string-length($text) - string-length(translate($text, '&#10;', '')) + 1"/>
+    </xsl:call-template>
+  </xsl:template>
+
+  <xsl:template name="code-lines">
+    <xsl:param name="rest"/>
+    <xsl:param name="n"/>
+    <xsl:param name="total"/>
+    <xsl:variable name="line">
+      <xsl:choose>
+        <xsl:when test="contains($rest, '&#10;')"><xsl:value-of select="substring-before($rest, '&#10;')"/></xsl:when>
+        <xsl:otherwise><xsl:value-of select="$rest"/></xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <fo:block role="SKIP">
+      <xsl:if test="$n &lt; $code-min-lines and $n &lt; $total">
+        <xsl:attribute name="keep-with-next.within-column">always</xsl:attribute>
+      </xsl:if>
+      <xsl:if test="$n &gt; $total - $code-min-lines + 1 and $n &gt; 1">
+        <xsl:attribute name="keep-with-previous.within-column">always</xsl:attribute>
+      </xsl:if>
+      <xsl:choose>
+        <xsl:when test="string-length($line) = 0">&#xA0;</xsl:when>
+        <xsl:otherwise><xsl:value-of select="$line"/></xsl:otherwise>
+      </xsl:choose>
+    </fo:block>
+    <xsl:if test="contains($rest, '&#10;')">
+      <xsl:call-template name="code-lines">
+        <xsl:with-param name="rest" select="substring-after($rest, '&#10;')"/>
+        <xsl:with-param name="n" select="$n + 1"/>
+        <xsl:with-param name="total" select="$total"/>
+      </xsl:call-template>
+    </xsl:if>
+  </xsl:template>
 
   <!--
     Starting each clause on a new page.  GFD.240 sets a page break before 32 of
@@ -239,8 +379,10 @@
     paragraph followed by another item, inside refine_p-style, after the
     p-style attribute set above has been applied, so the list rule there never
     takes effect.  This is the stylesheet's refine_p-style from metanorma-iso
-    3.5.0 (the pinned image), changed only at that rule, from 9pt to 3pt.
-    make check fails if metanorma-iso's original changes.
+    3.5.0 (the pinned image), changed at that rule, from 9pt to 3pt, and to
+    give the Property Index 3pt between names in place of a table cell's 5pt,
+    so the index fits on one page.  make check fails if metanorma-iso's
+    original changes.
   -->
   <!-- upstream: metanorma-iso refine_p-style sha256:cf7b88bf4e16df921a40fcbfb63826edfc959434fa76c7ba3fefa21ace7bb554 -->
 	<xsl:template name="refine_p-style">
@@ -267,6 +409,9 @@
 			<xsl:choose>
 				<xsl:when test="not(following-sibling::*)"> <!-- last paragraph in table cell -->
 					<xsl:attribute name="margin-bottom">2pt</xsl:attribute>
+				</xsl:when>
+				<xsl:when test="ancestor::mn:table[1]/@class = 'property-index'"> <!-- DFDL: 3pt, so the Property Index fits on one page -->
+					<xsl:attribute name="margin-bottom">3pt</xsl:attribute>
 				</xsl:when>
 				<xsl:otherwise>
 					<xsl:attribute name="margin-bottom">5pt</xsl:attribute>

@@ -73,12 +73,31 @@ pdf:  FORMATS := xml,html,pdf
 # so remove the old output first; check then fails on what is missing.
 xml html pdf:
 	@mkdir -p $(BUILD)
-	@for f in $$(echo $(FORMATS) | tr , ' '); do rm -f $(BUILD)/$(STEM).$$f; done
+	@for f in $$(echo $(FORMATS) | tr , ' '); do rm -f $(BUILD)/$(STEM).$$f $(BUILD)/$(STEM).$$f.err; done
 	$(DOCKER) metanorma compile -t iso -x $(FORMATS) $(MN_REQUIRE) $(MN_FLAGS) $(SPEC)
 	@for f in $(dir $(SPEC))$(SRCSTEM).*; do \
 		case "$$f" in *.adoc) continue ;; esac; \
 		mv -f "$$f" "$(BUILD)/$(STEM)$${f#$(dir $(SPEC))$(SRCSTEM)}"; \
 	done
+	@# Metanorma reports success whatever FOP did. FOP writes an empty PDF when
+	@# it stops on an error, and lets content that cannot fit run off the page,
+	@# dropping it; it reports both only in this log.
+	@if case ",$(FORMATS)," in *,pdf,*) true ;; *) false ;; esac; then \
+		if [ -f $(BUILD)/$(STEM).pdf.err ] && grep -q 'Exception' $(BUILD)/$(STEM).pdf.err; then \
+			grep -m 3 'Exception' $(BUILD)/$(STEM).pdf.err >&2; \
+			echo "$(BUILD)/$(STEM).pdf failed; see $(BUILD)/$(STEM).pdf.err" >&2; \
+			exit 1; \
+		fi; \
+		if [ ! -s $(BUILD)/$(STEM).pdf ]; then \
+			echo "$(BUILD)/$(STEM).pdf is missing or empty; see $(BUILD)/$(STEM).pdf.err" >&2; \
+			exit 1; \
+		fi; \
+		if [ -f $(BUILD)/$(STEM).pdf.err ] && grep -q 'exceed' $(BUILD)/$(STEM).pdf.err; then \
+			grep 'exceed' $(BUILD)/$(STEM).pdf.err >&2; \
+			echo "$(BUILD)/$(STEM).pdf has content that runs off the page; see above" >&2; \
+			exit 1; \
+		fi; \
+	fi
 	@echo "Output in $(BUILD)/"
 
 # A release is committed, so it is rendered from scratch rather than

@@ -17,6 +17,10 @@ a fingerprint of the original it replaces, as a comment beside it:
 
     <!-- upstream: metanorma-iso refine_p-style sha256:... -->
 
+A template with no name is identified by its match pattern instead:
+
+    <!-- upstream: metanorma-iso match="mn:sourcecode/text()" sha256:... -->
+
 With --image, --check also reads those originals from the Metanorma image and
 fails if any no longer matches its fingerprint, so an image upgrade that
 changes a template we depend on cannot pass unnoticed.  Review the change,
@@ -44,7 +48,7 @@ DECLARATION = '<?xml version="1.0" encoding="UTF-8"?>\n'
 FO_NAMESPACE = 'xmlns:fo="http://www.w3.org/1999/XSL/Format"'
 STYLESHEET = re.compile(r"<xsl:stylesheet[^>]*>(.*)</xsl:stylesheet>", re.DOTALL)
 FINGERPRINT = re.compile(
-    r"<!-- upstream: metanorma-iso ([\w-]+) sha256:([0-9a-f]{64}) -->"
+    r'<!-- upstream: metanorma-iso ([\w-]+|match="[^"]+") sha256:([0-9a-f]{64}) -->'
 )
 UPSTREAM_XSL = "iso.international-standard.xsl"
 NOTICE = """<!--
@@ -86,9 +90,13 @@ def generate() -> str:
 
 
 def upstream_template(stylesheet: str, name: str) -> str | None:
-    """The text of one named template in metanorma-iso's stylesheet."""
-    # The name may sit beside other attributes, as in <xsl:template match="..." name="fn">.
-    pattern = rf'<xsl:template\b[^>]*\bname="{re.escape(name)}"[^>]*>.*?</xsl:template>'
+    """The text of one template in metanorma-iso's stylesheet, by name or match."""
+    if name.startswith('match="'):
+        attribute = name
+    else:
+        # The name may sit beside other attributes, as in <xsl:template match="..." name="fn">.
+        attribute = f'name="{name}"'
+    pattern = rf"<xsl:template\b[^>]*\b{re.escape(attribute)}[^>]*>.*?</xsl:template>"
     found = re.findall(pattern, stylesheet, re.DOTALL)
     return found[0] if len(found) == 1 else None
 

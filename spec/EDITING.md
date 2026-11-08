@@ -138,6 +138,23 @@ shaded cells are kept as data files in `tables/`, one line per cell, and
 `make tables` writes them into the clause. Edit the data file, not the table;
 `make check` fails if the two disagree. `tools/tables.py` describes the format.
 
+## Page breaks
+
+Tables and examples break across pages by themselves, so there is nothing to
+mark when adding or changing one. A table breaks between rows and repeats its
+caption and header. A row is only split if it is taller than a page, and then
+its cells have no rule at the break. A row never breaks straight after the
+first paragraph of a cell, and a code example never leaves fewer than three
+lines on either side of a break.
+
+A table that should stay whole takes `keep-lines-together=true`; one whose row
+spans must not be cut takes `class="keep-row-groups"`. Both still break if the
+table grows taller than a page. The separator suppression matrices in clause
+14, which `tools/tables.py` writes, never break: they move whole to the next
+page, and if one grows taller than a page `make pdf` fails. `make pdf` fails
+if anything runs off a page, which FOP otherwise does without an error, and if
+the PDF fails to build at all.
+
 ## The Property Index
 
 The Property Index in the front matter is generated from the property
@@ -150,6 +167,10 @@ carries an anchor named after it, which the index links to:
 Give a new property its anchor and run `make index`; `make check` fails if
 the index is out of date. A property defined in more than one table is
 anchored only at the first.
+
+The index fits on one page, in three columns: A-E, F-Q and R-Z. `make check`
+fails if a column grows past what fits, and says which; move the boundaries in
+`BANDS` in `tools/property-index.py` to even the columns out.
 
 ## Technical text
 

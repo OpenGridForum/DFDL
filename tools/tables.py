@@ -182,7 +182,7 @@ def render(table):
     out = [
         BEGIN.format(name=table.name),
         f".{table.title}",
-        f'[cols="{cols}",headerrows={table.header_rows},keep-lines-together=true]',
+        f'[cols="{cols}",headerrows={table.header_rows},keep-lines-together=true,class="never-break"]',
         "|===",
     ]
     for r, row in enumerate(table.grid):
