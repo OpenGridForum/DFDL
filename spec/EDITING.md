@@ -182,6 +182,10 @@ it with the attribute:
     Wording for the ISO edition only.
     endif::[]
 
+The OGF edition prints its preamble, `clauses/front-01-preamble.adoc`, on its
+cover page. The preamble's `== Foreword` heading is how the stylesheet finds
+it, so keep that heading; it is never printed.
+
 Values that change between releases are set once, as attributes in the
 master, never typed into the text or the stylesheets. The OGF edition's
 header, footer and cover read `presentation-metadata-ogf-*` attributes in

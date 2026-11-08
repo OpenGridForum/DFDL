@@ -1,3 +1,8 @@
+// The OGF edition prints this preamble on its cover page, after the title,
+// and nowhere else; see pdf-overrides-ogf-only.xsl. Its Foreword heading is
+// what lets the stylesheet find it, and is never printed.
+== Foreword
+
 // Instructions and Note to Editors
 
 // This document uses an adaptation of the ISO Standards format, adapted for use in creating an OGF DFDL specification which can subsequently be easily adapted to be an ISO PAS Submission.

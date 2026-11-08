@@ -5,10 +5,12 @@
 // an edition needs its own wording, the section or the line below says so
 // with ifdef::edition-ogf[] or ifdef::edition-iso[]. See EDITING.md.
 
+ifdef::edition-iso[]
 [abstract]
 == Abstract
 
 include::../abstract.adoc[]
+endif::[]
 
 // The specification numbers its own clauses from the Introduction, so the
 // sections that precede it stay unnumbered in both editions.

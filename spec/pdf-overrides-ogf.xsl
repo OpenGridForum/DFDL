@@ -420,10 +420,12 @@
   </xsl:template>
 
   <!--
-    A plain cover in the shape of the GFD.240 one: the document number, the
+    The OGF cover, laid out as GFD.240's first page: the document number, the
     working group and the contact address on the left; the authors and the
-    dates on the right; then the title and the copyright, which comes from the
-    copyright-year attribute and the publisher.
+    dates on the right; the title; then the preamble (Status of This Document,
+    Obsoletes, Copyright Notice and Abstract), which the source marks as the
+    Foreword.  The two templates after this keep the preamble from printing a
+    second time in the front matter or appearing in the contents.
   -->
   <xsl:template name="cover-page">
     <xsl:param name="num"/>
@@ -451,17 +453,15 @@
             </fo:table-body>
           </fo:table>
         </fo:block-container>
-        <fo:block font-size="18pt" font-weight="bold" text-align="center" margin-top="40mm">
+        <fo:block font-size="16pt" font-weight="bold" text-align="center" margin-top="12mm" margin-bottom="8mm">
           <xsl:value-of select="/mn:metanorma/mn:bibdata/mn:title[@language = 'en'][@type = 'main']"/>
         </fo:block>
-        <fo:block font-size="10pt" text-align="center" margin-top="20mm">
-          <xsl:text>Copyright © </xsl:text>
-          <xsl:value-of select="/mn:metanorma/mn:bibdata/mn:copyright/mn:owner/mn:organization/mn:name"/>
-          <xsl:text> </xsl:text>
-          <xsl:value-of select="/mn:metanorma/mn:bibdata/mn:copyright/mn:from"/>
-        </fo:block>
+        <xsl:apply-templates select="/mn:metanorma/mn:preface/mn:foreword/node()[not(self::mn:title or self::mn:fmt-title)]"/>
       </fo:flow>
     </fo:page-sequence>
   </xsl:template>
+
+  <xsl:template match="mn:preface/mn:foreword" mode="update_xml_step_move_pagebreak" priority="10"/>
+  <xsl:template match="mn:preface/mn:foreword" mode="contents" priority="10"/>
 
 </xsl:stylesheet>
