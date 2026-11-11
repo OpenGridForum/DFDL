@@ -3,11 +3,11 @@
 
 == Property Index
 
-[%unnumbered,cols="35,26,29",options="header"]
+[%unnumbered,cols="35,26,29",options="header",class="property-index"]
 |===
 
-| A-K
-| L-Q
+| A-E
+| F-Q
 | R-Z
 
 a| <<p-alignment,alignment>>
@@ -90,7 +90,7 @@ a| <<p-alignment,alignment>>
 
 <<p-extraescapedcharacters,extraEscapedCharacters>>
 
-<<p-failuretype,failureType>>
+a| <<p-failuretype,failureType>>
 
 <<p-fillbyte,fillByte>>
 
@@ -108,7 +108,7 @@ a| <<p-alignment,alignment>>
 
 <<p-inputvaluecalc,inputValueCalc>>
 
-a| <<p-leadingskip,leadingSkip>>
+<<p-leadingskip,leadingSkip>>
 
 <<p-length,length>>
 

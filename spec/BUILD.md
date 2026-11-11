@@ -28,7 +28,7 @@ together.
 | --- | --- |
 | `make xml` | semantic XML only — the fast path, and what the validators read |
 | `make html` | XML + HTML |
-| `make pdf` | XML + HTML + PDF (slow) |
+| `make pdf` | XML + HTML + PDF (slow); fails if the PDF fails to build or any content runs off a page |
 | `make all` | the same as `make pdf` — one pass emits all three |
 | `make editions` | `make all` for every edition |
 | `make lint` | `ruff` and `black` over `tools/` |
