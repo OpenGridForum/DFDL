@@ -59,9 +59,9 @@ specifically allowed.
 | Regular expressions
 a| dfdl:lengthKind 'pattern',
 
-dfdl:assert with dfdl:testkind 'pattern' ,
+dfdl:assert with testKind 'pattern' ,
 
-dfdl:discriminator with dfdl:testkind 'pattern'
+dfdl:discriminator with testKind 'pattern'
 
 | Zoned numbers
 | dfdl:textNumberRep 'zoned'

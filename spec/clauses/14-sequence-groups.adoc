@@ -404,7 +404,7 @@ _Rep(M < INF)_ , INF meaning infinity or unbounded.
 
 ===== Errors When the Sequence is Positional
 
-In the matrix abovethere are some cells where the combination of properties
+In the matrix above there are some cells where the combination of properties
 doesn't make sense, and a Schema Definition Error is raised.
 These occur when an element has dfdl:occursCountKind 'implicit' and XSD
 maxOccurs 'unbounded', and dfdl:separatorSuppressionPolicy implies that the
@@ -660,7 +660,7 @@ fragment:
 
 This example is similar to the one used above in the discussion of parsing with
 separator suppression.
-However, the element has no default value, the dfdl:emptyValueDelimterPolicy has
+However, the element has no default value, the dfdl:emptyValueDelimiterPolicy has
 been removed, and the element is nillable.
 Element 'a' is clearly potentially trailing as it is declared last.
 The corresponding cell in the matrix above contains this description:
@@ -672,7 +672,7 @@ nilfootnote:[An Infoset item value of nil means the Infoset item *[nilled\]*
 member is true, and the *[dataValue\]* member has no value.
 See <<element-information-items>> Element Information Items.], 4, nil.
 Five occurrences are unparsed; however, the last value is nil, which has a
-representation of '%ES;' meaning empty-string, and dfdl:nilvalueDelimiterPolicy
+representation of '%ES;' meaning empty-string, and dfdl:nilValueDelimiterPolicy
 is 'none' meaning no initiator or terminator is to appear in the data.
 Since the schema is suppressing trailing zero-length reps the unparse results in
 this output:
@@ -972,7 +972,7 @@ on parsing and are not expected in the Infoset on unparsing.
       <xs:element name="arrayElement" type="xs:int"
                   minOccurs="0" maxOccurs="unbounded"
                   dfdl:occursCountKind="expression"
-                  dfdl:occurCount= "{../repeatCount}"
+                  dfdl:occursCount= "{../repeatCount}"
                   dfdl:representation="binary" dfdl:lengthKind="implicit" />
     </xs:sequence>
   </xs:complexType>

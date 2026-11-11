@@ -157,7 +157,7 @@ The representation of the array is stored after these two elements.
 </xs:group>
 ----
 
-In the example abovethere are two hidden elements named 'nrows' and 'ncols'.
+In the example above there are two hidden elements named 'nrows' and 'ncols'.
 These hidden elements' values are computed when unparsing from the number of
 occurrences in the 'rows' and 'cols' repeating elements.
 The 'rows' and 'cols' repeating elements number of occurrences are computed when
@@ -251,7 +251,7 @@ The hidden element ``++'pdate'++`` is referenced by relative paths.
 The expression ``++'../pdate/yy'++`` accesses an element of type ``++'int'++``,
 and the ``++xs:string++`` constructor function turns it into a string.
 
-Finally,one must handle the unparse case where the physical layer is computed
+Finally, one must handle the unparse case where the physical layer is computed
 from the logical layer:
 
 [source,xml]

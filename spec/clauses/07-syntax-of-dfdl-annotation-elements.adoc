@@ -76,7 +76,7 @@ This is just the standard XSD way of doing annotations.
 The source attribute is an identifier that separates different families of
 appinfo annotations.
 
-Belowa dfdl:format annotation is used inside a dfdl:defineFormat annotation to
+Below a dfdl:format annotation is used inside a dfdl:defineFormat annotation to
 define a named reusable set of format properties that can be referenced from
 another format annotation.
 

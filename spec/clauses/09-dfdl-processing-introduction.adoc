@@ -979,7 +979,7 @@ This can occur when:
 [arabic]
 . the first child element of the complex type is a required simple element, then
 an empty string (type xs:string), empty hexBinary (type xs:hexBinary), or
-default value is alsoadded to the Infoset.
+default value is also added to the Infoset.
 . the first child element of the complex type is a required complex element,
 then an item is added to the Infoset (which may itself have a child via (1))
 
