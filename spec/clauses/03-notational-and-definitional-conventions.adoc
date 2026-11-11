@@ -30,7 +30,7 @@ Error by the schema author.
 Similarly, when describing characteristics of data being parsed or being
 unparsed, and whether that data conforms to the format described by a DFDL
 schema, these same words may be used.
-For example,the specification may state "The representation _must_ be followed
+For example, the specification may state "The representation _must_ be followed
 by a terminating delimiter.", but what is intended by "_must_" in this case is
 that the consequence of the data not having that terminating delimiter is a
 Processing Error because the data does not comply with its format specification.
