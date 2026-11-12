@@ -1,0 +1,168 @@
+name: pages
+
+# Publishes the workgroup review version of the specification on GitHub Pages,
+# alongside the files under docs/ that Pages already served.
+#
+# The review version is always the most recent release candidate tag, one
+# matching v*-RC* such as v1.2.2-RC1; other tags are ignored. Every run builds
+# the OGF edition from that tag, so nothing built is committed: a tag is the
+# only record of what was reviewed, and the pinned Metanorma image rebuilds it.
+# A newer tag replaces it.
+#
+# To close a review and keep its tag, push a tag ending in "-closed", such as
+# v1.2.2-RC1-closed. While the newest tag is a closing one, no review version
+# is published. The next review tag reopens it.
+#
+# It runs when a review tag is pushed, when docs/ changes on the default
+# branch, and by hand from the Actions tab. docs/archive is left off the site.
+#
+# Pages must be set to deploy from GitHub Actions (Settings > Pages > Source).
+
+on:
+  push:
+    tags: ['v*-RC*']
+    branches: [master]
+    paths: ['docs/**']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One deploy at a time, and a deploy in progress is never cut short.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+env:
+  # Kept in step with IMAGE in the Makefile.
+  METANORMA_IMAGE: metanorma/metanorma:alpine-1.17.0
+
+jobs:
+  build:
+    runs-on: ubuntu-26.04
+    timeout-minutes: 60
+    steps:
+      # The commit that started the run, for tools/. Full history, so every
+      # tag is visible.
+      - name: Check out the repository
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      # The site's docs/ always comes from the default branch, whatever
+      # started the run.
+      - name: Check out the site
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          path: site
+
+      # The OGF document ID comes from the tagged source, so the file name
+      # follows the spec rather than this workflow.
+      - name: Find the latest review tag
+        id: tag
+        run: |
+          # Checkout fetches the tag that started the run as a lightweight
+          # one, which would date it by its commit; fetch the real tags.
+          git fetch --force --tags --quiet origin
+          git for-each-ref --sort=-creatordate --count=3 \
+            --format='%(creatordate:iso) %(refname:short)' 'refs/tags/v*-RC*'
+          tag=$(git tag --list 'v*-RC*' --sort=-creatordate | head -n 1)
+          if [ -z "$tag" ]; then
+            echo "No review tag; publishing docs/ only."
+            exit 0
+          fi
+          case "$tag" in *-closed)
+            echo "$tag closes the review; publishing docs/ only."
+            exit 0
+          esac
+          version=${tag#v}
+          version=${version%%-*}
+          docid=$(git show "$tag:spec/dfdl-ogf.adoc" \
+            | sed -n 's/^:presentation-metadata-ogf-docid: *//p')
+          if [ -z "$docid" ]; then
+            echo "No :presentation-metadata-ogf-docid: in $tag:spec/dfdl-ogf.adoc" >&2
+            exit 1
+          fi
+          {
+            echo "tag=$tag"
+            echo "docid=$docid"
+            echo "stem=gwdrp-dfdl-v$version-$docid"
+            echo "commit=$(git rev-parse --short "$tag^{commit}")"
+            echo "date=$(git for-each-ref --format='%(creatordate:short)' "refs/tags/$tag")"
+          } >> "$GITHUB_OUTPUT"
+          echo "Publishing $tag"
+
+      - name: Check out the review tag
+        if: steps.tag.outputs.tag
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ steps.tag.outputs.tag }}
+          path: review
+
+      - name: Pull the pinned Metanorma image
+        if: steps.tag.outputs.tag
+        run: docker pull "$METANORMA_IMAGE"
+
+      - name: Build the OGF edition
+        if: steps.tag.outputs.tag
+        working-directory: review
+        run: make EDITION=ogf pdf
+
+      # Jekyll copies files that have no front matter as they are, so the
+      # spec goes into the site's docs/ before it runs.
+      - name: Add the review version to the site
+        if: steps.tag.outputs.tag
+        env:
+          TAG: ${{ steps.tag.outputs.tag }}
+          STEM: ${{ steps.tag.outputs.stem }}
+          DOCID: ${{ steps.tag.outputs.docid }}
+          COMMIT: ${{ steps.tag.outputs.commit }}
+          DATE: ${{ steps.tag.outputs.date }}
+        run: |
+          mkdir -p site/docs/spec
+          cp review/build/ogf/dfdl.pdf "site/docs/spec/$STEM.pdf"
+          cp review/build/ogf/dfdl.html "site/docs/spec/$STEM.htm"
+          python3 tools/review-page.py --tag "$TAG" --date "$DATE" \
+            --commit "$COMMIT" --repo "$GITHUB_REPOSITORY" --stem "$STEM" \
+            --docid "$DOCID" --out site/docs/spec/index.html
+
+      # docs/ has no home page, so the site root sends readers to the review
+      # version. A home page added to docs/ later takes precedence.
+      - name: Point the site root at the review version
+        if: steps.tag.outputs.tag
+        run: |
+          if ! ls site/docs/index.* > /dev/null 2>&1; then
+            printf '%s\n' '<!doctype html>' '<meta charset="utf-8">' \
+              '<title>DFDL workgroup review</title>' \
+              '<meta http-equiv="refresh" content="0; url=spec/">' \
+              '<link rel="canonical" href="spec/">' \
+              '<p><a href="spec/">DFDL workgroup review version</a></p>' \
+              > site/docs/index.html
+          fi
+
+      - name: Leave the archive off the site
+        run: rm -rf site/docs/archive
+
+      # The same Jekyll build Pages ran when it deployed from the branch.
+      - name: Build the site
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./site/docs
+          destination: ./_site
+
+      - name: Upload the site
+        uses: actions/upload-pages-artifact@v5
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-26.04
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}spec/
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5

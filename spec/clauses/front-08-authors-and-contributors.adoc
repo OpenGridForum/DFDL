@@ -18,6 +18,7 @@ The authors greatly acknowledge the contributions made to this document by the
 following and all the other people who provided constructive and valuable input
 in the group discussions.
 
+- Aaron Bauman, USA
 - Tim Kimber, Prolifics, UK
 - Suman Kalia, IBM, Markham, Ontario, Canada
 - Stephanie Fetzer, HCL, USA
