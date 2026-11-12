@@ -10,6 +10,7 @@ AsciiDoc.
 A data file is a few settings followed by the grid, one row at a time::
 
     title: Separator Suppression for dfdl:occursCountKind 'implicit'
+    number: 48
     widths: 27 10 10 14 13 11 15
     header-rows: 4
     colour grey #DBDBDB
@@ -70,6 +71,7 @@ class Cell:
 class Table:
     name: str
     title: str = ""
+    number: str = ""
     widths: list = field(default_factory=list)
     header_rows: int = 0
     colours: dict = field(default_factory=dict)
@@ -95,6 +97,8 @@ def parse(path):
                 table.colours[name] = hexcode
             elif key == "title":
                 table.title = value.strip()
+            elif key == "number":
+                table.number = value.strip()
             elif key == "widths":
                 table.widths = value.split()
             elif key == "header-rows":
@@ -109,8 +113,8 @@ def parse(path):
                 current = []
     if current:
         rows.append(current)
-    if not table.title or not table.widths:
-        fail(path.name, "needs a title and widths")
+    if not table.title or not table.number or not table.widths:
+        fail(path.name, "needs a title, a number and widths")
     build_grid(table, rows)
     return table
 
@@ -182,7 +186,7 @@ def render(table):
     out = [
         BEGIN.format(name=table.name),
         f".{table.title}",
-        f'[cols="{cols}",headerrows={table.header_rows},keep-lines-together=true,class="never-break"]',
+        f'[number="{table.number}",cols="{cols}",headerrows={table.header_rows},keep-lines-together=true,class="never-break"]',
         "|===",
     ]
     for r, row in enumerate(table.grid):

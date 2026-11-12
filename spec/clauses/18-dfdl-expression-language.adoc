@@ -164,7 +164,7 @@ A different variable instance tuple is then visible.
 The flags in the variable memory tuples are interpreted and modified as follows:
 
 .Memory States for Expression Language Variables
-[cols="3,1,2,1,1,2,2",keep-lines-together=true]
+[number="54",cols="3,1,2,1,1,2,2",keep-lines-together=true]
 |===
 
 .2+| *DFDL annotation*
@@ -332,6 +332,7 @@ is always treated as a DFDL string literal.
 * [.underline]#Within# an expression, a string is never interpreted as a DFDL
 string literal.
 
+[[dfdl-expression-syntax]]
 === DFDL Expression Syntax
 
 Refer to XML Path Language (XPath) 2.0 [<<a-xpath,XPath>>] for a description of
@@ -339,7 +340,7 @@ XPath expressions
 
 [[dfdl-expression-language-2]]
 .DFDL Expression Language
-[cols="3,1,8",class="bnf",separator=!]
+[number="55",cols="3,1,8",class="bnf",separator=!]
 |===
 
 ! DFDL Expression
@@ -512,6 +513,7 @@ In the function signatures below a '?' following an argument name, argument type
 or result type indicates that the argument/result can be a node or value of the
 expected type or it can have no value.
 
+[[constructor-functions-for-xml-schema-built-in-types]]
 ==== Constructor Functions for XML Schema Built-in Types
 
 The arguments to the constructors are all of type xs:anyAtomicType.
@@ -527,7 +529,7 @@ the constructed type.
 The following constructor functions for the built-in types are supported:
 
 .Basic Constructors
-[cols="1",options="header"]
+[number="56",cols="1",options="header"]
 |===
 
 | Function
@@ -576,7 +578,7 @@ A special constructor function is provided for constructing a
 value.
 
 .Special Constructor for xs:dateTime
-[cols="1",options="header"]
+[number="57",cols="1",options="header"]
 |===
 
 | Function
@@ -591,7 +593,7 @@ value.
 The following additional constructor functions are defined on the boolean type.
 
 .Boolean functions
-[cols="1,3",options="header"]
+[number="58",cols="1,3",options="header"]
 |===
 
 | Function
@@ -608,7 +610,7 @@ The following functions are defined on boolean values.
 The return type of these functions is xs:boolean.:
 
 .Boolean functions
-[cols="1,6a",options="header"]
+[number="59",cols="1,6a",options="header"]
 |===
 
 | Function
@@ -644,7 +646,7 @@ Each function returns a value of the same type as the type of its argument.
 The argument must be convertible to a number type.
 
 .Numeric Functions
-[cols="1,2",options="header"]
+[number="60",cols="1,2",options="header"]
 |===
 
 | Function
@@ -676,7 +678,7 @@ In the functions below which compare strings, DFDL always uses the default
 Unicode collation algorithm (which is a comparison of codepoint values).
 
 .String Functions
-[cols="1,1",options="header"]
+[number="61",cols="1,1",options="header"]
 |===
 
 | Function
@@ -720,7 +722,7 @@ xs:double)
 
 [[date-and-time-functions]]
 .Date and Time Functions
-[cols="1,1",options="header"]
+[number="62",cols="1,1",options="header"]
 |===
 
 | Function
@@ -763,6 +765,7 @@ xs:double)
 | Returns the seconds from an xs:time value as an xs:decimal.
 |===
 
+[[node-sequence-test-functions]]
 ===== Node Sequence Test Functions
 
 The following functions are defined on sequences.
@@ -773,7 +776,7 @@ In the functions below, if the argument evaluates to the current node, or any
 enclosing parent node, then it is a Schema Definition Error.
 
 .Node Sequence Test Functions
-[cols="1,4",options="header"]
+[number="63",cols="1,4",options="header"]
 |===
 
 | Function
@@ -802,7 +805,7 @@ Returns 0 if ``++$arg++`` is the empty sequence.
 This section discusses functions and operators on nodes.
 
 .Node functions
-[cols="1a,3",options="header"]
+[number="64",cols="1a,3",options="header"]
 |===
 
 | Function
@@ -824,7 +827,7 @@ fn:namespace-uri($arg)
 This section discusses functions related to nillable elements.
 
 .Nillable Element Functions
-[cols="1,5",options="header"]
+[number="65",cols="1,5",options="header"]
 |===
 
 | Function
@@ -838,7 +841,7 @@ This section discusses functions related to nillable elements.
 ==== DFDL Functions
 
 .DFDL Functions
-[cols="1,1",options="header"]
+[number="66",cols="1,1",options="header"]
 |===
 
 | Function
@@ -993,7 +996,7 @@ binary type from a number.
 Accordingly, the following new DFDL specific functions are provided.
 
 .DFDL Constructor Functions
-[cols="1,3a",options="header"]
+[number="67",cols="1,3a",options="header"]
 |===
 
 | Function
@@ -1054,7 +1057,6 @@ Examples:
 ==== Miscellaneous Functions
 
 // Numbered 67-A, as in earlier editions, so later tables keep their numbers.
-// The next table, in clause 19, is set to 68 by hand; see EDITING.md.
 .Miscellaneous Functions
 [number="67-A",cols="1a,2a",options="header"]
 |===

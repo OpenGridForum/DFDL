@@ -10,6 +10,7 @@
 #   make editions  `all` for every edition, from one source state
 #   make lint      ruff + black over tools/ (host tools, not the container)
 #   make tables    rewrite the generated tables from spec/tables/
+#   make numbers   number any new table; xml, html and pdf do this first
 #   make check     lint, then the validators in tools/ against the semantic XML
 #   make clean     remove build output
 #
@@ -52,7 +53,7 @@ MN_REQUIRE := -r /metanorma/tools/bits.rb
 
 RELEASE  := docs/releases/$(VERSION)
 
-.PHONY: all editions release xml html pdf lint tables overrides index check check-conversion clean
+.PHONY: all editions release xml html pdf lint tables numbers check-numbers overrides index check check-conversion clean
 
 # One pdf pass also emits the HTML and the XML, so `all` is just `pdf`.
 all: pdf
@@ -72,6 +73,7 @@ pdf:  FORMATS := xml,html,pdf
 # into $(BUILD)/ afterwards. A conversion that fails doesn't fail the build,
 # so remove the old output first; check then fails on what is missing.
 xml html pdf:
+	@python3 tools/table-numbers.py
 	@mkdir -p $(BUILD)
 	@for f in $$(echo $(FORMATS) | tr , ' '); do rm -f $(BUILD)/$(STEM).$$f $(BUILD)/$(STEM).$$f.err; done
 	$(DOCKER) metanorma compile -t iso -x $(FORMATS) $(MN_REQUIRE) $(MN_FLAGS) $(SPEC)
@@ -128,6 +130,14 @@ lint:
 tables:
 	python3 tools/tables.py
 
+# Every captioned table states its number, so adding one renumbers nothing;
+# see tools/table-numbers.py.
+numbers:
+	python3 tools/table-numbers.py
+
+check-numbers:
+	@python3 tools/table-numbers.py --check
+
 # The OGF edition's PDF override joins spec/pdf-overrides.xsl, which both
 # editions use, and spec/pdf-overrides-ogf-only.xsl; see tools/overrides.py.
 overrides:
@@ -138,9 +148,10 @@ overrides:
 index: xml
 	python3 tools/property-index.py $(BUILD)/$(STEM).xml --write
 
-# Runs every executable in tools/, plus any tools/check*.py, over the
-# build. Tolerant of tools/ being empty or absent.
-check: lint html
+# Checks the table numbers before anything is built, because every build
+# numbers new tables itself; then runs every executable in tools/, plus any
+# tools/check*.py, over the build. Tolerant of tools/ being empty or absent.
+check: check-numbers lint html
 	@python3 tools/tables.py --check
 	@python3 tools/overrides.py --check --image $(IMAGE)
 	@python3 tools/property-index.py $(BUILD)/$(STEM).xml --check

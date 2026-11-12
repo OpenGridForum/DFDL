@@ -1,6 +1,6 @@
-[appendix]
+[appendix,obligation=normative]
 [[appendix-g-property-precedence]]
-== Appendix G: Property Precedence
+== Property Precedence
 
 === Parsing
 

@@ -3,6 +3,7 @@
 # table into the clause.
 
 title: Separator Suppressions for dfdl:occursCountKind 'implicit'
+number: 48
 widths: 27 10 10 14 13 11 15
 header-rows: 4
 

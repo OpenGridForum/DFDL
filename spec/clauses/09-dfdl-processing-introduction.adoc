@@ -86,14 +86,14 @@ Any one of the following constructs is a point of uncertainty:
 
 * An xs:choice
 * All xs:elements in an unordered xs:sequence
-(dfdl:sequenceKindfootnote:[For dfdl:sequenceKind, see Section 14 Sequence Groups.] is 'unordered')
+(dfdl:sequenceKindfootnote:[For dfdl:sequenceKind, see <<sequence-groups>> Sequence Groups.] is 'unordered')
 * All xs:elements in an xs:sequence containing one or more
 dfdl:floatingfootnote:[For dfdl:floating elements, see <<floating-elements>> Floating Elements.] xs:elements
 
 Any one of the following constructs is a _potential_ point of uncertainty:
 
 * An
-optionalfootnote:[For optional and array elements, see Section 16 Properties for Array Elements and Optional Elements.] xs:element
+optionalfootnote:[For optional and array elements, see <<properties-for-array-elements-and-optional-elements>> Properties for Array Elements and Optional Elements.] xs:element
 * An array xs:element.
 
 Examples of potential points of uncertainty are in
@@ -164,7 +164,7 @@ detected, and sometimes the framing adds human readability to the data format.
 In the grammar tables below, the terminal symbols are shown in bold italic font.
 
 .DFDL Grammar Productions
-[cols="6,1,15",options="header",class="bnf",separator=!]
+[number="11",cols="6,1,15",options="header",class="bnf",separator=!]
 |===
 
 ! Productions
@@ -815,7 +815,7 @@ certain values of
 dfdl:occursCountKindfootnote:[Property dfdl:occursCountKind is defined in <<the-dfdl-occurscountkind-property>>.], as follows:
 
 .Points of Uncertainty and dfdl:occursCountKind
-[cols="1,3",options="header"]
+[number="12",cols="1,3",options="header"]
 |===
 
 | dfdl:occursCountKind
@@ -831,7 +831,7 @@ dfdl:occursCountKindfootnote:[Property dfdl:occursCountKind is defined in <<the-
 | A point of uncertainty exists for all occurrences
 
 | expression
-| No point of uncertainty (dfdl:occursCountfootnote:[Property dfdl:occursCount is defined in Section 16.] values are expected)
+| No point of uncertainty (dfdl:occursCountfootnote:[Property dfdl:occursCount is defined in <<properties-for-array-elements-and-optional-elements>>.] values are expected)
 
 | stopValue
 | No point of uncertainty (The stop value must always be present, even when XSD minOccurs is 0).

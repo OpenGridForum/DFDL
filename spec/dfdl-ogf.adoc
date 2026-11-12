@@ -21,6 +21,7 @@
 :presentation-metadata-ogf-updated: Updated November 2026
 :presentation-metadata-ogf-contact: ogf.org/dfdl
 :presentation-metadata-ogf-group: OGF DFDL WG
+:ogf-status: Updated Grid Final Draft (GFD) Release Candidate for DFDL workgroup and DFDL community review.
 :presentation-metadata-ogf-author-1: Michael J Beckerle, ASF/Owl Cyber Defense/Tresys
 :presentation-metadata-ogf-author-2: Stephen M Hanson, IBM
 :publisher: Open Grid Forum

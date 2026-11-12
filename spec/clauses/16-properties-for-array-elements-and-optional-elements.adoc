@@ -7,7 +7,7 @@ The properties handle a logical one-dimensional array of any simple or complex
 type.
 
 .Properties for Array Elements and Optional Elements
-[cols="1,5a",options="header"]
+[number="52",cols="1,5a",options="header"]
 |===
 
 | Property Name
