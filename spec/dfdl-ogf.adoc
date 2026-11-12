@@ -16,9 +16,9 @@
 :smartquotes: false
 :block-unnumbered: sourcecode
 :pdf-stylesheet-override: pdf-overrides-ogf.xsl
-:presentation-metadata-ogf-docid: GFD-R-P.240
+:presentation-metadata-ogf-docid: GFD-R.240
 :presentation-metadata-ogf-date: February 2021
-:presentation-metadata-ogf-updated: Updated January 2026
+:presentation-metadata-ogf-updated: Updated November 2026
 :presentation-metadata-ogf-contact: ogf.org/dfdl
 :presentation-metadata-ogf-group: OGF DFDL WG
 :presentation-metadata-ogf-author-1: Michael J Beckerle, ASF/Owl Cyber Defense/Tresys

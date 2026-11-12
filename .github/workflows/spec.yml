@@ -35,11 +35,11 @@ env:
 jobs:
   build:
     name: build (both editions)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     timeout-minutes: 60
     steps:
       - name: Check out the repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Pull the pinned Metanorma image
         run: docker pull "$METANORMA_IMAGE"
@@ -54,7 +54,7 @@ jobs:
       # The artifacts are how a reviewer reads the rendered spec without
       # installing Docker, Metanorma or anything else.
       - name: Upload the rendered specification
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: dfdl-spec
           path: |
@@ -66,14 +66,14 @@ jobs:
 
   check:
     name: check (lint + validators)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     timeout-minutes: 30
     steps:
       - name: Check out the repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7
         with:
           # Matches target-version in pyproject.toml.
           python-version: '3.14'
