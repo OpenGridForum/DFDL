@@ -17,8 +17,9 @@ When the alignment properties are applied to an array element, the properties
 are applied to each occurrence of the element; that is, not only to the first
 occurrence.
 
-The following properties are used to define alignment rules.
+The properties in <<aligned-data-properties>> are used to define alignment rules.
 
+[[aligned-data-properties]]
 .Aligned Data Properties
 [number="14",cols="1,5a",options="header"]
 |===
@@ -106,10 +107,10 @@ dfdl:group
 |===
 
 There are two properties which control the data alignment by controlling the
-length of the *_AlignmentFill_* region
+length of the *_AlignmentFill_* region:
 
-* alignment - an integer 1 or greater
-* alignmentUnits - bits or bytes
+* alignment - an integer 1 or greater;
+* alignmentUnits - bits or bytes.
 
 An element's representation is aligned to N units if P is the first position in
 the representation and P mod N = 1.  When parsing, the position of the first
@@ -217,8 +218,8 @@ data is processed, then bits are skipped (parsing) or filled from dfdl:fillByte
 
 All required character set encodings in DFDL have 8-bit/1-byte alignment.
 
-DFDL standard encodings specify their alignment.
-See <<appendix-d-dfdl-standard-encodings>> DFDL Standard Encodings.
+The alignment of each DFDL standard encoding is as specified in
+<<appendix-d-dfdl-standard-encodings>> DFDL Standard Encodings.
 
 Some implementations MAY include additional implementation-defined encodings
 which have other alignments.
@@ -310,7 +311,7 @@ element 'B'.
 === Properties for Specifying Delimiters
 
 The following properties apply to all objects that use text delimiters to
-delimit, that is, to initiate and/or terminate data.
+delimit, that is, to initiate data, terminate it, or both.
 Delimiters can apply to binary data; however, they are most often called 'text'
 delimiters because the concept is much more commonly used for textual data
 formats.
@@ -327,6 +328,9 @@ Once a matching delimiter is found, no other matches are subsequently attempted
 the matching of DFDL String Literals are given in
 <<appendix-c-processing-of-dfdl-string-literals>> Processing of DFDL String literals.
 
+The properties for specifying delimiters are listed in <<properties-for-specifying-delimiters-table>>.
+
+[[properties-for-specifying-delimiters-table]]
 .Properties for Specifying Delimiters
 [number="16",cols="2,3a",options="header"]
 |===
@@ -570,7 +574,9 @@ Annotation: dfdl:element, dfdl:simpleType
 
 These properties are used to determine the content length of an element and
 apply to elements of all types (simple and complex).
+They are listed in <<properties-for-specifying-length>>.
 
+[[properties-for-specifying-length]]
 .Properties for Specifying Length
 [number="17",cols="1,6a",options="header"]
 |===
@@ -650,6 +656,9 @@ to provide the length to use.
 When parsing and dfdl:lengthKind is 'explicit', delimiter scanning is turned off
 and in-scope delimiters are not looked for within or between elements.
 
+The dfdl:length property is described in <<the-dfdl-length-property>>.
+
+[[the-dfdl-length-property]]
 .The dfdl:length Property
 [number="18",cols="1,6a",options="header"]
 |===
@@ -682,19 +691,19 @@ When dfdl:lengthKind 'explicit', the method of extracting data is described in
 On parsing, the length of an element with dfdl:lengthKind 'delimited' is
 determined by scanning the data stream for the delimiter.
 
-The data stream is scanned for any of
+The data stream is scanned for any of:
 
-* the element's terminator (if specified)
-* an enclosing construct's separator or terminator
-* the end of an enclosing element designated by its known length
-* the end of the data stream
+* the element's terminator (if specified);
+* an enclosing construct's separator or terminator;
+* the end of an enclosing element designated by its known length;
+* the end of the data stream.
 
-dfdl:lengthKind 'delimited' may be specified for
+dfdl:lengthKind 'delimited' may be specified for:
 
-* elements of simple type with text representation
+* elements of simple type with text representation;
 * elements of number or calendar (date and time) simple type with
-dfdl:representation 'binary' that have a packed decimal representation
-* elements of type xs:hexBinary
+dfdl:representation 'binary' that have a packed decimal representation;
+* elements of type xs:hexBinary;
 * elements of complex type.
 
 The rules for resolving ambiguity between delimiters are:
@@ -842,14 +851,13 @@ for SimpleTypes when dfdl:lengthKind is 'implicit' .
 Multiply by 8 to convert to number of bits.
 |===
 
-* 'Not Allowed' means that there is no implicit length for the combination of
-simple type and representation, and it is a Schema Definition Error if
-dfdl:lengthKind  'implicit' is specified.
-* packed decimal means dfdl:binaryNumberRep is 'packed', 'bcd', or
-'ibm4690Packed'
-* binary means dfdl:binaryNumberRep is 'binary'
-* binarySeconds means dfdl:binaryCalendarRep is 'binarySeconds'
-* binaryMilliseconds means dfdl:binaryCalendarRep is 'binaryMilliseconds'.
+'Not Allowed':: There is no implicit length for the combination of simple type
+and representation, and it is a Schema Definition Error if dfdl:lengthKind
+'implicit' is specified.
+packed decimal:: dfdl:binaryNumberRep is 'packed', 'bcd', or 'ibm4690Packed'.
+binary:: dfdl:binaryNumberRep is 'binary'.
+binarySeconds:: dfdl:binaryCalendarRep is 'binarySeconds'.
+binaryMilliseconds:: dfdl:binaryCalendarRep is 'binaryMilliseconds'.
 
 When dfdl:lengthKind is 'implicit', the method of extracting data is described
 in <<elements-of-specified-length>> Elements of Specified Length.
@@ -874,6 +882,9 @@ When dfdl:lengthKind is 'prefixed' the method of extracting data is described in
 When dfdl:lengthKind is 'prefixed', delimiter scanning is turned off and
 in-scope delimiters are not looked for within or between elements.
 
+The properties for dfdl:lengthKind 'prefixed' are listed in <<properties-for-dfdl-lengthkind-prefixed>>.
+
+[[properties-for-dfdl-lengthkind-prefixed]]
 .Properties for dfdl:lengthKind 'prefixed'
 [number="20",cols="1,3a",options="header"]
 |===
@@ -1011,11 +1022,12 @@ the length of the element's content.
 For a simple element with text representation, the length is computed as for
 dfdl:lengthKind 'delimited'.
 
-For a simple element with binary representation, the length is given in the
-table below.
+For a simple element with binary representation, the length is given in
+<<unparse-lengths-in-bits-for-binary-data-with-dfdl-lengthkind-prefixed>>.
 
 For a complex element, the length is that of the ComplexContent region.
 
+[[unparse-lengths-in-bits-for-binary-data-with-dfdl-lengthkind-prefixed]]
 .Unparse Lengths (in Bits) for Binary Data with dfdl:lengthKind 'prefixed'
 [number="21",cols="1,1,2",options="header"]
 |===
@@ -1099,6 +1111,9 @@ The pattern is only used on parsing.
 When dfdl:lengthKind is 'pattern', delimiter scanning is turned off and in-scope
 delimiters are not looked for within or between elements.
 
+The dfdl:lengthPattern property is described in <<the-dfdl-lengthpattern-property>>.
+
+[[the-dfdl-lengthpattern-property]]
 .The dfdl:lengthPattern Property
 [number="22",cols="1,6a",options="header"]
 |===
@@ -1172,22 +1187,22 @@ A dfdl:lengthKind of  'endOfParent' can only be used on simple and complex
 elements in the following locations:
 
 * When the immediate containing model group is a sequence, on the final element
-in the sequence
+in the sequence.
 * When the immediate containing model group is a choice, on any element that is
-a branch of the choice
+a branch of the choice.
 * A simple type or global element declaration referenced by one of the above.
 * A global element declaration that is the document root.
 
 It is a Schema Definition Error if:
 
-* the element has a terminator.
-* the element has dfdl:trailingSkip not equal to 0.
-* the element has maxOccurs > 1.
+* the element has a terminator;
+* the element has dfdl:trailingSkip not equal to 0;
+* the element has maxOccurs > 1;
 * any other model-group is defined between this element and the end of the
-enclosing component.
+enclosing component;
 * any other represented element is defined between this element and the end of
-the enclosing component.
-* the parent is an element with dfdl:lengthKind 'implicit' or 'delimited'.
+the enclosing component;
+* the parent is an element with dfdl:lengthKind 'implicit' or 'delimited';
 * the element has text representation, does not have a single-byte character set
 encoding, and the _effective length units of the parent_ is not 'characters'.
 +
@@ -1199,28 +1214,28 @@ The _effective length units of the parent_ are defined by:
 ** 'bytes' if parent is a choice with dfdl:choiceLengthKind 'explicit';
 ** 'characters' if the element is the document root;
 ** the effective length units of the parent's parent if parent is an element
-with dfdl:lengthKind 'endOfParent'
+with dfdl:lengthKind 'endOfParent'.
 
 If the element is in a sequence then it is a Schema Definition Error if:
 
-* the dfdl:separatorPosition of the sequence is 'postfix'
-* the dfdl:sequenceKind of the sequence is not 'ordered'
-* the sequence has a terminator
-* there are floating elements in the sequence
-* the sequence has a non-zero dfdl:trailingSkip
+* the dfdl:separatorPosition of the sequence is 'postfix';
+* the dfdl:sequenceKind of the sequence is not 'ordered';
+* the sequence has a terminator;
+* there are floating elements in the sequence;
+* the sequence has a non-zero dfdl:trailingSkip.
 
 If the element is in a choice where dfdl:choiceLengthKind is 'implicit' then it
 is a Schema Definition Error if:
 
-* the choice has a terminator
-* the choice has a non-zero dfdl:trailingSkip
+* the choice has a terminator;
+* the choice has a non-zero dfdl:trailingSkip.
 
 A simple element must have one of:
 
-* type xs:string
-* dfdl:representation 'text'
-* type xs:hexBinary
-* dfdl:representation 'binary' and a packed decimal representation
+* type xs:string;
+* dfdl:representation 'text';
+* type xs:hexBinary;
+* dfdl:representation 'binary' and a packed decimal representation.
 
 A complex element can have dfdl:lengthKind 'endOfParent'.
 If so then its last child element can be any dfdl:lengthKind including
@@ -1329,7 +1344,7 @@ part of the grammar *_RightFill_* region).
 * When unparsing, if the simple content region is larger than the encoded length
 of the element (as padded when dfdl:textPadKind is not 'none') then the
 remaining bytes, which are insufficient to hold another character code, are
-filled with dfdl:fillByte (Again, this is the grammar *_RightFill_* region.)
+filled with dfdl:fillByte (Again, this is the grammar *_RightFill_* region).
 
 It is a Schema Definition Error if type is xs:string and dfdl:textPadKind is not
 'none' and dfdl:lengthUnits is 'bytes' and dfdl:encoding is not an SBCS encoding
@@ -1363,9 +1378,10 @@ type.
 Non-floating point numbers with binary representation and dfdl:binaryNumberRep
 'binary' are represented as a bit string which contains a base-2 representation.
 
-The value of the specified length is constrained per the table below.
+The value of the specified length is constrained per <<allowable-specified-lengths-in-bits-for-base-2-binary-number-elements>>.
 The lengths are expressed in bits and are inclusive.
 
+[[allowable-specified-lengths-in-bits-for-base-2-binary-number-elements]]
 .Allowable Specified Lengths in Bits for Base-2 Binary Number Elements
 [number="23",cols="1,1,2",options="header"]
 |===

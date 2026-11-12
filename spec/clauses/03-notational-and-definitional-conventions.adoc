@@ -50,7 +50,7 @@ conforming DFDL implementation MUST check for the consistency and issue
 appropriate diagnostic messages when an inconsistency is found.
 
 There are several kinds of failures that can occur when a DFDL processor is
-handling data and/or a DFDL schema.
+handling data, a DFDL schema, or both.
 These are:
 
 * *_Schema Definition Error_* or *_SDE_* for short - these indicate the DFDL
@@ -74,3 +74,6 @@ Schema facet constraints, or  the XSD maxOccurs and XSD minOccurs values.
 provides the ability to add Recoverable Error assertions to a DFDL schema. These
 cause diagnostic messages to be created but MUST NOT stop, nor influence,
 parsing or unparsing behavior.
+
+<<appendix-f-specific-errors-classified>> Specific Errors Classified says which
+errors are Schema Definition Errors and which are Processing Errors.

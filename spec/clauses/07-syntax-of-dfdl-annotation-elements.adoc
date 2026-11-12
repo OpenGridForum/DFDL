@@ -15,8 +15,9 @@ of the component format annotation elements.
 
 There are specific annotations for each type of schema component that supports
 only the representation properties applicable to that component.
-The table below gives the specific annotation for each schema component.
+The specific annotation for each schema component is given in <<dfdl-component-format-annotations>>.
 
+[[dfdl-component-format-annotations]]
 .DFDL Component Format Annotations
 [number="6",cols="1,1",options="header"]
 |===
@@ -137,10 +138,10 @@ However, the format properties may be specified in any one of three forms:
 A DFDL property may be specified using any of the forms with the following
 exceptions:
 
-* The dfdl:ref property may be specified in attribute or short form
-* The dfdl:escapeSchemeRef property may be specified in attribute or short form
-* The dfdl:hiddenGroupRef  property may be specified in attribute or short form
-* The dfdl:prefixLengthType property may be specified in attribute or short form
+* The dfdl:ref property may be specified in attribute or short form.
+* The dfdl:escapeSchemeRef property may be specified in attribute or short form.
+* The dfdl:hiddenGroupRef  property may be specified in attribute or short form.
+* The dfdl:prefixLengthType property may be specified in attribute or short form.
 * Short form must not be used on the xs:schema element.
 
 It is a Schema Definition Error if the same property is specified in more than
@@ -455,7 +456,7 @@ of properties to be defined that can be reused.
 
 An escape scheme defines the properties that describe the text escaping rules in
 force when data such as text delimiters are present in the data.
-There are two variants on such schemes,
+There are two variants on such schemes:
 
 * The use of a single escape character to cause the next character to be
 interpreted literally. The escape character itself is escaped by the
@@ -538,12 +539,12 @@ specified.
 
 A dfdl:assert can appear as an annotation on these schema components:
 
-* an xs:element declaration (local or global)
-* an xs:element reference
-* an xs:group reference
-* an xs:sequence
-* an xs:choice
-* an xs:simpleType definition (local or global)
+* an xs:element declaration (local or global);
+* an xs:element reference;
+* an xs:group reference;
+* an xs:sequence;
+* an xs:choice;
+* an xs:simpleType definition (local or global).
 
 If the resolved set of statement annotations for a schema component contains
 multiple dfdl:assert statements, then the subset with testKind 'pattern' are
@@ -555,6 +556,9 @@ If one of the resolved set of asserts for a schema component is unsuccessful,
 and the failureType of the assert is 'processingError', then no further asserts
 in the set are executed.
 
+The properties of dfdl:assert are listed in <<dfdl-assert-properties>>.
+
+[[dfdl-assert-properties]]
 .dfdl:assert properties
 [number="7",cols="1,6a",options="header"]
 |===
@@ -700,8 +704,8 @@ DFDL discriminator statement annotations are used during parsing to:
 [arabic]
 . resolve _points of uncertainty_ (choices, optional elements, array repetition)
 that cannot be resolved by speculative parsing. See <<parser-overview>>
-Parser Overview.
-. remove ambiguity during speculative parsing
+Parser Overview;
+. remove ambiguity during speculative parsing;
 . improve diagnostic behavior when a DFDL parser encounters malformed data.
 
 Discriminators are not used during unparsing.
@@ -767,12 +771,12 @@ specified.
 
 A dfdl:discriminator can be an annotation on these schema components:
 
-* an xs:element declaration (local or global)
-* an xs:element reference
-* an xs:group reference
-* an xs:sequence
-* an xs:choice
-* an xs:simpleType definition (local or global)
+* an xs:element declaration (local or global);
+* an xs:element reference;
+* an xs:group reference;
+* an xs:sequence;
+* an xs:choice;
+* an xs:simpleType definition (local or global).
 
 The resolved set of statement annotations for a schema component can contain
 only a single dfdl:discriminator or one or more dfdl:assert annotations, but not
@@ -781,6 +785,9 @@ To clarify: dfdl:assert annotations and dfdl:discriminator annotations are
 exclusive of each other.
 It is a Schema Definition Error otherwise.
 
+The properties of dfdl:discriminator are listed in <<dfdl-discriminator-properties>>.
+
+[[dfdl-discriminator-properties]]
 .dfdl:discriminator properties
 [number="8",cols="1,6a",options="header"]
 |===
@@ -950,9 +957,9 @@ a schema to be parameterized so that they are reusable.
 
 There are 3 DFDL annotation elements associated with DFDL variables:
 
-* dfdl:defineVariable - defines a variable and creates a global instance of it.
-* dfdl:newVariableInstance - creates a scoped instance of a variable.
-* dfdl:setVariable - assigns the value of a variable instance, which can be
+dfdl:defineVariable:: Defines a variable and creates a global instance of it.
+dfdl:newVariableInstance:: Creates a scoped instance of a variable.
+dfdl:setVariable:: Assigns the value of a variable instance, which can be
 global or scoped.
 
 Variables are defined at the top-level of a schema and have a specific simple
@@ -1094,9 +1101,10 @@ simple type restriction.
 [[predefined-variables]]
 ===== Predefined Variables
 
-The following variables are predefined, and their names are in the DFDL
+The variables in <<pre-defined-variables>> are predefined, and their names are in the DFDL
 namespace (http://www.ogf.org/dfdl/dfdl-1.0/)
 
+[[pre-defined-variables]]
 .Pre-defined variables
 [number="9",cols="2,1,2,1",options="header"]
 |===
@@ -1295,7 +1303,7 @@ dfdl:defineVariable or dfdl:newVariableInstance, or externally.
 
 The resolved set of annotations for an annotation point may contain multiple
 dfdl:setVariable statements.
-They must all be for unique variables (different name and/or namespace) and it
+They must all be for unique variables (different name, namespace, or both) and it
 is a Schema Definition Error otherwise.
 The order of execution is specified in
 <<evaluation-order-for-statement-annotations>> Evaluation Order for Statement

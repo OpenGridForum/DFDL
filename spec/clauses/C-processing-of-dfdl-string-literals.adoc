@@ -39,9 +39,10 @@ return true
 
 === Recognizing DFDL String Literal Part
 
-Each type of string literal part and/or the DfdlESEntity is recognised as
-described in the table below:
+Each type of string literal part, and the DfdlESEntity, is recognised as
+described in <<recognizing-dfdl-string-literal-part>>.
 
+[[recognizing-dfdl-string-literal-part]]
 .Recognizing DFDL String Literal Part
 [number="1",cols="1,4a",options="header"]
 |===

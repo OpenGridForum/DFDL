@@ -1,8 +1,9 @@
 [[sequence-groups]]
 == Sequence Groups
 
-The following properties are specific to sequences.
+The properties in <<properties-for-sequence-groups>> are specific to sequences.
 
+[[properties-for-sequence-groups]]
 .Properties for Sequence Groups
 [number="44",cols="1,5a",options="header"]
 |===
@@ -47,8 +48,8 @@ set to the empty string.
 Annotation: dfdl:sequence, dfdl:choice, dfdl:group
 |===
 
-A sequence can have a dfdl:initiator and/or a dfdl:terminator as described
-earlier.
+A sequence can have a dfdl:initiator, a dfdl:terminator, or both, as
+described earlier.
 
 === Empty Sequences
 
@@ -87,7 +88,7 @@ separators, and satisfy the requirement to model sequences where:
 [arabic]
 . A separator has alternative potential representations in the data.
 . A separator is placed before, after, or between occurrences in the data.
-. Separators are used to indicate the position of occurrences in the data
+. Separators are used to indicate the position of occurrences in the data.
 
 These requirements are addressed by the properties dfdl:separator,
 dfdl:separatorPosition and dfdl:separatorSuppressionPolicy, as described below.
@@ -105,9 +106,9 @@ Such a sequence is called a _positional_ sequence.
 its position in the data. Typically, the components of such a sequence do not
 have an initiator. In some such sequences, the separators for optional
 zero-length occurrences may or must be omitted when at the end of the group. In
-DFDL, a sequence is considered positional if it contains only required elements
-and/or optional and array elements that have dfdl:occursCountKind 'implicit',
-'fixed' or 'expression', and it has dfdl:separatorSuppressionPolicy 'never',
+DFDL, a sequence is considered positional if it contains only required elements,
+optional and array elements that have dfdl:occursCountKind 'implicit', 'fixed'
+or 'expression', or both, and it has dfdl:separatorSuppressionPolicy 'never',
 'trailingEmptyStrict'  or 'trailingEmpty'.
 
 *_Non-positional sequence_* - Occurrences in the sequence cannot be identified
@@ -116,9 +117,12 @@ have an initiator. Such sequences sometimes allow the separator to be omitted
 for optional zero-length occurrences anywhere in the sequence. Speculative
 parsing might need to be employed by the parser to identify each occurrence.  In
 DFDL, a sequence is non-positional if it contains any optional or array elements
-that have dfdl:occursCountKind 'parsed' or 'stopValue', and/or it has
-dfdl:separatorSuppressionPolicy 'anyEmpty'.
+that have dfdl:occursCountKind 'parsed' or 'stopValue', or it has
+dfdl:separatorSuppressionPolicy 'anyEmpty', or both.
 
+The properties for sequence groups with separators are listed in <<properties-for-sequence-groups-with-separators>>.
+
+[[properties-for-sequence-groups-with-separators]]
 .Properties for Sequence Groups with Separators
 [number="45",cols="2,5a",options="header"]
 |===
@@ -225,15 +229,17 @@ When parsing a sequence group that specifies a separator, the number of
 occurrences and separators that are expected in the data stream for a child
 (element or group) depends on several factors:
 
-* Whether element occurrences are optional or required
-* Whether the occurrences (element or group) have a zero-length representation
-* Whether occurrences (element or group) are trailing
-* Whether the sequence is positional
-* The dfdl:occursCountKind of the element
+* Whether element occurrences are optional or required.
+* Whether the occurrences (element or group) have a zero-length representation.
+* Whether occurrences (element or group) are trailing.
+* Whether the sequence is positional.
+* The dfdl:occursCountKind of the element.
 
 Where to expect a separator for optional content of zero-length is controlled by
 property dfdl:separatorSuppressionPolicy.
+Its values are described in <<sequence-groups-and-separator-suppression>>.
 
+[[sequence-groups-and-separator-suppression]]
 .Sequence groups and separator suppression
 [number="46",cols="1,2",options="header"]
 |===
@@ -262,9 +268,9 @@ zero length representation and is followed in its enclosing group definition by
 only these kinds of schema components:
 
 [arabic]
-. calculated elements (those having dfdl:inputValueCalc)
-. additional potentially trailing elements
-. potentially trailing groups
+. calculated elements (those having dfdl:inputValueCalc);
+. additional potentially trailing elements;
+. potentially trailing groups.
 
 Intuitively, the array or optional element occurrence could be last.
 
@@ -321,7 +327,7 @@ When dfdl:occursCountKind is 'implicit', between XSD minOccurs and XSD maxOccurs
 (inclusive) occurrences and their separators are expected, according to the
 dfdl:separatorSuppressionPolicy of the sequence.
 
-The behaviour for 'implicit' is more fully expressed in matrix form.
+The behaviour for 'implicit' is more fully expressed in matrix form, in <<separator-suppression-for-dfdl-occurscountkind-implicit-when-parsing>>.
 The cells in the matrix give the number of occurrences of element values that
 are expected in the data stream when parsing, for the different values of
 dfdl:separatorSuppressionPolicy.
@@ -330,6 +336,7 @@ not, and the position of the element in the sequence.
 The number of separators can be inferred from this, considering
 dfdl:separatorPosition.
 
+[[separator-suppression-for-dfdl-occurscountkind-implicit-when-parsing]]
 // Generated by tools/tables.py from tables/separator-suppression-parsing.txt. Edit that file, not this table.
 .Separator Suppression for dfdl:occursCountKind 'implicit' when Parsing
 [number="47",cols="^.^27,^.^10,^.^14,^.^14,^.^12,^.^11,^.^11",headerrows=4,keep-lines-together=true,class="never-break"]
@@ -410,10 +417,10 @@ These occur when an element has dfdl:occursCountKind 'implicit' and XSD
 maxOccurs 'unbounded', and dfdl:separatorSuppressionPolicy implies that the
 sequence is positional, specifically:
 
-* If a sequence has dfdl:separatorSuppressionPolicy 'never';
+* If a sequence has dfdl:separatorSuppressionPolicy 'never'.
 * If a sequence has dfdl:separatorSuppressionPolicy 'trailingEmptyStrict' or
 'trailingEmpty' and the element is not the last declaration in the sequence.
-(This avoids ambiguity about which element is being suppressed.)
+(This avoids ambiguity about which element is being suppressed).
 
 ===== Example Parsing Scenarios
 
@@ -532,13 +539,13 @@ tolerated.
 When a child of a sequence is a group then a separator is expected/tolerated
 depending on dfdl:separatorSuppressionPolicy and other factors:
 
-* 'never' - the child group's associated separator is expected
-* 'trailingEmpty' – if the child group is potentially trailing, has zero-length
+'never':: The child group's associated separator is expected.
+'trailingEmpty':: If the child group is potentially trailing, has zero-length
 and it is actually trailing, its separator may appear or not. Additional
 separators are not expected.
-* 'trailingEmptyStrict' – if the child group is potentially trailing, has
+'trailingEmptyStrict':: If the child group is potentially trailing, has
 zero-length and it is actually trailing, its separator must not appear.
-* 'anyEmpty' – if the child group has zero-length its separator must not appear.
+'anyEmpty':: If the child group has zero-length its separator must not appear.
 
 ==== Unparsing Sequence Groups with Separators
 
@@ -571,7 +578,7 @@ When dfdl:occursCountKind is 'implicit' the occurrences in the augmented Infoset
 are output along with their separators, according to the
 dfdl:separatorSuppressionPolicy of the sequence.
 
-The behaviour for 'implicit' is more fully expressed in matrix form.
+The behaviour for 'implicit' is more fully expressed in matrix form, in <<separator-suppressions-for-dfdl-occurscountkind-implicit>>.
 The cells in the matrix give the number of occurrences of element values that
 are output to the data stream when unparsing, for the different values of
 dfdl:separatorSuppressionPolicy.
@@ -580,6 +587,7 @@ not, and the position of the element in the sequence.
 The number of separators output can be inferred from this, considering
 dfdl:separatorPosition.
 
+[[separator-suppressions-for-dfdl-occurscountkind-implicit]]
 // Generated by tools/tables.py from tables/separator-suppression-unparsing.txt. Edit that file, not this table.
 .Separator Suppressions for dfdl:occursCountKind 'implicit'
 [number="48",cols="^.^27,^.^10,^.^10,^.^14,^.^13,^.^11,^.^15",headerrows=4,keep-lines-together=true,class="never-break"]
@@ -704,10 +712,10 @@ Infoset when parsing.
 When a child of a sequence is a group then a separator is output depending on
 dfdl:separatorSuppressionPolicy and other factors:
 
-* 'never' - the child group's associated separator is output
+* 'never' - the child group's associated separator is output;
 * 'trailingEmpty' or 'trailingEmptyStrict' – if the child group is potentially
 trailing, has zero-length and it is actually trailing, its separator is not
-output.
+output;
 * 'anyEmpty' – if the child group has zero-length its separator is not output.
 
 === Unordered Sequence Groups
@@ -741,7 +749,7 @@ It is a Schema Definition Error if an unordered sequence has no members.
 When parsing, the semantics of an unordered sequence are expressed by way of:
 
 [arabic]
-. a source-to-source transformation of the sequence group definition, and
+. a source-to-source transformation of the sequence group definition; and
 . a post-processing transformation of the Infoset .
 
 An implementation MAY use any technique consistent with this semantic.
@@ -756,19 +764,19 @@ wrapped in an array element.
 The unordered sequence is transformed as follows:
 
 * the dfdl:sequenceKind property of the unordered sequence is changed to
-"ordered"
+"ordered";
 * the content of the unordered sequence is replaced by a complex element ( the
 'choice element' ) with the following properties:
-** XSD minOccurs="0"
-** XSD maxOccurs="unbounded"
-** dfdl:lengthKind "implicit"
-** dfd:occursCountKind "parsed"
+** XSD minOccurs="0";
+** XSD maxOccurs="unbounded";
+** dfdl:lengthKind "implicit";
+** dfd:occursCountKind "parsed";
 * the content of the choice element's complex type is a choice group with the
 following properties:
-* dfdl:choiceLengthKind "implicit"
-* The members of the unordered sequence become the members of the choice group,
-with their declaration order preserved.
-* The XSD minOccurs and XSD maxOccurs properties on each member of the choice
+* dfdl:choiceLengthKind "implicit";
+* the members of the unordered sequence become the members of the choice group,
+with their declaration order preserved;
+* the XSD minOccurs and XSD maxOccurs properties on each member of the choice
 group are both set to 1.
 
 Using the following example as an illustration:
@@ -815,8 +823,8 @@ empty representation then it must not be defaulted.
 Post-processing consists of the following steps:
 
 [arabic]
-. Sort the temporary Infoset to produce the real Infoset
-. Check scalar elements and validate
+. Sort the temporary Infoset to produce the real Infoset.
+. Check scalar elements and validate.
 
 *Step 1: Sort the Temporary Infoset*
 
@@ -878,6 +886,9 @@ occurrences cannot appear in between occurrences of the array element.(In other
 words, property dfdl:floating 'yes' only makes a statement about the floating
 element, not about any other elements in the sequence.)
 
+The properties for floating elements are listed in <<properties-for-floating-elements>>.
+
+[[properties-for-floating-elements]]
 .Properties for Floating Elements
 [number="49",cols="1,4a",options="header"]
 |===
@@ -1011,6 +1022,9 @@ dfdl:hiddenGroupRef cannot be combined from a xs:group reference.
 
 A hidden group may appear within another hidden group.
 
+The properties for hidden groups are listed in <<properties-for-hidden-groups>>.
+
+[[properties-for-hidden-groups]]
 .Properties for Hidden Groups
 [number="50",cols="1,5a",options="header"]
 |===

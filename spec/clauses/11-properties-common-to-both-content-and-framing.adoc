@@ -1,6 +1,9 @@
 [[properties-common-to-both-content-and-framing]]
 == Properties Common to both Content and Framing
 
+These properties are listed in <<properties-common-to-both-content-and-framing-table>>.
+
+[[properties-common-to-both-content-and-framing-table]]
 .Properties Common to both Content and Framing
 [number="13",cols="1,4a",options="header"]
 |===
@@ -276,15 +279,15 @@ determine lengths in bytes or bits from the length in characters by multiplying
 the length value by the character width, without having to decode any
 characters.
 
-When parsing, character decoding errors MUST be detected when
+When parsing, character decoding errors MUST be detected when:
 
 [loweralpha]
-. the decoding results in a character being placed into the DFDL Infoset
-. the decoding is necessary to identify a delimiter
+. the decoding results in a character being placed into the DFDL Infoset;
+. the decoding is necessary to identify a delimiter;
 . the decoding is necessary to determine a match or non-match of a regular
 expression in a dfdl:assert or dfdl:discriminator with testKind='pattern'.
 
-When unparsing, character encoding errors MUST be detected when
+When unparsing, character encoding errors MUST be detected when:
 
 [loweralpha,start=4]
 . an unmapped character appears in the Infoset value of an element.
@@ -378,9 +381,9 @@ The following specific situations involving encodings UTF-16, UTF-16LE, and
 UTF-16BE when dfdl:utf16Width "fixed", and they do not cause a decoding or
 encoding error.
 
-* unpaired surrogate codepoint
-* out-of-order surrogate codepoint pair
-* surrogate codepoint pair is encountered
+* Unpaired surrogate codepoint.
+* Out-of-order surrogate codepoint pair.
+* Surrogate codepoint pair is encountered.
 
 In all these cases the code-point(s) becomes a character code in the DFDL
 Information Item for the string.
@@ -401,10 +404,10 @@ Byte order and bit order are separate concepts.
 However, of the possible combinations, only the following are allowed:
 
 [arabic]
-. 'bigEndian' with 'mostSignificantBitFirst'
-. 'littleEndian' with 'mostSignificantBitFirst'
-. 'littleEndian' with 'leastSignificantBitFirst'
-footnote:[Used by data format MIL-STD-2045]
+. 'bigEndian' with 'mostSignificantBitFirst';
+. 'littleEndian' with 'mostSignificantBitFirst';
+. 'littleEndian' with 'leastSignificantBitFirst'.footnote:[Used by data format
+MIL-STD-2045.]
 
 Other combinations MUST produce Schema Definition Errors.
 

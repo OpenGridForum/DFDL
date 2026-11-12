@@ -59,11 +59,11 @@ The _resolved set of annotations_ for an annotation point is a combined set of
 annotations taken from:
 
 [arabic]
-. a simple type definition and the base simple type it references.
-. an element declaration and the type definition from (1) it references.
-. an element reference and the global element declaration from (2) it
+. A simple type definition and the base simple type it references.
+. An element declaration and the type definition from (1) it references.
+. An element reference and the global element declaration from (2) it
 references.
-. a group reference and the global group definition it references
+. A group reference and the global group definition it references.
 
 [[dfdl-annotation-elements]]
 .DFDL Annotation Elements
@@ -140,9 +140,9 @@ A format property that is used to describe a physical characteristic of a
 component is called a _representation_ property.
 
 Properties on DFDL annotations may have values of one or more of the following
-types
+types:
 
-* Enumeration The property value is an XSD xs:token the value of which is one of
+Enumeration:: The property value is an XSD xs:token the value of which is one of
 the allowed values listed in the property description.
 +
 Example: the dfdl:lengthKind property, which has values taken from "delimited",
@@ -154,8 +154,8 @@ For example:
 lengthKind='delimited'
 ----
 
-* <<dfdl-string-literals,DFDL string literal>>
-(<<dfdl-string-literals>>):  The property value represents a sequence of literal
+<<dfdl-string-literals,DFDL string literal>> (<<dfdl-string-literals>>)::
+The property value represents a sequence of literal
 bytes or characters which represent data which appears in the data stream. The
 value type is a restriction of the XSD xs:token that further disallows the space
 character.
@@ -176,9 +176,9 @@ This uses DFDL's string-literal character class entity syntax (see
 <<dfdl-character-class-entities-in-dfdl-string-literals>>) to express that the
 element or model group is terminated by a line ending in the data stream.
 
-* <<dfdl-expressions,DFDL expression>> (<<dfdl-expressions>>)  The
-property is an xs:string the value of which is a DFDL expression that returns a
-value derived from other property values and/or from the DFDL Infoset. Leading
+<<dfdl-expressions,DFDL expression>> (<<dfdl-expressions>>)::
+The property is an xs:string the value of which is a DFDL expression that returns a
+value derived from other property values, from the DFDL Infoset, or from both. Leading
 and trailing whitespace is trimmed for DFDL expressions.
 +
 Example: the dfdl:occursCount property takes an expression which commonly looks
@@ -190,8 +190,8 @@ An example dfdl:occursCount property might be:
 occursCount='{ ../hdr/count }'
 ----
 
-* <<dfdl-regular-expressions,DFDL regular expression>>
-(<<dfdl-regular-expressions>>)  The property is an xs:string the value of which
+<<dfdl-regular-expressions,DFDL regular expression>> (<<dfdl-regular-expressions>>)::
+The property is an xs:string the value of which
 is a regular expression that can be used as a pattern to calculate the length of
 an element by applying that pattern to the sequence of literal bytes or
 characters which appear in the data stream. Note that leading and trailing
@@ -209,7 +209,7 @@ lengthPattern="\w{1,5};"
 This scans the data stream for from 1 to 5 word-characters followed by a
 semi-colon character.
 
-* Logical Value. The property value is a string that describes a logical value.
+Logical Value:: The property value is a string that describes a logical value.
 The type of the logical value is one of the XML schema simple types. The string
 must conform to the XML schema lexical representation for the type.
 +
@@ -223,8 +223,8 @@ For example for an element of type xs:int:
 nilValue='0'
 ----
 
-* QName The property value is an XML Qualified Name as specified in "Namespaces
-in XML"  [<<a-xmlnamespaces,XMLNamespaces>>]
+QName:: The property value is an XML Qualified Name as specified in "Namespaces
+in XML" [<<a-xmlnamespaces,XMLNamespaces>>].
 +
 Example: The dfdl:escapeSchemeRef property refers to a named escape scheme
 definition via its qualified name.
@@ -235,9 +235,9 @@ For example:
 escapeSchemeRef='ex:backslashScheme'
 ----
 
-Some properties accept a list or union of types
+Some properties accept a list or union of types:
 
-* List of DFDL String Literals or Logical Values   The property value is a
+List of DFDL String Literals or Logical Values:: The property value is a
 whitespace separated list of the specified type. When parsing, if more than one
 string literal in the list matches the portion of the data stream being
 evaluated then the longest matching value in the list must be used. When
@@ -253,7 +253,7 @@ sequence are separated either by a comma or a tab character.
 separator=', %HT;'
 ----
 
-* Union of types and expressions. The property value is a union of DFDL
+Union of types and expressions:: The property value is a union of DFDL
 expression and exactly one of the other types. The expression must resolve to a
 value of the other type.
 +
@@ -268,7 +268,7 @@ length='{ xs:unsignedInt(../hdr/len) }'
 length='14'
 ----
 
-* Union of types. The property value is a union of two or more types. The type
+Union of types:: The property value is a union of two or more types. The type
 is often dependent on the value of another property.
 +
 For example, dfdl:nilValue can be a List of DFDL String Literals or a List of
@@ -284,19 +284,19 @@ appear in the data stream.
 This presents the following challenges:
 
 * the literal characters in the data stream might not be in the same character
-set encoding as the DFDL schema
+set encoding as the DFDL schema;
 * it may be necessary to specify a literal character which is not valid in an
-XML document
-* it may be necessary to specify one or more raw byte values
+XML document;
+* it may be necessary to specify one or more raw byte values.
 
 A DFDL string literal can describe any of the following types of literal data in
 any combination:
 
-* a single literal character in any encoding
-* a string of literal characters in any encoding
+* a single literal character in any encoding;
+* a string of literal characters in any encoding;
 * one or more characters from a set of related characters (e.g. end-of-line
-characters)
-* a literal byte value
+characters);
+* a literal byte value.
 
 A DFDL string literal is therefore able to describe any arbitrary sequence of
 bytes and characters.
@@ -492,8 +492,9 @@ code point in ISO/IEC 10646.
 A DecimalCodePoint provides a decimal representation of the character's code
 point in ISO/IEC 10646.
 
-A DfdlEntityName is one of the mnemonics given in the following tables.
+A DfdlEntityName is one of the mnemonics given in <<dfdl-entities>>.
 
+[[dfdl-entities]]
 .DFDL Entities
 [number="4",cols="1,2,2",options="header"]
 |===
@@ -767,15 +768,15 @@ at processing-time.
 
 The general syntax of expressions is "{" expression "}"
 
-The rules for recognizing DFDL expressions are
+The rules for recognizing DFDL expressions are:
 
 * Discard any leading and trailing whitespace.
 * Must start with a '{' in the first position and end with '}' in the last
 position.
-* '{' in any position other than the first is treated as a literal.
-* '}' in any position other than the last position is treated as a literal.
-* '{{' as the first characters are treated as the literal '{' and not as the
-start of a DFDL expression.
+* A '{' in any position other than the first is treated as a literal.
+* A '}' in any position other than the last position is treated as a literal.
+* An initial '{{' is treated as the literal '{' and not as the start of a DFDL
+expression.
 
 DFDL expressions reference other items in the Infoset or augmented Infoset using
 absolute or relative paths.

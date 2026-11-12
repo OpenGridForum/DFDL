@@ -8,8 +8,9 @@ In some contexts, choices are referred to generally as 'unions'.
 However, this should not be confused with XSD unions which are an unrelated
 concept.
 
-The following properties are specific to xs:choice.
+The properties in <<properties-for-choice-groups>> are specific to xs:choice.
 
+[[properties-for-choice-groups]]
 .Properties for Choice Groups
 [number="51",cols="1,4a",options="header"]
 |===
@@ -118,7 +119,7 @@ It is not possible to place this property in scope on a dfdl:format annotation.
 Annotation: dfdl:element, dfdl:sequence, dfdl:choice, dfdl:group
 |===
 
-A choice can have a dfdl: initiator and/or a dfdl:terminator as described
+A choice can have a dfdl:initiator, a dfdl:terminator, or both, as described
 earlier.
 
 The explanation of choices requires this terminology:
@@ -157,7 +158,7 @@ Speculative resolution works as follows:
 
 [arabic]
 . Attempt to parse the first branch of the choice.
-. If this fails with a Processing Error
+. If this fails with a Processing Error.
 [loweralpha]
 .. If a dfdl:discriminator evaluated to true earlier on this branch  then the parser is 'bound' to this branch and parsing of the entire choice construct fails with a Processing Error.
 .. If the branch has a dfdl:initiator and the choice has dfdl:initiatedContent 'yes'  then the parser is 'bound' to this branch and parsing of the entire choice construct fails with a Processing Error.
@@ -169,7 +170,7 @@ becomes the Infoset for the parse of the choice construct.
 dfdl:occursCountKind='expression' or dfdl:occursCountKind='parsed', then zero
 instances are possible. If the branch parses successfully without a
 discriminator but produces no element occurrences, then the branch is considered
-missing, and the parser looks for the next branch
+missing, and the parser looks for the next branch.
 
 It is not possible for variable settings to be communicated from the speculative
 attempt to parse a branch to any other parsing situation.

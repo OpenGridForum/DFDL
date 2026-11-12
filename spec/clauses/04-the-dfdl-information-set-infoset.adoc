@@ -8,7 +8,7 @@ Its purpose is to define what is provided:
 * to an invoking application by a DFDL parser when parsing DFDL-described data
 using a DFDL Schema;
 * to a DFDL unparser by an invoking application when generating DFDL-described
-data using a DFDL Schema
+data using a DFDL Schema.
 
 The DFDL Infoset contains enough information so that a DFDL schema can be
 defined that enables unparsing the Infoset and reparsing the resultant data
@@ -104,11 +104,11 @@ It is a concrete artifact describing the information set.
 
 The document information item has the following members:
 
-* *[root]* The element information item corresponding to the root element
+*[root]*:: The element information item corresponding to the root element
 declaration of the DFDL Schema.
-* *[dfdlVersion]* String. The version of the DFDL specification to which this
-information set conforms. For DFDL V1.0 this is 'dfdl-1.0'
-* *[schema]* String. This member is reserved for future use.
+*[dfdlVersion]*:: String. The version of the DFDL specification to which this
+information set conforms. For DFDL V1.0 this is 'dfdl-1.0'.
+*[schema]*:: String. This member is reserved for future use.
 
 [[element-information-items]]
 ==== Element Information Items
@@ -132,9 +132,9 @@ are accessible by recursively following its *[children]* member.
 
 An element information item has the following members:
 
-* *[array]* Boolean. True if the item is an array, meaning that it corresponds
+*[array]*:: Boolean. True if the item is an array, meaning that it corresponds
 to an element having maxOccurs value greater than 1, or 'unbounded'.
-* *[children]* An ordered set of zero or more element information items. The
+*[children]*:: An ordered set of zero or more element information items. The
 order they appear in the set is the order implied by the DFDL Schema. 'Ordered
 set' is not formally defined here, but two operations are assumed: 'count' gives
 the number of information items, and 'at (index)' gives the element at ordinal
@@ -142,10 +142,10 @@ position 'index' starting from 1. In a simple element information item this
 member has no value. In a document information item this member contains exactly
 one element information item. If the *[nilled]* member is true, then this member
 has no value.
-* *[dataType]* String. The name of the XML Schema 1.0 built-in simple type to
+*[dataType]*:: String. The name of the XML Schema 1.0 built-in simple type to
 which the value corresponds. DFDL supports a subset of these types listed in
 <<dfdl-simple-types>> DFDL Simple Types.
-* *[dataValue]* The value in the value space (as defined by XML Schema Part 2:
+*[dataValue]*:: The value in the value space (as defined by XML Schema Part 2:
 Datatypes [<<a-xsdl-part1,XSDLV1>>]) of the *[datatype]* member.
 In a complex element information item this member has no value.
 If the *[nilled]* member is true, then this member has no value.
@@ -168,26 +168,26 @@ For information items of datatype xs:hexBinary, the value is an ordered
 collection of unsigned 8-bit bytes each having value from 0 to 255.
 The length of this collection can be 0 in which case the value may be referred
 to as an 'empty hexBinary'.
-* *[document]* The document information item representing the DFDL information
+*[document]*:: The document information item representing the DFDL information
 set that contains this element. This element is empty except in the root element
 of an information set.
-* *[name]* String. The local part of the element name.
-* *[namespace]* String. The namespace, if any, of the element. If the element
+*[name]*:: String. The local part of the element name.
+*[namespace]*:: String. The namespace, if any, of the element. If the element
 does not belong to a namespace, the value is the empty string.
-* *[nilled]* Boolean. True if the nillable item is nil. False if the nillable
+*[nilled]*:: Boolean. True if the nillable item is nil. False if the nillable
 item is not nil. If the element is not nillable this member has no value.
-* *[parent]* The complex element information item which contains this
+*[parent]*:: The complex element information item which contains this
 information item in its *[children]* member. In the root element of an
 information set this member is empty.
-* *[schema]* String. A reference to a schema component associated with this
+*[schema]*:: String. A reference to a schema component associated with this
 information item, if any. If not empty, the value MUST be an absolute or
 relative Schema Component Designator [<<a-scd,SCD>>].
-* **[unionMemberSchema]**footnote:[Also, to support PSVI <<a-psvi,[PSVI\]>>
-construction.] String. For simple element information items, this member
+*[unionMemberSchema]*:: String.footnote:[Also, to support PSVI <<a-psvi,[PSVI\]>>
+construction.] For simple element information items, this member
 contains an SCD reference to the member of the union that matched the value of
 the element. Empty if validation is not enabled. Empty if the element's type is
 not a union.
-* *[valid]*
+*[valid]*::
 Booleanfootnote:[The purpose of this member is to support construction of a W3C standard Post Schema Validation Infoset (PSVI) <<a-psvi,[PSVI\]>>  from a DFDL Infoset.]. True if the element is valid as determined by a DFDL implementation that performs validation checking. A complex element information item is not valid if any of its *[children]* are not valid. Empty if validation is not enabled.
 
 On unparsing, any non-empty values for the *[valid]* or *[unionMemberSchema]*

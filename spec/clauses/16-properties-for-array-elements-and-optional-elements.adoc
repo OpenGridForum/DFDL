@@ -5,7 +5,9 @@ These properties are for array elements (XSD maxOccurs >1 or unbounded) or
 optional elements (XSD minOccurs 0 and XSD maxOccurs 1).
 The properties handle a logical one-dimensional array of any simple or complex
 type.
+They are listed in <<properties-for-array-elements-and-optional-elements-table>>.
 
+[[properties-for-array-elements-and-optional-elements-table]]
 .Properties for Array Elements and Optional Elements
 [number="52",cols="1,5a",options="header"]
 |===
@@ -251,19 +253,19 @@ group.
 
 An array is potentially unbounded if any of the following are true:
 
-* dfdl:occursCountKind is 'stopValue'
-* dfdl:occursCountKind is 'parsed'
-* dfdl:occursCountKind is 'implicit' and XSD maxOccurs is unbounded
+* dfdl:occursCountKind is 'stopValue';
+* dfdl:occursCountKind is 'parsed';
+* dfdl:occursCountKind is 'implicit' and XSD maxOccurs is unbounded.
 
 To prevent an infinite loop, the parsing of an array that is potentially
 unbounded MUST terminate when the parsing of an occurrence makes no forward
 progress.
 This is detected when the following are true:
 
-* The occurrence is a point of uncertainty;
+* The occurrence is a point of uncertainty.
 * The position in the data does not move during the parsing of the occurrence
 (including any associated Separator, PrefixSeparator or PostfixSeparator
-region);
+region).
 * The occurrence is known-to-exist with empty representation or nil
 representation.
 
@@ -279,11 +281,11 @@ values of XSD maxOccurs, the parsing of an array must similarly terminate when
 the following are true:
 
 * dfdl:occursCountKind is 'implicit';
-* The occurrence is a point of uncertainty;
-* The position in the data does not move during the parsing of the occurrence
+* the occurrence is a point of uncertainty;
+* the position in the data does not move during the parsing of the occurrence
 (including any associated Separator, PrefixSeparator, or PostfixSeparator
 region);
-* The occurrence is known to exist with empty representation.
+* the occurrence is known to exist with empty representation.
 
 In this situation no forward progress occurs, and nothing is being added to the
 infoset.

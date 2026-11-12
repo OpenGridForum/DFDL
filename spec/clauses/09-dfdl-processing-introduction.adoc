@@ -3,8 +3,8 @@
 
 A _DFDL Parser_ is an application or code library that takes as input:
 
-* A DFDL annotated XML schema
-* A data stream
+* A DFDL annotated XML schema.
+* A data stream.
 
 It uses the DFDL schema description to interpret the data stream and realize the
 DFDL Information Set.
@@ -84,16 +84,16 @@ stream.
 
 Any one of the following constructs is a point of uncertainty:
 
-* An xs:choice
+* An xs:choice.
 * All xs:elements in an unordered xs:sequence
-(dfdl:sequenceKindfootnote:[For dfdl:sequenceKind, see <<sequence-groups>> Sequence Groups.] is 'unordered')
+(dfdl:sequenceKindfootnote:[For dfdl:sequenceKind, see <<sequence-groups>> Sequence Groups.] is 'unordered').
 * All xs:elements in an xs:sequence containing one or more
-dfdl:floatingfootnote:[For dfdl:floating elements, see <<floating-elements>> Floating Elements.] xs:elements
+dfdl:floatingfootnote:[For dfdl:floating elements, see <<floating-elements>> Floating Elements.] xs:elements.
 
 Any one of the following constructs is a _potential_ point of uncertainty:
 
 * An
-optionalfootnote:[For optional and array elements, see <<properties-for-array-elements-and-optional-elements>> Properties for Array Elements and Optional Elements.] xs:element
+optionalfootnote:[For optional and array elements, see <<properties-for-array-elements-and-optional-elements>> Properties for Array Elements and Optional Elements.] xs:element.
 * An array xs:element.
 
 Examples of potential points of uncertainty are in
@@ -161,8 +161,9 @@ Note that sometimes the framing is not strictly necessary for parsing, but adds
 useful redundancy to the data format, allowing corrupt data to be more robustly
 detected, and sometimes the framing adds human readability to the data format.
 
-In the grammar tables below, the terminal symbols are shown in bold italic font.
+In the grammar in <<dfdl-grammar-productions>>, the terminal symbols are shown in bold italic font.
 
+[[dfdl-grammar-productions]]
 .DFDL Grammar Productions
 [number="11",cols="6,1,15",options="header",class="bnf",separator=!]
 |===
@@ -374,11 +375,11 @@ Some examples follow the definitions.
 An element occurrence has a _nil representation_ if the element declaration has
 XSD nillable property 'true' and the occurrence either:
 
-* conforms to the grammar for SimpleNilLiteralElementRep or
+* Conforms to the grammar for SimpleNilLiteralElementRep or
 ComplexNilLiteralElementRep. Specifically, the *_NilElementInitiator_* and
 *_NilElementTerminator_* regions must be conformant with property
 dfdl:nilValueDelimiterPolicyfootnote:[For dfdl:nilValueDelimiterPolicy, see <<properties-for-nillable-elements>> Properties for Nillable Elements.]. (If non-conformant it is not a Processing Error and the representation is not nil).
-* conforms to the grammar for SimpleNormalRep and its SimpleLogicalValue is
+* Conforms to the grammar for SimpleNormalRep and its SimpleLogicalValue is
 *_NilLogicalValue_*.
 
 The LeadingAlignment, TrailingAlignment, PrefixLength regions may be present.
@@ -594,8 +595,8 @@ components.
 It does this by examining the data and the schema, to:
 
 [loweralpha]
-. Establish representation
-. Resolve points of uncertainty
+. Establish representation.
+. Resolve points of uncertainty.
 
 These two activities are defined below.
 They are mutually recursive in the expected way as a DFDL schema is a recursive
@@ -674,7 +675,7 @@ If none of those hold because they are not applicable, then a schema component
 is known-not-to-exist when any of the following hold:
 
 [arabic]
-. The occurrence is missing
+. The occurrence is missing.
 . There is a dfdl:assert with failureType 'processingError' on the component and
 its expression evaluates to false or its regular expression pattern fails to
 match, or a Processing Error occurs while processing the dfdl:assert.
@@ -736,18 +737,18 @@ If the result is length zero as described above, the representation is then
 established by checking, in order, for:
 
 [arabic]
-. nil representation (if %ES; or %WSP*; on its own is a literal nil value).
-. empty representation.
-. normal representation (xs:string or xs:hexBinary only)
-. absent representation (if none of the prior representations apply).
+. Nil representation (if %ES; or %WSP*; on its own is a literal nil value).
+. Empty representation.
+. Normal representation (xs:string or xs:hexBinary only).
+. Absent representation (if none of the prior representations apply).
 
 If the result is not length zero, the representation is then established by
 checking, in order, for:
 
 [arabic]
-. nil representation (as a literal nil value)
-. nil representation (as a logical nil value)
-. normal representation
+. nil representation (as a literal nil value);
+. nil representation (as a logical nil value);
+. normal representation.
 
 ===== Complex element
 
@@ -764,8 +765,8 @@ If the result is zero bits consumed, the representation is then established by
 checking, in order, for:
 
 [arabic]
-. empty representation.
-. absent representation (if none of the prior representations apply).
+. Empty representation.
+. Absent representation (if none of the prior representations apply).
 
 Otherwise the element has normal representation.
 
@@ -812,8 +813,9 @@ floating element is parsed in schema definition order.
 
 When parsing an array or optional element, points of uncertainty only occur for
 certain values of
-dfdl:occursCountKindfootnote:[Property dfdl:occursCountKind is defined in <<the-dfdl-occurscountkind-property>>.], as follows:
+dfdl:occursCountKindfootnote:[Property dfdl:occursCountKind is defined in <<the-dfdl-occurscountkind-property>>.], as shown in <<points-of-uncertainty-and-dfdl-occurscountkind>>.
 
+[[points-of-uncertainty-and-dfdl-occurscountkind]]
 .Points of Uncertainty and dfdl:occursCountKind
 [number="12",cols="1,3",options="header"]
 |===
@@ -938,9 +940,9 @@ evaluating to true, or dfdl:setVariable statements, are retained.
 Assuming the empty representation has been established, there are three cases to
 consider:
 
-* Simple element (not type xs:string or xs:hexBinary)
-* Simple element (type xs:string or xs:hexBinary)
-* Complex element
+* Simple element (not type xs:string or xs:hexBinary).
+* Simple element (type xs:string or xs:hexBinary).
+* Complex element.
 
 Each is described in a section below.
 
@@ -977,11 +979,11 @@ may create the Infoset item and a single child Infoset item.
 This can occur when:
 
 [arabic]
-. the first child element of the complex type is a required simple element, then
+. The first child element of the complex type is a required simple element, then
 an empty string (type xs:string), empty hexBinary (type xs:hexBinary), or
 default value is also added to the Infoset.
-. the first child element of the complex type is a required complex element,
-then an item is added to the Infoset (which may itself have a child via (1))
+. The first child element of the complex type is a required complex element,
+then an item is added to the Infoset (which may itself have a child via (1)).
 
 ===== Example: Complex Optional Empty Element Not Added to Infoset
 
@@ -1162,24 +1164,24 @@ unparsing via its format annotations) is as defined in the ordered lists below.
 For elements and element references:
 
 [arabic]
-. dfdl:discriminator or dfdl:assert(s) with testKind 'pattern' (parsing only)
+. dfdl:discriminator or dfdl:assert(s) with testKind 'pattern' (parsing only);
 . dfdl:element following property scoping rules, which includes establishing
 representation as described in <<establishing-representation>> and
-conversion to the element type for simple types
-. dfdl:setVariable(s) - in lexical order, innermost schema component first
-. dfdl:discriminator or dfdl:assert(s) with testKind 'expression' (parsing only)
+conversion to the element type for simple types;
+. dfdl:setVariable(s) - in lexical order, innermost schema component first;
+. dfdl:discriminator or dfdl:assert(s) with testKind 'expression' (parsing only).
 
 For sequences, choices and group references:
 
 [arabic]
-. dfdl:discriminator or dfdl:assert(s) with testKind 'pattern' (parsing only)
+. dfdl:discriminator or dfdl:assert(s) with testKind 'pattern' (parsing only);
 . dfdl:newVariableInstance(s) - in lexical order, innermost schema component
-first
-. dfdl:setVariable(s) - in lexical order, innermost schema component first
+first;
+. dfdl:setVariable(s) - in lexical order, innermost schema component first;
 . dfdl:sequence or dfdl:choice or dfdl:group following property scoping rules
 and evaluating any property expressions (corresponds to ComplexContent grammar
-region)
-. dfdl:discriminator or dfdl:assert(s) with testKind 'expression' (parsing only)
+region);
+. dfdl:discriminator or dfdl:assert(s) with testKind 'expression' (parsing only).
 
 The dfdl:setVariable annotations at any one annotation point of the schema are
 always executed in lexical order.
@@ -1320,11 +1322,11 @@ The following DFDL schema constructs are allowed in DFDL and are checked if
 applicable when validating:
 
 [arabic]
-. XSD pattern facet
-. XSD minLength, maxLength
-. XSD minInclusive, minExclusive, maxInclusive, maxExclusive
-. XSD enumeration
-. XSD maxOccurs
+. XSD pattern facet;
+. XSD minLength, maxLength;
+. XSD minInclusive, minExclusive, maxInclusive, maxExclusive;
+. XSD enumeration;
+. XSD maxOccurs.
 
 Note that validation is distinct from the checking of DFDL assert or
 discriminator predicates.

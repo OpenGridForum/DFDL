@@ -15,8 +15,8 @@ The main uses of the expression language are as follows:
 of one or more elements of the data. Properties such as dfdl:initiator,
 dfdl:terminator, dfdl:length, dfdl:occursCount, and dfdl:separator accept an
 expression.
-. In a dfdl:assert annotation
-. In a dfdl:discriminator annotation to resolve uncertainty when parsing
+. In a dfdl:assert annotation.
+. In a dfdl:discriminator annotation to resolve uncertainty when parsing.
 . In a dfdl:inputValueCalc property to derive the value of an element in the
 logical model that doesn't exist in the physical data.
 . In a dfdl:outputValueCalc property to compute the value of an element on
@@ -68,7 +68,7 @@ matches the DFDL specification:
 * Ensure that what is returned as the result is not a sequence with length > 1
 by appropriate use of fn:exactly-one().
 * Check for the disallowed use of those XPath 2.0 functions that are not in the
-DFDL subset
+DFDL subset.
 
 XPath 2.0 specification [XPATH2] defines its functions to be in namespace
 link:http://www.w3.org/2005/xpath-functions[http://www.w3.org/2005/xpath-functions]. The DFDL specification assumes namespace prefix "fn:" is bound to this namespace.
@@ -161,8 +161,10 @@ A different variable instance tuple is then visible.
 
 ==== Variable Memory State Transitions
 
-The flags in the variable memory tuples are interpreted and modified as follows:
+The flags in the variable memory tuples are interpreted and modified as shown
+in <<memory-states-for-expression-language-variables>>.
 
+[[memory-states-for-expression-language-variables]]
 .Memory States for Expression Language Variables
 [number="54",cols="3,1,2,1,1,2,2",keep-lines-together=true]
 |===
@@ -255,8 +257,8 @@ The flags in the variable memory tuples are interpreted and modified as follows:
 
 The above table describes a set of rules which might be abbreviated as:
 
-* write once, read many
-* no write after the value has been read
+* write once, read many;
+* no write after the value has been read.
 
 An exception to this behavior occurs whenever the DFDL processor backtracks
 because it is processing multiple arms of a choice or as a result of speculative
@@ -337,6 +339,7 @@ string literal.
 
 Refer to XML Path Language (XPath) 2.0 [<<a-xpath,XPath>>] for a description of
 XPath expressions
+The syntax of a DFDL expression is given in <<dfdl-expression-language-2>>.
 
 [[dfdl-expression-language-2]]
 .DFDL Expression Language
@@ -487,11 +490,11 @@ XPath expressions
 Notes:
 
 [arabic]
-. Only _If_ and _path_ expression types are supported
-. Only the _child_, _parent_, and _self_ axes are supported
+. Only _If_ and _path_ expression types are supported.
+. Only the _child_, _parent_, and _self_ axes are supported.
 . Predicates are only used to index arrays and so must be integer expressions
-otherwise a Schema Definition Error occurs
-. A subset of the XPath 2.0 operators is supported
+otherwise a Schema Definition Error occurs.
+. A subset of the XPath 2.0 operators is supported.
 . NameTest - These QNames are path steps that refer to elements in the DFDL
 Infoset. If such an element is in a namespace, then the NameTest QName must have
 a prefix which is bound to the namespace. Specifically, any default namespace is
@@ -526,8 +529,9 @@ result type.
 It is a Processing Error if the supplied argument value is not convertible to
 the constructed type.
 
-The following constructor functions for the built-in types are supported:
+The constructor functions for the built-in types in <<basic-constructors>> are supported.
 
+[[basic-constructors]]
 .Basic Constructors
 [number="56",cols="1",options="header"]
 |===
@@ -576,7 +580,9 @@ The following constructor functions for the built-in types are supported:
 A special constructor function is provided for constructing a
 ``++xs:dateTime++`` value from an ``++xs:date++`` value and an ``++xs:time++``
 value.
+It is given in <<special-constructor-for-xs-datetime>>.
 
+[[special-constructor-for-xs-datetime]]
 .Special Constructor for xs:dateTime
 [number="57",cols="1",options="header"]
 |===
@@ -590,8 +596,9 @@ value.
 
 ===== Boolean functions
 
-The following additional constructor functions are defined on the boolean type.
+The additional constructor functions in <<boolean-constructor-functions>> are defined on the boolean type.
 
+[[boolean-constructor-functions]]
 .Boolean functions
 [number="58",cols="1,3",options="header"]
 |===
@@ -606,9 +613,10 @@ The following additional constructor functions are defined on the boolean type.
 | Constructs the xs:boolean value 'false'.
 |===
 
-The following functions are defined on boolean values.
+The functions in <<boolean-functions>> are defined on boolean values.
 The return type of these functions is xs:boolean.:
 
+[[boolean-functions]]
 .Boolean functions
 [number="59",cols="1,6a",options="header"]
 |===
@@ -641,10 +649,11 @@ Inverts the xs:boolean value of the argument.
 
 ===== Numeric Functions
 
-The following functions are defined on numeric types.
+The functions in <<numeric-functions>> are defined on numeric types.
 Each function returns a value of the same type as the type of its argument.
 The argument must be convertible to a number type.
 
+[[numeric-functions]]
 .Numeric Functions
 [number="60",cols="1,2",options="header"]
 |===
@@ -677,6 +686,9 @@ types derived from it.
 In the functions below which compare strings, DFDL always uses the default
 Unicode collation algorithm (which is a comparison of codepoint values).
 
+The string functions are listed in <<string-functions>>.
+
+[[string-functions]]
 .String Functions
 [number="61",cols="1,1",options="header"]
 |===
@@ -719,6 +731,8 @@ xs:double)
 |===
 
 ===== Date and Time Functions
+
+The date and time functions are listed in <<date-and-time-functions>>.
 
 [[date-and-time-functions]]
 .Date and Time Functions
@@ -772,9 +786,10 @@ The following functions are defined on sequences.
 (Note that DFDL v1.0 does not support sequences of length > 1 as the final
 results of expressions.)
 
-In the functions below, if the argument evaluates to the current node, or any
+For the functions in <<node-sequence-test-functions-table>>, if the argument evaluates to the current node, or any
 enclosing parent node, then it is a Schema Definition Error.
 
+[[node-sequence-test-functions-table]]
 .Node Sequence Test Functions
 [number="63",cols="1,4",options="header"]
 |===
@@ -803,7 +818,9 @@ Returns 0 if ``++$arg++`` is the empty sequence.
 ===== Node functions
 
 This section discusses functions and operators on nodes.
+They are listed in <<node-functions>>.
 
+[[node-functions]]
 .Node functions
 [number="64",cols="1a,3",options="header"]
 |===
@@ -825,7 +842,9 @@ fn:namespace-uri($arg)
 ===== Nillable Element Functions
 
 This section discusses functions related to nillable elements.
+They are listed in <<nillable-element-functions>>.
 
+[[nillable-element-functions]]
 .Nillable Element Functions
 [number="65",cols="1,5",options="header"]
 |===
@@ -840,6 +859,9 @@ This section discusses functions related to nillable elements.
 [[dfdl-functions]]
 ==== DFDL Functions
 
+The DFDL functions are listed in <<dfdl-functions-table>>.
+
+[[dfdl-functions-table]]
 .DFDL Functions
 [number="66",cols="1,1",options="header"]
 |===
@@ -902,7 +924,7 @@ Additionally, the XSD fixed property is checked.
 It is a Schema Definition Error if the argument is a complex element.
 
 | dfdl:encodeDFDLEntities($arg)
-| Returns a string containing a DFDL string literal constructed from the $arg string argument. If $arg contains any '%' and/or space characters, then the return value replaces each '%' with '%%' and each space with '%SP;', otherwise $arg is returned unchanged.
+| Returns a string containing a DFDL string literal constructed from the $arg string argument. If $arg contains any '%' or space characters, then the return value replaces each '%' with '%%' and each space with '%SP;', otherwise $arg is returned unchanged.
 
 | dfdl:decodeDFDLEntities ($arg)
 a| Returns a string constructed from the $arg string argument. If $arg contains syntax matching DFDL Character Entities syntax, then the corresponding characters are used in the result.  Any characters in $arg not matching the DFDL Character Entities syntax remain unchanged in the result.
@@ -993,8 +1015,9 @@ character.
 
 There is sometimes a need to create a number type from hex binary, and a hex
 binary type from a number.
-Accordingly, the following new DFDL specific functions are provided.
+Accordingly, the new DFDL specific functions in <<dfdl-constructor-functions>> are provided.
 
+[[dfdl-constructor-functions]]
 .DFDL Constructor Functions
 [number="67",cols="1,3a",options="header"]
 |===
@@ -1041,21 +1064,24 @@ Definition Error.
 
 Examples:
 
-* dfdl:unsignedInt("xa1b2c3d4") is the unsigned int value 2712847316.
-* dfdl:int("xFFFFFFFF") is the signed int value -1.
-* dfdl:unsignedByte("xFF") is the unsigned byte value 255.
-* dfdl:byte("xff") is the signed byte value -1.
-* dfdl:byte("x7F") is the signed byte value 127.
-* dfdl:byte("x80") is the signed byte value -128.
-* dfdl:unsignedByte("x80") is the unsigned byte value 128.
-* dfdl:byte("x0A3") is a Schema Definition Error (too many digits for type).
-* dfdl:byte("xG3") is a Schema Definition Error (invalid digit).
-* dfdl:hexBinary(xs:unsignedByte(208))  is the hexBinary value "D0".
-* dfdl:hexBinary(208)  is the hexBinary value "00D0".
-* dfdl:hexBinary(-2084) is the hexBinary value "F7DC".
+`dfdl:unsignedInt("xa1b2c3d4")`:: The unsigned int value 2712847316.
+`dfdl:int("xFFFFFFFF")`:: The signed int value -1.
+`dfdl:unsignedByte("xFF")`:: The unsigned byte value 255.
+`dfdl:byte("xff")`:: The signed byte value -1.
+`dfdl:byte("x7F")`:: The signed byte value 127.
+`dfdl:byte("x80")`:: The signed byte value -128.
+`dfdl:unsignedByte("x80")`:: The unsigned byte value 128.
+`dfdl:byte("x0A3")`:: A Schema Definition Error (too many digits for type).
+`dfdl:byte("xG3")`:: A Schema Definition Error (invalid digit).
+`dfdl:hexBinary(xs:unsignedByte(208))`:: The hexBinary value "D0".
+`dfdl:hexBinary(208)`:: The hexBinary value "00D0".
+`dfdl:hexBinary(-2084)`:: The hexBinary value "F7DC".
 
 ==== Miscellaneous Functions
 
+The miscellaneous functions are listed in <<miscellaneous-functions>>.
+
+[[miscellaneous-functions]]
 // Numbered 67-A, as in earlier editions, so later tables keep their numbers.
 .Miscellaneous Functions
 [number="67-A",cols="1a,2a",options="header"]
