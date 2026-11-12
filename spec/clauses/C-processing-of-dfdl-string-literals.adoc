@@ -1,10 +1,10 @@
-[appendix]
+[appendix,obligation=normative]
 [[appendix-c-processing-of-dfdl-string-literals]]
-== Appendix C: Processing of DFDL String literals
+== Processing of DFDL String literals
 
 A DFDL String Literal describes characters or bytes that can appear in the data.
 The syntax of a DFDL String Literal is described in <<dfdl-properties>>.
-This appendix describes how a DFDL String Literal MUST be processed by a DFDL
+This annex describes how a DFDL String Literal MUST be processed by a DFDL
 processor.
 
 === Interpreting a DFDL String Literal
@@ -43,7 +43,7 @@ Each type of string literal part and/or the DfdlESEntity is recognised as
 described in the table below:
 
 .Recognizing DFDL String Literal Part
-[cols="1,4a",options="header"]
+[number="1",cols="1,4a",options="header"]
 |===
 
 | String Literal Part

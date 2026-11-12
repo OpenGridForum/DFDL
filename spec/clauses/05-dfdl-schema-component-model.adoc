@@ -3,7 +3,7 @@
 
 When using DFDL, the format of data is described by means of a _DFDL Schema_.
 
-The DFDL Schema Component Model is shown in conceptual UML in Figure 2.
+The DFDL Schema Component Model is shown in conceptual UML in <<dfdl-schema-uml-diagram>>.
 
 The shaded boxes have direct corresponding XML Schema syntax and therefore
 appear in DFDL schema.
@@ -15,6 +15,7 @@ xs:choice constructs of the schema.
 The class Term is a further generalization encompassing not only ModelGroup, but
 GroupReference, ElementReference, and ElementDeclaration.
 
+[[dfdl-schema-uml-diagram]]
 .DFDL Schema UML diagram
 image::images/image3.svg[]
 
@@ -38,10 +39,11 @@ not include many concepts that appear in XML schema.
 [[dfdl-simple-types]]
 === DFDL Simple Types
 
-The DFDL simple types are shown in Figure 3. The graph shows all the types
+The DFDL simple types are shown in <<dfdl-simple-types-as-a-subset-of-xml-schema-types>>. The graph shows all the types
 defined by XML Schema version 1.0, and the subset of these types supported by
 DFDL are shown as shaded.
 
+[[dfdl-simple-types-as-a-subset-of-xml-schema-types]]
 .DFDL simple types as a subset of XML Schema types
 image::images/image5.svg[]
 
@@ -54,7 +56,7 @@ XML documents.)
 The simple types are placed into logical type groupings as shown in this table:
 
 .Logical type groupings
-[cols="1,3",options="header"]
+[number="1",cols="1,3",options="header"]
 |===
 
 | Logical Type Group

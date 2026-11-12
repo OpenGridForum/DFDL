@@ -14,36 +14,47 @@ ifdef::edition-ogf[]
 [%unnumbered,cols="1,5"]
 |===
 
+.2+a| 2026-11-11
+
+(internal v1.2.2)
+| The OGF edition's document number is now GFD-R.240. Earlier editions carried
+GFD-R-P.240, the number of a Proposed Recommendation, but GFD.240 is a
+Recommendation.
+
+| The appendices are now annexes, labelled Annex A to Annex G as ISO requires,
+and each states its status: Annex B is informative and the others are
+normative. See link:https://github.com/OpenGridForum/DFDL/issues/106[(Issue 106)]
+
 a| 2026-11-07
 
-(internal v1.2.2 still)
-| Section 4.2.2 Restored the [dataValue] description, using the text from GFD.207.
+(internal v1.2.2)
+| <<element-information-items>> Restored the [dataValue] description, using the text from GFD.207.
 See link:https://github.com/OpenGridForum/DFDL/issues/82[(Issue 82)]
 
 a| 2026-01-15
 
-(internal v1.2.2 still)
+(internal v1.2.2)
 a| Fixed errata language and minor formatting per
 
 link:https://github.com/OpenGridForum/DFDL/issues/77#issuecomment-3760018110[(Issue 77)]
 
 a| 2026-01-15
 
-(internal v1.2.2 still)
+(internal v1.2.2)
 | More minor and typographical format fixes per link:https://github.com/OpenGridForum/DFDL/issues/77#issuecomment-3750887512[(Issue 77)]
 
 .5+a| 2026-01-02
 
 (internal v1.2.2)
-| Section 7.5.1 clarification of language about assert statement evaluation order.
+| <<properties-for-dfdl-assert>> clarification of language about assert statement evaluation order.
 
-| Section 13.6 use uniform terminology of 'signed number' and 'unsigned number'. Section 13.6.2 Clarified error cases. Section 13.7.1 Clarified illegal combinations of BCD with decimalSigned 'yes' and packed with decimalSigned 'no'.
+| <<properties-specific-to-number-with-text-representation>> use uniform terminology of 'signed number' and 'unsigned number'. <<converting-logical-numbers-to-from-text-representation>> Clarified error cases. <<converting-logical-numbers-to-from-binary-representation>> Clarified illegal combinations of BCD with decimalSigned 'yes' and packed with decimalSigned 'no'.
 
-| Section 12.3.4 Clarifications about facet checks and processing errors on dfdl:prefixLengthType simple types for cases where dfdl:prefixIncludesPrefixLength is 'yes' or 'no'.
+| <<dfdl-lengthkind-prefixed>> Clarifications about facet checks and processing errors on dfdl:prefixLengthType simple types for cases where dfdl:prefixIncludesPrefixLength is 'yes' or 'no'.
 
-| Section 18.5.1 Correct xs:dateTime constructor to a single argument only.
+| <<constructor-functions-for-xml-schema-built-in-types>> Correct xs:dateTime constructor to a single argument only.
 
-| Section 18.5.2.5 and Section 35 Clarifications around the argument to the fn:count function. It is not required to only be an array or optional element, but can be any node sequence.
+| <<node-sequence-test-functions>> and <<appendix-f-specific-errors-classified>> Clarifications around the argument to the fn:count function. It is not required to only be an array or optional element, but can be any node sequence.
 
 a| 2026-01-02
 
@@ -60,28 +71,26 @@ a| 2025-10-01
 (internal v1.2.0)
 a| Format changed to use ISO template.
 
-OGF back matter sections (25 to 28) moved to front matter to make ISO PAS
-submission simpler – just the front matter pages change.
-Sections 25-28 still exist to preserve section numbering, but are marked
-"Removed".
+OGF back matter sections moved to front matter to make ISO PAS submission
+simpler - just the front matter pages change between OGF and ISO versions.
 
 .7+| 2023-06-13
-| Section 13.2.1 Property escapeKind. Clarify it is a Schema Definition Error if the dfdl:escapeCharacter or dfdl:escapeEscapeCharacter is the same as the first character of an in-scope dfdl:separator or dfdl:terminator
+| <<the-dfdl-escapescheme-properties>> Property escapeKind. Clarify it is a Schema Definition Error if the dfdl:escapeCharacter or dfdl:escapeEscapeCharacter is the same as the first character of an in-scope dfdl:separator or dfdl:terminator
 
-a| Section 18.4 Notes. Add item 6 saying: The expression ".[1]" is the same as "." and that ".[n]" where n is not equal to 1 returns an empty node sequence.
+a| <<dfdl-expression-syntax>> Notes. Add item 6 saying: The expression ".[1]" is the same as "." and that ".[n]" where n is not equal to 1 returns an empty node sequence.
 
-Section 18.5.2.5 the sentence "In the functions below, if the argument includes
+<<node-sequence-test-functions>> the sentence "In the functions below, if the argument includes
 the current node, or any enclosing parent node, then it is a Schema Definition
 Error." should be using "evaluates to" not "includes".
 
-| Section 18.5.1 the xs:dateTime function takes 2 arguments, an xs:date and xs:time.
+| <<constructor-functions-for-xml-schema-built-in-types>> the xs:dateTime function takes 2 arguments, an xs:date and xs:time.
 
-| Section 13.6.1.1 Clarify with simpler grammar for textNumberPattern for V and P symbols. Clarify exponent E is required.
+| <<dfdl-textnumberpattern-for-dfdl-textnumberrep-standard>> Clarify with simpler grammar for textNumberPattern for V and P symbols. Clarify exponent E is required.
 
-| Section 13.6.1.1 Clarify quoting of special characters in textNumberPattern
+| <<dfdl-textnumberpattern-for-dfdl-textnumberrep-standard>> Clarify quoting of special characters in textNumberPattern
 
-| Section 13.11.1 Correct number of digits in calendarPattern
+| <<the-dfdl-calendarpattern-property>> Correct number of digits in calendarPattern
 
-| Section 12.3.4 Update prefixLengthType facet checking, prohibit statement annotations on the type, clarify that prohibitions also apply to any base type, and clarify language in 12.3.4.1.
+| <<dfdl-lengthkind-prefixed>> Update prefixLengthType facet checking, prohibit statement annotations on the type, clarify that prohibitions also apply to any base type, and clarify language in <<nested-prefix-lengths>>.
 |===
 endif::[]

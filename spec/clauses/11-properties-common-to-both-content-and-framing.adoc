@@ -2,7 +2,7 @@
 == Properties Common to both Content and Framing
 
 .Properties Common to both Content and Framing
-[cols="1,4a",options="header"]
+[number="13",cols="1,4a",options="header"]
 |===
 
 | Property Name
@@ -107,7 +107,7 @@ The encoding name 'UTF-8' is interpreted strictly and does not include variants
 such as CESU-8.
 
 DFDL standard encoding names are defined in
-<<appendix-d-dfdl-standard-encodings>> Appendix D: DFDL Standard Encodings.
+<<appendix-d-dfdl-standard-encodings>> DFDL Standard Encodings.
 When supported, a conforming DFDL implementation MUST implement them in a
 uniform manner so that they are portable across all DFDL implementations that
 implement them.

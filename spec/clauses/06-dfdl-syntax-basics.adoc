@@ -67,7 +67,7 @@ references.
 
 [[dfdl-annotation-elements]]
 .DFDL Annotation Elements
-[cols="1,2,4",options="header"]
+[number="2",cols="1,2,4",options="header"]
 |===
 
 | Annotation Type
@@ -303,7 +303,7 @@ bytes and characters.
 
 Details on how a string literal is matched against the data stream for parsing
 are given in
-<<appendix-c-processing-of-dfdl-string-literals,Appendix C: Processing of DFDL String literals>>.
+<<appendix-c-processing-of-dfdl-string-literals>> Processing of DFDL String literals.
 
 *_Empty String:_* The special DFDL entity %ES; is provided for describing an
 empty string or an empty byte sequence. The %ES; entity is the only way to do
@@ -398,7 +398,7 @@ including the various kinds of entities.
 
 [[dfdl-character-entity-character-class-entity-and-byte-value]]
 .DFDL Character Entity, Character Class Entity, and Byte Value Entity Syntax
-[cols="5,1,15",class="bnf",separator=!]
+[number="3",cols="5,1,15",class="bnf",separator=!]
 |===
 
 ! DfdlStringLiteral
@@ -495,7 +495,7 @@ point in ISO/IEC 10646.
 A DfdlEntityName is one of the mnemonics given in the following tables.
 
 .DFDL Entities
-[cols="1,2,2",options="header"]
+[number="4",cols="1,2,2",options="header"]
 |===
 
 | Mnemonic
@@ -659,7 +659,7 @@ characters from a set of related characters.
 
 [[dfdl-character-class-entities]]
 .DFDL Character Class Entities
-[cols="1,5a,2",options="header"]
+[number="5",cols="1,5a,2",options="header"]
 |===
 
 | Mnemonic

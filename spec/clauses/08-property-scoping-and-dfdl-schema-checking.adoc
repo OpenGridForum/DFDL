@@ -13,7 +13,7 @@ annotations is given in <<dfdl-annotation-scoping>> DFDL annotation scoping
 
 [[dfdl-annotation-scoping]]
 .DFDL annotation scoping
-[cols="1,4",options="header"]
+[number="10",cols="1,4",options="header"]
 |===
 
 | Annotation Point
@@ -192,7 +192,7 @@ the "default" working sets.
 The "Applicable" properties are all the DFDL properties that apply to that
 schema component.
 For example, all the DFDL properties that apply to a particular xs:simpleType
-(as defined by Section 13).
+(as defined by <<simple-types>>).
 
 [source,xml]
 ----

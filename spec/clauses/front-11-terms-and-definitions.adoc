@@ -2,7 +2,7 @@
 == Terms and Definitions
 
 See <<glossary-and-terminology>> Glossary and Terminology, and
-<<appendix-e-glossary-of-terms,Appendix E: Glossary of Terms>>.
+<<appendix-e-glossary-of-terms>> Glossary of Terms.
 
 ISO and IEC maintain terminology databases for use in standardization at the
 following addresses:

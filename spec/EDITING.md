@@ -37,8 +37,9 @@ than sweeping the document.
 
 Edit the clause file. The names carry the clause number the specification gives
 itself, so Clause 13 is `clauses/13-simple-types.adoc` and Annex E is
-`clauses/E-glossary-of-terms.adoc`. Numbers in the rendered document are
-generated, so nothing has to be renumbered by hand.
+`clauses/E-glossary-of-terms.adoc`. Clause and figure numbers in the rendered
+document are generated, and table numbers are written in the source, so
+nothing has to be renumbered by hand.
 
 ## Adding a clause
 
@@ -63,11 +64,20 @@ instead.
 
 ## Tables, figures and listings
 
-A title goes on the line above the block, and the number is generated:
+A title goes on the line above the block. A captioned table also states its
+number, which keeps the numbers readers know from earlier editions:
 
     .Properties Specific to String
-    [cols="1,4",options="header"]
+    [number="29",cols="1,4",options="header"]
     |===
+
+A new table needs no number of its own: `make html`, `make pdf` and
+`make numbers` give it the number of the table before it plus a letter, such as
+33-A after 33, then 33-B. Tables in an annex are numbered from 1 again and
+print with the annex letter, as A.1. Removing a table leaves a gap in the
+numbers rather than renumbering the tables after it. `make check` fails on a
+missing, repeated or out-of-order number. A table that can't take the next
+letter, such as a new table between 33 and 33-A, is numbered by hand.
 
 A column whose cells hold lists or several paragraphs is marked once in `cols`,
 as in `cols="1,3a"`, so its cells need no `a|` of their own.
@@ -127,15 +137,10 @@ line wrapped in a role:
 `make check` catches captions that fail to attach and markup that leaks into
 the rendered text.
 
-Two tables carry numbers set by hand, 33-A and 67-A, so that the tables after
-them keep the numbers readers know from earlier editions. The table after each
-one has `number=` set too, so the count resumes. Adding or removing a table
-before either means updating those numbers. `make check` catches an added table,
-because two tables then print the same number, but not a removed one.
-
 The two separator suppression tables in clause 14 are generated. Their merged,
 shaded cells are kept as data files in `tables/`, one line per cell, and
-`make tables` writes them into the clause. Edit the data file, not the table;
+`make tables` writes them into the clause. Edit the data file, not the table,
+and set their numbers there;
 `make check` fails if the two disagree. `tools/tables.py` describes the format.
 
 ## Page breaks
@@ -226,7 +231,9 @@ header, footer and cover read `presentation-metadata-ogf-*` attributes in
 `dfdl-ogf.adoc`: the document number, the dates, the contact address and
 the cover's author lines. Metanorma splits these values at commas, and the
 stylesheet joins them again, so a value may contain commas. Copyright years
-come from `copyright-year`, which the text reads as `{copyright-year}`.
+come from `copyright-year`, which the text reads as `{copyright-year}`. The
+cover's Status of This Document line is `ogf-status`. It says the document is
+a release candidate; the review tag says which one.
 
 The OGF edition's HTML cover is `html-cover-ogf.html`, a template that reads
 the same attributes as the PDF cover. `dfdl-ogf.adoc` gives its path from
@@ -244,6 +251,28 @@ unquoted. With a wrong path Metanorma builds no HTML, and without the
 attribute it builds the HTML without the fonts. Neither stops the build, so
 `make check` fails if there is no HTML, and `make EDITION=ogf check` fails if
 the HTML doesn't load the fonts.
+
+## Publishing a release
+
+The values that change between releases are attributes in `dfdl-ogf.adoc`,
+so a release is a handful of edits there and in the Change History, made in
+one commit before tagging.
+
+For each review version:
+
+1. `presentation-metadata-ogf-updated`: the current month, as in
+   "Updated November 2026". The cover and every page header show it.
+2. `copyright-year`, if the year has changed.
+3. Tag the commit with the next release candidate, such as `v1.2.2-RC2`. The
+   status line says only "Release Candidate"; the tag says which one.
+
+When review is over and the document goes to OGF:
+
+1. `ogf-status`: the status OGF publishes it with, in place of the release
+   candidate wording.
+2. `presentation-metadata-ogf-updated`: the publication month.
+3. `copyright-year`, if the year has changed.
+4. The Document Change History: an entry for the release.
 
 ## The conversion check
 

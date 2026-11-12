@@ -8,7 +8,7 @@ For example, a binary-only subset without any expressions or variables is
 specifically allowed.
 
 .Optional DFDL features
-[cols="1,2",options="header"]
+[number="69",cols="1,2",options="header"]
 |===
 
 | Feature

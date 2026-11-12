@@ -1,6 +1,6 @@
-[appendix]
+[appendix,obligation=informative]
 [[appendix-b-rationale-for-single-assignment-variables]]
-== Appendix B: Rationale for Single-Assignment Variables
+== Rationale for Single-Assignment Variables
 
 DFDL is intended to be a description language.
 That is, the capture of a data format should be as descriptive/declarative as

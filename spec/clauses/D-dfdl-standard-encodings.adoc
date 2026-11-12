@@ -1,16 +1,16 @@
-[appendix]
+[appendix,obligation=normative]
 [[appendix-d-dfdl-standard-encodings]]
-== Appendix D: DFDL Standard Encodings
+== DFDL Standard Encodings
 
-This appendix provides a specification template for the definition of DFDL
+This annex provides a specification template for the definition of DFDL
 standard encodings and defines two such encodings for use in DFDL
-schemas.footnote:[It is anticipated this appendix will be migrated into a separate document to facilitate the addition of new encodings without revising the DFDL specification.]
+schemas.footnote:[It is anticipated this annex will be migrated into a separate document to facilitate the addition of new encodings without revising the DFDL specification.]
 
 These encodings are optional - DFDL implementations are not required to support
 them to be in conformance with the DFDL specification.
 
 However, if implemented, then a conformant DFDL implementation MUST follow the
-specification in this appendix.
+specification in this annex.
 
 === Purpose
 
@@ -97,7 +97,7 @@ The table below shows how the 8-character string 'UNIT1234' is encoded into 7
 bytes, when the bit order is least-significant-bit first.
 
 .Example of DFDL Standard Encoding X-DFDL-US-ASCII-7-BIT-PACKED
-[cols="2,1,1,1,1",options="header"]
+[number="1",cols="2,1,1,1,1",options="header"]
 |===
 
 | Logical character
@@ -247,7 +247,7 @@ The correspondence of ASCII characters to their code point values is given by
 the table below.
 
 .Translation Table for DFDL Standard Encoding X-DFDL-US-ASCII-6-BIT-PACKED
-[cols="1,1,4",options="header"]
+[number="2",cols="1,1,4",options="header"]
 |===
 
 | Character
@@ -372,7 +372,7 @@ The table below shows how the 8 character string '1234' is encoded into 3 bytes.
 The bit order is least-significant-bit first:
 
 .Example of DFDL Standard Encoding X-DFDL-US-ASCII-6-BIT-PACKED
-[cols="2,1,1,1,1",options="header"]
+[number="3",cols="2,1,1,1,1",options="header"]
 |===
 
 | Logical character
@@ -412,7 +412,7 @@ XXXXXX**11**
 | 3
 |===
 
-=== References for Appendix D
+=== References for Annex D
 
 [%plain%unnumbered,cols="1,6"]
 |===

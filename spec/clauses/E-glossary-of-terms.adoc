@@ -1,6 +1,6 @@
-[appendix]
+[appendix,obligation=normative]
 [[appendix-e-glossary-of-terms]]
-== Appendix E: Glossary of Terms
+== Glossary of Terms
 
 *_Adjacent_* - Two _addressable units_ of the input/output stream are adjacent
 if they are at consecutive positions.
@@ -241,7 +241,7 @@ DFDL annotations.
 
 *_DFDL Standard Encoding_* - A character set for which there is no IANA name or
 CCSID but the name and definition of which DFDL implementations must agree on.
-See <<appendix-d-dfdl-standard-encodings>> Appendix D: DFDL Standard Encodings.
+See <<appendix-d-dfdl-standard-encodings>> DFDL Standard Encodings.
 
 *_Double-Byte Character Set_* (DBCS) - A character set encoding where each
 character code consists of one code unit which uses exactly 2 bytes.
@@ -286,7 +286,7 @@ Character Set)
 (Double-Byte Character Set)
 * 4-bytes wide: UTF-32.
 * 7-bits wide:
-X-DFDL-US-ASCII-7-BIT-PACKEDfootnote:[X-DFDL-US-ASCII-7-BIT-PACKED is a DFDL standard encoding, which uses the US-ASCII characters, but each code unit is stored occupying only 7 bits, not a whole 8-bit-byte. DFDL standard encodings are defined in a separate specification. See <<appendix-d-dfdl-standard-encodings>> Appendix D: DFDL Standard Encodings.].
+X-DFDL-US-ASCII-7-BIT-PACKEDfootnote:[X-DFDL-US-ASCII-7-BIT-PACKED is a DFDL standard encoding, which uses the US-ASCII characters, but each code unit is stored occupying only 7 bits, not a whole 8-bit-byte. DFDL standard encodings are defined in a separate specification. See <<appendix-d-dfdl-standard-encodings>> DFDL Standard Encodings.].
 
 *_Fixed Array Element_* - An array element where XSD minOccurs is equal to XSD
 maxOccurs.
@@ -398,7 +398,7 @@ minOccurs.
 
 *_Required Property_* – A DFDL property that must have a value. The required
 properties for each schema component are listed in
-<<appendix-g-property-precedence,Appendix G: Property Precedence>>.
+<<appendix-g-property-precedence>> Property Precedence.
 
 *_Resolved Set of Annotations_* - When DFDL annotations appear on
 

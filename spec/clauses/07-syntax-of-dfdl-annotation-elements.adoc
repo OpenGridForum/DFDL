@@ -18,7 +18,7 @@ only the representation properties applicable to that component.
 The table below gives the specific annotation for each schema component.
 
 .DFDL Component Format Annotations
-[cols="1,1",options="header"]
+[number="6",cols="1,1",options="header"]
 |===
 
 | Schema component
@@ -506,6 +506,7 @@ Examples of dfdl:assert elements are below:
 </dfdl:assert>
 ----
 
+[[properties-for-dfdl-assert]]
 ==== Properties for dfdl:assert
 
 A dfdl:assert annotation contains a test expression or a test pattern.
@@ -555,7 +556,7 @@ and the failureType of the assert is 'processingError', then no further asserts
 in the set are executed.
 
 .dfdl:assert properties
-[cols="1,6a",options="header"]
+[number="7",cols="1,6a",options="header"]
 |===
 
 | Property Name
@@ -781,7 +782,7 @@ exclusive of each other.
 It is a Schema Definition Error otherwise.
 
 .dfdl:discriminator properties
-[cols="1,6a",options="header"]
+[number="8",cols="1,6a",options="header"]
 |===
 
 | Property Name
@@ -975,7 +976,7 @@ DFDL variables only _vary_ in the sense that different instances of the same
 variable can have different values.
 A single instance of a variable only ever takes on a single value.
 Each variable instance is a _single-assignment_ location for a
-valuefootnote:[The rationale for single-assignment variables is to keep DFDL schemas _declarative_ by preventing variables from being used as algorithmic accumulators. See the <<appendix-b-rationale-for-single-assignment-variables,Appendix B: Rationale for Single-Assignment Variables>>.].
+valuefootnote:[The rationale for single-assignment variables is to keep DFDL schemas _declarative_ by preventing variables from being used as algorithmic accumulators. See <<appendix-b-rationale-for-single-assignment-variables>> Rationale for Single-Assignment Variables.].
 Once a variable instance's value has been read, it can never be assigned again.
 If it has not yet been assigned, and its default value has not been read, then a
 variable instance can be assigned _once_ using dfdl:setVariable.
@@ -1097,7 +1098,7 @@ The following variables are predefined, and their names are in the DFDL
 namespace (http://www.ogf.org/dfdl/dfdl-1.0/)
 
 .Pre-defined variables
-[cols="2,1,2,1",options="header"]
+[number="9",cols="2,1,2,1",options="header"]
 |===
 
 | Name

@@ -15,7 +15,8 @@
 
 [.underline]#Status of This Document#
 
-Grid Final Draft (GFD)
+// Set in dfdl-ogf.adoc, with the other values that change between releases.
+{ogf-status}
 
 [.underline]#Obsoletes#
 

@@ -5,7 +5,7 @@ The sections of the specification are
 * <<notational-and-definitional-conventions>>, Notational and Definitional
 Conventions - provides definitions used throughout the specification. Note that
 terminology is defined at point of first use, but there is a complete Glossary
-in <<appendix-e-glossary-of-terms,Appendix E: Glossary of Terms>>.
+in <<appendix-e-glossary-of-terms>> Glossary of Terms.
 * <<the-dfdl-information-set-infoset>>, The DFDL Information Set
 (Infoset) - describes the abstract data structure produced by parsing data using
 a DFDL processor, and which is consumed by a DFDL processor when unparsing data.
@@ -53,6 +53,6 @@ value elements, and assertion checking.
 expression language used when parsing to isolate elements within the data
 stream, as well as to check assertions.
 
-The remaining sections and appendices supply additional details of particular
+The remaining sections and annexes supply additional details of particular
 importance to implementors of DFDL, or they provide detail and reference
 material and are referenced from other parts of the specification.

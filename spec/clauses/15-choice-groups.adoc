@@ -11,7 +11,7 @@ concept.
 The following properties are specific to xs:choice.
 
 .Properties for Choice Groups
-[cols="1,4a",options="header"]
+[number="51",cols="1,4a",options="header"]
 |===
 
 | Property Name

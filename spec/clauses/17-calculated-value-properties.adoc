@@ -25,7 +25,7 @@ unparsing.
 These properties apply to elements of simple type.
 
 .Calculated Value Properties
-[cols="1,5a",options="header"]
+[number="53",cols="1,5a",options="header"]
 |===
 
 | Property Name

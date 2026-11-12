@@ -20,7 +20,7 @@ occurrence.
 The following properties are used to define alignment rules.
 
 .Aligned Data Properties
-[cols="1,5a",options="header"]
+[number="14",cols="1,5a",options="header"]
 |===
 
 | Property Name
@@ -137,7 +137,7 @@ each logical type.
 
 [[implicit-alignment-in-bits]]
 .Implicit Alignment in bits
-[cols="2,2,1,2"]
+[number="15",cols="2,2,1,2"]
 |===
 
 .2+| *Type*
@@ -218,7 +218,7 @@ data is processed, then bits are skipped (parsing) or filled from dfdl:fillByte
 All required character set encodings in DFDL have 8-bit/1-byte alignment.
 
 DFDL standard encodings specify their alignment.
-See <<appendix-d-dfdl-standard-encodings>> Appendix D: DFDL Standard Encodings.
+See <<appendix-d-dfdl-standard-encodings>> DFDL Standard Encodings.
 
 Some implementations MAY include additional implementation-defined encodings
 which have other alignments.
@@ -325,10 +325,10 @@ one that is selected as having been found.
 Once a matching delimiter is found, no other matches are subsequently attempted
 (i.e., there is no backtracking to try shorter matches.) Additional details on
 the matching of DFDL String Literals are given in
-<<appendix-c-processing-of-dfdl-string-literals,Appendix C: Processing of DFDL String literals>>.
+<<appendix-c-processing-of-dfdl-string-literals>> Processing of DFDL String literals.
 
 .Properties for Specifying Delimiters
-[cols="2,3a",options="header"]
+[number="16",cols="2,3a",options="header"]
 |===
 
 | Property Name
@@ -554,12 +554,12 @@ This property describes the behavior of the DFDL processor for occurrences of
 elements of any type that have the empty representation.
 
 When 'treatAsEmpty' if an occurrence of an element has the empty representation
-when parsed, the behaviour is as stated in Section 9 for an occurrence with
+when parsed, the behaviour is as stated in <<dfdl-processing-introduction>> for an occurrence with
 empty representation.
 Consequently, default values or empty strings may be added to the Infoset.
 
 When 'treatAsAbsent' if an occurrence of an element has the empty representation
-when parsed, the behaviour is as stated in Section 9 for an absent occurrence.
+when parsed, the behaviour is as stated in <<dfdl-processing-introduction>> for an absent occurrence.
 Consequently, default values or empty strings are never added to the Infoset.
 
 Annotation: dfdl:element, dfdl:simpleType
@@ -572,7 +572,7 @@ These properties are used to determine the content length of an element and
 apply to elements of all types (simple and complex).
 
 .Properties for Specifying Length
-[cols="1,6a",options="header"]
+[number="17",cols="1,6a",options="header"]
 |===
 
 | Property Name
@@ -651,7 +651,7 @@ When parsing and dfdl:lengthKind is 'explicit', delimiter scanning is turned off
 and in-scope delimiters are not looked for within or between elements.
 
 .The dfdl:length Property
-[cols="1,6a",options="header"]
+[number="18",cols="1,6a",options="header"]
 |===
 
 | Property Name
@@ -778,7 +778,7 @@ for SimpleTypes when dfdl:lengthKind is 'implicit' .
 
 [[length-in-bits-for-simpletypes-when-dfdl-lengthkind-is-impli]]
 .Length in Bits for SimpleTypes when dfdl:lengthKind is 'implicit'
-[cols="1,1,1,1"]
+[number="19",cols="1,1,1,1"]
 |===
 
 .2+| Type
@@ -860,6 +860,7 @@ It is a Schema Definition Error if type is xs:string and dfdl:lengthKind is
 This prevents a scenario where validation against the XSD maxLength facet is in
 characters but parsing and unparsing using the XSD maxLength facet is in bytes.
 
+[[dfdl-lengthkind-prefixed]]
 ==== dfdl:lengthKind 'prefixed'
 
 When dfdl:lengthKind is 'prefixed' the length of the element is given by the
@@ -874,7 +875,7 @@ When dfdl:lengthKind is 'prefixed', delimiter scanning is turned off and
 in-scope delimiters are not looked for within or between elements.
 
 .Properties for dfdl:lengthKind 'prefixed'
-[cols="1,3a",options="header"]
+[number="20",cols="1,3a",options="header"]
 |===
 
 | Property Name
@@ -1016,7 +1017,7 @@ table below.
 For a complex element, the length is that of the ComplexContent region.
 
 .Unparse Lengths (in Bits) for Binary Data with dfdl:lengthKind 'prefixed'
-[cols="1,1,2",options="header"]
+[number="21",cols="1,1,2",options="header"]
 |===
 
 | Type
@@ -1069,6 +1070,7 @@ This gives the unparse length in bytes.
 Multiply by 8 for the number of bits.
 |===
 
+[[nested-prefix-lengths]]
 ===== Nested Prefix Lengths
 
 It is possible for a prefix length, as specified by dfdl:prefixLengthType, to
@@ -1098,7 +1100,7 @@ When dfdl:lengthKind is 'pattern', delimiter scanning is turned off and in-scope
 delimiters are not looked for within or between elements.
 
 .The dfdl:lengthPattern Property
-[cols="1,6a",options="header"]
+[number="22",cols="1,6a",options="header"]
 |===
 
 | Property Name
@@ -1365,7 +1367,7 @@ The value of the specified length is constrained per the table below.
 The lengths are expressed in bits and are inclusive.
 
 .Allowable Specified Lengths in Bits for Base-2 Binary Number Elements
-[cols="1,1,2",options="header"]
+[number="23",cols="1,1,2",options="header"]
 |===
 
 | Type
