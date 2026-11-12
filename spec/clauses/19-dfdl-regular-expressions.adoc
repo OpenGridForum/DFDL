@@ -16,10 +16,11 @@ DFDL regular expressions thereby conform to Unicode Technical Standard
 +#18+ , Unicode Regular Expressions, level 1
 [<<a-unicoderegex,UnicodeRegex>>].
 
-The following regular expression constructs are not common to both ICU and
+The regular expression constructs in <<disallowed-regular-expression-constructs>> are not common to both ICU and
 +Java(R)+ 7 and it is a Schema Definition Error if any
 are used in a DFDL regular expression:
 
+[[disallowed-regular-expression-constructs]]
 .Disallowed Regular Expression Constructs
 [number="68",cols="2,6,1",options="header"]
 |===

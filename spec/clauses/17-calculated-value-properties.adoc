@@ -23,7 +23,9 @@ element on parsing normally implies use of one or more calculated elements on
 unparsing.
 
 These properties apply to elements of simple type.
+They are listed in <<calculated-value-properties-table>>.
 
+[[calculated-value-properties-table]]
 .Calculated Value Properties
 [number="53",cols="1,5a",options="header"]
 |===

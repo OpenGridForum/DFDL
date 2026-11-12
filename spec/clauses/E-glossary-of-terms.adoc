@@ -226,9 +226,9 @@ as to allow the delimiters to appear within data if properly escaped.
 *_DFDL Infoset_* - The abstract data structure that must be provided:
 
 * To an invoking application by a DFDL parser when parsing DFDL-described data
-using a DFDL Schema;
+using a DFDL Schema.
 * To a DFDL unparser by an invoking application when generating DFDL-described
-data using a DFDL Schema
+data using a DFDL Schema.
 
 *_DFDL Processor_* - A program that uses DFDL schemas in order to process data
 described by them.
@@ -241,7 +241,8 @@ DFDL annotations.
 
 *_DFDL Standard Encoding_* - A character set for which there is no IANA name or
 CCSID but the name and definition of which DFDL implementations must agree on.
-See <<appendix-d-dfdl-standard-encodings>> DFDL Standard Encodings.
+DFDL standard encodings are as specified in
+<<appendix-d-dfdl-standard-encodings>> DFDL Standard Encodings.
 
 *_Double-Byte Character Set_* (DBCS) - A character set encoding where each
 character code consists of one code unit which uses exactly 2 bytes.
@@ -281,12 +282,12 @@ or some number of bits less than a byte.  Examples of different fixed widths
 are:
 
 * 1-byte wide: ASCII, ebcdic-cp-us, iso-8859-1. See also SBCS (Single-Byte
-Character Set)
+Character Set);
 * 2-bytes wide: UTF-16 when dfdl:utf16Width is 'fixed'. See also DBCS
-(Double-Byte Character Set)
-* 4-bytes wide: UTF-32.
+(Double-Byte Character Set);
+* 4-bytes wide: UTF-32;
 * 7-bits wide:
-X-DFDL-US-ASCII-7-BIT-PACKEDfootnote:[X-DFDL-US-ASCII-7-BIT-PACKED is a DFDL standard encoding, which uses the US-ASCII characters, but each code unit is stored occupying only 7 bits, not a whole 8-bit-byte. DFDL standard encodings are defined in a separate specification. See <<appendix-d-dfdl-standard-encodings>> DFDL Standard Encodings.].
+X-DFDL-US-ASCII-7-BIT-PACKEDfootnote:[X-DFDL-US-ASCII-7-BIT-PACKED is a DFDL standard encoding, which uses the US-ASCII characters, but each code unit is stored occupying only 7 bits, not a whole 8-bit-byte. DFDL standard encodings are defined in a separate specification. They are as specified in <<appendix-d-dfdl-standard-encodings>> DFDL Standard Encodings.].
 
 *_Fixed Array Element_* - An array element where XSD minOccurs is equal to XSD
 maxOccurs.
@@ -400,15 +401,15 @@ minOccurs.
 properties for each schema component are listed in
 <<appendix-g-property-precedence>> Property Precedence.
 
-*_Resolved Set of Annotations_* - When DFDL annotations appear on
+*_Resolved Set of Annotations_* - When DFDL annotations appear on:
 
 [arabic]
-. a simple type definition and the base simple type it references (recursively,
+. A simple type definition and the base simple type it references (recursively,
 if the base simple type also references another base simple type).
-. an element declaration and the simple type definition from (1) it references.
-. an element reference and the global element declaration from (2) it
+. An element declaration and the simple type definition from (1) it references.
+. An element reference and the global element declaration from (2) it
 references.
-. a group reference and the global group definition it references
+. A group reference and the global group definition it references.
 
 They are combined, and the resulting set of annotations is referred to as the
 _resolved set of annotations_ for the schema component.
@@ -522,9 +523,9 @@ characters are encoded using one or more code units for their representation
 depending on which specific character is being encoded. Examples with their
 ranges of varying width:
 
-* 1 to 4 bytes: UTF-8
-* 1 or 2 16-bit code units: UTF-16 when property dfdl:utf16Width is 'variable'
-* 1 or 2 bytes: Shift-JIS
+* 1 to 4 bytes: UTF-8;
+* 1 or 2 16-bit code units: UTF-16 when property dfdl:utf16Width is 'variable';
+* 1 or 2 bytes: Shift-JIS.
 
 *_Well-Formed_* – A data stream is said to be well-formed with respect to a DFDL
 schema if a DFDL processor can parse the data into a DFDL Infoset, or there

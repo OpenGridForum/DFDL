@@ -401,30 +401,30 @@ via software libraries.
 The goals of version 1.0 are as follows:
 
 [arabic]
-. Leverage XML technology and concepts
-. Support very efficient parsers/formatters
-. Avoid features  that require unnecessary data copying
+. Leverage XML technology and concepts.
+. Support very efficient parsers/formatters.
+. Avoid features  that require unnecessary data copying.
 . Support round-tripping, that is, read and write data in a described format
-from the same description
-. Keep simple cases simple
+from the same description.
+. Keep simple cases simple.
 . Simple descriptions should be "human readable" to the same degree that XSD is.
 
 The general features of version 1.0 are as follows:
 
 [loweralpha]
-. Text and binary data parsing and unparsing
+. Text and binary data parsing and unparsing.
 . Validate the data when parsing and unparsing using XSD validation.
-. Defaulted input and output for missing representations
+. Defaulted input and output for missing representations.
 . Reference – use of the value of a previously read element in subsequent
-expressions
-. Choice – capability to select among format variations
+expressions.
+. Choice – capability to select among format variations.
 . Hidden groups of elements – A description of an intermediate representation
 the corresponding Infoset items of which are not exposed in the final Infoset.
 . Basic arithmetic in DFDL expressions.
 . Out-of-type value handling (e.g., The string value 'NIL' to indicate nil for
-an integer)
+an integer).
 . Speculative parsing to resolve uncertainty.
-. Very general parsing capability: Lookahead/Push-back
+. Very general parsing capability: Lookahead/Push-back.
 
 Version 1.0 of DFDL is a language capable of expressing a wide range of binary
 and text-based data formats.

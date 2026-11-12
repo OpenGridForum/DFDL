@@ -12,6 +12,9 @@ simple types into Number, String, Calendar, Boolean, and Opaque groups, per
 
 === Properties Common to All Simple Types
 
+These properties are listed in <<properties-common-to-all-simple-types>>.
+
+[[properties-common-to-all-simple-types]]
 .Properties Common to All Simple Types
 [number="24",cols="1,5a",options="header"]
 |===
@@ -99,6 +102,9 @@ properties.
 
 === Properties Common to All Simple Types with Text representation
 
+These properties are listed in <<properties-common-to-all-simple-types-with-text-representation>>.
+
+[[properties-common-to-all-simple-types-with-text-representation]]
 .Properties Common to All Simple Types with Text Representation
 [number="26",cols="2,7a",options="header"]
 |===
@@ -123,8 +129,8 @@ is a Processing Error.
 'padChar': The data value is padded using the dfdl:textStringPadCharacter,
 dfdl:textNumberPadCharacter, dfdl:textBooleanPadCharacter or
 dfdl:textCalendarPadCharacter  depending on the type of the element.
-The padding characters populate the *_LeftPadding_* and/or *_RightPadding_*
-regions depending on dfdl:textStringJustification(see
+The padding characters populate the *_LeftPadding_* region, the
+*_RightPadding_* region, or both, depending on dfdl:textStringJustification(see
 <<properties-specific-to-string>>), dfdl:textNumberJustification (see
 <<properties-specific-to-number-with-text-representation>>),
 dfdl:textBooleanJustification (see
@@ -163,8 +169,8 @@ When 'none' no trimming takes place.
 When 'padChar' the element is trimmed of the dfdl:textStringPadCharacter,
 dfdl:textNumberPadCharacter, dfdl:textBooleanPadCharacter or
 dfdl:textCalendarPadCharacter  depending on the type of the element.
-The padding characters populate the *_LeftPadding_* and/or *_RightPadding_*
-regions depending on dfdl:textStringJustification, dfdl:textNumberJustification,
+The padding characters populate the *_LeftPadding_* region, the
+*_RightPadding_* region, or both, depending on dfdl:textStringJustification, dfdl:textNumberJustification,
 or dfdl:textCalendarJustification, depending on the type of the element.
 
 Annotation: dfdl:element , dfdl:simpleType
@@ -234,6 +240,9 @@ When unparsing, pad characters are added without reference to an escape scheme.
 On unparsing, the application of escape scheme processing takes place before the
 application of the dfdl:emptyValueDelimiterPolicy property.
 
+The escape scheme properties are listed in <<escape-scheme-properties>>.
+
+[[escape-scheme-properties]]
 .Escape Scheme Properties
 [number="27",cols="1,3a",options="header"]
 |===
@@ -494,6 +503,9 @@ Additional examples are in
 Bidirectional text is a feature expected in a future revision of the DFDL
 standard.
 
+These properties are listed in <<properties-for-bidirectional-support-for-all-simple-types-with-text-representation>>.
+
+[[properties-for-bidirectional-support-for-all-simple-types-with-text-representation]]
 .Properties for Bidirectional support for All Simple Types with Text representation
 [number="28",cols="1,3a",options="header"]
 |===
@@ -515,6 +527,9 @@ Annotation: dfdl:element, dfdl:simpleType (representation text)
 [[properties-specific-to-string]]
 === Properties Specific to String
 
+These properties are listed in <<properties-specific-to-string-table>>.
+
+[[properties-specific-to-string-table]]
 .Properties Specific to String
 [number="29",cols="1,2a",options="header"]
 |===
@@ -624,6 +639,9 @@ Annotation: dfdl:element, dfdl:simpleType
 
 === Properties Specific to Number with Text or Binary Representation
 
+These properties are listed in <<properties-specific-to-number-with-text-or-binary-representation>>.
+
+[[properties-specific-to-number-with-text-or-binary-representation]]
 .Properties Specific to Number with Text or Binary Representation
 [number="30",cols="1,3a",options="header"]
 |===
@@ -659,6 +677,9 @@ Other symbols adjacent to the textual representation of a number, such as
 currency symbols, percent signs, or coordinate axis indicators, are not
 considered part of the value representation.
 
+The properties specific to numbers with text representation are listed in <<properties-specific-to-number-with-text-representation-table>>.
+
+[[properties-specific-to-number-with-text-representation-table]]
 .Properties Specific to Number with Text Representation
 [number="31",cols="1,2a",options="header"]
 |===
@@ -1216,8 +1237,9 @@ digit.
 To insert a special character in a pattern as a literal, that is, without any
 special meaning, the character, or a string containing it must be surrounded by
 quote symbols.
-There are some exceptions to this which are noted below.
+There are some exceptions to this which are noted in <<dfdl-textnumberpattern-special-characters>>.
 
+[[dfdl-textnumberpattern-special-characters]]
 .dfdl:textNumberPattern Special Characters
 [number="32",cols="1,2,8",options="header"]
 |===
@@ -1339,8 +1361,9 @@ It is a Schema Definition Error if any symbols other than "0", "1" through "9"
 or +#+ are used in the vpinteger region of the
 pattern.
 
-*Examples*
+Examples of the P symbol are given in <<examples-of-p-symbol-in-the-dfdl-textnumberpattern-property>>.
 
+[[examples-of-p-symbol-in-the-dfdl-textnumberpattern-property]]
 .Examples of P Symbol in the dfdl:textNumberPattern Property
 [number="33",cols="2,1,1",options="header"]
 |===
@@ -1358,6 +1381,9 @@ pattern.
 | 12300
 |===
 
+The syntax of dfdl:textNumberPattern is given in <<dfdl-textnumberpattern-bnf-syntax>>.
+
+[[dfdl-textnumberpattern-bnf-syntax]]
 // Numbered 33-A, as in earlier editions, so later tables keep their numbers.
 .dfdl:textNumberPattern BNF syntax
 [number="33-A",cols="3,1,18",class="bnf",separator=!]
@@ -1421,19 +1447,14 @@ pattern.
 
 3+a! Notation:
 
-[align=indent]
 X*  0 or more instances of X
 
-[align=indent]
 X? 0 or 1 instances of X
 
-[align=indent]
 X|Y either X or Y
 
-[align=indent]
 C..D any character from C up to D, inclusive
 
-[align=indent]
 S-T characters in S, except those in T
 |===
 
@@ -1564,8 +1585,9 @@ The '@' pattern character can be used with the +'#'+
 to control how many integer and fraction digits are needed to display the
 specified number of significant digits.
 The '@' only affects unparsing behavior.
-Examples:
+Examples are given in <<significant-digits-at-symbol-in-the-dfdl-textnumberpattern-property>>.
 
+[[significant-digits-at-symbol-in-the-dfdl-textnumberpattern-property]]
 .Significant Digits '@' Symbol in the dfdl:textNumberPattern Property
 [number="34",cols="1,3,3,1,2",options="header"]
 |===
@@ -1708,14 +1730,15 @@ In addition, only the following pattern characters may be used:
 
 * '+' must be present at the beginning or end of the pattern to indicate
 whether the leading or trailing digit carries the overpunched sign, if the
-logical type is signed
+logical type is signed;
 * '{plus}' may be present at the beginning or end of the pattern to indicate
 whether the leading or trailing digit carries the overpunched sign, if the
 logical type is unsigned. If logical type is unsigned and dfdl:textNumberPolicy
-'lax' specified it is a Schema Definition Error if no '{plus}' is present.
-* 'V' may be used  to indicate the location of an implied decimal point
-* 'P' may be used  to indicate the decimal  scaling
-* '0-9' indicates the number of needed digits (including overpunched).
+'lax' specified it is a Schema Definition Error if no '{plus}' is present;
+* the character 'V' may be used to indicate the location of an implied decimal
+point;
+* the character 'P' may be used to indicate the decimal scaling;
+* '0-9' indicates the number of needed digits (including overpunched);
 * +'#'+ indicates the number of optional digits.
 
 Rounding occurs as described under Rounding in
@@ -1756,6 +1779,10 @@ See <<properties-specific-to-float-double-with-binary-representati>>.
 Note that simple types derived from xs:decimal do not imply base-10
 representations in the data stream.
 
+The properties specific to numbers with binary representation are listed in
+<<properties-specific-to-number-with-binary-representation-table>>.
+
+[[properties-specific-to-number-with-binary-representation-table]]
 .Properties Specific to Number with Binary Representation
 [number="35",cols="1,3a",options="header"]
 |===
@@ -1993,10 +2020,10 @@ corresponding integer values that is consistent with this:
 
 In the pseudo code below:
 
-* '%' is modular division (division where remainder is returned)
-* '/' is regular division (quotient is returned)
+* '%' is modular division (division where remainder is returned);
+* '/' is regular division (quotient is returned);
 * the expression 'a ? b : c' means 'if a is true, then the value is b, otherwise
-the value is c'
+the value is c'.
 
 [[little-endian-bit-position-and-value]]
 .Little Endian bit position and value
@@ -2259,6 +2286,9 @@ On unparsing no sign nibble is written.
 [[properties-specific-to-float-double-with-binary-representati]]
 === Properties Specific to Float/Double with Binary Representation
 
+These properties are listed in <<properties-specific-to-float-double-with-binary-representation>>.
+
+[[properties-specific-to-float-double-with-binary-representation]]
 .Properties Specific to Float/Double with Binary Representation
 [number="36",cols="1,5a",options="header"]
 |===
@@ -2305,6 +2335,9 @@ Annotation: dfdl:element, dfdl:simpleType
 [[properties-specific-to-boolean-with-text-representation]]
 === Properties Specific to Boolean with Text Representation
 
+These properties are listed in <<properties-specific-to-boolean-with-text-representation-table>>.
+
+[[properties-specific-to-boolean-with-text-representation-table]]
 .Properties Specific to Boolean with Text Representation
 [number="37",cols="1,3a",options="header"]
 |===
@@ -2414,6 +2447,9 @@ Annotation: dfdl:element, dfdl:simpleType
 [[properties-specific-to-boolean-with-binary-representation]]
 === Properties Specific to Boolean with Binary Representation
 
+These properties are listed in <<properties-specific-to-boolean-with-binary-representation-table>>.
+
+[[properties-specific-to-boolean-with-binary-representation-table]]
 .Properties Specific to Boolean with Binary Representation
 [number="38",cols="1,3a",options="header"]
 |===
@@ -2467,7 +2503,9 @@ the pattern.
 
 These properties can be used when a calendar has dfdl:representation 'text' or
 dfdl:representation 'binary' and a packed decimal representation.
+They are listed in <<properties-specific-to-calendar-with-text-or-binary-representation>>.
 
+[[properties-specific-to-calendar-with-text-or-binary-representation]]
 .Properties specific to Calendar with Text or Binary Representation
 [number="39",cols="1,3a",options="header"]
 |===
@@ -2648,6 +2686,9 @@ The pattern is derived from the ICU SimpleDatetimeFormat class described here:
 An extension is the formatting symbol I which means accept a subset of ISO 8601
 [<<a-iso8601,ISO8601>>] compliant calendars
 
+The symbols in the pattern are listed in <<symbols-in-the-dfdl-calendarpattern-property>>.
+
+[[symbols-in-the-dfdl-calendarpattern-property]]
 .Symbols in the dfdl:calendarPattern Property
 [number="40",cols="1,2,3,1,4",options="header",class="keep-row-groups"]
 |===
@@ -2688,7 +2729,7 @@ An extension is the formatting symbol I which means accept a subset of ISO 8601
 | 1997
 
 .5+| M
-.5+| Text & Number
+.5+| Text and Number
 .5+| month in year
 | M
 | 9, 12
@@ -2784,7 +2825,7 @@ An extension is the formatting symbol I which means accept a subset of ISO 8601
 | Tu
 
 .6+| e
-.6+| Text & Number
+.6+| Text and Number
 .6+| day of week (local)
 | e
 | 2
@@ -3006,12 +3047,13 @@ profile of the ISO 8601 standard proposed by the W3C at
 [<<a-w3datetime,W3DateTime>>].
 The formats are referred to as 'granularities'.
 
-* xs:dateTime. When parsing, the data must match one of the granularities. When
-unparsing, the fullest granularity is used.
-* xs:date. When parsing, the data must match one of the date-only granularities.
+* For xs:dateTime, when parsing, the data must match one of the granularities.
+When unparsing, the fullest granularity is used.
+* For xs:date, when parsing, the data must match one of the date-only
+granularities.
 When unparsing, the fullest date-only granularity is used.
-* xs:time. When parsing, the data must match only the time components of one of
-the granularities that contains time components. When unparsing, the time
+* For xs:time, when parsing, the data must match only the time components of one
+of the granularities that contains time components. When unparsing, the time
 components of the fullest granularity are used. The literal 'T' character is not
 expected in the data when parsing and is not output when unparsing.
 * The number of fractional second digits supported is the same as for the "S"
@@ -3049,22 +3091,25 @@ already allowed by the 'strict' value.
 [arabic]
 . Lenient parsing behaviour when in 'strict' policy:
 [loweralpha]
-.. Case insensitive matching for text fields
-.. MMM, MMMM, and MMMMM all accept either short or long form of Month
-.. E, EE, EEE, EEEE, EEEEE , and EEEEEE all accept either abbreviated, full, narrow and short forms of Day of Week
-.. Accepts truncated leftmost numeric field (e.g., pattern "HHmmss" allows "123456" (12:34:56) and "23456" (2:34:56) but not "3456")
+.. Case insensitive matching for text fields.
+.. MMM, MMMM, and MMMMM all accept either short or long form of Month.
+.. E, EE, EEE, EEEE, EEEEE , and EEEEEE all accept either abbreviated, full, narrow and short forms of Day of Week.
+.. Accepts truncated leftmost numeric field (e.g., pattern "HHmmss" allows "123456" (12:34:56) and "23456" (2:34:56) but not "3456").
 . Additional lenient parsing behaviour when in 'lax' policy is
 implementation-defined, but typically includes:
 [loweralpha]
-.. Values outside valid ranges are normalized (e.g., "March 32 1996" is treated as "April 1 1996")
-.. Ignoring a trailing dot after a non-numeric field
-.. Leading and trailing whitespace in the data but not in the pattern is accepted
-.. Whitespace in the pattern can be missing in the data
-.. Partial matching on literal strings. E.g., data "20130621d" allowed for pattern "yyyyMMdd'date' "
+.. Values outside valid ranges are normalized (e.g., "March 32 1996" is treated as "April 1 1996").
+.. Ignoring a trailing dot after a non-numeric field.
+.. Leading and trailing whitespace in the data but not in the pattern is accepted.
+.. Whitespace in the pattern can be missing in the data.
+.. Partial matching on literal strings. E.g., data "20130621d" allowed for pattern "yyyyMMdd'date' ".
 
 [[properties-specific-to-calendar-with-text-representation]]
 === Properties Specific to Calendar with Text Representation
 
+These properties are listed in <<properties-specific-to-calendar-with-text-representation-table>>.
+
+[[properties-specific-to-calendar-with-text-representation-table]]
 .Properties Specific to Calendar with Text Representation
 [number="41",cols="1,3a",options="header"]
 |===
@@ -3112,6 +3157,9 @@ Annotation: dfdl:element, dfdl:simpleType
 [[properties-specific-to-calendar-with-binary-representation]]
 === Properties Specific to Calendar with Binary Representation
 
+These properties are listed in <<properties-specific-to-calendar-with-binary-representation-table>>.
+
+[[properties-specific-to-calendar-with-binary-representation-table]]
 .Properties Specific to Calendar with Binary Representation
 [number="42",cols="2,7a",options="header"]
 |===
@@ -3185,9 +3233,9 @@ Annotation: dfdl:element, dfdl:simpleType
 Examples of packed decimal format calendars for December 14, 1923 and
 dfdl:calendarPattern of 'MMddyy' would be:
 
-* packed: (hexadecimal) `01 21 42 3C`
-* bcd: (hexadecimal) `12 14 23`
-* ibm4690Packed: (hexadecimal) `12 14 23`
+* packed: (hexadecimal) `01 21 42 3C`;
+* bcd: (hexadecimal) `12 14 23`;
+* ibm4690Packed: (hexadecimal) `12 14 23`.
 
 The 'C' nibble at the end of the 'packed' representation is a sign nibble, and
 the leading 0 nibble is just to align to a byte boundary..
@@ -3270,7 +3318,9 @@ appear surrounding the literal nil in the output data.
 These properties are used when the XSD 'nillable' property of an element is
 'true', and they control when and how the representation data are interpreted as
 having the logical meaning 'nil'.
+They are listed in <<properties-for-nillable-elements-table>>.
 
+[[properties-for-nillable-elements-table]]
 .Properties for Nillable Elements
 [number="43",cols="1,3a",options="header"]
 |===

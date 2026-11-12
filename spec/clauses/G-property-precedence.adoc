@@ -37,7 +37,7 @@ elements)_
 **** _"parsed"_
 **** _"stopValue"_
 ***** dfdl:occursStopValue
-* _Parsing: identification, framing & extraction_
+* _Parsing: identification, framing and extraction_
 ** dfdl:leadingSkip
 *** dfdl:alignmentUnits
 ** dfdl:alignment
@@ -213,7 +213,7 @@ dfdl:textBooleanJustification or dfdl:textCalendarJustification
 ***** XSD minOccurs
 ***** XSD maxOccurs
 **** _"parsed"_
-* _Parsing: identification, framing & extraction_
+* _Parsing: identification, framing and extraction_
 ** dfdl:leadingSkip
 *** dfdl:alignmentUnits
 ** dfdl:alignment
@@ -252,7 +252,7 @@ dfdl:textBooleanJustification or dfdl:textCalendarJustification
 **** dfdl:utf16Width
 ** dfdl:encodingErrorPolicy
 ** dfdl:ignoreCase
-* _Parsing: identification, framing & extraction_
+* _Parsing: identification, framing and extraction_
 ** dfdl:leadingSkip
 *** dfdl:alignmentUnits
 ** dfdl:alignment
@@ -278,7 +278,7 @@ dfdl:textBooleanJustification or dfdl:textCalendarJustification
 **** dfdl:utf16Width
 ** dfdl:encodingErrorPolicy
 ** dfdl:ignoreCase
-* _Parsing: identification, framing & extraction_
+* _Parsing: identification, framing and extraction_
 ** dfdl:leadingSkip
 *** dfdl:alignmentUnits
 ** dfdl:alignment
@@ -430,7 +430,7 @@ elements)
 ****** dfdl:byteOrder
 ****** dfdl:binaryBooleanTrueRep
 ****** dfdl:binaryBooleanFalseRep
-* Unparsing: insertion & framing
+* Unparsing: insertion and framing
 ** dfdl:leadingSkip
 *** dfdl:alignmentUnits
 ** dfdl:alignment
@@ -524,7 +524,7 @@ dfdl:textBooleanJustification or dfdl:textCalendarJustification
 ***** XSD minOccurs
 ***** XSD maxOccurs
 **** _"parsed"_
-* Unparsing: insertion & framing
+* Unparsing: insertion and framing
 ** dfdl:leadingSkip
 *** dfdl:alignmentUnits
 ** dfdl:alignment
@@ -561,7 +561,7 @@ dfdl:textBooleanJustification or dfdl:textCalendarJustification
 **** dfdl:utf16Width
 ** dfdl:encodingErrorPolicy
 ** dfdl:fillByte
-* Unparsing: insertion & framing
+* Unparsing: insertion and framing
 ** dfdl:leadingSkip
 *** dfdl:alignmentUnits
 ** dfdl:alignment
@@ -585,7 +585,7 @@ dfdl:textBooleanJustification or dfdl:textCalendarJustification
 **** dfdl:utf16Width
 ** dfdl:encodingErrorPolicy
 ** dfdl:fillByte
-* Unparsing: insertion & framing
+* Unparsing: insertion and framing
 ** dfdl:leadingSkip
 *** dfdl:alignmentUnits
 ** dfdl:alignment

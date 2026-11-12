@@ -158,13 +158,13 @@ defined UTF-8 value, which takes precedence.
 The DFDL properties from the following types of reference are combined using the
 rules below:
 
-* An xs:element and its referenced xs:simpleType restriction
-* An xs:element reference and its referenced global xs:element
+* An xs:element and its referenced xs:simpleType restriction.
+* An xs:element reference and its referenced global xs:element.
 * An xs:group reference and an xs:sequence or xs:choice in its referenced global
-xs:group
-* An xs:simpleType restriction and its base xs:simpleType restriction
+xs:group.
+* An xs:simpleType restriction and its base xs:simpleType restriction.
 
-Rules
+Rules:
 
 [arabic]
 . Create (a) an empty working set of "explicit" properties, and (b) an empty
@@ -333,14 +333,14 @@ value of 'binary'
 ----
 
 The DFDL properties applied to the xs:sequence in xs:group "ggrp1" in SCHEMA2
-when referenced from the group reference in SCHEMA1 are
+when referenced from the group reference in SCHEMA1 are:
 
 [arabic]
-. dfdl:separator "," from the group reference in SCHEMA1
-. dfdl:separatorPosition "infix" from the group declaration in SCHEMA2
+. dfdl:separator "," from the group reference in SCHEMA1;
+. dfdl:separatorPosition "infix" from the group declaration in SCHEMA2;
 . dfdl:encoding "UTF-8", dfdl:initiator ''"  from the default dfdl:format
-annotation in SCHEMA2
-. dfdl:terminator ""   from the default dfdl:format annotation in SCHEMA1
+annotation in SCHEMA2;
+. dfdl:terminator ""   from the default dfdl:format annotation in SCHEMA1.
 
 === DFDL Schema Checking
 
@@ -371,25 +371,22 @@ having to do with type inconsistencies) can be detected before processing data.
 ==== Schema Component Constraint: Unique Particle Attribution
 
 The term _particle_ is used in XSD to refer to a schema component that can have
-dimension (XSD minOccurs and/or XSD maxOccurs) expressed on it.
+dimension (XSD minOccurs, XSD maxOccurs, or both) expressed on it.
 In DFDL only local element declarations and element references are particles.
 
 A DFDL processor MUST implement the Schema Component Constraint: Unique Particle
 Attribution defined in _XML Schema Part 1: Structures_ [<<a-xsdl-part1,XSDLV1>>]
 that applies to the DFDL schema subset.
 
-Two elements *overlap* if
+Two elements *overlap* if:
 
 * They are both element declaration particles whose declarations have the same
 name and target namespace.
 
 A schema violates the unique attribution constraint if it contains two particles
-which overlap and which either
+which overlap and which either:
 
-* are both in the particles of a _choice_ group.
-
-or
-
+* are both in the particles of a _choice_ group; or
 * either describes adjacent information items in an xs:sequence and the first
 has XSD minOccurs less than XSD maxOccurs.
 

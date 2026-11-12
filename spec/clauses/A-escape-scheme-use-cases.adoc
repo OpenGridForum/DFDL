@@ -14,7 +14,9 @@ unparsed to create the physical representation on the right.
 dfdl:escapeKind 'escapeCharacter', dfdl:escapeCharacter '/',
 dfdl:escapeEscapeCharacter '/', dfdl:separator ';', dfdl:extraEscapedCharacters
 '?'
+Examples with these properties are given in <<examples-of-escape-character-same-as-dfdl-escapeescapecharacter>>.
 
+[[examples-of-escape-character-same-as-dfdl-escapeescapecharacter]]
 .Examples of Escape Character Same as dfdl:escapeEscapeCharacter
 [number="1",cols="1,1",options="header"]
 |===
@@ -66,7 +68,9 @@ dfdl:escapeEscapeCharacter '/', dfdl:separator ';', dfdl:extraEscapedCharacters
 dfdl:escapeKind 'escapeCharacter', dfdl:escapeCharacter '/',
 dfdl:escapeEscapeCharacter
 '%%'footnote:[The '%' character needs escaping as part of DFDL syntax when used as a literal character in DFDL properties. It is escaped by doubling it, i.e., preceding it by another '%' character. In this example the dfdl:escapeEscapeCharacter is defined to be a single '%' character in the data stream.], dfdl:separator ';'', dfdl:extraEscapedCharacters '?'
+Examples with these properties are given in <<examples-1-of-escape-character-different-from-dfdl-escapeescapecharacter>>.
 
+[[examples-1-of-escape-character-different-from-dfdl-escapeescapecharacter]]
 .Examples (1) of Escape Character Different from dfdl:escapeEscapeCharacter
 [number="2",cols="1,1",options="header"]
 |===
@@ -124,7 +128,9 @@ dfdl:escapeEscapeCharacter
 
 Dfdl:escapeKind 'escapeCharacter', dfdl:escapeCharacter '/',
 dfdl:escapeEscapeCharacter '%%', dfdl:separator 'sep'
+Examples with these properties are given in <<examples-2-of-escape-character-different-from-dfdl-escapeescapecharacter>>.
 
+[[examples-2-of-escape-character-different-from-dfdl-escapeescapecharacter]]
 .Examples (2) of Escape Character Different from dfdl:escapeEscapeCharacter
 [number="3",cols="1,1",options="header"]
 |===
@@ -147,7 +153,9 @@ dfdl:escapeEscapeCharacter '%%', dfdl:separator 'sep'
 dfdl:escapeKind 'escapeBlock', dfdl:escapeBlockStart '[', dfdl:escapeBlockEnd
 ']', dfdl:escapeEscapeCharacter '%%', dfdl:separator ';', 
 dfdl:extraEscapedCharacters '?'
+Examples with these properties are given in <<examples-of-escape-block-with-different-start-and-end-characters>>.
 
+[[examples-of-escape-block-with-different-start-and-end-characters]]
 .Examples of Escape Block with Different Start and End Characters
 [number="4",cols="1,1",options="header"]
 |===
@@ -254,7 +262,9 @@ dfdl:extraEscapedCharacters '?'
 dfdl:escapeKind 'escapeBlock', dfdl:escapeBlockStart 'pass:[&amp;apos;]',
 dfdl:escapeBlockEnd 'pass:[&amp;apos;]', dfdl:escapeEscapeCharacter '%',
 dfdl:separator ';',  dfdl:extraEscapedCharacters '?'
+Examples with these properties are given in <<examples-of-escape-block-with-same-start-and-end-characters>>.
 
+[[examples-of-escape-block-with-same-start-and-end-characters]]
 .Examples of Escape Block with Same Start and End Characters
 [number="5",cols="1,1",options="header"]
 |===

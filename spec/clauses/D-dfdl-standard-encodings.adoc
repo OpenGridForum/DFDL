@@ -93,9 +93,11 @@ Not applicable - code units are always smaller than 1 byte.
 
 ==== Example 1
 
-The table below shows how the 8-character string 'UNIT1234' is encoded into 7
-bytes, when the bit order is least-significant-bit first.
+The 8-character string 'UNIT1234' is encoded into 7 bytes as shown in
+<<example-of-dfdl-standard-encoding-x-dfdl-us-ascii-7-bit-packed>>, when the
+bit order is least-significant-bit first.
 
+[[example-of-dfdl-standard-encoding-x-dfdl-us-ascii-7-bit-packed]]
 .Example of DFDL Standard Encoding X-DFDL-US-ASCII-7-BIT-PACKED
 [number="1",cols="2,1,1,1,1",options="header"]
 |===
@@ -244,8 +246,9 @@ The assignment of numeric code units to the characters is different for some of
 the characters and the same for others.
 
 The correspondence of ASCII characters to their code point values is given by
-the table below.
+<<translation-table-for-dfdl-standard-encoding-x-dfdl-us-ascii-6-bit-packed>>.
 
+[[translation-table-for-dfdl-standard-encoding-x-dfdl-us-ascii-6-bit-packed]]
 .Translation Table for DFDL Standard Encoding X-DFDL-US-ASCII-6-BIT-PACKED
 [number="2",cols="1,1,4",options="header"]
 |===
@@ -368,9 +371,11 @@ Code units are always less than 1 byte in size.
 
 ==== Example 1
 
-The table below shows how the 8 character string '1234' is encoded into 3 bytes.
+The 8 character string '1234' is encoded into 3 bytes as shown in
+<<example-of-dfdl-standard-encoding-x-dfdl-us-ascii-6-bit-packed>>.
 The bit order is least-significant-bit first:
 
+[[example-of-dfdl-standard-encoding-x-dfdl-us-ascii-6-bit-packed]]
 .Example of DFDL Standard Encoding X-DFDL-US-ASCII-6-BIT-PACKED
 [number="3",cols="2,1,1,1,1",options="header"]
 |===

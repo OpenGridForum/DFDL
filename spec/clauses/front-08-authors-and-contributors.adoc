@@ -18,23 +18,23 @@ The authors greatly acknowledge the contributions made to this document by the
 following and all the other people who provided constructive and valuable input
 in the group discussions.
 
-- Aaron Bauman, USA
-- Tim Kimber, Prolifics, UK
-- Suman Kalia, IBM, Markham, Ontario, Canada
-- Stephanie Fetzer, HCL, USA
-- Martin Westhead, Netgear, San Jose, CA, USA
-- James Myers, USA
-- Jonathan W. Cranford, Keyfactor, GA, USA
-- Tom Sugden, UBS Investment Bank, UK
-- Tara Gibson, PNNL, Richland, WA, USA
-- Robert McGrath, NCSA, Urbana-Champaign, IL, USA (retired)
-- Geoff Judd, IBM UK (retired)
-- Dewey M. Sasser, MA, USA
-- David A. Loose, Abacus Insights, MA, USA
-- Eric S. Smith, Quill Health, MA, USA
-- Kristoffer H. Rose, Two Sigma Investments, NY, USA
-- Simon Parker, Bloomberg Polar Lake, Dublin, IE (retired)
-- Peter A. Lambros, IBM UK (retired)
-- Dave Glick, SIPC, USA
-- Steve Marting, Progeny, USA
-- Alejandro Rodriguez, Amazon, WA, USA
+- Aaron Bauman, USA.
+- Tim Kimber, Prolifics, UK.
+- Suman Kalia, IBM, Markham, Ontario, Canada.
+- Stephanie Fetzer, HCL, USA.
+- Martin Westhead, Netgear, San Jose, CA, USA.
+- James Myers, USA.
+- Jonathan W. Cranford, Keyfactor, GA, USA.
+- Tom Sugden, UBS Investment Bank, UK.
+- Tara Gibson, PNNL, Richland, WA, USA.
+- Robert McGrath, NCSA, Urbana-Champaign, IL, USA (retired).
+- Geoff Judd, IBM UK (retired).
+- Dewey M. Sasser, MA, USA.
+- David A. Loose, Abacus Insights, MA, USA.
+- Eric S. Smith, Quill Health, MA, USA.
+- Kristoffer H. Rose, Two Sigma Investments, NY, USA.
+- Simon Parker, Bloomberg Polar Lake, Dublin, IE (retired).
+- Peter A. Lambros, IBM UK (retired).
+- Dave Glick, SIPC, USA.
+- Steve Marting, Progeny, USA.
+- Alejandro Rodriguez, Amazon, WA, USA.

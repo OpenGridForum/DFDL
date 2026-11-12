@@ -1,12 +1,13 @@
 [[optional-dfdl-features]]
 == Optional DFDL Features
 
-The following table lists the features of the DFDL language that are considered
-optional for DFDL processor implementations.
+The features of the DFDL language that are considered optional for DFDL
+processor implementations are listed in <<optional-dfdl-features-table>>.
 This list admits very small subsets of the full DFDL specification.
 For example, a binary-only subset without any expressions or variables is
 specifically allowed.
 
+[[optional-dfdl-features-table]]
 .Optional DFDL features
 [number="69",cols="1,2",options="header"]
 |===
