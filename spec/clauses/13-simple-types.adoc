@@ -2962,7 +2962,7 @@ The symbols in the pattern are listed in <<symbols-in-the-dfdl-calendarpattern-p
 .3+| Text
 .3+| time zone: ISO 8601 basic or extended format
 | x
-| -08, +0530, +0000
+| -08, +0530, +00
 
 | xx
 | -0800, +0000
@@ -3061,7 +3061,8 @@ fractional seconds specifier described above.
 * The omission of time zone from the input data when the type is xs:dateTime or
 xs:time is not a Processing Error. If that occurs then the time zone is obtained
 from the calendarTimeZone property.
-* When unparsing and the time zone is UTC, the time zone is output as '+00:00'.
+* When unparsing with the 'I' symbol and the time zone is UTC, the time zone is
+output as '+00:00'.
 
 When parsing, for any pattern that omits components the values for the omitted
 components are supplied from the Unix epoch
