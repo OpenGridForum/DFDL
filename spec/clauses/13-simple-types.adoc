@@ -2301,8 +2301,8 @@ These properties are listed in <<properties-specific-to-float-double-with-binary
 
 This specifies the encoding method for the float and double.
 
-Valid values are 'ieee', 'ibm390Hex',This property can be computed by way of an
-expression which returns a string of 'ieee' or ' ibm390Hex' .
+Valid values are 'ieee', 'ibm390Hex'. This property can be computed by way of an
+expression which returns a string of 'ieee' or 'ibm390Hex'.
 The expression must not contain forward references to elements which have not
 yet been processed.
 
@@ -2584,7 +2584,7 @@ Data which does not specify a time zone does not obtain a time zone from this
 property and so simply lacks time zone information.
 
 The IANA time zone format (also known as the Olson time zone format) may also be
-used. (e.g., America/New_York)) See [<<a-ianatimezone,IANATimeZone>>].
+used. (e.g., America/New_York) See [<<a-ianatimezone,IANATimeZone>>].
 
 Note that this property is used when parsing only.
 
