@@ -1361,7 +1361,7 @@ When dfdl:lengthKind is 'implicit', see <<dfdl-lengthkind-implicit>>
 dfdl:lengthKind 'implicit'.
 
 The dfdl:lengthUnits can be 'bytes' or 'bits' unless otherwise stated.
-It is Schema Definition Error if dfdl:lengthUnits is 'characters'.
+It is a Schema Definition Error if dfdl:lengthUnits is 'characters'.
 
 It is a Schema Definition Error if the specified dfdl:length for an element of
 dfdl:lengthKind 'explicit' is a string literal integer such that the length of
