@@ -14,6 +14,19 @@ ifdef::edition-ogf[]
 [%unnumbered,cols="1,5"]
 |===
 
+.2+a| 2026-11-17
+
+(internal v1.2.2)
+| <<example-parsing-scenarios>> Corrected the 'trailingEmpty' example to match
+its cell in <<separator-suppression-for-dfdl-occurscountkind-implicit-when-parsing>>.
+It had < where the table has +<=+, and square brackets the table does not have.
+See link:https://github.com/OpenGridForum/DFDL/issues/119[(Issue 119)]
+
+| <<parsing-sequence-groups-with-separators>> Corrected the definition of M in
+_Rep(M +<=+ max – min)_. M runs from 0 to XSD maxOccurs minus XSD minOccurs,
+not between XSD minOccurs and XSD maxOccurs.
+See link:https://github.com/OpenGridForum/DFDL/issues/119[(Issue 119)]
+
 .2+a| 2026-11-11
 
 (internal v1.2.2)

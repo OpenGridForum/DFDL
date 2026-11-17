@@ -291,6 +291,7 @@ dfdl:separatorSuppressionPolicy property is carried on the sequence, while the
 XSD minOccurs, XSD maxOccurs and dfdl:occursCountKind properties are carried on
 an _element_ in that sequence.
 
+[[parsing-sequence-groups-with-separators]]
 ==== Parsing Sequence Groups with Separators
 
 Parsing child elements is described first.
@@ -404,8 +405,9 @@ where such a representation does not have
 zero-lengthfootnote:[Absent representation always implies zero-length. Nil, empty, and normal representations can also be zero-length with the right combinations of properties. See <<zero-length-representation>> Zero-length Representation.]. This is an optional occurrence, so default rules do not apply.
 
 A notation like *_Rep(M +<=+ max – min)_* means that
-there are M occurrences, where M is some value between the values of the XSD
-minOccurs and XSD maxOccurs properties.
+there are M occurrences, where M can be any number from 0 to max – min, that
+is, XSD maxOccurs minus XSD minOccurs.
+_Rep(M < max – min)_ is the same except that M must be less than max – min.
 When an unbounded number of occurrences is possible this is shown explicitly by
 _Rep(M < INF)_ , INF meaning infinity or unbounded.
 
@@ -422,6 +424,7 @@ sequence is positional, specifically:
 'trailingEmpty' and the element is not the last declaration in the sequence.
 (This avoids ambiguity about which element is being suppressed).
 
+[[example-parsing-scenarios]]
 ===== Example Parsing Scenarios
 
 Consider the cell of the matrix above for the element in this DFDL schema
@@ -508,7 +511,7 @@ arises because the occurrence has the empty representation, the occurs index is
 If the scenario is changed so that dfdl:separatorSuppressionPolicy is
 'trailingEmpty' then a different cell of the matrix above applies.
 
-_RepDef(min) [~ Rep(M < max – min) ]_
+_RepDef(min) ~ Rep(M +<=+ max – min)_
 
 This has a more lax behavior so that this data is also acceptable:
 
