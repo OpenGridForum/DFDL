@@ -92,7 +92,7 @@ dfdl:discriminator with testKind 'pattern'
 | dfdl:inputValueCalc <> '' or dfdl:outputValueCalc <> ''
 
 | Escape schemes
-| dfd:defineEscapeScheme in the schema
+| dfdl:defineEscapeScheme in the schema
 
 | Extended encodings
 | Any dfdl:encoding value beyond the core list

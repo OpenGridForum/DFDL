@@ -765,15 +765,15 @@ The unordered sequence is transformed as follows:
 
 * the dfdl:sequenceKind property of the unordered sequence is changed to
 "ordered";
-* the content of the unordered sequence is replaced by a complex element ( the
-'choice element' ) with the following properties:
+* the content of the unordered sequence is replaced by a complex element (the
+'choice element') with the following properties:
 ** XSD minOccurs="0";
 ** XSD maxOccurs="unbounded";
 ** dfdl:lengthKind "implicit";
 ** dfd:occursCountKind "parsed";
 * the content of the choice element's complex type is a choice group with the
 following properties:
-* dfdl:choiceLengthKind "implicit";
+** dfdl:choiceLengthKind "implicit";
 * the members of the unordered sequence become the members of the choice group,
 with their declaration order preserved;
 * the XSD minOccurs and XSD maxOccurs properties on each member of the choice
