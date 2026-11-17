@@ -14,9 +14,18 @@ ifdef::edition-ogf[]
 [%unnumbered,cols="1,5"]
 |===
 
-.2+a| 2026-11-17
+.4+a| 2026-11-17
 
 (internal v1.2.2)
+| <<the-dfdl-calendarpattern-property>> Corrected the zero-offset example for
+the 'x' symbol in the table of calendar pattern symbols from +0000 to +00, as
+in [<<a-ldml,LDML>>]. +0000 is the 'xx' form.
+See link:https://github.com/OpenGridForum/DFDL/issues/120[(Issue 120)]
+
+| <<the-dfdl-calendarpattern-property>> The rule that a UTC time zone is
+unparsed as '+00:00' now says it applies to the 'I' symbol only.
+See link:https://github.com/OpenGridForum/DFDL/issues/120[(Issue 120)]
+
 | <<example-parsing-scenarios>> Corrected the 'trailingEmpty' example to match
 its cell in <<separator-suppression-for-dfdl-occurscountkind-implicit-when-parsing>>.
 It had < where the table has +<=+, and square brackets the table does not have.
