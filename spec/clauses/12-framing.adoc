@@ -1100,6 +1100,7 @@ specifies a prefix length, that is, nesting of prefix lengths must not exceed a
 depth of 1. It is a Processing Error if a PrefixPrefixLength region has zero
 length.
 
+[[dfdl-lengthkind-pattern]]
 ==== dfdl:lengthKind  'pattern'
 
 The dfdl:lengthKind 'pattern' means the length of the element is given by a
@@ -1154,7 +1155,11 @@ Content and Framing.
 Annotation: dfdl:element, dfdl:simpleType
 |===
 
-On unparsing the behavior is the same as for dfdl:lengthKind 'prefixed'.
+On unparsing the length of the element is determined as for the content of an
+element with dfdl:lengthKind 'prefixed' (see <<dfdl-lengthkind-prefixed>>)
+except that no prefix is written.
+The data written is not checked against dfdl:lengthPattern and so may be parsed
+by the same schema with a different length or not at all.
 
 When the DFDL regular expression is matched against data:
 

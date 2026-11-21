@@ -14,6 +14,14 @@ ifdef::edition-ogf[]
 [%unnumbered,cols="1,5"]
 |===
 
+a| 2026-11-21
+
+(internal v1.2.2)
+| <<dfdl-lengthkind-pattern>> Clarified that on unparsing only the content
+length rules of dfdl:lengthKind 'prefixed' apply, that no prefix is written,
+and that the data written is not checked against dfdl:lengthPattern.
+See link:https://github.com/OpenGridForum/DFDL/issues/123[(Issue 123)]
+
 .4+a| 2026-11-17
 
 (internal v1.2.2)
