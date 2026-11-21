@@ -1158,8 +1158,11 @@ Annotation: dfdl:element, dfdl:simpleType
 On unparsing the length of the element is determined as for the content of an
 element with dfdl:lengthKind 'prefixed' (see <<dfdl-lengthkind-prefixed>>)
 except that no prefix is written.
-The data written is not checked against dfdl:lengthPattern and so may be parsed
-by the same schema with a different length or not at all.
+The data written is not checked against dfdl:lengthPattern.footnote:[When
+parsing, DFDL length pattern regular expressions match against the data stream
+and commonly use lookahead to recognize characters in the data stream that are
+beyond the length of the element's content.
+Such a pattern is meaningless for unparsing.]
 
 When the DFDL regular expression is matched against data:
 
